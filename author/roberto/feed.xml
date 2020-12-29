@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <link href="http://localhost:4000/https://blog.openthreatresearch.com/author/roberto/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="http://localhost:4000/https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2020-12-28T22:41:19-05:00</updated>
+  <id>http://localhost:4000/https://blog.openthreatresearch.com/author/roberto/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Welcome to OTR</title>
+      <link href="http://localhost:4000/https://blog.openthreatresearch.com/welcome" rel="alternate" type="text/html" title="Welcome to OTR" />
+      <published>2020-12-28T05:00:00-05:00</published>
+      <updated>2020-12-28T05:00:00-05:00</updated>
+      <id>http://localhost:4000/https://blog.openthreatresearch.com/welcome</id>
+      <content type="html" xml:base="http://localhost:4000/https://blog.openthreatresearch.com/welcome">&lt;p&gt;Hey! Welcome to OTR, it’s great to have you :)&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Roberto Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Getting started" />
+      
+
+      
+        <summary type="html">Hey! Welcome to OTR, it’s great to have you :)</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>
