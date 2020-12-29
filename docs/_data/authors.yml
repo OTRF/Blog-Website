@@ -1,0 +1,44 @@
+roberto:
+  username: roberto
+  name: Roberto Rodriguez
+  location: USA-Peru
+  url_full: https://github.com/Cyb3rWard0g
+  url: github.com/Cyb3rWard0g
+  bio: Security Researcher
+  picture: assets/images/authors/avatar-roberto.png
+  facebook: False
+  twitter: Cyb3rWard0g
+  cover: False
+jose:
+  username: jose
+  name: Jose Luis
+  location: USA-Peru
+  url_full: https://github.com/Cyb3rPandaH/
+  url: github.com/Cyb3rPandaH/
+  bio: Security Researcher
+  picture: assets/images/authors/avatar-jose.jpg
+  facebook: False
+  twitter: Cyb3rPandaH
+  cover: False
+valentina:
+  username: valentina
+  name: Valentina Palacin
+  location: Argentina
+  url_full: https://github.com/fierytermite
+  url: github.com/fierytermite
+  bio: Threat Intel Analyst and Threat Hunter
+  picture: assets/images/authors/avatar-valentina.jpg
+  facebook: False
+  twitter: fierytermite
+  cover: False
+mauricio:
+  username: mauricio
+  name: Mauricio Velazco
+  location: USA-Peru
+  url_full: https://github.com/mvelazc0
+  url: github.com/mvelazc0
+  bio: Threat Detection & Adversary Simulation 
+  picture: assets/images/authors/avatar-mauricio.jpg
+  facebook: False
+  twitter: False
+  cover: False

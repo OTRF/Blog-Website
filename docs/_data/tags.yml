@@ -1,0 +1,20 @@
+azure:
+  name: azure
+  description: Microsoft Azure, commonly referred to as Azure, is a cloud computing service created by Microsoft for building, testing, deploying, and managing applications and services through Microsoft-managed data centers.
+  cover: False
+mitre-att&ck:
+  name: mitre-att&ck
+  description: MITRE ATT&CK is a globally-accessible knowledge base of adversary tactics and techniques based on real-world observations
+  cover: False
+purple-team:
+  name: purple-team
+  description: Offense and Defense collaborating.
+  cover: False
+threat-research:
+  name: threat-research
+  description: Posts to share and execute the threat research methodology defined by the OTR community.
+  cover: False
+getting-started:
+  name: getting-started
+  description: False
+  cover: False
