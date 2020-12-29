@@ -18,3 +18,11 @@ getting-started:
   name: getting-started
   description: False
   cover: False
+dns:
+  name: dns
+  description: False
+  cover: False
+ssl-certificates:
+  name: ssl-certificates
+  description: False
+  cover: False
