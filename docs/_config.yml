@@ -26,7 +26,7 @@ language: 'en-us'
 words_per_minute: 200
 
 # edit baseurl to simply '/' if using as your personal page (instead of a project page)
-baseurl: "/"
+baseurl: "https://blog.openthreatresearch.com/"
 
 # Website info
 title: Open Threat Research Blog
