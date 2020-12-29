@@ -8,15 +8,16 @@
     
       
       <item>
-        <title>Welcome to OTR</title>
+        <title>Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate</title>
         
-          <description>&lt;p&gt;Hey! Welcome to OTR, it’s great to have you :)&lt;/p&gt;
+          <description>&lt;p&gt;Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).&lt;/p&gt;
+
 </description>
         
-        <pubDate>Mon, 28 Dec 2020 05:00:00 -0500</pubDate>
+        <pubDate>Mon, 28 Dec 2020 06:00:00 -0500</pubDate>
         <link>
-        http://localhost:4000/welcome</link>
-        <guid isPermaLink="true">http://localhost:4000/welcome</guid>
+        http://localhost:4000/csr-ssl-certificate-activation</link>
+        <guid isPermaLink="true">http://localhost:4000/csr-ssl-certificate-activation</guid>
       </item>
       
     

@@ -2,10 +2,10 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
-  <link href="http://localhost:4000/https://blog.openthreatresearch.com/author/roberto/feed.xml" rel="self" type="application/atom+xml" />
-  <link href="http://localhost:4000/https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2020-12-28T22:41:19-05:00</updated>
-  <id>http://localhost:4000/https://blog.openthreatresearch.com/author/roberto/feed.xml</id>
+  <link href="http://localhost:4000/author/roberto/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="http://localhost:4000/" rel="alternate" type="text/html" />
+  <updated>2020-12-29T02:29:17-05:00</updated>
+  <id>http://localhost:4000/author/roberto/feed.xml</id>
 
   
   
@@ -38,12 +38,165 @@
 
   
     <entry>
-      <title type="html">Welcome to OTR</title>
-      <link href="http://localhost:4000/https://blog.openthreatresearch.com/welcome" rel="alternate" type="text/html" title="Welcome to OTR" />
-      <published>2020-12-28T05:00:00-05:00</published>
-      <updated>2020-12-28T05:00:00-05:00</updated>
-      <id>http://localhost:4000/https://blog.openthreatresearch.com/welcome</id>
-      <content type="html" xml:base="http://localhost:4000/https://blog.openthreatresearch.com/welcome">&lt;p&gt;Hey! Welcome to OTR, it’s great to have you :)&lt;/p&gt;</content>
+      <title type="html">Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate</title>
+      <link href="http://localhost:4000/csr-ssl-certificate-activation" rel="alternate" type="text/html" title="Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate" />
+      <published>2020-12-28T06:00:00-05:00</published>
+      <updated>2020-12-28T06:00:00-05:00</updated>
+      <id>http://localhost:4000/csr-ssl-certificate-activation</id>
+      <content type="html" xml:base="http://localhost:4000/csr-ssl-certificate-activation">&lt;p&gt;Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).&lt;/p&gt;
+
+&lt;h2 id=&quot;adfs-certificates&quot;&gt;ADFS Certificates&lt;/h2&gt;
+
+&lt;p&gt;There are 4 types of ADFS certificates&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Token Signing
+    &lt;ul&gt;
+      &lt;li&gt;Used to digitally sign security tokens issued by ADFS&lt;/li&gt;
+      &lt;li&gt;Automatically generated and can be &lt;strong&gt;self-signed&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Token Decrypting
+    &lt;ul&gt;
+      &lt;li&gt;Used to decrypt tokens received&lt;/li&gt;
+      &lt;li&gt;It can be &lt;strong&gt;self-signed&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Service Communications
+    &lt;ul&gt;
+      &lt;li&gt;Server authentication certificate used for windows communication foundation (WCF) Message security&lt;/li&gt;
+      &lt;li&gt;It can be self-signed or issued and signed by a trusted third party Certificate Authority&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Security Sockets Layer (SSL)
+    &lt;ul&gt;
+      &lt;li&gt;Used to secure web traffic&lt;/li&gt;
+      &lt;li&gt;It can be self-signed or issued and signed by a trusted third party Certificate Authority (CA)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The SSL and Service Communications certificates can be the same&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In previous setups, I had set up ADFS servers with self-signed certificates for the &lt;strong&gt;Service Communications&lt;/strong&gt; and &lt;strong&gt;SSL&lt;/strong&gt;. However, in order to simulate the federated trust between my lab environment and office 365, I needed to set up my ADFS server with a &lt;strong&gt;trusted third party CA Signed SSL Certificate&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this post. I will show you all the steps I took to generate a trusted CA signed SSL certificate all the way from the certificate signing request (CSR) to the activation and installation of the new certificate.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-certificate-authority&quot;&gt;What is Certificate Authority?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Certificate Authority (CA) is an organization that is trusted to sign digital certificates. CA verifies identity and legitimacy of company or individual that requested a certificate and if the verification is successful, CA issues signed certificate.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;quick-recipe&quot;&gt;Quick Recipe:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create certificate signing request (.csr) file.&lt;/li&gt;
+  &lt;li&gt;Buy SSL Certificate.&lt;/li&gt;
+  &lt;li&gt;Activate SSL certificate. Here is where you would use the .csr file.&lt;/li&gt;
+  &lt;li&gt;Download trusted SSL certificate&lt;/li&gt;
+  &lt;li&gt;Install trusted certificate&lt;/li&gt;
+  &lt;li&gt;Export certificate and private keys as a .pfx file&lt;/li&gt;
+  &lt;li&gt;Share certificaet with servers (i.e. Domain Controller and ADFS)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-create-certificate-signing-request-csr-file&quot;&gt;1. Create Certificate Signing Request (.CSR) File&lt;/h2&gt;
+
+&lt;p&gt;A CSR or Certificate Signing request is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.&lt;/p&gt;
+
+&lt;p&gt;I put together a PowerShell script named &lt;a href=&quot;https://github.com/OTRF/Blacksmith/blob/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1&quot;&gt;Get-CertSigningReq.ps1&lt;/a&gt; to generate a .csr file. You would usually execute that script on the server where you would install the trusted certificate once you obtain one. However, you can do it on a separate system to then install and export the certificate and share it with other servers (I usually do this to use the trusted certificate in deployments as code).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Import PowerShell Module&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Log on to a Windows box (physical or virtual)&lt;/li&gt;
+  &lt;li&gt;Open PowerShell as Administrator&lt;/li&gt;
+  &lt;li&gt;Import the following module directly from GitHub&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Create .CSR File&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;As I mentioned before, in my environment, I decided to use a Positive SSL Wildcard (multidomain) certificate. Therefore, when creating the .csr file, I set a &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; wildcard as a prefix of my domain &lt;code class=&quot;highlighter-rouge&quot;&gt;.yourdomain.com&lt;/code&gt; for the&lt;code class=&quot;highlighter-rouge&quot;&gt;Subject Common Name&lt;/code&gt; property of the request. You do not have to do that. That is just an option.&lt;/p&gt;
+
+&lt;p&gt;You can simple have &lt;code class=&quot;highlighter-rouge&quot;&gt;yourdomain.com&lt;/code&gt; and that’s it. It is cheaper to buy a single domain SSL certificate.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-CertSigningReq -FriendlyName &quot;*.youdomain.com site certificate&quot; -Description &quot;ADFS yourdomain.com certificate&quot; -SubjectCommonName &quot;*.yourdomain.com&quot; -SubjectOrganizationUnit &quot;Research&quot; -SubjectOrganization &quot;yourdomain.com&quot; -SubjectCountry &quot;US&quot; -SubjectState &quot;Texas&quot; -SubjectLocality &quot;Texas&quot; -CertFilePath &quot;Request.csr&quot;
+
+get-content .\Request.csr 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Copy the contents of the .csr file and get ready to use it during the activation process of your new SSL certificate.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-buy-ssl-certificate&quot;&gt;2. Buy SSL Certificate&lt;/h2&gt;
+
+&lt;p&gt;I bought mine at &lt;a href=&quot;https://www.namecheap.com/&quot;&gt;namecheap.com&lt;/a&gt; and I usually get a PositiveSSL Wildcard certificate to secure multiple domains of a single one (i.e *.mydomain.com). Here are all the options you have in that site: &lt;a href=&quot;https://www.namecheap.com/security/ssl-certificates/&quot;&gt;https://www.namecheap.com/security/ssl-certificates/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_02_ssl_certificates_price.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should then be ready to active the certificate. You will need the .csr file for the next steps&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_03_positivessl_cert_product.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to validate your base64 encoded CSR blob, you can do it with this tool provided by namecheap called &lt;a href=&quot;https://decoder.link/result&quot;&gt;Decoder&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;3-activate-ssl-certificate&quot;&gt;3. Activate SSL certificate&lt;/h2&gt;
+
+&lt;p&gt;In my case, I started the process by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Activate&lt;/code&gt; button shown in the previous image. I then was prompted to enter the contents of the .csr file&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_04_activate_cert_csr_input.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Either you bought your SSL certificate via namecheap.com or other provider, you will get to a step where you need to confirm that you own the domain which you requested the SSL certificate for. When you get to that step you will have a few options:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Email:&lt;/strong&gt; You would simply provide an e-mail address to which an approval e-mail will be sent.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;HTTP-Based:&lt;/strong&gt; It usually involves uploading an activation file (i.e .txt) with a code to a hosting server.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DNS-Based:&lt;/strong&gt; You would usually need to create a CNAME record in the DNS settings of the domain.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_05_domain_owner_validation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After validating that you own the domain, you will be able to download the certificate (you might have to wait for a few minutes)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_06_certificate_download.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-install-certificate&quot;&gt;4. Install Certificate&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Log on to the computer where you created the .csr file&lt;/li&gt;
+  &lt;li&gt;Open PowerShell as Administrator&lt;/li&gt;
+  &lt;li&gt;Install the new SSL certificate (.cer or .crt files provided by your trusted provider) with the following command&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$CertFile = Get-Item -Path NewSSLCert.cer
+Import-Certificate -FilePath $CertFile.FullName -CertStoreLocation &quot;cert:\LocalMachine\My&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;5-export-certificate-and-private-key-pfx-format&quot;&gt;5. Export Certificate and Private Key (.PFX Format)&lt;/h2&gt;
+
+&lt;p&gt;On the same PowerShell console run the following commands to export the newly installed certificate as a .PFX file. The password that you use to export the certificate will be the same password that you will use to import the certificate file to your other servers. In my case it would be the Domain Controller and ADFS servers of my lab environment.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$InstalledCert = Get-ChildItem -Path &quot;cert:\LocalMachine\My\&quot; -DnsName &quot;yourdomain.com&quot;
+Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (ConvertTo-SecureString &quot;YOURPASSWORD&quot; -AsPlainText -Force)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That’s it! I hope this short post was helpful and maybe serve you as a reference for future projects.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/334/38/what-is-certificate-authority-ca/&lt;/li&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/10095/67/how-to-enable-an-ssl-certificate/&lt;/li&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/794/67/how-do-i-activate-an-ssl-certificate/&lt;/li&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/467/67/how-to-generate-csr-certificate-signing-request-code/&lt;/li&gt;
+  &lt;li&gt;https://www.ssls.com/knowledgebase/what-is-csr/&lt;/li&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9637/68/how-can-i-complete-the-domain-control-validation-dcv-for-my-ssl-certificate/?_ga=2.199643694.1278617947.1608673309-1707679281.1608673309&lt;/li&gt;
+  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/&lt;/li&gt;
+  &lt;li&gt;https://decoder.link/result&lt;/li&gt;
+&lt;/ul&gt;</content>
 
       
       
@@ -60,11 +213,13 @@
       
 
       
-        <category term="Getting started" />
+        <category term="DNS" />
+      
+        <category term="SSL Certificates" />
       
 
       
-        <summary type="html">Hey! Welcome to OTR, it’s great to have you :)</summary>
+        <summary type="html">Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).</summary>
       
 
       
