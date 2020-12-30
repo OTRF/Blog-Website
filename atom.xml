@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Adding a Custom Domain to Microsoft 365</title>
+        
+          <description>&lt;p&gt;I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow &lt;a href=&quot;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&quot;&gt;federated authentication&lt;/a&gt; to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 28 Dec 2020 06:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/ms365-add-custom-domain</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/ms365-add-custom-domain</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate</title>
         
           <description>&lt;p&gt;Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).&lt;/p&gt;

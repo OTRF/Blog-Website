@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/getting-started/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2020-12-29T03:06:40-05:00</updated>
+  <updated>2020-12-29T20:11:20-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/getting-started/feed.xml</id>
 
   
@@ -65,13 +65,13 @@
   &lt;li&gt;Service Communications
     &lt;ul&gt;
       &lt;li&gt;Server authentication certificate used for windows communication foundation (WCF) Message security&lt;/li&gt;
-      &lt;li&gt;It can be self-signed or issued and signed by a trusted third party Certificate Authority&lt;/li&gt;
+      &lt;li&gt;It can be self-signed or issued and signed by a trusted third-party Certificate Authority&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Security Sockets Layer (SSL)
     &lt;ul&gt;
       &lt;li&gt;Used to secure web traffic&lt;/li&gt;
-      &lt;li&gt;It can be self-signed or issued and signed by a trusted third party Certificate Authority (CA)&lt;/li&gt;
+      &lt;li&gt;It can be self-signed or issued and signed by a trusted third-party Certificate Authority (CA)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
