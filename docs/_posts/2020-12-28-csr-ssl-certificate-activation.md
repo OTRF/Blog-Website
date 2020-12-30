@@ -5,7 +5,7 @@ cover:  assets/images/blog/2020-12-28_01_namecheap_ssl_doberman.jpg
 navigation: True
 title: Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate
 date: 2020-12-28 11:00:00
-tags: [DNS, SSL Certificates]
+tags: [DNS, SSL Certificates, Getting Started]
 class: post-template
 subclass: 'post'
 author: roberto
@@ -25,10 +25,10 @@ There are 4 types of ADFS certificates
     * It can be **self-signed**
 3. Service Communications 
     * Server authentication certificate used for windows communication foundation (WCF) Message security
-    * It can be self-signed or issued and signed by a trusted third party Certificate Authority 
+    * It can be self-signed or issued and signed by a trusted third-party Certificate Authority 
 4. Security Sockets Layer (SSL)
     * Used to secure web traffic
-    * It can be self-signed or issued and signed by a trusted third party Certificate Authority (CA) 
+    * It can be self-signed or issued and signed by a trusted third-party Certificate Authority (CA) 
 
 > The SSL and Service Communications certificates can be the same 
 

@@ -26,3 +26,7 @@ ssl-certificates:
   name: ssl-certificates
   description: False
   cover: False
+microsoft-365:
+  name: microsoft-365
+  description: False
+  cover: False
