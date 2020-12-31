@@ -38,3 +38,7 @@ wireshark:
   name: wireshark
   description: False
   cover: False
+azure-arm:
+  name: azure-arm
+  description: Azure Resource Manager (ARM) Templates
+  cover: False
