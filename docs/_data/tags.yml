@@ -30,3 +30,11 @@ microsoft-365:
   name: microsoft-365
   description: False
   cover: False
+adfs:
+  name: adfs
+  description: Active Directory Federation Service (ADFS)
+  cover: False
+wireshark:
+  name: wireshark
+  description: False
+  cover: False

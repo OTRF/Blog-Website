@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/2020-12-29_11_custom_domain_complete.png
 navigation: True
 title: Adding a Custom Domain to Microsoft 365
-date: 2020-12-28 11:00:00
+date: 2020-12-29 11:00:00
 tags: [DNS, Azure, Microsoft 365]
 class: post-template
 subclass: 'post'
