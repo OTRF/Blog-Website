@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</title>
+        
+          <description>&lt;p&gt;I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 31 Dec 2020 10:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title>
         
           <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;

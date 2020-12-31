@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/roberto/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2020-12-31T05:54:28-05:00</updated>
+  <updated>2020-12-31T15:08:49-05:00</updated>
   <id>https://blog.openthreatresearch.com/author/roberto/feed.xml</id>
 
   
@@ -36,6 +36,165 @@
   
   
 
+  
+    <entry>
+      <title type="html">How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</title>
+      <link href="https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup" rel="alternate" type="text/html" title="How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory" />
+      <published>2020-12-31T10:00:00-05:00</published>
+      <updated>2020-12-31T10:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup">&lt;p&gt;I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show you how to set up &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/active-directory/hybrid/whatis-azure-ad-connect&quot;&gt;Azure AD connect&lt;/a&gt; on a domain controller to sync and federate an Azure AD custom domain with on-prem directory. This is done to leverage on-prem Active Directory Federation Services (ADFS) and allow on-prem users to authenticate to cloud services with the same credentials.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-azure-ad-connect&quot;&gt;What is Azure AD Connect?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Azure AD Connect is the Microsoft tool designed to meet and accomplish your hybrid identity goals.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;why-use-azure-ad-connect&quot;&gt;WHy Use Azure AD Connect?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Integrating your on-premises directories with Azure AD makes your users more productive by providing a common identity for accessing both cloud and on-premises resources.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;initialize-azure-ad-connect-setup&quot;&gt;Initialize Azure AD Connect Setup&lt;/h2&gt;
+
+&lt;p&gt;Click on the Azure AD connect icon after downloading it and installing it your domain controller. You can download and install it with the following PowerShell commands (Remember this is not setting it up. Only installing Azure AD Connect resources)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Resolve-DnsName download.microsoft.com
+$AADConnectDLUrl=&quot;https://download.microsoft.com/download/B/0/0/B00291D0-5A83-4DE7-86F5-980BC00DE05A/AzureADConnect.msi&quot;
+$exe=&quot;$env:SystemRoot\system32\msiexec.exe&quot;
+
+$tempfile = [System.IO.Path]::GetTempFileName()
+$folder = [System.IO.Path]::GetDirectoryName($tempfile)
+
+$webclient = New-Object System.Net.WebClient
+$webclient.DownloadFile($AADConnectDLUrl, $tempfile)
+
+Rename-Item -Path $tempfile -NewName &quot;AzureADConnect.msi&quot;
+$MSIPath = $folder + &quot;\AzureADConnect.msi&quot;
+
+Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /norestart&quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Double-click on the Azure AD Connect Icon on the desktop&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_01_dc_azuread_connect_setup.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;custom-setup&quot;&gt;Custom Setup&lt;/h2&gt;
+
+&lt;p&gt;Select the &lt;code class=&quot;highlighter-rouge&quot;&gt;Customize&lt;/code&gt; option&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_02_dc_azuread_connect_custom.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;required-components&quot;&gt;Required Components&lt;/h2&gt;
+
+&lt;p&gt;Do not select any options. Just keep the default setup and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_03_dc_azuread_connect_required.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_04_dc_azuread_connect_required.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;select-sign-in-methods&quot;&gt;Select Sign-In Methods&lt;/h2&gt;
+
+&lt;p&gt;We are going to use our “on-prem” ADFS server as the indentity provider to handle federation services. Therefore, we need to click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Federation with AD FS&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_05_dc_azuread_connect_signon_method.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;enter-azure-ad-global-admin-creds&quot;&gt;Enter Azure AD Global Admin Creds&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_06_dc_azuread_connect_azuread.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-sync&quot;&gt;Set Up Sync&lt;/h2&gt;
+
+&lt;p&gt;Enter “On-Prem” Active Directory&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_07_dc_azuread_connect_sync_ad.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;create-azure-ad-sync-account&quot;&gt;Create Azure AD Sync Account&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_08_dc_azuread_connect_sync_account.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_09_dc_azuread_connect_sync_ad.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-azure-sign-in-to-use-same-creds-as-our-on-prem-directory&quot;&gt;Set Up Azure Sign-In to use same creds as our “On-prem” directory&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_10_dc_azuread_connect_sync_signin.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;select-ous-to-sync&quot;&gt;Select OUs to Sync&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_11_dc_azuread_connect_sync_ou.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;identify-users&quot;&gt;Identify Users&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_12_dc_azuread_connect_sync_identify_users.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;synchronize-all-users&quot;&gt;Synchronize All Users&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_13_dc_azuread_connect_sync_all_users.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;skip-optional-features&quot;&gt;Skip Optional Features&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_14_dc_azuread_connect_sync_skip_opt.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;provide-creds-for-on-prem-domain&quot;&gt;Provide Creds for On-prem Domain&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_15_dc_azuread_connect_domain_creds.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;choose-existing-adfs-server&quot;&gt;Choose Existing ADFS Server&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_16_dc_azuread_connect_use_existing_adfs.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;select-azure-ad-domain-to-federate-with-on-prem-directory&quot;&gt;Select Azure AD domain to federate with on-prem directory&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_17_dc_azuread_connect_use_domain_to_federate.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ready-to-configure&quot;&gt;Ready to configure&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_18_dc_azuread_connect_ready_configure.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-complete&quot;&gt;Configuration Complete&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_19_dc_azuread_connect_config_complete.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;verify-federation-connectivity&quot;&gt;Verify Federation Connectivity&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_20_dc_azuread_connect_verify_connectivity.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/azure/active-directory/hybrid/whatis-azure-ad-connect&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Roberto Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Azure" />
+      
+        <category term="ADFS" />
+      
+
+      
+        <summary type="html">I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title>
