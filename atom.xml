@@ -8,13 +8,28 @@
     
       
       <item>
+        <title>Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
+        
+          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) &lt;a href=&quot;https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS&quot;&gt;template&lt;/a&gt; to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working before creating a trust with an external service provider (i.e. Microsoft 365).&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 30 Dec 2020 06:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Adding a Custom Domain to Microsoft 365</title>
         
           <description>&lt;p&gt;I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow &lt;a href=&quot;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&quot;&gt;federated authentication&lt;/a&gt; to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.&lt;/p&gt;
 
 </description>
         
-        <pubDate>Mon, 28 Dec 2020 06:00:00 -0500</pubDate>
+        <pubDate>Tue, 29 Dec 2020 06:00:00 -0500</pubDate>
         <link>
         https://blog.openthreatresearch.com/ms365-add-custom-domain</link>
         <guid isPermaLink="true">https://blog.openthreatresearch.com/ms365-add-custom-domain</guid>

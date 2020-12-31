@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
+    <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Open Threat Research Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" />
+    <meta property="og:description" content="I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2020-12-30T06:00:00-05:00" />
+    <meta property="article:modified_time" content="2020-12-30T06:00:00-05:00" />
+    <meta property="article:tag" content="Adfs" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" />
+    <meta name="twitter:description" content="I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working" />
+    <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Open Threat Research Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Adfs" />
+    <meta name="twitter:site" content="@OTR_Community" />
+    <meta name="twitter:creator" content="@OTR_Community" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Open Threat Research Blog",
+        "logo": "https://blog.openthreatresearch.com/false"
+    },
+    "url": "https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network"
+    },
+    "description": "I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
+    <!--<li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>-->
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/OTR_Community" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-adfs tag-fiddler tag-wireshark post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="30 December 2020">30 December 2020</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/adfs/'>ADFS</a>,
+                            
+                        
+                            
+                               <a href='/tag/fiddler/'>FIDDLER</a>,
+                            
+                        
+                            
+                               <a href='/tag/wireshark/'>WIRESHARK</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p>I recently created an Azure Resource Manager (ARM) <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">template</a> to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working before creating a trust with an external service provider (i.e. Microsoft 365).</p>
+
+<p>In this post, I will show you how to use <a href="https://www.telerik.com/fiddler">fiddler</a> and <a href="https://www.wireshark.org/">Wireshark</a> to inspect the network traffic generated while accessing and providing credentials to the default Identity Provider (Idp) Initiated Sign on page on-prem.</p>
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li>An Active Directory (AD) Environment with a Domain Controller (DC), ADFS server and a domain joined computer: You can deploy all that in less than 30 minutes with <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">this ARM template</a> from the project <a href="https://github.com/OTRF/Blacksmith">Blacksmith</a>.</li>
+  <li>On the Domain Joined Computer:
+    <ul>
+      <li>Install <a href="https://www.telerik.com/download/fiddler">Fiddler Classic</a></li>
+      <li>Install <a href="https://github.com/dotnet/Kerberos.NET/releases">Fiddler extension</a> based on the <a href="https://github.com/dotnet/Kerberos.NET">Kerberos.NET</a> library : Download <code class="highlighter-rouge">setup.exe</code> and run it.</li>
+    </ul>
+  </li>
+  <li>On the ADFS Server:
+    <ul>
+      <li>Install <a href="https://www.wireshark.org/download.html">Wireshark</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="validate-adfs-server-setup-client-side">Validate ADFS Server Setup (Client Side)</h2>
+
+<p>One easy way to validate that the federation services are running an handling kerberos authentication is by browsing to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and entering domain credentials (replace <code class="highlighter-rouge">&lt;ADFS FQDN&gt;</code> with the URL of your ADFS server. Not the name of the ADFS server at all).</p>
+
+<ul>
+  <li>Log on (RDP) to domain joined endpoint</li>
+  <li>Open broser and go to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code>
+    <ul>
+      <li>Verify if <code class="highlighter-rouge">EnableIdpInitiatedSignonPage</code> is set to <code class="highlighter-rouge">True</code> (Run command on ADFS server via PowerShell)</li>
+    </ul>
+
+    <pre><code class="language-PowerShell">  Get-AdfsProperties | select-object EnableIdpInitiatedSignonPage
+</code></pre>
+
+    <ul>
+      <li>If property is set to <code class="highlighter-rouge">False</code>, run this command (on ADFS Server) to enable it and restart the ADFS service</li>
+    </ul>
+
+    <pre><code class="language-PowerShell">  Set-AdfsProperties -EnableIdpInitiatedSignonPage $true
+  Restart-Service -Name adfssrv
+</code></pre>
+  </li>
+  <li>Enter domain user and credentials!</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_04_adfs_client_check.png" alt="" /></p>
+
+<ul>
+  <li>If everything is working properly (at least on-prem), you will get the <code class="highlighter-rouge">You are signed in</code> message</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_05_adfs_client_check.png" alt="" /></p>
+
+<p>That was very easy right? Now, are you also wondering what actually happens between the domain joined computer, the ADFS server and the DC server when all this happens? (Network perspective)</p>
+
+<h2 id="disable-extended-protection-for-authentication-adfs-server">Disable Extended Protection for Authentication (ADFS Server)</h2>
+
+<p>In order to avoid continuous credentials prompt while authenticating and capturing/proxying traffic with fiddler, we need to disabke the <code class="highlighter-rouge">Disable Extended Protection for Authentication</code> property in the ADFS server.</p>
+
+<ul>
+  <li>Log on to ADFS Server</li>
+  <li>Open PowerShell as Administrator and run the following commands</li>
+</ul>
+
+<pre><code class="language-PowerShell">Get-AdfsProperties | select ExtendedProtectionTokenCheck
+
+Set-ADFSProperties -ExtendedProtectionTokenCheck:None
+
+Restart-Service -Name adfssrv
+
+Get-AdfsProperties | select ExtendedProtectionTokenCheck
+</code></pre>
+
+<p><img src="assets/images/blog/2020-12-30_07_adfs_server_disable_epa.png" alt="" /></p>
+
+<h2 id="set-up-fiddler-client-side">Set Up Fiddler (Client Side)</h2>
+
+<ul>
+  <li>Log on (if you disconnected) to domain joined computer</li>
+  <li>Open fiddler</li>
+  <li>Enable <code class="highlighter-rouge">Decrypt HTTPS traffic</code> option in Tools &gt; Options &gt; HTTPs</li>
+  <li>Trust the fiddler root certificate</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_08_adfs_client_https_options.png" alt="" /></p>
+
+<ul>
+  <li>Enable Microsoft Edge to send network traffic to the local computer (AppContainer Loopback Exemption). WinConfig &gt; Microsoft Edge &gt; Save Changes</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_09_adfs_client_appcontainer.png" alt="" /></p>
+
+<ul>
+  <li>Make sure you are capturing traffic and that the <code class="highlighter-rouge">Kerberos</code> extension is available under the <code class="highlighter-rouge">Inspectors</code> options. You can simply open Microsoft Edge and go to any site (just to generate traffic and not to validate Kerberos parsers)</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_10_adfs_client_capture_extension.png" alt="" /></p>
+
+<ul>
+  <li>Close browser and remove all sessions captured by Fiddler. Getting ready!</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_11_adfs_client_fiddler_remove_sessions.png" alt="" /></p>
+
+<h2 id="set-up-wireshark-adfs-server">Set Up Wireshark (ADFS Server)</h2>
+
+<p>It seems that our ADFS server handles the authentication with the AD DC on behalf of the domain user. Therefore, we can validate that thought with wireshark and filter on interactions with the IP addresses of the AD DC and domain joined computer.</p>
+
+<ul>
+  <li>Open Wireshark on the ADFS server and apply the following filter:</li>
+</ul>
+
+<p><code class="highlighter-rouge">ip.addr == &lt;DC IP Address&gt; or ip.addr == &lt;Domain Joined Computer IP Address&gt;</code></p>
+
+<p><img src="assets/images/blog/2020-12-30_12_adfs_server_wireshark_filter.png" alt="" /></p>
+
+<h2 id="open-edge-from-fiddler-and-filter-web-browser-only-client-side">Open Edge from Fiddler and Filter Web Browser Only (Client Side)</h2>
+
+<ul>
+  <li>On your domain joined computer, open Microsoft Edge from fiddler</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_13_adfs_client_fiddler_browser.png" alt="" /></p>
+
+<ul>
+  <li>Filter traffic to only capture from web browsers</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_14_adfs_client_fiddler_browser.png" alt="" /></p>
+
+<h2 id="browse-to-adfs-sign-on-page-client-side">Browse to ADFS Sign On Page (Client Side)</h2>
+
+<ul>
+  <li>Once again, go to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and click on <code class="highlighter-rouge">Sign In</code></li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_15_adfs_client_signon_page.png" alt="" /></p>
+
+<h2 id="enter-domain-credentials">Enter Domain Credentials</h2>
+
+<p><img src="assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" alt="" /></p>
+
+<p>You will see a few events captured by fiddler. I recommend to filter the results on the specific <code class="highlighter-rouge">microsoftedgecp</code> process that handled the authentication as shown below:</p>
+
+<p><img src="assets/images/blog/2020-12-30_17_adfs_client_filter_traffic.png" alt="" /></p>
+
+<p>You will also see a few events in Wireshark (ADFS Server). I am interested in the <code class="highlighter-rouge">KRB5</code> protocol ones as shown below</p>
+
+<p><img src="assets/images/blog/2020-12-30_18_adfs_server_krb5_traffic.png" alt="" /></p>
+
+<p>Stop fiddler and wireshark captures. Time to learn a little bit more about this process</p>
+
+<h2 id="so-what-happened-lets-dive-into-it">So, What Happened? Let’s Dive Into It!</h2>
+
+<h3 id="1-access-adfs-sign-on-page">1. Access ADFS Sign On Page</h3>
+
+<p>Client Connects to the ADFS server via <code class="highlighter-rouge">https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx </code> . Here is where we get to the Open Threat Research banner with the option to <code class="highlighter-rouge">Sign In</code> and the message <code class="highlighter-rouge">You are not signed in. Sign in to this site</code>. Nothing special. Just a simple GET request to get to ADFS sign on page.</p>
+
+<p><img src="assets/images/blog/2020-12-30_19_adfs_client_fiddler_otr_banner.png" alt="" /></p>
+
+<h3 id="2-redirection-to-adfs-server-and-samlrequest-generation">2. Redirection to ADFS Server and SamlRequest Generation</h3>
+
+<p>Client clicks on the <code class="highlighter-rouge">Sign In</code> button. That click makes a <code class="highlighter-rouge">POST</code> request to <code class="highlighter-rouge">POST https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5</code>.</p>
+
+<p>The ADFS server receives the requests and returns a <code class="highlighter-rouge">302 Response Code</code> with some information about where to go. It sets the new <code class="highlighter-rouge">Location</code> to <code class="highlighter-rouge">https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5</code> where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization’s internal network (intranet) for any application that uses a browser for its authentication.</p>
+
+<p><img src="assets/images/blog/2020-12-30_20_adfs_client_samlrequest_302.png" alt="" /></p>
+
+<p>One thing also that was provided in the 302 Redirect Message was a <code class="highlighter-rouge">MSISSamlRequest</code> cookie which contained the <code class="highlighter-rouge">SamlRequest</code>. A SamlRequest tells the browser to send the request to the preconfigured identity provider.</p>
+
+<p>This was the <code class="highlighter-rouge">MSISSamlRequest</code> cookie (Base64 Encoded)</p>
+
+<pre><code class="language-Block">QmFzZVVybD1odHRwcyUzYSUyZiUyZmFkZnMuc29sb3JpZ2F0ZWxhYnMuY29tJTJmYWRmcyUyZmxzJTJmXFNBTUxSZXF1ZXN0PWZaRk5TOFF3RUliJTJmU3NrOVRacnRyalowQzhVaUZQVGlpZ2N2a3FaVE41QW1OWk9LUDk5JTJiSE1XOUR1OHo3enhNaVdxMGs2em5lSFV2OERVRHhxUnR6dVRqZUJJOW5JNkNacmtTTkIlMmJnb04wOTExVG9vUURkM1hVRHowbnlCZ0dOZDJjaVVrNlNGbkdHMW1GVUxpNGpMampOQkQxa3I1eExjWkNDcDFtUnZaT2tXVnFNVTNFanJ6Rk9LQmxUJTJmWUFwZXV1RCUyYlZRUnJPb3cxWDdjNXN3aUk4bURkd2pyNWprNDZSVWFsRTZOZ0RKcWVhbWZuJTJiUnloTlI3U000T0o5Qm1NTkNUNUdlMER1V21lcHVlZ285ZWUwdXFjcE1KTzNvYlVvZ1FWaGxTclRLTFM5MDhYdjUxV2NMZlJnT3lHR2FNSmR1THFwTDlmVVgxQ3clM2QlM2RcUHJvdG9jb2xCaW5kaW5nPXVybiUzYW9hc2lzJTNhbmFtZXMlM2F0YyUzYVNBTUwlM2EyLjAlM2FiaW5kaW5ncyUzYUhUVFAtUmVkaXJlY3RcU2lnbmF0dXJlPVZSTklyRWklMmJWY1hUSHZMNXRRdUEyeHpSZHdieng2dllCcnNwMWd1NHRPNGlENFQxWUhmYVFkUW4lMmJuVzFBdHd0WWloTTludSUyZkNWQ3Njc3pad2xCQTJhcm5SUm9Xd2JiamclMmJLN3VyY3NrMDVTOFNndVJRM2xTbiUyZnY1b082UmRLTnFmUFFFdm00WHFEeUpReExKbVVkNHkwZDFCQnBGNGR1ekFyN1MyWkhTWmJhN1NqUkRNRk4xJTJmWjhyY1A2UTFrZHp1eVBZb3JkeDBxdTFOQjhpbjlLelByJTJib0w5aWRKWmklMmJKNHNVN0xjQzExcjFyNkk1OE4lMmZnMUNGUCUyZmF2MFpRJTJmZU1pZU5NMEtLWWljZUNla25HUWxtVTN6dWl6aGZpVEFaVU5uRSUyYlVvc2lCbFlsNTAlMmYlMmIwa2hTSjNYbDBjVW1uVjE4b1BSb1FpMG9ZOWh0Uk9QY09Vb3clM2QlM2RcU2lnQWxnPWh0dHAlM2ElMmYlMmZ3d3cudzMub3JnJTJmMjAwMSUyZjA0JTJmeG1sZHNpZy1tb3JlJTIzcnNhLXNoYTI1NlxRdWVyeVN0cmluZ0hhc2g9TiUyZkNHa3l3T3hSUmF3bXdnVTZtREhlNmh2VE5lQkxLQkdyMHNZMmRpcHg0JTNk
+</code></pre>
+
+<p>After base64 decoding that, we can get to the Url encoded value of <code class="highlighter-rouge">BaseUrl</code> which contains the <code class="highlighter-rouge">SamlRequest</code></p>
+
+<pre><code class="language-Block">BaseUrl=https%3a%2f%2fadfs.solorigatelabs.com%2fadfs%2fls%2f\SAMLRequest=fZFNS8QwEIb%2fSsk9TZrtrjZ0C8UiFPTiigcvkqZTN5AmNZOKP99%2bHMW9Du8z7zxMiWq0k6zneHUv8DUDxqRtzuTjeBI9nI6CZrkSNB%2bgoN0911TooQDd3XUDz0nyBgGNd2ciUk6SFnGG1mFULi4jLjjNBD1kr5xLcZCCp1mRvZOkWVqMU3EjrzFOKBlT%2fYApeuuD%2bVQRrOow1X7c5swiI8mDdwjr5jk46RUalE6NgDJqeamfn%2bRyhNR7SM4OJ9BmMNCT5Ge0DuWmepuego9ee0uqcpMJO3obUogQVhlSrTKLS908Xv51WcLfRgOyGGaMJduLqpL9fUX1Cw%3d%3d\ProtocolBinding=urn%3aoasis%3anames%3atc%3aSAML%3a2.0%3abindings%3aHTTP-Redirect\Signature=VRNIrEi%2bVcXTHvL5tQuA2xzRdwbzx6vYBrsp1gu4tO4iD4T1YHfaQdQn%2bnW1AtwtYihM9nu%2fCVCscszZwlBA2arnRRoWwbb
+</code></pre>
+
+<p>After Url decoding everything, we get to the <code class="highlighter-rouge">SamlRequest</code> base64 encoded value as shown below:</p>
+
+<pre><code class="language-Block">fZFNS8QwEIb/Ssk9TZrtrjZ0C8UiFPTiigcvkqZTN5AmNZOKP99+HMW9Du8z7zxMiWq0k6zneHUv8DUDxqRtzuTjeBI9nI6CZrkSNB+goN0911TooQDd3XUDz0nyBgGNd2ciUk6SFnGG1mFULi4jLjjNBD1kr5xLcZCCp1mRvZOkWVqMU3EjrzFOKBlT/YApeuuD+VQRrOow1X7c5swiI8mDdwjr5jk46RUalE6NgDJqeamfn+RyhNR7SM4OJ9BmMNCT5Ge0DuWmepuego9ee0uqcpMJO3obUogQVhlSrTKLS908Xv51WcLfRgOyGGaMJduLqpL9fUX1Cw==
+</code></pre>
+
+<p>After base64 decoding that string, we can get its XML format (<code class="highlighter-rouge">AuthnRequest message</code>)</p>
+
+<pre><code class="language-xmlblock">&lt;?xml version="1.0"?&gt;
+&lt;samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="_562de652-14a2-4fe9-b80c-2cf9ecb7bf04" Version="2.0" IssueInstant="2020-12-31T00:23:20.191Z" Destination="https://adfs.solorigatelabs.com/adfs/ls/" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"&gt;
+  &lt;Issuer xmlns="urn:oasis:names:tc:SAML:2.0:assertion"&gt;http://ADFS.solorigatelabs.com/adfs/services/trust&lt;/Issuer&gt;
+&lt;/samlp:AuthnRequest&gt;
+</code></pre>
+
+<p>This message contains details needed by the ADFS server (Identity Provider) to process the user authentication. You can also decode all those string with tools from here <a href="https://www.samltool.com/online_tools.php">https://www.samltool.com/online_tools.php</a>.</p>
+
+<h3 id="3-enter-credentials-in-logon-form">3. Enter Credentials in Logon Form</h3>
+
+<p>After the previous redirection, the client receives a <code class="highlighter-rouge">401 Response Code</code>. This is simply telling the client to authenticate against the ADFS server (Identity Provider). Here is where we entered our domain credentials <code class="highlighter-rouge">User:pgustavo</code>.</p>
+
+<p><img src="assets/images/blog/2020-12-30_21_adfs_client_401_login_form.png" alt="" /></p>
+
+<h3 id="4-kerberos-authentication">4. Kerberos Authentication</h3>
+
+<p>The Identity Provider decodes the <code class="highlighter-rouge">SAMLRequest</code> and performs the user authentication via Kerberos.</p>
+
+<p><strong>AS-REQ</strong></p>
+
+<p>ADFS server handles the authentication process and sends an AS-REQ message to the domain controller on behalf of the domain user that is trying to authenticate.</p>
+
+<ul>
+  <li>User being authenticated: <strong>pgustavo</strong></li>
+  <li>Service requested: <strong>krbtgt</strong></li>
+  <li>Host Address: <strong>ADFS01 Server</strong></li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_22_adfs_server_wireshark_asreq.png" alt="" /></p>
+
+<p><strong>PREAUTH_REQUIRED</strong></p>
+
+<blockquote>
+  <p>Kerberos Pre-Authentication is a security feature which offers protection against password-guessing attacks. The AS request identifies the client to the KDC in Plaintext. If Kerberos Pre-Authentication is enabled, a Timestamp will be encrypted using the user’s password hash as an encryption key.</p>
+</blockquote>
+
+<p>Error Code: 25 - HEX -&gt; 0x19 (<a href="https://ldapwiki.com/wiki/Kerberos%20Error%20Codes">Source</a>)</p>
+
+<p><img src="assets/images/blog/2020-12-30_23_adfs_server_wireshark_preauth.png" alt="" /></p>
+
+<p>TCP connection closes!</p>
+
+<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REQ</strong></p>
+
+<p>S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket for <code class="highlighter-rouge">pgustavo</code></p>
+
+<blockquote>
+  <p>In a KRB_TGS_REQ and KRB_TGS_REP subprotocol message sequence, a Kerberos principal uses its ticket-granting ticket (TGT) to request a service ticket to a service. The TGS uses the requesting principal’s identity from the TGT passed in the KRB_TGS_REQ message to create the service ticket.</p>
+</blockquote>
+
+<blockquote>
+  <p>In the S4U2self TGS exchange subprotocol extension, a service requests a service ticket to itself on behalf of a user. The user is identified to the KDC by the user name and user realm. Alternatively, the user might be identified using the user’s certificate.</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">The service uses its own TGT and adds a new type of padata</code>. This is why we did not get another AS-REQ and AS-REP to get a TGT.</p>
+
+<blockquote>
+  <p>If the service possesses the user certificate, it can obtain a service ticket to itself on that user’s behalf using the S4U2self TGS exchange subprotocol extension, with a new padata type PA-S4U-X509-USER (ID 130)</p>
+</blockquote>
+
+<p><img src="assets/images/blog/2020-12-30_24_adfs_server_wireshark_s4u2self.png" alt="" /></p>
+
+<p><img src="assets/images/blog/2020-12-30_25_adfs_server_wireshark_s4u2self.png" alt="" /></p>
+
+<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REP</strong></p>
+
+<p>The ADFS service gets a ticket that describes the user <code class="highlighter-rouge">pgustavo</code></p>
+
+<p><img src="assets/images/blog/2020-12-30_26_adfs_server_wireshark_s4u2self.png" alt="" /></p>
+
+<p>We coul also validate the step where pgustavo sent an <code class="highlighter-rouge">AP-REQ</code> . This is parsed by the <code class="highlighter-rouge">Kerberos</code> extension.</p>
+
+<p><img src="assets/images/blog/2020-12-30_27-adfs_client_fiddler_kerberos_apreq.png" alt="" /></p>
+
+<h3 id="4-successful-authentication--authentication-cookies">4. Successful Authentication &amp; Authentication Cookies</h3>
+
+<p>A final redirection occurs since we are simply authenticating against the ADFS server to validate we can authenticate. There are no service providers set up.</p>
+
+<p><img src="assets/images/blog/2020-12-30_28_adfs_client_fiddler_redirection.png" alt="" /></p>
+
+<p>We also finally get “Authentication Cookies” such as <code class="highlighter-rouge">MSISAuth</code></p>
+
+<blockquote>
+  <p>The MSISAuth (MSISAuth + MSISAuth1 + …) are the encrypted cookies used to validate the SAML assertion produced for the client. The cookie is used for subsequent authentications against the ADFS. These are what we call the “authentication cookies”, and you will see these cookies ONLY when AD FS 2.0 is the IdP. Without these, the client will not experience SSO.</p>
+</blockquote>
+
+<p><img src="assets/images/blog/2020-12-30_30_adfs_client_browser_signed_in.png" alt="" /></p>
+
+<h2 id="final-diagram">Final Diagram!</h2>
+
+<p>After going through all those steps, I put together this image to summarize the main steps. This is going to help me as a reference for when I add service providers.</p>
+
+<p><img src="assets/images/blog/2020-12-30_31_adfs_idpinitiated_signon_flow.png" alt="" /></p>
+
+<p>That’s it! I hope you enjoyed this post and helps you as a reference for other projects!</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>https://syfuhs.net/a-fiddler-extension-for-kerberos-messages</li>
+  <li>https://github.com/dotnet/Kerberos.NET</li>
+  <li>https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/troubleshooting/ad-fs-tshoot-initiatedsignon</li>
+  <li>https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/technical-reference/understanding-key-ad-fs-concepts</li>
+  <li>https://medium.com/@robert.broeckelmann/active-directory-federation-services-adfs-and-kerberos-f36c71e13be5</li>
+  <li>https://social.technet.microsoft.com/wiki/contents/articles/1426.ad-fs-2-0-continuously-prompted-for-credentials-while-using-fiddler-web-debugger.aspx</li>
+  <li>https://www.samltool.com/online_tools.php</li>
+  <li>https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/troubleshooting/ad-fs-tshoot-fiddler-ws-fed</li>
+  <li>https://www.youtube.com/watch?v=e8x-pQJSB40</li>
+  <li>https://docs.microsoft.com/en-us/windows-server/identity/ad-fs/operations/configure-intranet-forms-based-authentication-for-devices-that-do-not-support-wia</li>
+  <li>https://ldapwiki.com/wiki/Kerberos%20Pre-Authentication</li>
+  <li>http://www.ipfonix.com/single-sign-on.pdf</li>
+  <li>https://medium.com/@robert.broeckelmann/active-directory-federation-services-adfs-and-kerberos-f36c71e13be5</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/cd9d5ca7-ce20-4693-872b-2f5dd41cbff6</li>
+</ul>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Open Threat Research Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="roberto" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/roberto">Roberto Rodriguez</a></h4>
+                                
+                                    <p>Security Researcher</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/roberto">Read More</a>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/ms365-add-custom-domain">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/2020-12-29_11_custom_domain_complete.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/ms365-add-custom-domain">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Dns</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Azure</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Microsoft 365</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Adding a Custom Domain to Microsoft 365</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="Roberto Rodriguez" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/roberto/">Roberto Rodriguez</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://blog.openthreatresearch.com/">
+            
+                <img src="/assets/images/favicon.png" alt="Open Threat Research Blog icon" />
+            
+            <span>Open Threat Research Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Inspecting+Default+ADFS+Identity+Provider+Initiated+Sign+On+Page+with+Fiddler+and+Wireshark&amp;url=adfs_default_idp_initiatedsignon_network"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=adfs_default_idp_initiatedsignon_network"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2020</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/OTR_Community" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Open Threat Research Blog</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

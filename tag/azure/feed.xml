@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/azure/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2020-12-29T20:11:20-05:00</updated>
+  <updated>2020-12-31T04:55:55-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/azure/feed.xml</id>
 
   
@@ -40,8 +40,8 @@
     <entry>
       <title type="html">Adding a Custom Domain to Microsoft 365</title>
       <link href="https://blog.openthreatresearch.com/ms365-add-custom-domain" rel="alternate" type="text/html" title="Adding a Custom Domain to Microsoft 365" />
-      <published>2020-12-28T06:00:00-05:00</published>
-      <updated>2020-12-28T06:00:00-05:00</updated>
+      <published>2020-12-29T06:00:00-05:00</published>
+      <updated>2020-12-29T06:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/ms365-add-custom-domain</id>
       <content type="html" xml:base="https://blog.openthreatresearch.com/ms365-add-custom-domain">&lt;p&gt;I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow &lt;a href=&quot;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&quot;&gt;federated authentication&lt;/a&gt; to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.&lt;/p&gt;
 
