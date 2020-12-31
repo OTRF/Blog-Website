@@ -2,10 +2,10 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
-  <link href="https://blog.openthreatresearch.com/tag/azure/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/tag/azure-arm/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
   <updated>2020-12-31T05:54:28-05:00</updated>
-  <id>https://blog.openthreatresearch.com/tag/azure/feed.xml</id>
+  <id>https://blog.openthreatresearch.com/tag/azure-arm/feed.xml</id>
 
   
   
@@ -144,151 +144,6 @@
 
       
         <summary type="html">I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (securestring) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an Azure Storage Account to host the certificate in a private container and access it via its own Shared Access Signature (SAS) string.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Adding a Custom Domain to Microsoft 365</title>
-      <link href="https://blog.openthreatresearch.com/ms365-add-custom-domain" rel="alternate" type="text/html" title="Adding a Custom Domain to Microsoft 365" />
-      <published>2020-12-29T06:00:00-05:00</published>
-      <updated>2020-12-29T06:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/ms365-add-custom-domain</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/ms365-add-custom-domain">&lt;p&gt;I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow &lt;a href=&quot;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&quot;&gt;federated authentication&lt;/a&gt; to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.&lt;/p&gt;
-
-&lt;p&gt;In this post, I will show you how to do that through the Microsoft 365 admin console.&lt;/p&gt;
-
-&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
-
-&lt;p&gt;Once again, if you want on-prem AD user accounts to authenticate to Office 365 apps in the cloud with the same on-prem password, you need to synchronize them with the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription which requires you to add the on-prem domain to Microsoft 365.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-is-microsoft-365&quot;&gt;What is Microsoft 365?&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Microsoft 365 is an integrated bundle of Windows 10, Office 365 and Enterprise Mobility + Security (aka EMS, which includes Intune device management, analytics and some Azure Active Directory capabilities), sold on a subscription basis.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;what-is-office-365&quot;&gt;What is Office 365?&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;It is a set of cloud based business applications like Exchange, Office Apps, SharePoint, OneDrive. It is a part of Microsoft 365.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;quick-recipe&quot;&gt;Quick Recipe&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Purchase Domain&lt;/li&gt;
-  &lt;li&gt;Access Microsoft 365 admin console&lt;/li&gt;
-  &lt;li&gt;Add custom domain&lt;/li&gt;
-  &lt;li&gt;Verify domain ownership&lt;/li&gt;
-  &lt;li&gt;Connect domain to MS 365 Services (Optional)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-purchase-domain&quot;&gt;1. Purchase Domain&lt;/h2&gt;
-
-&lt;p&gt;You need to use a domain that you already own or purchase one. If this is for a lab environment, most likely you will have to buy one. I purchased mine from &lt;a href=&quot;https://www.namecheap.com/&quot;&gt;namecheap.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_01_purchase_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-access-microsoft-365-admin-console&quot;&gt;2. Access Microsoft 365 Admin Console&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://admin.microsoft.com&quot;&gt;https://admin.microsoft.com&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Go to Settings &amp;gt; Domains&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-add-custom-domain&quot;&gt;3. Add Custom Domain&lt;/h2&gt;
-
-&lt;p&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_02_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Enter the name of the domain you just purchased or you already own&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_03_add_custom_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-verify-domain-ownership&quot;&gt;4. Verify Domain Ownership&lt;/h2&gt;
-
-&lt;p&gt;You will need to proof that you own the domain. I usually choose the verification option to add a TXT record to the DNS records of my domain.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_04_verify_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Add TXT Records to Domain Settings&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Log on to your domain provider console&lt;/li&gt;
-  &lt;li&gt;Select domain DNS settings&lt;/li&gt;
-  &lt;li&gt;Add TXT record&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_05_verify_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_06_update_domain_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-connect-domain-to-ms-365-services-optional&quot;&gt;5. Connect Domain to MS 365 Services (Optional)&lt;/h2&gt;
-
-&lt;p&gt;Next, you will have the option to attach specific Microsoft 365 services (i.e. Exchange) to your domain.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_07_connect_ms_services.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Add Additional DNS Records&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_08_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_09_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_10_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;That’s it! You have successfully added a custom domain to your Microsoft 365 subscription.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_11_custom_domain_complete.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_12_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;One thing you can do is check the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription, and you will now see the custom domain there and verified. Go to &lt;a href=&quot;https://aad.portal.azure.com&quot;&gt;https://aad.portal.azure.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_13_ad_custom_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I hope you enjoyed this post!&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/admin/setup/add-domain?view=o365-worldwide&lt;/li&gt;
-  &lt;li&gt;https://admin.microsoft.com&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/&lt;/li&gt;
-  &lt;li&gt;https://www.onmsft.com/feature/whats-the-difference-between-office-365-and-microsoft-365&lt;/li&gt;
-  &lt;li&gt;https://www.zdnet.com/article/what-is-microsoft-365-microsofts-most-important-subscription-bundle-explained/&lt;/li&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/admin/get-help-with-domains/what-is-a-domain?view=o365-worldwide&lt;/li&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&lt;/li&gt;
-&lt;/ul&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Roberto Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="DNS" />
-      
-        <category term="Azure" />
-      
-        <category term="Microsoft 365" />
-      
-
-      
-        <summary type="html">I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow federated authentication to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.</summary>
       
 
       

@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title>
+        
+          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 31 Dec 2020 05:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
         
           <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) &lt;a href=&quot;https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS&quot;&gt;template&lt;/a&gt; to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working before creating a trust with an external service provider (i.e. Microsoft 365).&lt;/p&gt;

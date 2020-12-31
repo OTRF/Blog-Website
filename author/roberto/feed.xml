@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/roberto/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2020-12-31T04:55:55-05:00</updated>
+  <updated>2020-12-31T05:54:28-05:00</updated>
   <id>https://blog.openthreatresearch.com/author/roberto/feed.xml</id>
 
   
@@ -36,6 +36,119 @@
   
   
 
+  
+    <entry>
+      <title type="html">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title>
+      <link href="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files" rel="alternate" type="text/html" title="How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files" />
+      <published>2020-12-31T05:00:00-05:00</published>
+      <updated>2020-12-31T05:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show you how to create an Azure storage account via an ARM template, and how you can upload and download files in a secured way.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-an-azure-blob-storage&quot;&gt;What is an Azure Blob Storage?&lt;/h2&gt;
+
+&lt;p&gt;Azure Blob storage is Microsoft’s object storage solution for the cloud. Blob storage offers three types of resources:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The storage account&lt;/li&gt;
+  &lt;li&gt;A container in the storage account&lt;/li&gt;
+  &lt;li&gt;A blob in a container&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-are-azure-storage-accounts&quot;&gt;What are Azure Storage Accounts?&lt;/h2&gt;
+
+&lt;p&gt;A storage account provides a unique namespace in Azure for your data. Every object that you store in Azure Storage has an address that includes your unique account name.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-are-azure-private-containers&quot;&gt;What are Azure Private Containers?&lt;/h2&gt;
+
+&lt;p&gt;A container organizes a set of blobs, similar to a directory in a file system. A storage account can include an unlimited number of containers, and a container can store an unlimited number of blobs. We can also restrict access to a container by disabling public access to it and granting limited access using shared access signatures (SAS). The specific SAS that we use is an Account SAS.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-a-shared-access-signature-sas&quot;&gt;What is a Shared Access Signature (SAS)&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A shared access signature (SAS) provides secure delegated access to resources in your storage account&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;what-is-an-account-sas&quot;&gt;What is an Account SAS?&lt;/h2&gt;
+
+&lt;p&gt;An account SAS is secured with the storage account key. An account SAS delegates access to resources in one or more of the storage services.&lt;/p&gt;
+
+&lt;h2 id=&quot;deploying-an-azure-account-storage-and-a-private-container&quot;&gt;Deploying an Azure Account Storage and a Private container&lt;/h2&gt;
+
+&lt;p&gt;I created an ARM template to automate the whole process:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Download the following template: https://github.com/hunters-forge/Blacksmith/blob/azure/templates/azure/Storage-Account-Private-Container/azuredeploy.json&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest&quot;&gt;Install Azure CLI&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Run the following command to create an Azure Storage Account and an Azure Private Container in it. Make sure you define your Resource Group, Azure Storage Account Name and Azure Private Container Name&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;az group deployment create &lt;span class=&quot;nt&quot;&gt;--resource-group&lt;/span&gt; &amp;lt;resourcegroup&amp;gt; &lt;span class=&quot;nt&quot;&gt;--template-file&lt;/span&gt; azuredeploy.json &lt;span class=&quot;nt&quot;&gt;--parameters&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;storageAccountName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;name&amp;gt; &lt;span class=&quot;nv&quot;&gt;containerName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Thats it! If you go to your Azure Portal &amp;gt; Resource Groups &amp;gt; GroupName, you will see the Azure Storage Account resource available.&lt;/li&gt;
+  &lt;li&gt;One thing to remember is that you can get the Account SAS token by checking your deployment output values. I created the template so that it creates one for you and has it available as part of the output variables. You can refresh that token and get a new one if you feel like it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;upload-ssl-certificate-to-private-container&quot;&gt;Upload SSL Certificate to Private Container&lt;/h2&gt;
+
+&lt;p&gt;I could now upload my SSL certificate with the following Azure CLI command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;az storage blob upload &lt;span class=&quot;nt&quot;&gt;--container-name&lt;/span&gt; &amp;lt;container-name&amp;gt; &lt;span class=&quot;nt&quot;&gt;--file&lt;/span&gt; &amp;lt;local-filename&amp;gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; &amp;lt;filename-on-target&amp;gt; &lt;span class=&quot;nt&quot;&gt;--connection-string&lt;/span&gt; &amp;lt;connection-string-SAS-token&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;calling-private-resources-from-arm-templates&quot;&gt;Calling Private Resources from ARM Templates&lt;/h2&gt;
+
+&lt;p&gt;All we need to do in an ARM templates is use the following URI syntax for every URL that we want to access. I like to set two parameters in my templates:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;_artifactsLocation&lt;/strong&gt;: This is the Account Storage / Container URL (e.g https://name-of-storage-account.blob.core.windows.net/name-of-container/)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;_artifactsLocationSasToken&lt;/strong&gt;: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; character before your SAS token.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s it! I hope you enjoyed this short post. I use this setup for several projects already!&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Roberto Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Azure" />
+      
+        <category term="Azure ARM" />
+      
+
+      
+        <summary type="html">I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (securestring) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an Azure Storage Account to host the certificate in a private container and access it via its own Shared Access Signature (SAS) string.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
