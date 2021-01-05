@@ -74,7 +74,6 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 ![](assets/images/blog/2020-12-30_07_adfs_server_disable_epa.png)
 
 ## Validate ADFS Server Setup (Client Side)
-
 From a domain joined computer, we can check the ADFS server setup by exploring the federation server service metadata
 
 * RDP to domain joined endpoint
@@ -127,7 +126,6 @@ That was very easy right? Now, let's set up our network traffic captures.
 ![](assets/images/blog/2020-12-30_12_client_wireshark_filter.png)
 
 ## ADFS Server Network Capture Setup
-
 * Open Wireshark and apply the following filter:
 
 `ip.addr == <DC IP Address> or ip.addr == <Domain Joined Computer IP Address>`
@@ -135,7 +133,6 @@ That was very easy right? Now, let's set up our network traffic captures.
 ![](assets/images/blog/2020-12-30_12_adfs_server_wireshark_filter.png)
 
 ## Capture Network Traffic
-
 * Once again, on the client, browse to `https://<ADFS FQDN>/adfs/ls/IdpInitiatedSignon.aspx` and click on `Sign In`
 
 ![](assets/images/blog/2020-12-30_15_adfs_client_signon_page.png)
@@ -144,26 +141,24 @@ That was very easy right? Now, let's set up our network traffic captures.
 
 ![](assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png)
 
-You will see a few events captured by fiddler. I recommend to filter the results on the specific `microsoftedgecp` process that handled the authentication as shown below:
+* You will see a few events captured by fiddler. I recommend to filter the results on the specific `microsoftedgecp` process that handled the authentication as shown below:
 
 ![](assets/images/blog/2020-12-30_17_adfs_client_filter_traffic.png)
 
-You will also see a few events in Wireshark (both client and server). I am interested in the `KRB5` protocol ones as shown below
+* You will also see a few events in Wireshark (both client and server). I am interested in the `KRB5` protocol ones as shown below
 
 ![](assets/images/blog/2020-12-30_18_client_server_krb5_traffic.png)
 
-Stop fiddler and wireshark captures. Time to learn a little bit more about this process
+* Stop fiddler and wireshark captures. Time to learn a little bit more about this process
 
 ## Inspect Network Traffic
 
 ### 1. Access to ADFS Sign On Page
-
 Client Connects to the ADFS server via `https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx ` . Here is where we get to the Open Threat Research banner with the option to `Sign In` and the message `You are not signed in. Sign in to this site`. Nothing special. Just a simple GET request to get to ADFS sign on page.
 
 ![](assets/images/blog/2020-12-30_19_adfs_client_fiddler_otr_banner.png)
 
 ### 2. Redirection to ADFS Server and SamlRequest Generation
-
 Client clicks on the `Sign In` button. That click makes a `POST` request to `POST https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5`.
 
 The ADFS server receives the requests and returns a `302 Response Code` and it sets the new `Location` to `https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5` where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization's internal network (intranet) for any application that uses a browser for its authentication.
@@ -206,17 +201,14 @@ This message contains details needed by the ADFS server (Identity Provider) to p
 * Base64 Decode + Inflate
 
 ### 3. Enter Credentials in Logon Form
-
 After the previous redirection, the client receives a `401 Response Code`. This is simply telling the client to authenticate against the ADFS server (Identity Provider). Here is where we entered our domain credentials `User:pgustavo`.
 
 ![](assets/images/blog/2020-12-30_21_adfs_client_401_login_form.png)
 
 ### 4. Kerberos Authentication
-
 The Identity Provider decodes the `SAMLRequest` and performs the user authentication via Kerberos.
 
 **AS-REQ** (Client -> Domain Controller
-
 The client first sends a request to the Kerberos Authentication Service (AS) to get TGT.
 
 * Client-Principal: pgustavo
@@ -225,7 +217,6 @@ The client first sends a request to the Kerberos Authentication Service (AS) to 
 ![](assets/images/blog/2020-12-30_22_client_wireshark_asreq.png)
 
 **PREAUTH_REQUIRED** (Domain Controller -> Client)
-
 >Kerberos Pre-Authentication is a security feature which offers protection against password-guessing attacks. The AS request identifies the client to the KDC in Plaintext. If Kerberos Pre-Authentication is enabled, a Timestamp will be encrypted using the user's password hash as an encryption key. If the KDC reads a valid time when using the user's password hash, which is available in the Microsoft Active Directory, to decrypt the Timestamp, the KDC knows that request isn't a replay of a previous request.
 
 Error Code: 25 - HEX -> 0x19 ([Source](https://ldapwiki.com/wiki/Kerberos%20Error%20Codes))
@@ -233,31 +224,26 @@ Error Code: 25 - HEX -> 0x19 ([Source](https://ldapwiki.com/wiki/Kerberos%20Erro
 ![](assets/images/blog/2020-12-30_22_client_wireshark_required_auth.png)
 
 **AS-REQ** (Client -> Domain Controller)
-
 The client sends another request to the Kerberos Authentication Service (AS), but with the encrypted timestamp this time.
 
 ![](assets/images/blog/2020-12-30_22_client_wireshark_asreq2.png)
 
 **AS-RESP** (Domain Controller -> Client)
-
 Client receives a response with a TGT for user pgustavo. This is just to request a service ticket to access the ADFS service.
 
 ![](assets/images/blog/2020-12-30_22_client_wireshark_asresp.png)
 
 **TGS-REQ** (Client -> Domain Controller)
-
 Client requests access to `adfs.solorigatelabs.com` to the Ticket Granting Server (TGS)
 
 ![](assets/images/blog/2020-12-30_22_client_wireshark_tgsreq.png)
 
 **TGS-REP** (Domain Controller -> Client)
-
 TGS responds with a service ticket to the `adfs.solorigatelabs.com` (HTTP)
 
 ![](assets/images/blog/2020-12-30_22_client_wireshark_tgsresp.png)
 
 **AS-REQ** (ADFS -> Domain Controller)
-
 After pgustavo enters its credentials, the ADFS server handles the authentication process and sends a request to the Kerberos Authentication Service (AS) on behalf of pgustavo.
 
 * User being authenticated: **pgustavo**
@@ -271,7 +257,6 @@ After pgustavo enters its credentials, the ADFS server handles the authenticatio
 ![](assets/images/blog/2020-12-30_23_adfs_server_wireshark_preauth.png)
 
 **S4U2self TGS Exchange (Delegation) - TGS-REQ** (ADFS -> Domain Controller)
-
 S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket on behalf of `pgustavo`
 
 > In a KRB_TGS_REQ and KRB_TGS_REP subprotocol message sequence, a Kerberos principal uses its ticket-granting ticket (TGT) to request a service ticket to a service. The TGS uses the requesting principal's identity from the TGT passed in the KRB_TGS_REQ message to create the service ticket.
@@ -287,19 +272,16 @@ S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket 
 ![](assets/images/blog/2020-12-30_25_adfs_server_wireshark_s4u2self.png)
 
 **S4U2self TGS Exchange (Delegation) - TGS-REP** (Domain Controller -> ADFS)
-
 The ADFS service gets a ticket with the username `pgustavo` and the service name mapped to the `adfsuser` account.
 
 ![](assets/images/blog/2020-12-30_26_adfs_server_wireshark_s4u2self.png)
 
 **AP-REQ** (Client -> ADFS)
-
 After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in the authorization header (Negotiate). This is parsed by the Fiddler `Kerberos` extension.
 
 ![](assets/images/blog/2020-12-30_27-adfs_client_fiddler_kerberos_apreq.png)
 
 ### 4. Successful Authentication & Authentication Cookies
-
 A final redirection occurs since we are simply authenticating against the ADFS server. Remember there are no service providers set up.
 
 ![](assets/images/blog/2020-12-30_28_adfs_client_fiddler_redirection.png)
@@ -311,7 +293,6 @@ We also finally get "Authentication Cookies" such as `MSISAuth`
 ![](assets/images/blog/2020-12-30_30_adfs_client_browser_signed_in.png)
 
 ## Final Diagram!
-
 After going through all those steps, I put together this image to summarize the main steps. This is going to help me as a reference for when I add service providers.
 
 ![](assets/images/blog/2020-12-30_31_adfs_idpinitiated_signon_flow.png)
