@@ -11,7 +11,7 @@
 
 
 
-    <title>Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
+    <title>Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,15 +36,15 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
     <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" />
-    <meta property="og:description" content="I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working" />
-    <meta property="og:url" content="https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network" />
+    <meta property="og:title" content="Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark" />
+    <meta property="og:description" content="I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) template to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network" />
     <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
@@ -52,8 +52,8 @@
     <meta property="article:modified_time" content="2020-12-30T06:00:00-05:00" />
     <meta property="article:tag" content="Adfs" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" />
-    <meta name="twitter:description" content="I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working" />
+    <meta name="twitter:title" content="Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark" />
+    <meta name="twitter:description" content="I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) template to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token" />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
     <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -74,7 +74,7 @@
         "name": "Open Threat Research Blog",
         "logo": "https://blog.openthreatresearch.com/false"
     },
-    "url": "https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network",
+    "url": "https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network",
     "image": {
         "@type": "ImageObject",
         "url": "https://blog.openthreatresearch.com/assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png",
@@ -83,9 +83,9 @@
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network"
+        "@id": "https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network"
     },
-    "description": "I recently created an Azure Resource Manager (ARM) template to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working"
+    "description": "I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) template to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark" href="/feed.xml" />
 
 
 </head>
@@ -175,7 +175,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</h1>
+                <h1 class="post-full-title">Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark</h1>
             </header>
 
             
@@ -185,17 +185,25 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>I recently created an Azure Resource Manager (ARM) <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">template</a> to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working before creating a trust with an external service provider (i.e. Microsoft 365).</p>
+                    <p>I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">template</a> to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.</p>
 
-<p>In this post, I will show you how to use <a href="https://www.telerik.com/fiddler">fiddler</a> and <a href="https://www.wireshark.org/">Wireshark</a> to inspect the network traffic generated while accessing and providing credentials to the default Identity Provider (Idp) Initiated Sign on page on-prem.</p>
+<p>In this post, I will show you how to use <a href="https://www.telerik.com/fiddler">fiddler</a> and <a href="https://www.wireshark.org/">Wireshark</a> to inspect the network traffic generated while accessing and providing credentials to the default ADFS Sign On page via the Intranet. This basic example does not require to have a SAML Service Provider (Relatying Party Trust) set up since, once again, I am interested in the process before getting an authentication token.</p>
 
 <h2 id="requirements">Requirements</h2>
 <ul>
-  <li>An Active Directory (AD) Environment with a Domain Controller (DC), ADFS server and a domain joined computer: You can deploy all that in less than 30 minutes with <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">this ARM template</a> from the project <a href="https://github.com/OTRF/Blacksmith">Blacksmith</a>.</li>
+  <li>An Active Directory (AD) Environment with a Domain Controller (DC)</li>
+  <li>An Active Directory Federation Service (ADFS) server
+    <ul>
+      <li>A federation server farm set up</li>
+    </ul>
+  </li>
+  <li>A domain joined computer</li>
+  <li>[Optional] You can deploy all the above in less than 30 minutes with <a href="https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS">this ARM template</a> from the project <a href="https://github.com/OTRF/Blacksmith">Blacksmith</a>.</li>
   <li>On the Domain Joined Computer:
     <ul>
       <li>Install <a href="https://www.telerik.com/download/fiddler">Fiddler Classic</a></li>
       <li>Install <a href="https://github.com/dotnet/Kerberos.NET/releases">Fiddler extension</a> based on the <a href="https://github.com/dotnet/Kerberos.NET">Kerberos.NET</a> library : Download <code class="highlighter-rouge">setup.exe</code> and run it.</li>
+      <li>Install <a href="https://www.wireshark.org/download.html">Wireshark</a></li>
     </ul>
   </li>
   <li>On the ADFS Server:
@@ -205,63 +213,78 @@ into the {body} of the default.hbs template -->
   </li>
 </ul>
 
-<h2 id="validate-adfs-server-setup-client-side">Validate ADFS Server Setup (Client Side)</h2>
+<p>Once you have all the requirements above taken care of, I recommend to validate your ADFS setup.</p>
 
-<p>One easy way to validate that the federation services are running an handling kerberos authentication is by browsing to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and entering domain credentials (replace <code class="highlighter-rouge">&lt;ADFS FQDN&gt;</code> with the URL of your ADFS server. Not the name of the ADFS server at all).</p>
-
+<h2 id="validate-adfs-server-setup-server-side">Validate ADFS Server Setup (Server Side)</h2>
 <ul>
-  <li>Log on (RDP) to domain joined endpoint</li>
-  <li>Open broser and go to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code>
-    <ul>
-      <li>Verify if <code class="highlighter-rouge">EnableIdpInitiatedSignonPage</code> is set to <code class="highlighter-rouge">True</code> (Run command on ADFS server via PowerShell)</li>
-    </ul>
-
-    <pre><code class="language-PowerShell">  Get-AdfsProperties | select-object EnableIdpInitiatedSignonPage
-</code></pre>
-
-    <ul>
-      <li>If property is set to <code class="highlighter-rouge">False</code>, run this command (on ADFS Server) to enable it and restart the ADFS service</li>
-    </ul>
-
-    <pre><code class="language-PowerShell">  Set-AdfsProperties -EnableIdpInitiatedSignonPage $true
-  Restart-Service -Name adfssrv
+  <li>RDP to ADFS Server</li>
+  <li>Check if the ADFS serve is running
+    <pre><code class="language-PowerShell">Get-Service adfssrv
 </code></pre>
   </li>
-  <li>Enter domain user and credentials!</li>
+  <li>Check ADFS properties
+    <pre><code class="language-PowerShell">Get-AdfsProperties
+</code></pre>
+  </li>
 </ul>
+
+<p><img src="assets/images/blog/2020-12-30_01_adfs_server_check_properties.png" alt="" /></p>
+
+<ul>
+  <li>You can get the ADFS Service <code class="highlighter-rouge">HostName</code> by running the following command (You will need that value in the next section)
+    <pre><code class="language-PowerShell">Get-AdfsProperties | select-object HostName
+</code></pre>
+  </li>
+  <li>Check ADFS servers available and certificates</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_02_adfs_server_check_adfs_servers.png" alt="" /></p>
+
+<ul>
+  <li>We are going to be using the ADFS Sign On page via the Intranet so we also need to check if that feature is enabled. We do it by verifying if the ADFS property <code class="highlighter-rouge">EnableIdpInitiatedSignonPage</code> is set to <code class="highlighter-rouge">True</code>
+    <pre><code class="language-PowerShell">Get-AdfsProperties | select-object EnableIdpInitiatedSignonPage
+</code></pre>
+  </li>
+  <li>If property is set to <code class="highlighter-rouge">False</code>, run this command to enable it and restart the ADFS service
+    <pre><code class="language-PowerShell">Set-AdfsProperties -EnableIdpInitiatedSignonPage $true
+Restart-Service -Name adfssrv
+</code></pre>
+  </li>
+  <li>In order to avoid continuous credentials prompt while authenticating and capturing/proxying traffic with fiddler, we need to disable the <code class="highlighter-rouge">Extended Protection for Authentication</code> property in the ADFS server.
+    <pre><code class="language-PowerShell">Get-AdfsProperties | select ExtendedProtectionTokenCheck
+Set-ADFSProperties -ExtendedProtectionTokenCheck:None
+Restart-Service -Name adfssrv
+Get-AdfsProperties | select ExtendedProtectionTokenCheck
+</code></pre>
+  </li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_07_adfs_server_disable_epa.png" alt="" /></p>
+
+<h2 id="validate-adfs-server-setup-client-side">Validate ADFS Server Setup (Client Side)</h2>
+
+<p>From a domain joined computer, we can check the ADFS server setup by exploring the federation server service metadata</p>
+
+<ul>
+  <li>RDP to domain joined endpoint</li>
+  <li>Browse to <code class="highlighter-rouge">https://&lt;ADFS HostName&gt;/adfs/fs/federationserverservice.asmx</code> (replace <code class="highlighter-rouge">&lt;ADFS HostName&gt;</code> with the <code class="highlighter-rouge">HostName</code> value of the ADFS service obtained in the previous section)</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_03_adfs_client_check_server_metadata.png" alt="" /></p>
+
+<p>Another easy way to validate that the federation service is running an handling kerberos authentication is by browsing to <code class="highlighter-rouge">https://&lt;ADFS HostName&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and entering domain credentials (replace <code class="highlighter-rouge">&lt;ADFS HostName&gt;</code> with the <code class="highlighter-rouge">HostName</code> value of the ADFS service obtained in the previous section)</p>
 
 <p><img src="assets/images/blog/2020-12-30_04_adfs_client_check.png" alt="" /></p>
 
 <ul>
-  <li>If everything is working properly (at least on-prem), you will get the <code class="highlighter-rouge">You are signed in</code> message</li>
+  <li>If everything is working properly (at least on-prem via the intranet), you will get the <code class="highlighter-rouge">You are signed in</code> message</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-30_05_adfs_client_check.png" alt="" /></p>
 
-<p>That was very easy right? Now, are you also wondering what actually happens between the domain joined computer, the ADFS server and the DC server when all this happens? (Network perspective)</p>
+<p>That was very easy right? Now, let’s set up our network traffic captures.</p>
 
-<h2 id="disable-extended-protection-for-authentication-adfs-server">Disable Extended Protection for Authentication (ADFS Server)</h2>
-
-<p>In order to avoid continuous credentials prompt while authenticating and capturing/proxying traffic with fiddler, we need to disabke the <code class="highlighter-rouge">Disable Extended Protection for Authentication</code> property in the ADFS server.</p>
-
-<ul>
-  <li>Log on to ADFS Server</li>
-  <li>Open PowerShell as Administrator and run the following commands</li>
-</ul>
-
-<pre><code class="language-PowerShell">Get-AdfsProperties | select ExtendedProtectionTokenCheck
-
-Set-ADFSProperties -ExtendedProtectionTokenCheck:None
-
-Restart-Service -Name adfssrv
-
-Get-AdfsProperties | select ExtendedProtectionTokenCheck
-</code></pre>
-
-<p><img src="assets/images/blog/2020-12-30_07_adfs_server_disable_epa.png" alt="" /></p>
-
-<h2 id="set-up-fiddler-client-side">Set Up Fiddler (Client Side)</h2>
-
+<h2 id="client-network-capture-setup">Client Network Capture Setup</h2>
 <ul>
   <li>Log on (if you disconnected) to domain joined computer</li>
   <li>Open fiddler</li>
@@ -272,7 +295,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 <p><img src="assets/images/blog/2020-12-30_08_adfs_client_https_options.png" alt="" /></p>
 
 <ul>
-  <li>Enable Microsoft Edge to send network traffic to the local computer (AppContainer Loopback Exemption). WinConfig &gt; Microsoft Edge &gt; Save Changes</li>
+  <li>I used Microsoft Edge for this blog post. Therefore, We need to enable Microsoft Edge to send network traffic to the local computer (AppContainer Loopback Exemption). WinConfig &gt; Microsoft Edge &gt; Save Changes</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-30_09_adfs_client_appcontainer.png" alt="" /></p>
@@ -289,22 +312,8 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p><img src="assets/images/blog/2020-12-30_11_adfs_client_fiddler_remove_sessions.png" alt="" /></p>
 
-<h2 id="set-up-wireshark-adfs-server">Set Up Wireshark (ADFS Server)</h2>
-
-<p>It seems that our ADFS server handles the authentication with the AD DC on behalf of the domain user. Therefore, we can validate that thought with wireshark and filter on interactions with the IP addresses of the AD DC and domain joined computer.</p>
-
 <ul>
-  <li>Open Wireshark on the ADFS server and apply the following filter:</li>
-</ul>
-
-<p><code class="highlighter-rouge">ip.addr == &lt;DC IP Address&gt; or ip.addr == &lt;Domain Joined Computer IP Address&gt;</code></p>
-
-<p><img src="assets/images/blog/2020-12-30_12_adfs_server_wireshark_filter.png" alt="" /></p>
-
-<h2 id="open-edge-from-fiddler-and-filter-web-browser-only-client-side">Open Edge from Fiddler and Filter Web Browser Only (Client Side)</h2>
-
-<ul>
-  <li>On your domain joined computer, open Microsoft Edge from fiddler</li>
+  <li>Open Edge from Fiddler and Filter Web Browser Only</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-30_13_adfs_client_fiddler_browser.png" alt="" /></p>
@@ -315,15 +324,35 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p><img src="assets/images/blog/2020-12-30_14_adfs_client_fiddler_browser.png" alt="" /></p>
 
-<h2 id="browse-to-adfs-sign-on-page-client-side">Browse to ADFS Sign On Page (Client Side)</h2>
+<ul>
+  <li>Open Wireshark and apply the following filter:</li>
+</ul>
+
+<p><code class="highlighter-rouge">ip.addr == &lt;DC IP Address&gt; or ip.addr == &lt;ADFS IP Address&gt;</code></p>
+
+<p><img src="assets/images/blog/2020-12-30_12_client_wireshark_filter.png" alt="" /></p>
+
+<h2 id="adfs-server-network-capture-setup">ADFS Server Network Capture Setup</h2>
 
 <ul>
-  <li>Once again, go to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and click on <code class="highlighter-rouge">Sign In</code></li>
+  <li>Open Wireshark and apply the following filter:</li>
+</ul>
+
+<p><code class="highlighter-rouge">ip.addr == &lt;DC IP Address&gt; or ip.addr == &lt;Domain Joined Computer IP Address&gt;</code></p>
+
+<p><img src="assets/images/blog/2020-12-30_12_adfs_server_wireshark_filter.png" alt="" /></p>
+
+<h2 id="capture-network-traffic">Capture Network Traffic</h2>
+
+<ul>
+  <li>Once again, on the client, browse to <code class="highlighter-rouge">https://&lt;ADFS FQDN&gt;/adfs/ls/IdpInitiatedSignon.aspx</code> and click on <code class="highlighter-rouge">Sign In</code></li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-30_15_adfs_client_signon_page.png" alt="" /></p>
 
-<h2 id="enter-domain-credentials">Enter Domain Credentials</h2>
+<ul>
+  <li>Enter Domain Credentials</li>
+</ul>
 
 <p><img src="assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png" alt="" /></p>
 
@@ -331,15 +360,15 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p><img src="assets/images/blog/2020-12-30_17_adfs_client_filter_traffic.png" alt="" /></p>
 
-<p>You will also see a few events in Wireshark (ADFS Server). I am interested in the <code class="highlighter-rouge">KRB5</code> protocol ones as shown below</p>
+<p>You will also see a few events in Wireshark (both client and server). I am interested in the <code class="highlighter-rouge">KRB5</code> protocol ones as shown below</p>
 
-<p><img src="assets/images/blog/2020-12-30_18_adfs_server_krb5_traffic.png" alt="" /></p>
+<p><img src="assets/images/blog/2020-12-30_18_client_server_krb5_traffic.png" alt="" /></p>
 
 <p>Stop fiddler and wireshark captures. Time to learn a little bit more about this process</p>
 
-<h2 id="so-what-happened-lets-dive-into-it">So, What Happened? Let’s Dive Into It!</h2>
+<h2 id="inspect-network-traffic">Inspect Network Traffic</h2>
 
-<h3 id="1-access-adfs-sign-on-page">1. Access ADFS Sign On Page</h3>
+<h3 id="1-access-to-adfs-sign-on-page">1. Access to ADFS Sign On Page</h3>
 
 <p>Client Connects to the ADFS server via <code class="highlighter-rouge">https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx </code> . Here is where we get to the Open Threat Research banner with the option to <code class="highlighter-rouge">Sign In</code> and the message <code class="highlighter-rouge">You are not signed in. Sign in to this site</code>. Nothing special. Just a simple GET request to get to ADFS sign on page.</p>
 
@@ -349,36 +378,42 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p>Client clicks on the <code class="highlighter-rouge">Sign In</code> button. That click makes a <code class="highlighter-rouge">POST</code> request to <code class="highlighter-rouge">POST https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5</code>.</p>
 
-<p>The ADFS server receives the requests and returns a <code class="highlighter-rouge">302 Response Code</code> with some information about where to go. It sets the new <code class="highlighter-rouge">Location</code> to <code class="highlighter-rouge">https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5</code> where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization’s internal network (intranet) for any application that uses a browser for its authentication.</p>
+<p>The ADFS server receives the requests and returns a <code class="highlighter-rouge">302 Response Code</code> and it sets the new <code class="highlighter-rouge">Location</code> to <code class="highlighter-rouge">https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5</code> where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization’s internal network (intranet) for any application that uses a browser for its authentication.</p>
 
 <p><img src="assets/images/blog/2020-12-30_20_adfs_client_samlrequest_302.png" alt="" /></p>
 
-<p>One thing also that was provided in the 302 Redirect Message was a <code class="highlighter-rouge">MSISSamlRequest</code> cookie which contained the <code class="highlighter-rouge">SamlRequest</code>. A SamlRequest tells the browser to send the request to the preconfigured identity provider.</p>
+<p>One thing also that was provided in the 302 Redirect Message was a <code class="highlighter-rouge">MSISSamlRequest</code> value inside of a cookie which contained the <code class="highlighter-rouge">SamlRequest</code> (AuthnRequest). A SAML Request is usually sent by the SAML service before the user is redirected to the Identify Provider (ADFS Server itself). The identity provider then decodes the SAML request and gets ready to authenticate the user.</p>
 
-<p>This was the <code class="highlighter-rouge">MSISSamlRequest</code> cookie (Base64 Encoded)</p>
+<p>This was the <code class="highlighter-rouge">MSISSamlRequest</code> value inside of the cookie (Base64 Encoded)</p>
 
-<pre><code class="language-Block">QmFzZVVybD1odHRwcyUzYSUyZiUyZmFkZnMuc29sb3JpZ2F0ZWxhYnMuY29tJTJmYWRmcyUyZmxzJTJmXFNBTUxSZXF1ZXN0PWZaRk5TOFF3RUliJTJmU3NrOVRacnRyalowQzhVaUZQVGlpZ2N2a3FaVE41QW1OWk9LUDk5JTJiSE1XOUR1OHo3enhNaVdxMGs2em5lSFV2OERVRHhxUnR6dVRqZUJJOW5JNkNacmtTTkIlMmJnb04wOTExVG9vUURkM1hVRHowbnlCZ0dOZDJjaVVrNlNGbkdHMW1GVUxpNGpMampOQkQxa3I1eExjWkNDcDFtUnZaT2tXVnFNVTNFanJ6Rk9LQmxUJTJmWUFwZXV1RCUyYlZRUnJPb3cxWDdjNXN3aUk4bURkd2pyNWprNDZSVWFsRTZOZ0RKcWVhbWZuJTJiUnloTlI3U000T0o5Qm1NTkNUNUdlMER1V21lcHVlZ285ZWUwdXFjcE1KTzNvYlVvZ1FWaGxTclRLTFM5MDhYdjUxV2NMZlJnT3lHR2FNSmR1THFwTDlmVVgxQ3clM2QlM2RcUHJvdG9jb2xCaW5kaW5nPXVybiUzYW9hc2lzJTNhbmFtZXMlM2F0YyUzYVNBTUwlM2EyLjAlM2FiaW5kaW5ncyUzYUhUVFAtUmVkaXJlY3RcU2lnbmF0dXJlPVZSTklyRWklMmJWY1hUSHZMNXRRdUEyeHpSZHdieng2dllCcnNwMWd1NHRPNGlENFQxWUhmYVFkUW4lMmJuVzFBdHd0WWloTTludSUyZkNWQ3Njc3pad2xCQTJhcm5SUm9Xd2JiamclMmJLN3VyY3NrMDVTOFNndVJRM2xTbiUyZnY1b082UmRLTnFmUFFFdm00WHFEeUpReExKbVVkNHkwZDFCQnBGNGR1ekFyN1MyWkhTWmJhN1NqUkRNRk4xJTJmWjhyY1A2UTFrZHp1eVBZb3JkeDBxdTFOQjhpbjlLelByJTJib0w5aWRKWmklMmJKNHNVN0xjQzExcjFyNkk1OE4lMmZnMUNGUCUyZmF2MFpRJTJmZU1pZU5NMEtLWWljZUNla25HUWxtVTN6dWl6aGZpVEFaVU5uRSUyYlVvc2lCbFlsNTAlMmYlMmIwa2hTSjNYbDBjVW1uVjE4b1BSb1FpMG9ZOWh0Uk9QY09Vb3clM2QlM2RcU2lnQWxnPWh0dHAlM2ElMmYlMmZ3d3cudzMub3JnJTJmMjAwMSUyZjA0JTJmeG1sZHNpZy1tb3JlJTIzcnNhLXNoYTI1NlxRdWVyeVN0cmluZ0hhc2g9TiUyZkNHa3l3T3hSUmF3bXdnVTZtREhlNmh2VE5lQkxLQkdyMHNZMmRpcHg0JTNk
+<pre><code class="language-Block">QmFzZVVybD1odHRwcyUzYSUyZiUyZmFkZnMuc29sb3JpZ2F0ZWxhYnMuY29tJTJmYWRmcyUyZmxzJTJmXFNBTUxSZXF1ZXN0PWZaRkJhNFF3RUlYJTJmU3NoZEUyM1ZOYmlDVkFwQ2UlMmJtV0hub3BNY1p1SUNZMms1VCUyYiUyZkVZOWxpN002ZkhldlBtWUJ2aWlWOVlGZnpVdjhpdEk4R2pveiUyZmpqUkxOVHpzY3B5U2JCayUyZnVNRjBsZDB6R1pxckVveXJJcTZUeGo5Q1lkS0d2T09FOHBSZ05Ba0lNQno0MlBFczJ6aE1ZcFhtbkY2QjNMYUVyciUyZkIyalByWW93JTJmMmV2SHElMmZBaU9FVHpPa1lMVjE2cE43cWZrSXFiRExyaE1OQktNSGEwQnVtNE16ekhKUXdBeGZKREF2MktWN2ZtTHhDQ1lPRXdzR1ZpblVyT1NFMGMlMmJpRGJBZDlYWjZkZFpiWVRWdW14M0dIZEhiSVE0ZzNRYUQydzBtc25UOTQlMmJWZmxtaiUyYlZrSUM4UzZBYjhoUjFEYms3eXZhWHclM2QlM2RcUHJvdG9jb2xCaW5kaW5nPXVybiUzYW9hc2lzJTNhbmFtZXMlM2F0YyUzYVNBTUwlM2EyLjAlM2FiaW5kaW5ncyUzYUhUVFAtUmVkaXJlY3RcU2lnbmF0dXJlPVJtQlJxa1ZDYjB0cUtPeEFSR1BTJTJiUFFGS3JXVkUyTEM0JTJiJTJiR2tMZENSVmVXUkFJdTElMmZGeUFYWW10R3d3WVhlS2VOYVBMMjdnUExmSWVWanltYyUyYmdlWmhXOUV4UFdkQUM1djlYUEtmNzFSQ29wNE45Y0ZodWV2M1FGY09vV0E0Z2d2NU1sY3VLMXl4eGVOZDJXQ0JFc2VDSFE5WCUyZmlCSWg2ZldxeXNKWjlrRlBOSkMlMmJkWWZ5UFpPTkpqRWRYUUViTHVueWVwM0Y4bkpUbFBUdjBMZ04ydWRKdWxpdzhORm0lMmIyNDR3OFdlNmVBOFJGYURYU2FaSDA3Rm1pdkxPNTQ2MDV4WDg0djh4bWUlMmJQV0xhRkU3U3N0aEtiSjloJTJidk4lMmJ3MURQenR1d3IxVng5NTFVQUNJMkhJdUdYT0N2WFVHendVWFVyNGRlWHdtMlBMYkVDckZ4OGclM2QlM2RcU2lnQWxnPWh0dHAlM2ElMmYlMmZ3d3cudzMub3JnJTJmMjAwMSUyZjA0JTJmeG1sZHNpZy1tb3JlJTIzcnNhLXNoYTI1NlxRdWVyeVN0cmluZ0hhc2g9OWkzZmpUcHFxY1RlUDl3MktBYk5HZmM4RHdnV0k1ZmZXaE5SM0lrMm1IYyUzZA==
 </code></pre>
 
-<p>After base64 decoding that, we can get to the Url encoded value of <code class="highlighter-rouge">BaseUrl</code> which contains the <code class="highlighter-rouge">SamlRequest</code></p>
+<p><img src="assets/images/blog/2020-12-30_20_adfs_client_samlrequest_strings.png" alt="" /></p>
 
-<pre><code class="language-Block">BaseUrl=https%3a%2f%2fadfs.solorigatelabs.com%2fadfs%2fls%2f\SAMLRequest=fZFNS8QwEIb%2fSsk9TZrtrjZ0C8UiFPTiigcvkqZTN5AmNZOKP99%2bHMW9Du8z7zxMiWq0k6zneHUv8DUDxqRtzuTjeBI9nI6CZrkSNB%2bgoN0911TooQDd3XUDz0nyBgGNd2ciUk6SFnGG1mFULi4jLjjNBD1kr5xLcZCCp1mRvZOkWVqMU3EjrzFOKBlT%2fYApeuuD%2bVQRrOow1X7c5swiI8mDdwjr5jk46RUalE6NgDJqeamfn%2bRyhNR7SM4OJ9BmMNCT5Ge0DuWmepuego9ee0uqcpMJO3obUogQVhlSrTKLS908Xv51WcLfRgOyGGaMJduLqpL9fUX1Cw%3d%3d\ProtocolBinding=urn%3aoasis%3anames%3atc%3aSAML%3a2.0%3abindings%3aHTTP-Redirect\Signature=VRNIrEi%2bVcXTHvL5tQuA2xzRdwbzx6vYBrsp1gu4tO4iD4T1YHfaQdQn%2bnW1AtwtYihM9nu%2fCVCscszZwlBA2arnRRoWwbb
+<p>After base64 decoding that value, we get to the Url encoded value of <code class="highlighter-rouge">BaseUrl</code> which contains the <code class="highlighter-rouge">SamlRequest</code></p>
+
+<pre><code class="language-Block">BaseUrl=https%3a%2f%2fadfs.solorigatelabs.com%2fadfs%2fls%2f\SAMLRequest=fZFBa4QwEIX%2fSshdE23VNbiCVApCe%2bmWHnopMcZuICY2k5T%2b%2fEY9li7M6fHevPmYBviiV9YFfzUv8itI8Gjoz%2fjjRLNTzscpySbBk%2fuMF0ld0zGZqrEoyrIq6Txj9CYdKGvOOE8pRgNAkIMBz42PEs2zhMYpXmnF6B3LaErr%2fB2jPrYow%2f2evHq%2fAiOETzOkYLV16pN7qfkIqbDLrhMNBKMHa0Bum4MzzHJQwAxfJDAv2KV7fmLxCCYOEwsGVinUrOSE0c%2biDbAd9XZ6ddZbYTVumx3GHdHbIQ4g3QaD2w0msnT94%2bVflmj%2bVkIC8S6Ab8hR1Dbk7yvaXw%3d%3d\ProtocolBinding=urn%3aoasis%3anames%3atc%3aSAML%3a2.0%3abindings%3aHTTP-Redirect\Signature=RmBRqkVCb0tqKOxARGPS%2bPQFKrWVE2LC4%2b%2bGkLdCRVeWRAIu1%2fFyAXYmtGwwYXeKeNaPL27gPLfIeVjymc%2bgeZhW9ExPWdAC5v9XPKf71RCop4N9cFhuev3QFcOoWA4ggv5MlcuK1yxxeNd2WCBEseCHQ9X%2fiBIh6fWqysJZ9kFPNJC%2bdYfyPZONJjEdXQEbLunyep3F8nJTlPTv0LgN2udJuliw8NFm%2b244w8We6eA8RFaDXSaZH07FmivLO54605xX84v8xme%2bPWLaFE7SsthKbJ9h%2bvN%2bw1DPztuwr1Vx951UACI2HIuGXOCvXUGzwUXUr4deXwm2PLbECrFx8g%3d%3d\SigAlg=http%3a%2f%2fwww.w3.org%2f2001%2f04%2fxmldsig-more%23rsa-sha256\QueryStringHash=9i3fjTpqqcTeP9w2KAbNGfc8DwgWI5ffWhNR3Ik2mHc%3d
 </code></pre>
 
-<p>After Url decoding everything, we get to the <code class="highlighter-rouge">SamlRequest</code> base64 encoded value as shown below:</p>
+<p>After Url decoding the <code class="highlighter-rouge">baseUrl</code> value, we get the following value:</p>
 
-<pre><code class="language-Block">fZFNS8QwEIb/Ssk9TZrtrjZ0C8UiFPTiigcvkqZTN5AmNZOKP99+HMW9Du8z7zxMiWq0k6zneHUv8DUDxqRtzuTjeBI9nI6CZrkSNB+goN0911TooQDd3XUDz0nyBgGNd2ciUk6SFnGG1mFULi4jLjjNBD1kr5xLcZCCp1mRvZOkWVqMU3EjrzFOKBlT/YApeuuD+VQRrOow1X7c5swiI8mDdwjr5jk46RUalE6NgDJqeamfn+RyhNR7SM4OJ9BmMNCT5Ge0DuWmepuego9ee0uqcpMJO3obUogQVhlSrTKLS908Xv51WcLfRgOyGGaMJduLqpL9fUX1Cw==
+<pre><code class="language-Block">https://adfs.solorigatelabs.com/adfs/ls/\SAMLRequest=fZFBa4QwEIX/SshdE23VNbiCVApCe+mWHnopMcZuICY2k5T+/EY9li7M6fHevPmYBviiV9YFfzUv8itI8Gjoz/jjRLNTzscpySbBk/uMF0ld0zGZqrEoyrIq6Txj9CYdKGvOOE8pRgNAkIMBz42PEs2zhMYpXmnF6B3LaErr/B2jPrYow/2evHq/AiOETzOkYLV16pN7qfkIqbDLrhMNBKMHa0Bum4MzzHJQwAxfJDAv2KV7fmLxCCYOEwsGVinUrOSE0c+iDbAd9XZ6ddZbYTVumx3GHdHbIQ4g3QaD2w0msnT94+Vflmj+VkIC8S6Ab8hR1Dbk7yvaXw==
 </code></pre>
 
-<p>After base64 decoding that string, we can get its XML format (<code class="highlighter-rouge">AuthnRequest message</code>)</p>
+<p>We can then take the deflated base64 encoded SAML Message inside of the <code class="highlighter-rouge">SamlRequest</code> and decode and inflate it.</p>
 
-<pre><code class="language-xmlblock">&lt;?xml version="1.0"?&gt;
-&lt;samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="_562de652-14a2-4fe9-b80c-2cf9ecb7bf04" Version="2.0" IssueInstant="2020-12-31T00:23:20.191Z" Destination="https://adfs.solorigatelabs.com/adfs/ls/" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"&gt;
-  &lt;Issuer xmlns="urn:oasis:names:tc:SAML:2.0:assertion"&gt;http://ADFS.solorigatelabs.com/adfs/services/trust&lt;/Issuer&gt;
-&lt;/samlp:AuthnRequest&gt;
+<pre><code class="language-Block">&lt;samlp:AuthnRequest ID="_80182abd-1dca-41a5-990b-d7b5566760ff" Version="2.0" IssueInstant="2021-01-05T07:03:10.092Z" Destination="https://adfs.solorigatelabs.com/adfs/ls/" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"&gt;&lt;Issuer xmlns="urn:oasis:names:tc:SAML:2.0:assertion"&gt;http://ADFS.solorigatelabs.com/adfs/services/trust&lt;/Issuer&gt;&lt;/samlp:AuthnRequest&gt;
 </code></pre>
 
 <p>This message contains details needed by the ADFS server (Identity Provider) to process the user authentication. You can also decode all those string with tools from here <a href="https://www.samltool.com/online_tools.php">https://www.samltool.com/online_tools.php</a>.</p>
+
+<p><strong>Recipe:</strong></p>
+<ul>
+  <li>Base64 Decode</li>
+  <li>URL Decode</li>
+  <li>Base64 Decode + Inflate</li>
+</ul>
 
 <h3 id="3-enter-credentials-in-logon-form">3. Enter Credentials in Logon Form</h3>
 
@@ -390,9 +425,54 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p>The Identity Provider decodes the <code class="highlighter-rouge">SAMLRequest</code> and performs the user authentication via Kerberos.</p>
 
-<p><strong>AS-REQ</strong></p>
+<p><strong>AS-REQ</strong> (Client -&gt; Domain Controller</p>
 
-<p>ADFS server handles the authentication process and sends an AS-REQ message to the domain controller on behalf of the domain user that is trying to authenticate.</p>
+<p>The client first sends a request to the Kerberos Authentication Service (AS) to get TGT.</p>
+
+<ul>
+  <li>Client-Principal: pgustavo</li>
+  <li>Principal Service: krbtgt/SOLORIGATELABS</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_asreq.png" alt="" /></p>
+
+<p><strong>PREAUTH_REQUIRED</strong> (Domain Controller -&gt; Client)</p>
+
+<blockquote>
+  <p>Kerberos Pre-Authentication is a security feature which offers protection against password-guessing attacks. The AS request identifies the client to the KDC in Plaintext. If Kerberos Pre-Authentication is enabled, a Timestamp will be encrypted using the user’s password hash as an encryption key. If the KDC reads a valid time when using the user’s password hash, which is available in the Microsoft Active Directory, to decrypt the Timestamp, the KDC knows that request isn’t a replay of a previous request.</p>
+</blockquote>
+
+<p>Error Code: 25 - HEX -&gt; 0x19 (<a href="https://ldapwiki.com/wiki/Kerberos%20Error%20Codes">Source</a>)</p>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_required_auth.png" alt="" /></p>
+
+<p><strong>AS-REQ</strong> (Client -&gt; Domain Controller)</p>
+
+<p>The client sends another request to the Kerberos Authentication Service (AS), but with the encrypted timestamp this time.</p>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_asreq2.png" alt="" /></p>
+
+<p><strong>AS-RESP</strong> (Domain Controller -&gt; Client)</p>
+
+<p>Client receives a response with a TGT for user pgustavo. This is just to request a service ticket to access the ADFS service.</p>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_asresp.png" alt="" /></p>
+
+<p><strong>TGS-REQ</strong> (Client -&gt; Domain Controller)</p>
+
+<p>Client requests access to <code class="highlighter-rouge">adfs.solorigatelabs.com</code> to the Ticket Granting Server (TGS)</p>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_tgsreq.png" alt="" /></p>
+
+<p><strong>TGS-REP</strong> (Domain Controller -&gt; Client)</p>
+
+<p>TGS responds with a service ticket to the <code class="highlighter-rouge">adfs.solorigatelabs.com</code> (HTTP)</p>
+
+<p><img src="assets/images/blog/2020-12-30_22_client_wireshark_tgsresp.png" alt="" /></p>
+
+<p><strong>AS-REQ</strong> (ADFS -&gt; Domain Controller)</p>
+
+<p>After pgustavo enters its credentials, the ADFS server handles the authentication process and sends a request to the Kerberos Authentication Service (AS) on behalf of pgustavo.</p>
 
 <ul>
   <li>User being authenticated: <strong>pgustavo</strong></li>
@@ -402,21 +482,13 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p><img src="assets/images/blog/2020-12-30_22_adfs_server_wireshark_asreq.png" alt="" /></p>
 
-<p><strong>PREAUTH_REQUIRED</strong></p>
-
-<blockquote>
-  <p>Kerberos Pre-Authentication is a security feature which offers protection against password-guessing attacks. The AS request identifies the client to the KDC in Plaintext. If Kerberos Pre-Authentication is enabled, a Timestamp will be encrypted using the user’s password hash as an encryption key.</p>
-</blockquote>
-
-<p>Error Code: 25 - HEX -&gt; 0x19 (<a href="https://ldapwiki.com/wiki/Kerberos%20Error%20Codes">Source</a>)</p>
+<p><strong>PREAUTH_REQUIRED</strong> (Domain Controller -&gt; ADFS)</p>
 
 <p><img src="assets/images/blog/2020-12-30_23_adfs_server_wireshark_preauth.png" alt="" /></p>
 
-<p>TCP connection closes!</p>
+<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REQ</strong> (ADFS -&gt; Domain Controller)</p>
 
-<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REQ</strong></p>
-
-<p>S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket for <code class="highlighter-rouge">pgustavo</code></p>
+<p>S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket on behalf of <code class="highlighter-rouge">pgustavo</code></p>
 
 <blockquote>
   <p>In a KRB_TGS_REQ and KRB_TGS_REP subprotocol message sequence, a Kerberos principal uses its ticket-granting ticket (TGT) to request a service ticket to a service. The TGS uses the requesting principal’s identity from the TGT passed in the KRB_TGS_REQ message to create the service ticket.</p>
@@ -426,7 +498,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
   <p>In the S4U2self TGS exchange subprotocol extension, a service requests a service ticket to itself on behalf of a user. The user is identified to the KDC by the user name and user realm. Alternatively, the user might be identified using the user’s certificate.</p>
 </blockquote>
 
-<p><code class="highlighter-rouge">The service uses its own TGT and adds a new type of padata</code>. This is why we did not get another AS-REQ and AS-REP to get a TGT.</p>
+<p><code class="highlighter-rouge">The service uses its own TGT and adds a new type of padata</code></p>
 
 <blockquote>
   <p>If the service possesses the user certificate, it can obtain a service ticket to itself on that user’s behalf using the S4U2self TGS exchange subprotocol extension, with a new padata type PA-S4U-X509-USER (ID 130)</p>
@@ -436,19 +508,21 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 <p><img src="assets/images/blog/2020-12-30_25_adfs_server_wireshark_s4u2self.png" alt="" /></p>
 
-<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REP</strong></p>
+<p><strong>S4U2self TGS Exchange (Delegation) - TGS-REP</strong> (Domain Controller -&gt; ADFS)</p>
 
-<p>The ADFS service gets a ticket that describes the user <code class="highlighter-rouge">pgustavo</code></p>
+<p>The ADFS service gets a ticket with the username <code class="highlighter-rouge">pgustavo</code> and the service name mapped to the <code class="highlighter-rouge">adfsuser</code> account.</p>
 
 <p><img src="assets/images/blog/2020-12-30_26_adfs_server_wireshark_s4u2self.png" alt="" /></p>
 
-<p>We coul also validate the step where pgustavo sent an <code class="highlighter-rouge">AP-REQ</code> . This is parsed by the <code class="highlighter-rouge">Kerberos</code> extension.</p>
+<p><strong>AP-REQ</strong> (Client -&gt; ADFS)</p>
+
+<p>After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in the authorization header (Negotiate). This is parsed by the Fiddler <code class="highlighter-rouge">Kerberos</code> extension.</p>
 
 <p><img src="assets/images/blog/2020-12-30_27-adfs_client_fiddler_kerberos_apreq.png" alt="" /></p>
 
 <h3 id="4-successful-authentication--authentication-cookies">4. Successful Authentication &amp; Authentication Cookies</h3>
 
-<p>A final redirection occurs since we are simply authenticating against the ADFS server to validate we can authenticate. There are no service providers set up.</p>
+<p>A final redirection occurs since we are simply authenticating against the ADFS server. Remember there are no service providers set up.</p>
 
 <p><img src="assets/images/blog/2020-12-30_28_adfs_client_fiddler_redirection.png" alt="" /></p>
 
@@ -746,18 +820,18 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</div>
+    <div class="floating-header-title">Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Inspecting+Default+ADFS+Identity+Provider+Initiated+Sign+On+Page+with+Fiddler+and+Wireshark&amp;url=adfs_default_idp_initiatedsignon_network"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Exploring+ADFS+Initial+Web+Traffic+and+Kerberos+Authentication+via+Fiddler+and+Wireshark&amp;url=adfs_initial_web_kerberos_network"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=adfs_default_idp_initiatedsignon_network"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=adfs_initial_web_kerberos_network"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
@@ -782,7 +856,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
         <!-- The footer at the very bottom of the screen -->
         <footer class="site-footer outer">
             <div class="site-footer-content inner">
-                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2020</section>
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2021</section>
                 <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
                     <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
                     <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>

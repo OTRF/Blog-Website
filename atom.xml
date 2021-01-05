@@ -38,16 +38,16 @@
     
       
       <item>
-        <title>Inspecting Default ADFS Identity Provider Initiated Sign On Page with Fiddler and Wireshark</title>
+        <title>Exploring ADFS Initial Web Traffic and Kerberos Authentication via Fiddler and Wireshark</title>
         
-          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) &lt;a href=&quot;https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS&quot;&gt;template&lt;/a&gt; to learn how to set up an Active Directory Federation Service (ADFS) server. After the deployment, I wanted to learn more about the processes to authenticate a user via the ADFS server and test whether or not authentication was even working before creating a trust with an external service provider (i.e. Microsoft 365).&lt;/p&gt;
+          <description>&lt;p&gt;I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) &lt;a href=&quot;https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS&quot;&gt;template&lt;/a&gt; to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.&lt;/p&gt;
 
 </description>
         
         <pubDate>Wed, 30 Dec 2020 06:00:00 -0500</pubDate>
         <link>
-        https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network</link>
-        <guid isPermaLink="true">https://blog.openthreatresearch.com/adfs_default_idp_initiatedsignon_network</guid>
+        https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network</guid>
       </item>
       
     
