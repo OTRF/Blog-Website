@@ -13,7 +13,7 @@ author: roberto
 
 I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) [template](https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS) to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.
 
-In this post, I will show you how to use [fiddler](https://www.telerik.com/fiddler) and [Wireshark](https://www.wireshark.org/) to inspect the network traffic generated while accessing and providing credentials to the default ADFS Sign On page via the Intranet. This basic example does not require to have a SAML Service Provider (Relatying Party Trust) set up since, once again, I am interested in the process before getting an authentication token.
+In this post, I will show you how to use [fiddler](https://www.telerik.com/fiddler) and [Wireshark](https://www.wireshark.org/) to inspect the network traffic generated while accessing and providing credentials to the default ADFS Sign On page via the Intranet. This basic example does not require to have a SAML Service Provider (Relaying Party Trust) set up since, once again, I am interested in the process before getting an authentication token.
 
 ## Requirements
 * An Active Directory (AD) Environment with a Domain Controller (DC)
