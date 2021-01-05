@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/fiddler/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-01-05T13:08:05-05:00</updated>
+  <updated>2021-01-05T14:57:25-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/fiddler/feed.xml</id>
 
   
@@ -45,7 +45,7 @@
       <id>https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network</id>
       <content type="html" xml:base="https://blog.openthreatresearch.com/adfs_initial_web_kerberos_network">&lt;p&gt;I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) &lt;a href=&quot;https://github.com/OTRF/Blacksmith/tree/master/templates/azure/Win10-AD-ADFS&quot;&gt;template&lt;/a&gt; to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.&lt;/p&gt;
 
-&lt;p&gt;In this post, I will show you how to use &lt;a href=&quot;https://www.telerik.com/fiddler&quot;&gt;fiddler&lt;/a&gt; and &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; to inspect the network traffic generated while accessing and providing credentials to the default ADFS Sign On page via the Intranet. This basic example does not require to have a SAML Service Provider (Relatying Party Trust) set up since, once again, I am interested in the process before getting an authentication token.&lt;/p&gt;
+&lt;p&gt;In this post, I will show you how to use &lt;a href=&quot;https://www.telerik.com/fiddler&quot;&gt;fiddler&lt;/a&gt; and &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; to inspect the network traffic generated while accessing and providing credentials to the default ADFS Sign On page via the Intranet. This basic example does not require to have a SAML Service Provider (Relaying Party Trust) set up since, once again, I am interested in the process before getting an authentication token.&lt;/p&gt;
 
 &lt;h2 id=&quot;requirements&quot;&gt;Requirements&lt;/h2&gt;
 &lt;ul&gt;
