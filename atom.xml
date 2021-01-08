@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>How to set up a Microsoft Defender for Identity Sensor on a Domain Controller</title>
+        
+          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template to deploy a lab environment to validate the detection of identity attacks and wanted to deploy &lt;a href=&quot;https://www.microsoft.com/en-us/microsoft-365/security/identity-defender&quot;&gt;Microsoft Defender for Identity&lt;/a&gt; to test the protection of on-premises identities and correlation of signals with Microsoft 365.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 07 Jan 2021 05:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/microsoft365-identity-sensors-install</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/microsoft365-identity-sensors-install</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</title>
         
           <description>&lt;p&gt;I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.&lt;/p&gt;

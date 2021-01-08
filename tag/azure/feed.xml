@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/azure/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-01-05T14:57:25-05:00</updated>
+  <updated>2021-01-08T00:25:33-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/azure/feed.xml</id>
 
   
@@ -36,6 +36,116 @@
   
   
 
+  
+    <entry>
+      <title type="html">How to set up a Microsoft Defender for Identity Sensor on a Domain Controller</title>
+      <link href="https://blog.openthreatresearch.com/microsoft365-identity-sensors-install" rel="alternate" type="text/html" title="How to set up a Microsoft Defender for Identity Sensor on a Domain Controller" />
+      <published>2021-01-07T05:00:00-05:00</published>
+      <updated>2021-01-07T05:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/microsoft365-identity-sensors-install</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/microsoft365-identity-sensors-install">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template to deploy a lab environment to validate the detection of identity attacks and wanted to deploy &lt;a href=&quot;https://www.microsoft.com/en-us/microsoft-365/security/identity-defender&quot;&gt;Microsoft Defender for Identity&lt;/a&gt; to test the protection of on-premises identities and correlation of signals with Microsoft 365.&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show you how to install and configure a Microsoft Defender for Identity sensor on a Domain Controller.&lt;/p&gt;
+
+&lt;h2 id=&quot;requirements&quot;&gt;Requirements&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Active Directory Domain Controller&lt;/li&gt;
+  &lt;li&gt;Microsoft .Net Framework 4.7 or later installed on the DC&lt;/li&gt;
+  &lt;li&gt;On-prem AD synced with Azure AD Tenant (Microsoft 365 Subscription)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;access-microsoft-defender-for-identity-portal&quot;&gt;Access Microsoft Defender For Identity Portal&lt;/h2&gt;
+&lt;p&gt;Browse to &lt;a href=&quot;https://portal.atp.azure.com/&quot;&gt;https://portal.atp.azure.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_01_microsoft365_identity_setup.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;connect-to-on-prem-active-directory-forest&quot;&gt;Connect to On-Prem Active Directory Forest&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_02_microsoft365_identity_access_ad.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;download-microsoft-defender-for-identity-sensor&quot;&gt;Download Microsoft Defender for Identity Sensor&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download to save the package locally&lt;/li&gt;
+  &lt;li&gt;Copy the Access key. The access key is required for the Defender for Identity sensor to connect to our Defender for Identity instance.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_03_microsoft365_identity_sensor_setup.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;install-mdi-sensor&quot;&gt;Install MDI Sensor&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Make sure Microsoft .Net Framework 4.7 or later is installed on my servers. You could do it with the following PowerShell command:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-ItemProperty &quot;HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full&quot;).Release -ge 460798
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Extract the installation files from the zip file&lt;/li&gt;
+  &lt;li&gt;Run Azure ATP sensor setup.exe and follow the setup wizard&lt;/li&gt;
+  &lt;li&gt;Select your language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_04_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The installation wizard automatically checks if the server is a domain controller, a dedicated server or an Active Directory Federation Services (Server).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_05_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enter the Access Key from the Microsoft Defender for Identity portal&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_06_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_07_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_08_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After the installation completes, you will see the domain controller sensor in the Microsoft Defender for Identity Portal. It will configure itself as you can see in the images below&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_09_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-07_10_microsoft365_identity_sensor_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That’s it! That’s how easy it is to deploy an MDI sensor in your environment!&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/defender-for-identity/install-step1&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Roberto Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Azure" />
+      
+        <category term="MDI" />
+      
+
+      
+        <summary type="html">I recently created an Azure Resource Manager (ARM) template to deploy a lab environment to validate the detection of identity attacks and wanted to deploy Microsoft Defender for Identity to test the protection of on-premises identities and correlation of signals with Microsoft 365.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</title>
