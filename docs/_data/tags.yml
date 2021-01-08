@@ -42,3 +42,7 @@ azure-arm:
   name: azure-arm
   description: Azure Resource Manager (ARM) Templates
   cover: False
+mdi:
+  name: mdi
+  description: Microsoft Defender for Identity
+  cover: False
