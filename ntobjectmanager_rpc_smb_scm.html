@@ -43,7 +43,7 @@
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" />
-    <meta property="og:description" content="I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client" />
+    <meta property="og:description" content="I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try. In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call" />
     <meta property="og:url" content="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" />
     <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/2021-02-05_0_cover.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
@@ -53,7 +53,7 @@
     <meta property="article:tag" content="Ntobjectmanager" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" />
-    <meta name="twitter:description" content="I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client" />
+    <meta name="twitter:description" content="I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try. In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call" />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
     <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/2021-02-05_0_cover.png" />
     <meta name="twitter:label1" content="Written by" />
@@ -85,7 +85,7 @@
         "@type": "WebPage",
         "@id": "https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm"
     },
-    "description": "I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client"
+    "description": "I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try. In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call"
 }
     </script>
 
@@ -181,9 +181,9 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB</p>
+                    <p>I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.</p>
 
-<p>In this post, I will show you how to use a PowerShell module named <a href="https://www.powershellgallery.com/packages/NtObjectManager/">NtObjectManager</a>, developed by James Forshaw <a href="https://twitter.com/tiraniddo">@tiraniddo</a>, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the the Server Message Block (SMB) Protocol and we will go step-by-step calling each specific RPC method to create and start the service.</p>
+<p>In this post, I will show you how to use a PowerShell module named <a href="https://www.powershellgallery.com/packages/NtObjectManager/">NtObjectManager</a>, developed by James Forshaw <a href="https://twitter.com/tiraniddo">@tiraniddo</a>, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the Server Message Block (SMB) Protocol, and we will go step-by-step calling each RPC method needed to create and start the service.</p>
 
 <p>The PowerShell scripts utilized in the post are available in the <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions">WinRPCFunctions</a> project in Github.</p>
 
@@ -199,7 +199,7 @@ into the {body} of the default.hbs template -->
 
 <p>The following is the registry key for this database: <code class="highlighter-rouge">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services</code>. This key contains a subkey for each installed service and driver service. The name of the subkey is the name of the service.</p>
 
-<p>Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The RPC interface universally unique identifier (UUID) allocated to the SCM RPC server is <code class="highlighter-rouge">367ABB81-9844-35F1-AD32-98F038001003</code> and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint <code class="highlighter-rouge">\PIPE\svcctl</code> in order to handle client remote procedure calls.</p>
+<p>Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The SCM RPC server interface universally unique identifier (UUID) is <code class="highlighter-rouge">367ABB81-9844-35F1-AD32-98F038001003</code> and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint <code class="highlighter-rouge">\PIPE\svcctl</code>.</p>
 
 <h2 id="what-is-ntobjectmanager">What is NtObjectManager?</h2>
 
@@ -242,7 +242,7 @@ into the {body} of the default.hbs template -->
 
 <h2 id="install-ntobjectmanager">Install NtObjectManager</h2>
 
-<p>In a fresh VM, I had to run the following commands to set PSGallery repository and install new modules.</p>
+<p>In a fresh VM, I had to run the following commands to set the PSGallery repository and install new modules.</p>
 
 <pre><code class="language-PowerShell">Set-ExecutionPolicy Unrestricted -Force
 
@@ -265,7 +265,7 @@ Register-PSRepository -Default
 
 <h2 id="set-dbghelp-dll-path-for-symbols-resolving">Set DbgHelp DLL path for Symbols Resolving</h2>
 
-<p>In order to parse RPC servers and resolve RPC procedures we can specify the path to the dbghelp DLL from Windows SDK. The dbghelp.dll is provided after installing debugging tools for Windows. You can install it via the <a href="https://medium.com/r/?url=https%3A%2F%2Fdeveloper.microsoft.com%2Fwindows%2Fdownloads%2Fwindows-10-sdk">Windows 10 SDK setup</a> or programmatically with the following commands:</p>
+<p>In order to parse RPC servers and resolve RPC procedures, we can specify the path to the dbghelp DLL from Windows SDK. The dbghelp.dll is provided after installing debugging tools for Windows. You can install it via the <a href="https://medium.com/r/?url=https%3A%2F%2Fdeveloper.microsoft.com%2Fwindows%2Fdownloads%2Fwindows-10-sdk">Windows 10 SDK setup</a> or programmatically with the following PowerShell commands:</p>
 
 <pre><code class="language-PowerShell"># Download Installer
 $url = "https://go.microsoft.com/fwlink/p/?linkid=2083338&amp;clcid=0x409"
@@ -285,18 +285,17 @@ Start-Process "C:\ProgramData\winsdksetup.exe" -Wait -ArgumentList '/features Op
 <h2 id="start-and-create-services-via-rpc-model">Start and Create Services via RPC Model</h2>
 
 <p>Now that we have <code class="highlighter-rouge">NtObjectManager</code> imported and our symbols resolving path set, let’s take a look at what we are going to do next.
-The image below is a simple representation of some of the remote procedure calls that we can use to create and start a service.
-I also added the two type of transports one could use to carry the RPC traffic. All this is based on the <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/4c8b7701-b043-400c-9350-dc29cfaa5e7a">SCM Remote Protocol documentation</a>. Of course there are other ways to create a service remotely.</p>
+The image below is a simple representation of some of the remote procedure calls that we can use to create and start a service.</p>
+
+<p>I also added the two type of transports one could use to carry the RPC traffic. All this is based on <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/4c8b7701-b043-400c-9350-dc29cfaa5e7a">SCM Remote Protocol documentation</a>. Of course there are other ways to create a service remotely.</p>
 
 <p><img src="assets/images/blog/2021-02-05_02_rpc_scm_model.png" alt="" /></p>
 
-<p>So, how can we create an RPC client to use all those RPC methods to create and start a service?</p>
+<p>So, how can we create a RPC client to call for all those RPC methods and create or start a service?</p>
 
 <h2 id="parse-scm-rpc-server">Parse SCM RPC Server</h2>
 
-<p>We first need to find and parse the SCM RPC server as an object to then create an RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is <code class="highlighter-rouge">367abb81-9844-35f1-ad32-98f038001003</code>.</p>
-
-<p>Therefore, we can use the <code class="highlighter-rouge">Get-RpcServer</code> command to find the <code class="highlighter-rouge">.dll or .exe</code> that hosts the SCM RPC server code. As you can see, we are looking for objects with <code class="highlighter-rouge">InterfaceId</code> that matches our RPC server interface UUID.</p>
+<p>First, we need to find and parse the SCM RPC server in order to create a RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is <code class="highlighter-rouge">367abb81-9844-35f1-ad32-98f038001003</code>. Therefore, we can use the <code class="highlighter-rouge">Get-RpcServer</code> command to find the <code class="highlighter-rouge">.dll or .exe</code> that hosts the SCM RPC server code. As you can see, we are looking for objects with <code class="highlighter-rouge">InterfaceId</code> that matches our RPC server interface UUID.</p>
 
 <pre><code class="language-PowerShell">$lookRPC = Get-ChildItem C:\Windows\System32\* -Include '*.dll','*.exe' | Get-RpcServer
 $scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003'}
@@ -312,12 +311,12 @@ $scmServer | fl
 
 <h2 id="create-rpc-client">Create RPC Client</h2>
 
-<p>We can use the <code class="highlighter-rouge">Get-RpcClient</code> command to create a new RPC client from the the parsed RPC server.</p>
+<p>Next, we can use the <code class="highlighter-rouge">Get-RpcClient</code> command to create a new RPC client from the the parsed RPC server.</p>
 
 <pre><code class="language-PowerShell">$scmClient = Get-RpcClient $scmServer
 </code></pre>
 
-<p>We can explore the available methods to send remote procedure calls from our RPC client.</p>
+<p>We can also explore the available methods from the RPC client object to send remote procedure calls to the SCM RPC server.</p>
 
 <pre><code class="language-PowerShell">$scmClient | Get-Member -MemberType Method
 </code></pre>
@@ -326,7 +325,7 @@ $scmServer | fl
 
 <h2 id="connect-rpc-client-to-remote-rpc-endpoint">Connect RPC Client to Remote RPC Endpoint</h2>
 
-<p>The client starts off disconnected as you can see below. Therefore, we need to pass the RPC client to the <code class="highlighter-rouge">Connect-RpcClient</code> command to connect to the remote RPC endpoint.</p>
+<p>As you can see in the image below, the RPC client starts off disconnected. Therefore, we can use the <code class="highlighter-rouge">Connect-RpcClient</code> command to connect the RPC client to the remote RPC endpoint.</p>
 
 <pre><code class="language-PowerShell">$scmClient
 </code></pre>
@@ -340,7 +339,7 @@ $scmServer | fl
   <li><strong>EndpointPath</strong>: The named pipe <code class="highlighter-rouge">\pipe\svcctl</code></li>
   <li><strong>ProtocolSequence</strong>: ncacn_np (naped pipes)</li>
   <li><strong>NetworkAddress</strong>: The IP address of the remote endpoint</li>
-  <li><strong>-SecurityQualityOfService</strong>: Impersonation level (i.e. Impersonation)</li>
+  <li><strong>SecurityQualityOfService</strong>: Impersonation level (i.e. Impersonation)</li>
 </ul>
 
 <pre><code class="language-PowerShell">Connect-RpcClient -Client $scmClient -EndpointPath "\pipe\svcctl" -ProtocolSequence ncacn_np -NetworkAddress 192.168.2.5 -SecurityQualityOfService $(New-NtSecurityQualityOfService -ImpersonationLevel Impersonation)
@@ -357,7 +356,7 @@ $scmServer | fl
 
 <p><img src="assets/images/blog/2021-02-05_07_wireshark_connect_rpcclient.png" alt="" /></p>
 
-<p>We are now ready to send a few remote procedures call with our RPC client!</p>
+<p>We are now ready to send a few remote procedures call to the RPC server!</p>
 
 <h2 id="create-service-remotely-rpc-calls">Create Service Remotely RPC Calls</h2>
 
@@ -371,13 +370,13 @@ $scmServer | fl
 
 <h2 id="send-ropenscmanagerw-call">Send ROpenSCManagerW Call</h2>
 
-<p>The <code class="highlighter-rouge">ROpenSCManagerW</code> method establishes a connection to server and opens the SCM database on the specified server.</p>
+<p>The <code class="highlighter-rouge">ROpenSCManagerW</code> method establishes a connection to the server and opens the SCM database on the specified server.</p>
 
 <p>The parameters that we are going to pass to our remote procedure call are the following:</p>
 
 <ul>
   <li><strong>MachineName</strong>: Name of remote endpoint</li>
-  <li><strong>DatabaseName</strong>: Name of databse (i.e. <code class="highlighter-rouge">ServicesActive</code>)</li>
+  <li><strong>DatabaseName</strong>: Name of database (i.e. <code class="highlighter-rouge">ServicesActive</code>)</li>
   <li><strong>DesiredAccess</strong>: A value that specifies the access to the database</li>
 </ul>
 
@@ -393,7 +392,7 @@ $scmServer | fl
   <li>SC_MANAGER_QUERY_LOCK_STATUS (0x0010): Required to call the QueryServiceLockStatus function to retrieve the lock status information for the database.</li>
 </ul>
 
-<p>We can run the following to connect to our remote workstation <code class="highlighter-rouge">WORKSTATION6</code>, open the SCM Database <code class="highlighter-rouge">ServicesActive</code> and get a handle with <code class="highlighter-rouge">SC_MANAGER_CREATE_SERVICE</code> access rights</p>
+<p>We can run the following to connect to our remote workstation <code class="highlighter-rouge">WORKSTATION6</code>, open the SCM Database <code class="highlighter-rouge">ServicesActive</code> and get a handle with <code class="highlighter-rouge">SC_MANAGER_CREATE_SERVICE</code> access rights.</p>
 
 <pre><code class="language-PowerShell">$Result = $scmClient.ROpenSCManagerW("WORKSTATION6","ServicesActive",[NtApiDotNet.Win32.ServiceControlManagerAccessRights]::CreateService)
 
@@ -410,7 +409,7 @@ $scmHandle
 
 <h2 id="send-rcreateservicew-call">Send RCreateServiceW Call</h2>
 
-<p>Now that we obtained a handle to the SCM databaqse, we can send the <code class="highlighter-rouge">RCreateServiceW</code> call to create a service remotely.
+<p>After obtaining a handle to the SCM database, we can send the <code class="highlighter-rouge">RCreateServiceW</code> call to create a service remotely.
 The <code class="highlighter-rouge">RCreateServiceW</code> method creates the service record in the SCM database.</p>
 
 <p>Most of the parameters that we are going to pass to our remote procedure call are the following:</p>
@@ -426,7 +425,7 @@ The <code class="highlighter-rouge">RCreateServiceW</code> method creates the se
   <li><strong>BinaryPathName</strong>: Fully qualified path to the service binary file. The path MAY include arguments.</li>
 </ul>
 
-<p>We can run the following to create the service <code class="highlighter-rouge">Wardog</code> on the remote endpoint using the <code class="highlighter-rouge">SCM Handle</code> we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> call. Later when we start the<code class="highlighter-rouge">Wardog</code> service, it will execute <code class="highlighter-rouge">cmd.exe</code> and get a list of files and folders in the <code class="highlighter-rouge">C:\</code> drive to then push the results to the <code class="highlighter-rouge">C:\programdata\WardogLog.txt</code>:</p>
+<p>We can run the following to create the service <code class="highlighter-rouge">Wardog</code> on the remote endpoint using the <code class="highlighter-rouge">SCM Handle</code> we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> call. When we later start the<code class="highlighter-rouge">Wardog</code> service, it will execute <code class="highlighter-rouge">cmd.exe</code> and list the files and folders in the <code class="highlighter-rouge">C:\</code> drive to then push the results to a file located at <code class="highlighter-rouge">C:\programdata\WardogLog.txt</code>:</p>
 
 <pre><code class="language-PowerShell"># Set the binarypath with arguments
 $BinaryPathName = '%COMSPEC% /C dir C:\ &gt; C:\programdata\WardogLog.txt'
@@ -473,14 +472,14 @@ $scmClient.RCloseServiceHandle($ServiceCreationHandle)
 <h2 id="send-ropenservicew-call">Send ROpenServiceW Call</h2>
 
 <p>Now that our service has been created, we can start it remotely.
-First, we need to open a handle to the existing Windows service before starting it.
+First, we need to open a handle to the existing Windows service (<code class="highlighter-rouge">Wardog</code> service).
 The <code class="highlighter-rouge">ROpenServiceW</code> method creates an RPC context handle to an existing service record.</p>
 
 <p>The parameters that we are going to pass to our remote procedure call are the following:</p>
 
 <ul>
   <li><strong>SCManager handle</strong>: SCM handle we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> remote procedure call</li>
-  <li><strong>Servicename</strong>: The ServiceName of the service record (i.e. <code class="highlighter-rouge">Wardog</code>)</li>
+  <li><strong>Servicename</strong>: The name of the service record (i.e. <code class="highlighter-rouge">Wardog</code>).</li>
   <li><strong>DesiredAccess</strong>: A value that specifies the access right.</li>
 </ul>
 
@@ -549,7 +548,7 @@ else{
 }
 </code></pre>
 
-<p>We are going to get an error which is expected since we are simply running a few cmd commands.
+<p>We are going to get an error message which is expected since we are simply running a few cmd commands.
 However, the file gets created since the service actually starts, but it just does not stay up.
 We can check again if the file <code class="highlighter-rouge">C:\ProgramData\WardogLog.txt</code> exists on workstation <code class="highlighter-rouge">WORKSTATION6</code>.</p>
 
@@ -570,7 +569,7 @@ We can check again if the file <code class="highlighter-rouge">C:\ProgramData\Wa
 
 <p>You can then extend this and look at other events that might not be as practical yet to collect and consume such as the ones coming from <code class="highlighter-rouge">RPC ETW provider (Microsoft-Windows-RPC)</code></p>
 
-<p>I hope you enjoyed this short post and learned as much as I did while going through this processa.</p>
+<p>I hope you enjoyed this short post and learned as much as I did while going through this process.</p>
 
 <p>I am creating PowerShell script in the <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions">WinRPCFunctions</a> project to expedite the creation of these use cases, so if you want to learn more about it and help create more use cases with the following RPC servers via SMB, let me know:</p>
 

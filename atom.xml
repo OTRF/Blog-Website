@@ -10,7 +10,7 @@
       <item>
         <title>Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title>
         
-          <description>&lt;p&gt;I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB&lt;/p&gt;
+          <description>&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
 
 </description>
         
