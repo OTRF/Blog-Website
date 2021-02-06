@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/ntobjectmanager/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2021-02-05T19:55:49-05:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/ntobjectmanager/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title>
+      <link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" />
+      <published>2021-02-05T07:00:00-05:00</published>
+      <updated>2021-02-05T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB&lt;/p&gt;
+
+&lt;p&gt;In this post, I will show you how to use a PowerShell module named &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager/&quot;&gt;NtObjectManager&lt;/a&gt;, developed by James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt;, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the the Server Message Block (SMB) Protocol and we will go step-by-step calling each specific RPC method to create and start the service.&lt;/p&gt;
+
+&lt;p&gt;The PowerShell scripts utilized in the post are available in the &lt;a href=&quot;https://github.com/Cyb3rWard0g/WinRpcFunctions&quot;&gt;WinRPCFunctions&lt;/a&gt; project in Github.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-rpc&quot;&gt;What is RPC?&lt;/h2&gt;
+
+&lt;p&gt;According to &lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wpo/49801c02-2e60-4133-8c6a-d9e1b6d9c02a#gt_8a7f6700-8311-45bc-af10-82e10accd331&quot;&gt;MS documentation&lt;/a&gt;, RPC is an inter-process communication (IPC) mechanism that enables data exchange and the invocation of functionality that resides in a different process. The different process can be on the same machine, on the local area network (LAN), or across the Internet.&lt;/p&gt;
+
+&lt;p&gt;According to &lt;a href=&quot;https://publications.opengroup.org/c706&quot;&gt;OSF’s Distributed Computing Environment (DCE) 1.1&lt;/a&gt;, the RPC model makes a functional distinction between clients and servers. A client requests a service, and a server provides the service by making resources available to the remote client.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-the-service-control-manager-scm&quot;&gt;What is the Service Control Manager (SCM)?&lt;/h2&gt;
+
+&lt;p&gt;The SCM is an RPC server that enables service configuration and control of service programs. This service is started at system boot and it maintains a database of installed services in the registry. The database, known as the &lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt; database or the SCM database, is used by the SCM and programs that add, modify, or configure services.&lt;/p&gt;
+
+&lt;p&gt;The following is the registry key for this database: &lt;code class=&quot;highlighter-rouge&quot;&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services&lt;/code&gt;. This key contains a subkey for each installed service and driver service. The name of the subkey is the name of the service.&lt;/p&gt;
+
+&lt;p&gt;Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The RPC interface universally unique identifier (UUID) allocated to the SCM RPC server is &lt;code class=&quot;highlighter-rouge&quot;&gt;367ABB81-9844-35F1-AD32-98F038001003&lt;/code&gt; and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint &lt;code class=&quot;highlighter-rouge&quot;&gt;\PIPE\svcctl&lt;/code&gt; in order to handle client remote procedure calls.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-is-ntobjectmanager&quot;&gt;What is NtObjectManager?&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager/&quot;&gt;NtObjectManager&lt;/a&gt; is a PowerShell module from the &lt;a href=&quot;https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools&quot;&gt;sandbox-attacksurface-analysis-tools&lt;/a&gt; developed by James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt; to access the NT object manager namespace.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Windows implements an object model to provide consistent and secure access to the various internal services implemented in the executive. The Windows object manager is an executive component responsible for creating, deleting, protecting, and tracking objects. The object manager centralizes resource control operations that otherwise would be scattered throughout the operating system.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;(Russinovich, Mark,Solomon, David,Ionescu, Alex. Windows Internals, Part 1 (6th Edition) (Developer Reference))&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;According to &lt;a href=&quot;https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library&quot;&gt;MS docs&lt;/a&gt;, the Windows operating system uses the term &lt;code class=&quot;highlighter-rouge&quot;&gt;executive layer&lt;/code&gt; to refer to kernel-mode components that provide a variety of services to device drivers, including:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Object management&lt;/li&gt;
+  &lt;li&gt;Memory management&lt;/li&gt;
+  &lt;li&gt;Process and thread management&lt;/li&gt;
+  &lt;li&gt;Input/output management&lt;/li&gt;
+  &lt;li&gt;Configuration management&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is an image showing the major internal components of the Windows operating system where we can see at what layer the &lt;code class=&quot;highlighter-rouge&quot;&gt;object manager&lt;/code&gt; operates:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_01_windows_components_overview.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-does-ntobjectmanager-have-to-do-with-rpc-and-scm&quot;&gt;What does NtObjectManager have to do with RPC and SCM?&lt;/h2&gt;
+
+&lt;p&gt;Last year, December 18th, 2020, James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt; updated the &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; project to support &lt;code class=&quot;highlighter-rouge&quot;&gt;Named Pipes - RPC Transport&lt;/code&gt; for RPC Clients. Then, on January 15th, 20201, he officially updated the module in &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager&quot;&gt;PowerShell Gallery&lt;/a&gt; to version v.1.1.30 for anyone to simply install, import and play with it.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Released v1.1.30 of NtObjectManager to the PS gallery. Main addition is the support for named pipe RPC clients. Also updated the NuGet packages, they now contain multi-target (no more &amp;quot;Core&amp;quot; versions) as well as full symbols and source link support. &lt;a href=&quot;https://t.co/PQBVIyIrNy&quot;&gt;https://t.co/PQBVIyIrNy&lt;/a&gt;&lt;/p&gt;&amp;mdash; James Forshaw (@tiraniddo) &lt;a href=&quot;https://twitter.com/tiraniddo/status/1350118676091949057?ref_src=twsrc%5Etfw&quot;&gt;January 15, 2021&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;This was great because instead of using command-line utilities such as &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/win32/services/controlling-a-service-using-sc&quot;&gt;SC.exe&lt;/a&gt;, we could now use &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; to programmatically create a RPC client, run a few remote procedure calls and interact with the SCM RPC server of a remote endpoint, all over SMB.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I find this fascinating for threat research because I can go remote procedure call - by - remote procedure call and understand the underlying behavior of someone creating a service remotely over SMB.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ok, time to run some code..&lt;/p&gt;
+
+&lt;h2 id=&quot;install-ntobjectmanager&quot;&gt;Install NtObjectManager&lt;/h2&gt;
+
+&lt;p&gt;In a fresh VM, I had to run the following commands to set PSGallery repository and install new modules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Set-ExecutionPolicy Unrestricted -Force
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Register-PSRepository -Default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install the module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Install-Module NtObjectManager -Force
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Import the module&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Import-Module NtObjectManager -verbose
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;set-dbghelp-dll-path-for-symbols-resolving&quot;&gt;Set DbgHelp DLL path for Symbols Resolving&lt;/h2&gt;
+
+&lt;p&gt;In order to parse RPC servers and resolve RPC procedures we can specify the path to the dbghelp DLL from Windows SDK. The dbghelp.dll is provided after installing debugging tools for Windows. You can install it via the &lt;a href=&quot;https://medium.com/r/?url=https%3A%2F%2Fdeveloper.microsoft.com%2Fwindows%2Fdownloads%2Fwindows-10-sdk&quot;&gt;Windows 10 SDK setup&lt;/a&gt; or programmatically with the following commands:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Download Installer
+$url = &quot;https://go.microsoft.com/fwlink/p/?linkid=2083338&amp;amp;clcid=0x409&quot;
+$wc = new-object System.Net.WebClient
+$request = [System.Net.WebRequest]::Create($url)
+$response = $request.GetResponse()
+$OutputFile = [System.IO.Path]::GetFileName($response.ResponseUri)
+$response.Close()
+$FilePath = &quot;C:\ProgramData\$OutputFile&quot;
+$wc.DownloadFile($url, $FilePath)
+if (!(Test-Path $FilePath)) { Write-Error &quot;Welp!&quot; }
+
+# Install Windows Debuggers - Silently
+Start-Process &quot;C:\ProgramData\winsdksetup.exe&quot; -Wait -ArgumentList '/features OptionId.WindowsDesktopDebuggers /ceip off /q'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;start-and-create-services-via-rpc-model&quot;&gt;Start and Create Services via RPC Model&lt;/h2&gt;
+
+&lt;p&gt;Now that we have &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; imported and our symbols resolving path set, let’s take a look at what we are going to do next.
+The image below is a simple representation of some of the remote procedure calls that we can use to create and start a service.
+I also added the two type of transports one could use to carry the RPC traffic. All this is based on the &lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/4c8b7701-b043-400c-9350-dc29cfaa5e7a&quot;&gt;SCM Remote Protocol documentation&lt;/a&gt;. Of course there are other ways to create a service remotely.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_02_rpc_scm_model.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;So, how can we create an RPC client to use all those RPC methods to create and start a service?&lt;/p&gt;
+
+&lt;h2 id=&quot;parse-scm-rpc-server&quot;&gt;Parse SCM RPC Server&lt;/h2&gt;
+
+&lt;p&gt;We first need to find and parse the SCM RPC server as an object to then create an RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is &lt;code class=&quot;highlighter-rouge&quot;&gt;367abb81-9844-35f1-ad32-98f038001003&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Therefore, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Get-RpcServer&lt;/code&gt; command to find the &lt;code class=&quot;highlighter-rouge&quot;&gt;.dll or .exe&lt;/code&gt; that hosts the SCM RPC server code. As you can see, we are looking for objects with &lt;code class=&quot;highlighter-rouge&quot;&gt;InterfaceId&lt;/code&gt; that matches our RPC server interface UUID.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$lookRPC = Get-ChildItem C:\Windows\System32\* -Include '*.dll','*.exe' | Get-RpcServer
+$scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003'}
+$scmServer | fl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_03_ntobjectmanager_scm_rpc_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The commands above take about 2-3 minutes. Since you already now know that &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\Windows\System32\services.exe&lt;/code&gt; contains the SCM RPC server code, you can simply run this command to expedite the process:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmServer = Get-RpcServer C:\Windows\System32\services.exe | Where-Object { $_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003' }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;create-rpc-client&quot;&gt;Create RPC Client&lt;/h2&gt;
+
+&lt;p&gt;We can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Get-RpcClient&lt;/code&gt; command to create a new RPC client from the the parsed RPC server.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient = Get-RpcClient $scmServer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can explore the available methods to send remote procedure calls from our RPC client.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient | Get-Member -MemberType Method
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_04_ntobjectmanager_rpc_client_procedures.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;connect-rpc-client-to-remote-rpc-endpoint&quot;&gt;Connect RPC Client to Remote RPC Endpoint&lt;/h2&gt;
+
+&lt;p&gt;The client starts off disconnected as you can see below. Therefore, we need to pass the RPC client to the &lt;code class=&quot;highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command to connect to the remote RPC endpoint.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_05_ntobjectmanager_rpc_client_disconnected.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When connecting the RPC Client to the remote RPC endpoint, there are a few parameters that we nee to pass:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Client&lt;/strong&gt;: Our new RPC client&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;EndpointPath&lt;/strong&gt;: The named pipe &lt;code class=&quot;highlighter-rouge&quot;&gt;\pipe\svcctl&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;ProtocolSequence&lt;/strong&gt;: ncacn_np (naped pipes)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;NetworkAddress&lt;/strong&gt;: The IP address of the remote endpoint&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;-SecurityQualityOfService&lt;/strong&gt;: Impersonation level (i.e. Impersonation)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Connect-RpcClient -Client $scmClient -EndpointPath &quot;\pipe\svcctl&quot; -ProtocolSequence ncacn_np -NetworkAddress 192.168.2.5 -SecurityQualityOfService $(New-NtSecurityQualityOfService -ImpersonationLevel Impersonation)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can now check and see if the RPC client is connected. It is ;) !&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_06_ntobjectmanager_rpc_client_connected.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_07_wireshark_connect_rpcclient.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We are now ready to send a few remote procedures call with our RPC client!&lt;/p&gt;
+
+&lt;h2 id=&quot;create-service-remotely-rpc-calls&quot;&gt;Create Service Remotely RPC Calls&lt;/h2&gt;
+
+&lt;p&gt;We will send the following RPC calls from our client to the SCM RPC server:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/dc84adb3-d51d-48eb-820d-ba1c6ca5faf2&quot;&gt;ROpenSCManagerW (Opnum 15)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6a8ca926-9477-4dd4-b766-692fab07227e&quot;&gt;RCreateServiceW (Opnum 12)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c&quot;&gt;RCloseServiceHandle (Opnum 0)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;send-ropenscmanagerw-call&quot;&gt;Send ROpenSCManagerW Call&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; method establishes a connection to server and opens the SCM database on the specified server.&lt;/p&gt;
+
+&lt;p&gt;The parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;MachineName&lt;/strong&gt;: Name of remote endpoint&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DatabaseName&lt;/strong&gt;: Name of databse (i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access to the database&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The SCM Access Rights options are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SC_MANAGER_ALL_ACCESS (0xF003F): Includes STANDARD_RIGHTS_REQUIRED, in addition to all access rights in this table.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_CREATE_SERVICE (0x0002): Required to call the CreateService function to create a service object and add it to the database.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_CONNECT (0x0001): Required to connect to the service control manager.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_ENUMERATE_SERVICE (0x0004): Required to call the EnumServicesStatus or EnumServicesStatusEx function to list the services that are in the database. Required to call the NotifyServiceStatusChange function to receive notification when any service is created or deleted.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_LOCK (0x0008): Required to call the LockServiceDatabase function to acquire a lock on the database.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_MODIFY_BOOT_CONFIG (0x0020): Required to call the NotifyBootConfigStatus function.&lt;/li&gt;
+  &lt;li&gt;SC_MANAGER_QUERY_LOCK_STATUS (0x0010): Required to call the QueryServiceLockStatus function to retrieve the lock status information for the database.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can run the following to connect to our remote workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;, open the SCM Database &lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt; and get a handle with &lt;code class=&quot;highlighter-rouge&quot;&gt;SC_MANAGER_CREATE_SERVICE&lt;/code&gt; access rights&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result = $scmClient.ROpenSCManagerW(&quot;WORKSTATION6&quot;,&quot;ServicesActive&quot;,[NtApiDotNet.Win32.ServiceControlManagerAccessRights]::CreateService)
+
+# Extract the handle
+$scmHandle = $Result.p3
+$scmHandle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_08_ntobjectmanager_ropenscmanagerw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_09_wireshark_ropenscmanagerw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;send-rcreateservicew-call&quot;&gt;Send RCreateServiceW Call&lt;/h2&gt;
+
+&lt;p&gt;Now that we obtained a handle to the SCM databaqse, we can send the &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; call to create a service remotely.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; method creates the service record in the SCM database.&lt;/p&gt;
+
+&lt;p&gt;Most of the parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;ServiceName&lt;/strong&gt;: Name of the service to install remotely&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DisplayName&lt;/strong&gt;: Display name by which user interface programs identify the service.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access to the service.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;ServiceType&lt;/strong&gt;: A value that specifies the type of service (i.e. SERVICE_WIN32_OWN_PROCESS (0x00000010) - Service that runs in its own process)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;StartType&lt;/strong&gt;: A value that specifies when to start the service (i.e. SERVICE_DEMAND_START (0x00000003) - Starts the service when a client requests the SCM to start the service)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;ErrorControl&lt;/strong&gt;: A value that specifies the severity of the error if the service fails to start and determines the action that the SCM takes (i.e. SERVICE_ERROR_NORMAL (0x00000001) - The SCM logs the error, but continues the startup operation)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;BinaryPathName&lt;/strong&gt;: Fully qualified path to the service binary file. The path MAY include arguments.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can run the following to create the service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint using the &lt;code class=&quot;highlighter-rouge&quot;&gt;SCM Handle&lt;/code&gt; we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; call. Later when we start the&lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service, it will execute &lt;code class=&quot;highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; and get a list of files and folders in the &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\&lt;/code&gt; drive to then push the results to the &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\programdata\WardogLog.txt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Set the binarypath with arguments
+$BinaryPathName = '%COMSPEC% /C dir C:\ &amp;gt; C:\programdata\WardogLog.txt'
+
+# Create service remotely
+$Result2 = $scmClient.RCreateServiceW($scmHandle,'Wardog','Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::All,[NtApiDotNet.Win32.ServiceType]::Win32OwnProcess,[NtApiDotNet.Win32.ServiceStartType]::Demand,[NtApiDotNet.Win32.ServiceErrorControl]::Normal,$BinaryPathName, $null, $null, $null, 0, 'LocalSystem',$null,0)
+
+# Results
+$Result2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_10_ntobjectmanager_rcreateservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_11_wireshark_rcreateservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can also see the registry activity generated on the remote endpoint with &lt;a href=&quot;https://docs.microsoft.com/en-us/sysinternals/downloads/procmon&quot;&gt;Process Monitor&lt;/a&gt; (Sysinternals):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_12_procmon_rcreateservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;send-rcloseservicehandle-call&quot;&gt;Send RCloseServiceHandle Call&lt;/h2&gt;
+
+&lt;p&gt;We can close the handle we got back after creating the service. We are going to request another handle later to start the service.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;RCloseServiceHandle&lt;/code&gt; method is called by the client and in response the server releases the handle to the specified service or the SCM database.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Extract the handle
+$ServiceCreationHandle = $Result2.p15
+
+# Close the handle
+$scmClient.RCloseServiceHandle($ServiceCreationHandle)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;start-service-remotely-rpc-calls&quot;&gt;Start Service Remotely RPC Calls&lt;/h2&gt;
+
+&lt;p&gt;We will send the following RPC calls from our client to the SCM RPC server:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6d0a4225-451b-4132-894d-7cef7aecfd2d&quot;&gt;ROpenServiceW (Opnum 16)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/d9be95a2-cf01-4bdc-b30f-6fe4b37ada16&quot;&gt;RStartServiceW (Opnum 19)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c&quot;&gt;RCloseServiceHandle (Opnum 0)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;send-ropenservicew-call&quot;&gt;Send ROpenServiceW Call&lt;/h2&gt;
+
+&lt;p&gt;Now that our service has been created, we can start it remotely.
+First, we need to open a handle to the existing Windows service before starting it.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; method creates an RPC context handle to an existing service record.&lt;/p&gt;
+
+&lt;p&gt;The parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Servicename&lt;/strong&gt;: The ServiceName of the service record (i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access right.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The service access rights we can use are the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SERVICE_ALL_ACCESS (0xF01FF): Includes STANDARD_RIGHTS_REQUIRED in addition to all access rights in this table.&lt;/li&gt;
+  &lt;li&gt;SERVICE_CHANGE_CONFIG (0x0002): Required to call the ChangeServiceConfig or ChangeServiceConfig2 function to change the service configuration. Because this grants the caller the right to change the executable file that the system runs, it should be granted only to administrators.&lt;/li&gt;
+  &lt;li&gt;SERVICE_ENUMERATE_DEPENDENTS (0x0008): Required to call the EnumDependentServices function to enumerate all the services dependent on the service.&lt;/li&gt;
+  &lt;li&gt;SERVICE_INTERROGATE (0x0080): Required to call the ControlService function to ask the service to report its status immediately.&lt;/li&gt;
+  &lt;li&gt;SERVICE_PAUSE_CONTINUE (0x0040): Required to call the ControlService function to pause or continue the service.&lt;/li&gt;
+  &lt;li&gt;SERVICE_QUERY_CONFIG (0x0001): Required to call the QueryServiceConfig and QueryServiceConfig2 functions to query the service configuration.&lt;/li&gt;
+  &lt;li&gt;SERVICE_QUERY_STATUS (0x0004) : Required to call the QueryServiceStatus or QueryServiceStatusEx function to ask the service control manager about the status of the service. Required to call the NotifyServiceStatusChange function to receive notification when a service changes status.&lt;/li&gt;
+  &lt;li&gt;SERVICE_START (0x0010): Required to call the StartService function to start the service.&lt;/li&gt;
+  &lt;li&gt;SERVICE_STOP (0x0020): Required to call the ControlService function to stop the service.&lt;/li&gt;
+  &lt;li&gt;SERVICE_USER_DEFINED_CONTROL(0x0100): Required to call the ControlService function to specify a user-defined control code.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can run the following to get a handle to the service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint with access rights &lt;code class=&quot;highlighter-rouge&quot;&gt;SERVICE_START (0x0010)&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result3 = $scmClient.ROpenServiceW($scmHandle,'Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::Start)
+$Result3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_13_ntobjectmanager_ropenservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_14_wireshark_ropenservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;send-rstartservicew-call&quot;&gt;Send RStartServiceW Call&lt;/h2&gt;
+
+&lt;p&gt;We can now start our &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service remotely using the handle we obtained after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;RStartServiceW&lt;/code&gt; method starts a specified service.&lt;/p&gt;
+
+&lt;p&gt;The parameter that we are going to pass to our remote procedure call is the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Service handle&lt;/strong&gt;: Handle we obtained with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call. The &lt;code class=&quot;highlighter-rouge&quot;&gt;SERVICE_START&lt;/code&gt; access right MUST have been granted to the caller when the RPC context handle to the service record was created.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can first check if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.
+It should not exist since we have not started the service yet.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt' 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can run the following to start service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Extract handle
+$OpenServiceHandle = $Result3.p3
+
+# Send RStartServiceW
+$Result4 = $scmClient.RStartServiceW($OpenServiceHandle,$null,$null)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can handle the results with the following commands:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;if ($Result4 -ne 0) {
+    $ex = [System.ComponentModel.Win32Exception]::new($Result4)
+    throw $ex
+}
+else{
+    # Return Handle
+    write-verbose &quot;[+] Service started successfully!&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We are going to get an error which is expected since we are simply running a few cmd commands.
+However, the file gets created since the service actually starts, but it just does not stay up.
+We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see, the service started, executed the command line and created the file.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_15_ntobjectmanager_rstartservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That’s it! Very easy right?&lt;/p&gt;
+
+&lt;h2 id=&quot;why-did-i-do-all-this&quot;&gt;Why did I do all this?&lt;/h2&gt;
+
+&lt;p&gt;From a defensive perspective, walking through the execution of each remote procedue call, helped me to understand and validate the underlying behavior of the technique &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;Create and Start services remotely&quot;&lt;/code&gt;. It also helped me to validate the detection model I had created based on documentation. Finally, I was able to map event logs to several of the actions taken in this specific technique variation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_16_create_start_services_remotely.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can then extend this and look at other events that might not be as practical yet to collect and consume such as the ones coming from &lt;code class=&quot;highlighter-rouge&quot;&gt;RPC ETW provider (Microsoft-Windows-RPC)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;I hope you enjoyed this short post and learned as much as I did while going through this processa.&lt;/p&gt;
+
+&lt;p&gt;I am creating PowerShell script in the &lt;a href=&quot;https://github.com/Cyb3rWard0g/WinRpcFunctions&quot;&gt;WinRPCFunctions&lt;/a&gt; project to expedite the creation of these use cases, so if you want to learn more about it and help create more use cases with the following RPC servers via SMB, let me know:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_17_table_rcp_server_interfaces.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;WinRPCFunctions Project - SCM Scripts: &lt;a href=&quot;https://github.com/Cyb3rWard0g/WinRpcFunctions/tree/master/scm&quot;&gt;https://github.com/Cyb3rWard0g/WinRpcFunctions/tree/master/scm&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;PCAP File: &lt;a href=&quot;https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/resources/output/datasets/NtObjectManager_RPC_SMB_SCM_CreateStartService.pcapng&quot;&gt;https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/resources/output/datasets/NtObjectManager_RPC_SMB_SCM_CreateStartService.pcapng&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Open Threat Research Discord Server Invite: &lt;a href=&quot;https://bit.ly/OTRDiscord&quot;&gt;https://bit.ly/OTRDiscord&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wpo/49801c02-2e60-4133-8c6a-d9e1b6d9c02a#gt_8a7f6700-8311-45bc-af10-82e10accd331&lt;/li&gt;
+  &lt;li&gt;https://medium.com/threat-hunters-forge/extending-the-exploration-and-analysis-of-windows-rpc-methods-calling-other-functions-with-ghidra-e4cdaa9555bd&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/overview-of-windows-components&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/windows/win32/services/database-of-installed-services&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/windows/win32/services/services-and-rpc-tcp&lt;/li&gt;
+  &lt;li&gt;https://github.com/OTRF/ThreatHunter-Playbook/blob/master/docs/library/windows/service_control_manager.md&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/dc84adb3-d51d-48eb-820d-ba1c6ca5faf2&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/b902a454-b5fa-403b-9325-029fae04cbe0&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6a8ca926-9477-4dd4-b766-692fab07227e&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6d0a4225-451b-4132-894d-7cef7aecfd2d&lt;/li&gt;
+  &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/d9be95a2-cf01-4bdc-b30f-6fe4b37ada16&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Roberto Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="NtObjectManager" />
+      
+        <category term="RPC" />
+      
+
+      
+        <summary type="html">I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

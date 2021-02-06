@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title>
+        
+          <description>&lt;p&gt;I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Fri, 05 Feb 2021 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>How to set up a Microsoft Defender for Identity Sensor on a Domain Controller</title>
         
           <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template to deploy a lab environment to validate the detection of identity attacks and wanted to deploy &lt;a href=&quot;https://www.microsoft.com/en-us/microsoft-365/security/identity-defender&quot;&gt;Microsoft Defender for Identity&lt;/a&gt; to test the protection of on-premises identities and correlation of signals with Microsoft 365.&lt;/p&gt;

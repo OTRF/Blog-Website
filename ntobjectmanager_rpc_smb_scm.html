@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
+    <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Open Threat Research Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" />
+    <meta property="og:description" content="I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/2021-02-05_0_cover.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-02-05T07:00:00-05:00" />
+    <meta property="article:modified_time" content="2021-02-05T07:00:00-05:00" />
+    <meta property="article:tag" content="Ntobjectmanager" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" />
+    <meta name="twitter:description" content="I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client" />
+    <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/2021-02-05_0_cover.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Open Threat Research Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Ntobjectmanager" />
+    <meta name="twitter:site" content="@OTR_Community" />
+    <meta name="twitter:creator" content="@OTR_Community" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Open Threat Research Blog",
+        "logo": "https://blog.openthreatresearch.com/false"
+    },
+    "url": "https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/2021-02-05_0_cover.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm"
+    },
+    "description": "I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB In this post, I will show you how to use a PowerShell module named NtObjectManager, developed by James Forshaw @tiraniddo, to create a Remote Procedure Call (RPC) client"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
+    <!--<li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>-->
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/OTR_Community" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-ntobjectmanager tag-rpc post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime=" 5 February 2021"> 5 February 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/ntobjectmanager/'>NTOBJECTMANAGER</a>,
+                            
+                        
+                            
+                               <a href='/tag/rpc/'>RPC</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/2021-02-05_0_cover.png)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p>I wanted to learn more about NtobjectManager and its latest features to create RPC clients and communicate with RPC servers over SMB</p>
+
+<p>In this post, I will show you how to use a PowerShell module named <a href="https://www.powershellgallery.com/packages/NtObjectManager/">NtObjectManager</a>, developed by James Forshaw <a href="https://twitter.com/tiraniddo">@tiraniddo</a>, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the the Server Message Block (SMB) Protocol and we will go step-by-step calling each specific RPC method to create and start the service.</p>
+
+<p>The PowerShell scripts utilized in the post are available in the <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions">WinRPCFunctions</a> project in Github.</p>
+
+<h2 id="what-is-rpc">What is RPC?</h2>
+
+<p>According to <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wpo/49801c02-2e60-4133-8c6a-d9e1b6d9c02a#gt_8a7f6700-8311-45bc-af10-82e10accd331">MS documentation</a>, RPC is an inter-process communication (IPC) mechanism that enables data exchange and the invocation of functionality that resides in a different process. The different process can be on the same machine, on the local area network (LAN), or across the Internet.</p>
+
+<p>According to <a href="https://publications.opengroup.org/c706">OSF’s Distributed Computing Environment (DCE) 1.1</a>, the RPC model makes a functional distinction between clients and servers. A client requests a service, and a server provides the service by making resources available to the remote client.</p>
+
+<h2 id="what-is-the-service-control-manager-scm">What is the Service Control Manager (SCM)?</h2>
+
+<p>The SCM is an RPC server that enables service configuration and control of service programs. This service is started at system boot and it maintains a database of installed services in the registry. The database, known as the <code class="highlighter-rouge">ServicesActive</code> database or the SCM database, is used by the SCM and programs that add, modify, or configure services.</p>
+
+<p>The following is the registry key for this database: <code class="highlighter-rouge">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services</code>. This key contains a subkey for each installed service and driver service. The name of the subkey is the name of the service.</p>
+
+<p>Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The RPC interface universally unique identifier (UUID) allocated to the SCM RPC server is <code class="highlighter-rouge">367ABB81-9844-35F1-AD32-98F038001003</code> and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint <code class="highlighter-rouge">\PIPE\svcctl</code> in order to handle client remote procedure calls.</p>
+
+<h2 id="what-is-ntobjectmanager">What is NtObjectManager?</h2>
+
+<p><a href="https://www.powershellgallery.com/packages/NtObjectManager/">NtObjectManager</a> is a PowerShell module from the <a href="https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools">sandbox-attacksurface-analysis-tools</a> developed by James Forshaw <a href="https://twitter.com/tiraniddo">@tiraniddo</a> to access the NT object manager namespace.</p>
+
+<blockquote>
+  <p>Windows implements an object model to provide consistent and secure access to the various internal services implemented in the executive. The Windows object manager is an executive component responsible for creating, deleting, protecting, and tracking objects. The object manager centralizes resource control operations that otherwise would be scattered throughout the operating system.</p>
+</blockquote>
+
+<p><em>(Russinovich, Mark,Solomon, David,Ionescu, Alex. Windows Internals, Part 1 (6th Edition) (Developer Reference))</em></p>
+
+<p>According to <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library">MS docs</a>, the Windows operating system uses the term <code class="highlighter-rouge">executive layer</code> to refer to kernel-mode components that provide a variety of services to device drivers, including:</p>
+
+<ul>
+  <li>Object management</li>
+  <li>Memory management</li>
+  <li>Process and thread management</li>
+  <li>Input/output management</li>
+  <li>Configuration management</li>
+</ul>
+
+<p>This is an image showing the major internal components of the Windows operating system where we can see at what layer the <code class="highlighter-rouge">object manager</code> operates:</p>
+
+<p><img src="assets/images/blog/2021-02-05_01_windows_components_overview.png" alt="" /></p>
+
+<h2 id="what-does-ntobjectmanager-have-to-do-with-rpc-and-scm">What does NtObjectManager have to do with RPC and SCM?</h2>
+
+<p>Last year, December 18th, 2020, James Forshaw <a href="https://twitter.com/tiraniddo">@tiraniddo</a> updated the <code class="highlighter-rouge">NtObjectManager</code> project to support <code class="highlighter-rouge">Named Pipes - RPC Transport</code> for RPC Clients. Then, on January 15th, 20201, he officially updated the module in <a href="https://www.powershellgallery.com/packages/NtObjectManager">PowerShell Gallery</a> to version v.1.1.30 for anyone to simply install, import and play with it.</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Released v1.1.30 of NtObjectManager to the PS gallery. Main addition is the support for named pipe RPC clients. Also updated the NuGet packages, they now contain multi-target (no more &quot;Core&quot; versions) as well as full symbols and source link support. <a href="https://t.co/PQBVIyIrNy">https://t.co/PQBVIyIrNy</a></p>&mdash; James Forshaw (@tiraniddo) <a href="https://twitter.com/tiraniddo/status/1350118676091949057?ref_src=twsrc%5Etfw">January 15, 2021</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>This was great because instead of using command-line utilities such as <a href="https://docs.microsoft.com/en-us/windows/win32/services/controlling-a-service-using-sc">SC.exe</a>, we could now use <code class="highlighter-rouge">NtObjectManager</code> to programmatically create a RPC client, run a few remote procedure calls and interact with the SCM RPC server of a remote endpoint, all over SMB.</p>
+
+<blockquote>
+  <p>I find this fascinating for threat research because I can go remote procedure call - by - remote procedure call and understand the underlying behavior of someone creating a service remotely over SMB.</p>
+</blockquote>
+
+<p>Ok, time to run some code..</p>
+
+<h2 id="install-ntobjectmanager">Install NtObjectManager</h2>
+
+<p>In a fresh VM, I had to run the following commands to set PSGallery repository and install new modules.</p>
+
+<pre><code class="language-PowerShell">Set-ExecutionPolicy Unrestricted -Force
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+Register-PSRepository -Default
+</code></pre>
+
+<p>Install the module</p>
+
+<pre><code class="language-PowerShell">Install-Module NtObjectManager -Force
+</code></pre>
+
+<p>Import the module</p>
+
+<pre><code class="language-PowerShell">Import-Module NtObjectManager -verbose
+</code></pre>
+
+<h2 id="set-dbghelp-dll-path-for-symbols-resolving">Set DbgHelp DLL path for Symbols Resolving</h2>
+
+<p>In order to parse RPC servers and resolve RPC procedures we can specify the path to the dbghelp DLL from Windows SDK. The dbghelp.dll is provided after installing debugging tools for Windows. You can install it via the <a href="https://medium.com/r/?url=https%3A%2F%2Fdeveloper.microsoft.com%2Fwindows%2Fdownloads%2Fwindows-10-sdk">Windows 10 SDK setup</a> or programmatically with the following commands:</p>
+
+<pre><code class="language-PowerShell"># Download Installer
+$url = "https://go.microsoft.com/fwlink/p/?linkid=2083338&amp;clcid=0x409"
+$wc = new-object System.Net.WebClient
+$request = [System.Net.WebRequest]::Create($url)
+$response = $request.GetResponse()
+$OutputFile = [System.IO.Path]::GetFileName($response.ResponseUri)
+$response.Close()
+$FilePath = "C:\ProgramData\$OutputFile"
+$wc.DownloadFile($url, $FilePath)
+if (!(Test-Path $FilePath)) { Write-Error "Welp!" }
+
+# Install Windows Debuggers - Silently
+Start-Process "C:\ProgramData\winsdksetup.exe" -Wait -ArgumentList '/features OptionId.WindowsDesktopDebuggers /ceip off /q'
+</code></pre>
+
+<h2 id="start-and-create-services-via-rpc-model">Start and Create Services via RPC Model</h2>
+
+<p>Now that we have <code class="highlighter-rouge">NtObjectManager</code> imported and our symbols resolving path set, let’s take a look at what we are going to do next.
+The image below is a simple representation of some of the remote procedure calls that we can use to create and start a service.
+I also added the two type of transports one could use to carry the RPC traffic. All this is based on the <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/4c8b7701-b043-400c-9350-dc29cfaa5e7a">SCM Remote Protocol documentation</a>. Of course there are other ways to create a service remotely.</p>
+
+<p><img src="assets/images/blog/2021-02-05_02_rpc_scm_model.png" alt="" /></p>
+
+<p>So, how can we create an RPC client to use all those RPC methods to create and start a service?</p>
+
+<h2 id="parse-scm-rpc-server">Parse SCM RPC Server</h2>
+
+<p>We first need to find and parse the SCM RPC server as an object to then create an RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is <code class="highlighter-rouge">367abb81-9844-35f1-ad32-98f038001003</code>.</p>
+
+<p>Therefore, we can use the <code class="highlighter-rouge">Get-RpcServer</code> command to find the <code class="highlighter-rouge">.dll or .exe</code> that hosts the SCM RPC server code. As you can see, we are looking for objects with <code class="highlighter-rouge">InterfaceId</code> that matches our RPC server interface UUID.</p>
+
+<pre><code class="language-PowerShell">$lookRPC = Get-ChildItem C:\Windows\System32\* -Include '*.dll','*.exe' | Get-RpcServer
+$scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003'}
+$scmServer | fl
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_03_ntobjectmanager_scm_rpc_server.png" alt="" /></p>
+
+<p>The commands above take about 2-3 minutes. Since you already now know that <code class="highlighter-rouge">C:\Windows\System32\services.exe</code> contains the SCM RPC server code, you can simply run this command to expedite the process:</p>
+
+<pre><code class="language-PowerShell">$scmServer = Get-RpcServer C:\Windows\System32\services.exe | Where-Object { $_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003' }
+</code></pre>
+
+<h2 id="create-rpc-client">Create RPC Client</h2>
+
+<p>We can use the <code class="highlighter-rouge">Get-RpcClient</code> command to create a new RPC client from the the parsed RPC server.</p>
+
+<pre><code class="language-PowerShell">$scmClient = Get-RpcClient $scmServer
+</code></pre>
+
+<p>We can explore the available methods to send remote procedure calls from our RPC client.</p>
+
+<pre><code class="language-PowerShell">$scmClient | Get-Member -MemberType Method
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_04_ntobjectmanager_rpc_client_procedures.png" alt="" /></p>
+
+<h2 id="connect-rpc-client-to-remote-rpc-endpoint">Connect RPC Client to Remote RPC Endpoint</h2>
+
+<p>The client starts off disconnected as you can see below. Therefore, we need to pass the RPC client to the <code class="highlighter-rouge">Connect-RpcClient</code> command to connect to the remote RPC endpoint.</p>
+
+<pre><code class="language-PowerShell">$scmClient
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_05_ntobjectmanager_rpc_client_disconnected.png" alt="" /></p>
+
+<p>When connecting the RPC Client to the remote RPC endpoint, there are a few parameters that we nee to pass:</p>
+
+<ul>
+  <li><strong>Client</strong>: Our new RPC client</li>
+  <li><strong>EndpointPath</strong>: The named pipe <code class="highlighter-rouge">\pipe\svcctl</code></li>
+  <li><strong>ProtocolSequence</strong>: ncacn_np (naped pipes)</li>
+  <li><strong>NetworkAddress</strong>: The IP address of the remote endpoint</li>
+  <li><strong>-SecurityQualityOfService</strong>: Impersonation level (i.e. Impersonation)</li>
+</ul>
+
+<pre><code class="language-PowerShell">Connect-RpcClient -Client $scmClient -EndpointPath "\pipe\svcctl" -ProtocolSequence ncacn_np -NetworkAddress 192.168.2.5 -SecurityQualityOfService $(New-NtSecurityQualityOfService -ImpersonationLevel Impersonation)
+</code></pre>
+
+<p>We can now check and see if the RPC client is connected. It is ;) !</p>
+
+<pre><code class="language-PowerShell">$scmClient
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_06_ntobjectmanager_rpc_client_connected.png" alt="" /></p>
+
+<p>We can also see the traffic generated in <a href="https://www.wireshark.org/">Wireshark</a> after running the <code class="highlighter-rouge">Connect-RpcClient</code> command:</p>
+
+<p><img src="assets/images/blog/2021-02-05_07_wireshark_connect_rpcclient.png" alt="" /></p>
+
+<p>We are now ready to send a few remote procedures call with our RPC client!</p>
+
+<h2 id="create-service-remotely-rpc-calls">Create Service Remotely RPC Calls</h2>
+
+<p>We will send the following RPC calls from our client to the SCM RPC server:</p>
+
+<ul>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/dc84adb3-d51d-48eb-820d-ba1c6ca5faf2">ROpenSCManagerW (Opnum 15)</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6a8ca926-9477-4dd4-b766-692fab07227e">RCreateServiceW (Opnum 12)</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c">RCloseServiceHandle (Opnum 0)</a></li>
+</ul>
+
+<h2 id="send-ropenscmanagerw-call">Send ROpenSCManagerW Call</h2>
+
+<p>The <code class="highlighter-rouge">ROpenSCManagerW</code> method establishes a connection to server and opens the SCM database on the specified server.</p>
+
+<p>The parameters that we are going to pass to our remote procedure call are the following:</p>
+
+<ul>
+  <li><strong>MachineName</strong>: Name of remote endpoint</li>
+  <li><strong>DatabaseName</strong>: Name of databse (i.e. <code class="highlighter-rouge">ServicesActive</code>)</li>
+  <li><strong>DesiredAccess</strong>: A value that specifies the access to the database</li>
+</ul>
+
+<p>The SCM Access Rights options are the following:</p>
+
+<ul>
+  <li>SC_MANAGER_ALL_ACCESS (0xF003F): Includes STANDARD_RIGHTS_REQUIRED, in addition to all access rights in this table.</li>
+  <li>SC_MANAGER_CREATE_SERVICE (0x0002): Required to call the CreateService function to create a service object and add it to the database.</li>
+  <li>SC_MANAGER_CONNECT (0x0001): Required to connect to the service control manager.</li>
+  <li>SC_MANAGER_ENUMERATE_SERVICE (0x0004): Required to call the EnumServicesStatus or EnumServicesStatusEx function to list the services that are in the database. Required to call the NotifyServiceStatusChange function to receive notification when any service is created or deleted.</li>
+  <li>SC_MANAGER_LOCK (0x0008): Required to call the LockServiceDatabase function to acquire a lock on the database.</li>
+  <li>SC_MANAGER_MODIFY_BOOT_CONFIG (0x0020): Required to call the NotifyBootConfigStatus function.</li>
+  <li>SC_MANAGER_QUERY_LOCK_STATUS (0x0010): Required to call the QueryServiceLockStatus function to retrieve the lock status information for the database.</li>
+</ul>
+
+<p>We can run the following to connect to our remote workstation <code class="highlighter-rouge">WORKSTATION6</code>, open the SCM Database <code class="highlighter-rouge">ServicesActive</code> and get a handle with <code class="highlighter-rouge">SC_MANAGER_CREATE_SERVICE</code> access rights</p>
+
+<pre><code class="language-PowerShell">$Result = $scmClient.ROpenSCManagerW("WORKSTATION6","ServicesActive",[NtApiDotNet.Win32.ServiceControlManagerAccessRights]::CreateService)
+
+# Extract the handle
+$scmHandle = $Result.p3
+$scmHandle
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_08_ntobjectmanager_ropenscmanagerw.png" alt="" /></p>
+
+<p>We can also see the traffic generated in <a href="https://www.wireshark.org/">Wireshark</a> after running the <code class="highlighter-rouge">ROpenSCManagerW</code> remote procedure call:</p>
+
+<p><img src="assets/images/blog/2021-02-05_09_wireshark_ropenscmanagerw.png" alt="" /></p>
+
+<h2 id="send-rcreateservicew-call">Send RCreateServiceW Call</h2>
+
+<p>Now that we obtained a handle to the SCM databaqse, we can send the <code class="highlighter-rouge">RCreateServiceW</code> call to create a service remotely.
+The <code class="highlighter-rouge">RCreateServiceW</code> method creates the service record in the SCM database.</p>
+
+<p>Most of the parameters that we are going to pass to our remote procedure call are the following:</p>
+
+<ul>
+  <li><strong>SCManager handle</strong>: SCM handle we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> remote procedure call</li>
+  <li><strong>ServiceName</strong>: Name of the service to install remotely</li>
+  <li><strong>DisplayName</strong>: Display name by which user interface programs identify the service.</li>
+  <li><strong>DesiredAccess</strong>: A value that specifies the access to the service.</li>
+  <li><strong>ServiceType</strong>: A value that specifies the type of service (i.e. SERVICE_WIN32_OWN_PROCESS (0x00000010) - Service that runs in its own process)</li>
+  <li><strong>StartType</strong>: A value that specifies when to start the service (i.e. SERVICE_DEMAND_START (0x00000003) - Starts the service when a client requests the SCM to start the service)</li>
+  <li><strong>ErrorControl</strong>: A value that specifies the severity of the error if the service fails to start and determines the action that the SCM takes (i.e. SERVICE_ERROR_NORMAL (0x00000001) - The SCM logs the error, but continues the startup operation)</li>
+  <li><strong>BinaryPathName</strong>: Fully qualified path to the service binary file. The path MAY include arguments.</li>
+</ul>
+
+<p>We can run the following to create the service <code class="highlighter-rouge">Wardog</code> on the remote endpoint using the <code class="highlighter-rouge">SCM Handle</code> we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> call. Later when we start the<code class="highlighter-rouge">Wardog</code> service, it will execute <code class="highlighter-rouge">cmd.exe</code> and get a list of files and folders in the <code class="highlighter-rouge">C:\</code> drive to then push the results to the <code class="highlighter-rouge">C:\programdata\WardogLog.txt</code>:</p>
+
+<pre><code class="language-PowerShell"># Set the binarypath with arguments
+$BinaryPathName = '%COMSPEC% /C dir C:\ &gt; C:\programdata\WardogLog.txt'
+
+# Create service remotely
+$Result2 = $scmClient.RCreateServiceW($scmHandle,'Wardog','Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::All,[NtApiDotNet.Win32.ServiceType]::Win32OwnProcess,[NtApiDotNet.Win32.ServiceStartType]::Demand,[NtApiDotNet.Win32.ServiceErrorControl]::Normal,$BinaryPathName, $null, $null, $null, 0, 'LocalSystem',$null,0)
+
+# Results
+$Result2
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_10_ntobjectmanager_rcreateservicew.png" alt="" /></p>
+
+<p>We can also see the traffic generated in <a href="https://www.wireshark.org/">Wireshark</a> after running the <code class="highlighter-rouge">RCreateServiceW</code> remote procedure call:</p>
+
+<p><img src="assets/images/blog/2021-02-05_11_wireshark_rcreateservicew.png" alt="" /></p>
+
+<p>We can also see the registry activity generated on the remote endpoint with <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procmon">Process Monitor</a> (Sysinternals):</p>
+
+<p><img src="assets/images/blog/2021-02-05_12_procmon_rcreateservicew.png" alt="" /></p>
+
+<h2 id="send-rcloseservicehandle-call">Send RCloseServiceHandle Call</h2>
+
+<p>We can close the handle we got back after creating the service. We are going to request another handle later to start the service.
+The <code class="highlighter-rouge">RCloseServiceHandle</code> method is called by the client and in response the server releases the handle to the specified service or the SCM database.</p>
+
+<pre><code class="language-PowerShell"># Extract the handle
+$ServiceCreationHandle = $Result2.p15
+
+# Close the handle
+$scmClient.RCloseServiceHandle($ServiceCreationHandle)
+</code></pre>
+
+<h2 id="start-service-remotely-rpc-calls">Start Service Remotely RPC Calls</h2>
+
+<p>We will send the following RPC calls from our client to the SCM RPC server:</p>
+
+<ul>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6d0a4225-451b-4132-894d-7cef7aecfd2d">ROpenServiceW (Opnum 16)</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/d9be95a2-cf01-4bdc-b30f-6fe4b37ada16">RStartServiceW (Opnum 19)</a></li>
+  <li><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c">RCloseServiceHandle (Opnum 0)</a></li>
+</ul>
+
+<h2 id="send-ropenservicew-call">Send ROpenServiceW Call</h2>
+
+<p>Now that our service has been created, we can start it remotely.
+First, we need to open a handle to the existing Windows service before starting it.
+The <code class="highlighter-rouge">ROpenServiceW</code> method creates an RPC context handle to an existing service record.</p>
+
+<p>The parameters that we are going to pass to our remote procedure call are the following:</p>
+
+<ul>
+  <li><strong>SCManager handle</strong>: SCM handle we obtained initially with the <code class="highlighter-rouge">ROpenSCManagerW</code> remote procedure call</li>
+  <li><strong>Servicename</strong>: The ServiceName of the service record (i.e. <code class="highlighter-rouge">Wardog</code>)</li>
+  <li><strong>DesiredAccess</strong>: A value that specifies the access right.</li>
+</ul>
+
+<p>The service access rights we can use are the following:</p>
+
+<ul>
+  <li>SERVICE_ALL_ACCESS (0xF01FF): Includes STANDARD_RIGHTS_REQUIRED in addition to all access rights in this table.</li>
+  <li>SERVICE_CHANGE_CONFIG (0x0002): Required to call the ChangeServiceConfig or ChangeServiceConfig2 function to change the service configuration. Because this grants the caller the right to change the executable file that the system runs, it should be granted only to administrators.</li>
+  <li>SERVICE_ENUMERATE_DEPENDENTS (0x0008): Required to call the EnumDependentServices function to enumerate all the services dependent on the service.</li>
+  <li>SERVICE_INTERROGATE (0x0080): Required to call the ControlService function to ask the service to report its status immediately.</li>
+  <li>SERVICE_PAUSE_CONTINUE (0x0040): Required to call the ControlService function to pause or continue the service.</li>
+  <li>SERVICE_QUERY_CONFIG (0x0001): Required to call the QueryServiceConfig and QueryServiceConfig2 functions to query the service configuration.</li>
+  <li>SERVICE_QUERY_STATUS (0x0004) : Required to call the QueryServiceStatus or QueryServiceStatusEx function to ask the service control manager about the status of the service. Required to call the NotifyServiceStatusChange function to receive notification when a service changes status.</li>
+  <li>SERVICE_START (0x0010): Required to call the StartService function to start the service.</li>
+  <li>SERVICE_STOP (0x0020): Required to call the ControlService function to stop the service.</li>
+  <li>SERVICE_USER_DEFINED_CONTROL(0x0100): Required to call the ControlService function to specify a user-defined control code.</li>
+</ul>
+
+<p>We can run the following to get a handle to the service <code class="highlighter-rouge">Wardog</code> on the remote endpoint with access rights <code class="highlighter-rouge">SERVICE_START (0x0010)</code>:</p>
+
+<pre><code class="language-PowerShell">$Result3 = $scmClient.ROpenServiceW($scmHandle,'Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::Start)
+$Result3
+</code></pre>
+
+<p><img src="assets/images/blog/2021-02-05_13_ntobjectmanager_ropenservicew.png" alt="" /></p>
+
+<p>We can also see the traffic generated in <a href="https://www.wireshark.org/">Wireshark</a> after running the <code class="highlighter-rouge">ROpenServiceW</code> remote procedure call:</p>
+
+<p><img src="assets/images/blog/2021-02-05_14_wireshark_ropenservicew.png" alt="" /></p>
+
+<h2 id="send-rstartservicew-call">Send RStartServiceW Call</h2>
+
+<p>We can now start our <code class="highlighter-rouge">Wardog</code> service remotely using the handle we obtained after running the <code class="highlighter-rouge">ROpenServiceW</code> remote procedure call.
+The <code class="highlighter-rouge">RStartServiceW</code> method starts a specified service.</p>
+
+<p>The parameter that we are going to pass to our remote procedure call is the following:</p>
+
+<ul>
+  <li><strong>Service handle</strong>: Handle we obtained with the <code class="highlighter-rouge">ROpenServiceW</code> remote procedure call. The <code class="highlighter-rouge">SERVICE_START</code> access right MUST have been granted to the caller when the RPC context handle to the service record was created.</li>
+</ul>
+
+<p>We can first check if the file <code class="highlighter-rouge">C:\ProgramData\WardogLog.txt</code> exists on workstation <code class="highlighter-rouge">WORKSTATION6</code>.
+It should not exist since we have not started the service yet.</p>
+
+<pre><code class="language-PowerShell">type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt' 
+</code></pre>
+
+<p>We can run the following to start service <code class="highlighter-rouge">Wardog</code> on the remote endpoint:</p>
+
+<pre><code class="language-PowerShell"># Extract handle
+$OpenServiceHandle = $Result3.p3
+
+# Send RStartServiceW
+$Result4 = $scmClient.RStartServiceW($OpenServiceHandle,$null,$null)
+</code></pre>
+
+<p>We can handle the results with the following commands:</p>
+
+<pre><code class="language-PowerShell">if ($Result4 -ne 0) {
+    $ex = [System.ComponentModel.Win32Exception]::new($Result4)
+    throw $ex
+}
+else{
+    # Return Handle
+    write-verbose "[+] Service started successfully!"
+}
+</code></pre>
+
+<p>We are going to get an error which is expected since we are simply running a few cmd commands.
+However, the file gets created since the service actually starts, but it just does not stay up.
+We can check again if the file <code class="highlighter-rouge">C:\ProgramData\WardogLog.txt</code> exists on workstation <code class="highlighter-rouge">WORKSTATION6</code>.</p>
+
+<pre><code class="language-PowerShell">type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt'
+</code></pre>
+
+<p>As you can see, the service started, executed the command line and created the file.</p>
+
+<p><img src="assets/images/blog/2021-02-05_15_ntobjectmanager_rstartservicew.png" alt="" /></p>
+
+<p>That’s it! Very easy right?</p>
+
+<h2 id="why-did-i-do-all-this">Why did I do all this?</h2>
+
+<p>From a defensive perspective, walking through the execution of each remote procedue call, helped me to understand and validate the underlying behavior of the technique <code class="highlighter-rouge">"Create and Start services remotely"</code>. It also helped me to validate the detection model I had created based on documentation. Finally, I was able to map event logs to several of the actions taken in this specific technique variation.</p>
+
+<p><img src="assets/images/blog/2021-02-05_16_create_start_services_remotely.png" alt="" /></p>
+
+<p>You can then extend this and look at other events that might not be as practical yet to collect and consume such as the ones coming from <code class="highlighter-rouge">RPC ETW provider (Microsoft-Windows-RPC)</code></p>
+
+<p>I hope you enjoyed this short post and learned as much as I did while going through this processa.</p>
+
+<p>I am creating PowerShell script in the <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions">WinRPCFunctions</a> project to expedite the creation of these use cases, so if you want to learn more about it and help create more use cases with the following RPC servers via SMB, let me know:</p>
+
+<p><img src="assets/images/blog/2021-02-05_17_table_rcp_server_interfaces.png" alt="" /></p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li>WinRPCFunctions Project - SCM Scripts: <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions/tree/master/scm">https://github.com/Cyb3rWard0g/WinRpcFunctions/tree/master/scm</a></li>
+  <li>PCAP File: <a href="https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/resources/output/datasets/NtObjectManager_RPC_SMB_SCM_CreateStartService.pcapng">https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/resources/output/datasets/NtObjectManager_RPC_SMB_SCM_CreateStartService.pcapng</a></li>
+  <li>Open Threat Research Discord Server Invite: <a href="https://bit.ly/OTRDiscord">https://bit.ly/OTRDiscord</a></li>
+</ul>
+
+<h2 id="references">References</h2>
+<ul>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wpo/49801c02-2e60-4133-8c6a-d9e1b6d9c02a#gt_8a7f6700-8311-45bc-af10-82e10accd331</li>
+  <li>https://medium.com/threat-hunters-forge/extending-the-exploration-and-analysis-of-windows-rpc-methods-calling-other-functions-with-ghidra-e4cdaa9555bd</li>
+  <li>https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/overview-of-windows-components</li>
+  <li>https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library</li>
+  <li>https://docs.microsoft.com/en-us/windows/win32/services/service-control-manager</li>
+  <li>https://docs.microsoft.com/en-us/windows/win32/services/database-of-installed-services</li>
+  <li>https://docs.microsoft.com/en-us/windows/win32/services/services-and-rpc-tcp</li>
+  <li>https://github.com/OTRF/ThreatHunter-Playbook/blob/master/docs/library/windows/service_control_manager.md</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/dc84adb3-d51d-48eb-820d-ba1c6ca5faf2</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/b902a454-b5fa-403b-9325-029fae04cbe0</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6a8ca926-9477-4dd4-b766-692fab07227e</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/a2a4e174-09fb-4e55-bad3-f77c4b13245c</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/6d0a4225-451b-4132-894d-7cef7aecfd2d</li>
+  <li>https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/d9be95a2-cf01-4bdc-b30f-6fe4b37ada16</li>
+</ul>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Open Threat Research Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="roberto" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/roberto">Roberto Rodriguez</a></h4>
+                                
+                                    <p>Security Researcher</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/roberto">Read More</a>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template no-image">
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/microsoft365-identity-sensors-install">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Azure</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Mdi</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">How to set up a Microsoft Defender for Identity Sensor on a Domain Controller</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="Roberto Rodriguez" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/roberto/">Roberto Rodriguez</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://blog.openthreatresearch.com/">
+            
+                <img src="/assets/images/favicon.png" alt="Open Threat Research Blog icon" />
+            
+            <span>Open Threat Research Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Creating+and+Starting+a+Windows+Service+Remotely+Using+NtObjectManager+Via+Remote+Procedure+Calls+%28RPC%29+Over+SMB&amp;url=ntobjectmanager_rpc_smb_scm"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=ntobjectmanager_rpc_smb_scm"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/OTR_Community" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Open Threat Research Blog</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>
