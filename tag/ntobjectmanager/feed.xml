@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/ntobjectmanager/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-02-05T23:12:59-05:00</updated>
+  <updated>2021-03-01T21:42:00-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/ntobjectmanager/feed.xml</id>
 
   
@@ -142,6 +142,11 @@ if (!(Test-Path $FilePath)) { Write-Error &quot;Welp!&quot; }
 
 # Install Windows Debuggers - Silently
 Start-Process &quot;C:\ProgramData\winsdksetup.exe&quot; -Wait -ArgumentList '/features OptionId.WindowsDesktopDebuggers /ceip off /q'
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can now run the following command to set the DbgHelp DLL path via the NtObjectManager module:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt; Set-GlobalSymbolResolver -DbgHelpPath 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\dbghelp.dll' 
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;start-and-create-services-via-rpc-model&quot;&gt;Start and Create Services via RPC Model&lt;/h2&gt;

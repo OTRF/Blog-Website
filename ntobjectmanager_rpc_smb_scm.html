@@ -282,6 +282,11 @@ if (!(Test-Path $FilePath)) { Write-Error "Welp!" }
 Start-Process "C:\ProgramData\winsdksetup.exe" -Wait -ArgumentList '/features OptionId.WindowsDesktopDebuggers /ceip off /q'
 </code></pre>
 
+<p>We can now run the following command to set the DbgHelp DLL path via the NtObjectManager module:</p>
+
+<pre><code class="language-PowerShell"> Set-GlobalSymbolResolver -DbgHelpPath 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\dbghelp.dll' 
+</code></pre>
+
 <h2 id="start-and-create-services-via-rpc-model">Start and Create Services via RPC Model</h2>
 
 <p>Now that we have <code class="highlighter-rouge">NtObjectManager</code> imported and our symbols resolving path set, let’s take a look at what we are going to do next.
