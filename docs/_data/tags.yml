@@ -46,3 +46,10 @@ mdi:
   name: mdi
   description: Microsoft Defender for Identity
   cover: False
+ntobjectmanager:
+  name: ntobjectmanager
+  description: A PowerShell module created by James Forshaw (@tiraniddo) as part of the sandbox-attacksurface-analysis-tools (https://github.com/googleprojectzero/sandbox-attacksurface-analysis-tools)
+  cover: False
+rpc:
+  name: rpc
+  description: Inter-process communication (IPC) mechanism that enables data exchange and the invocation of functionality that resides in a different process. A Client/Server Execution Model​ where a client requests a service, and a server provides the service by making resources available to the remote client​.

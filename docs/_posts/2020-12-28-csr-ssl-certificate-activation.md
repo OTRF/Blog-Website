@@ -47,7 +47,7 @@ In this post. I will show you all the steps I took to generate a trusted CA sign
 * Download trusted SSL certificate
 * Install trusted certificate
 * Export certificate and private keys as a .pfx file
-* Share certificaet with servers (i.e. Domain Controller and ADFS)
+* Share certificate with servers (i.e. Domain Controller and ADFS)
 
 ## 1. Create Certificate Signing Request (.CSR) File
 
