@@ -17,7 +17,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 * Go to [Visual Studio Code](https://code.visualstudio.com/) website.
 * Click on **Download for Windows**
 
-![](assets/images/blog/2020-12-01_01_download_vscode_windows.png#left)
+![](assets/images/blog/2020-12-01_01_download_vscode_windows.png)
 
 ## 2. Running VSCode Executable
 * Click on **Save File**.
