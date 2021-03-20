@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-03-20T16:32:10-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-03-20T19:54:22-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
 
 &lt;p&gt;In this post, I will show you how to use a PowerShell module named &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager/&quot;&gt;NtObjectManager&lt;/a&gt;, developed by James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt;, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the Server Message Block (SMB) Protocol, and we will go step-by-step calling each RPC method needed to create and start the service.&lt;/p&gt;
 
@@ -1331,13 +1331,13 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
   &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_save_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_saving_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the VSCode executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_open_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_open_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;3-completing-the-vscode-setup&quot;&gt;3. Completing the VSCode Setup&lt;/h2&gt;
 
