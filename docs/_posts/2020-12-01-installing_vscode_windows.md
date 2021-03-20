@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/images/blog/2020-12-01_00_vscode_cover.png
+cover:  assets/images/blog/2020-12-01_00_vscode_blog_cover.png
 navigation: True
 title: Installing Visual Studio Code - Windows
 date: 2020-12-01 12:00:00
@@ -22,11 +22,11 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 ## 2. Running VSCode Executable
 * Click on **Save File**.
 
-![](assets/images/blog/2020-12-01_02_save_vscode_executable.png)
+![](assets/images/blog/2020-12-01_02_saving_vscode_executable.png)
 
 * In your **Downloads** directory, right click on the VSCode executable and select **Open**.
 
-![](assets/images/blog/2020-12-01_03_open_executable.png)
+![](assets/images/blog/2020-12-01_03_open_vscode_executable.png)
 
 ## 3. Completing the VSCode Setup
 
