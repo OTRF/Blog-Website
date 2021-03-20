@@ -53,3 +53,9 @@ ntobjectmanager:
 rpc:
   name: rpc
   description: Inter-process communication (IPC) mechanism that enables data exchange and the invocation of functionality that resides in a different process. A Client/Server Execution Model​ where a client requests a service, and a server provides the service by making resources available to the remote client​.
+vscode:
+  name: visual-studio-code
+  description: Source-code editor.
+python:
+  name: python
+  description: Programming language that lets you work quickly and integrate systems more effectively.
