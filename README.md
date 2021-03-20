@@ -15,3 +15,12 @@
 4. In `docs/` run `JEKYLL_ENV=production bundle exec jekyll serve` to deploy site locally
 5. Browse to `http://127.0.0.1:4000//` and verify your blog post looks the way you want it
 6. Create pull request
+
+## Pushing updates to site (Administrators ONLY)
+
+Push site to github pages with the following command 
+
+1. Update local repository after PR is merged `git update`
+2. In `docs/` run `JEKYLL_ENV=production bundle exec jekyll serve` to deploy site locally and generate files in `docs/_site`
+3. Browse to `http://127.0.0.1:4000//` and verify everything looks good
+4. Go back to the root directory of the repo and run `ghp-import -p -c blog.openthreatresearch.com -f docs/_site`
