@@ -111,5 +111,50 @@
       </item>
       
     
+      
+      <item>
+        <title>Installing Visual Studio Code - Windows</title>
+        
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 01 Dec 2020 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/installing_vscode_windows</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_vscode_windows</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Installing Python Interpreter - Windows</title>
+        
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 01 Dec 2020 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/installing_python_interpreter</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_python_interpreter</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Installing Python Extension for Visual Studio Code - Windows</title>
+        
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 01 Dec 2020 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/installing_python_extension_vscode</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_python_extension_vscode</guid>
+      </item>
+      
+    
   </channel>
 </rss>

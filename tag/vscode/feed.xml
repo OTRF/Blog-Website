@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/vscode/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2021-03-20T16:22:57-04:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/vscode/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Installing Visual Studio Code - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_vscode_windows" rel="alternate" type="text/html" title="Installing Visual Studio Code - Windows" />
+      <published>2020-12-01T07:00:00-05:00</published>
+      <updated>2020-12-01T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_vscode_windows</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-downloading-vscode-executable&quot;&gt;1. Downloading VSCode Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt; website.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Download for Windows&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_download_vscode_windows.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-running-vscode-executable&quot;&gt;2. Running VSCode Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_save_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the VSCode executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_open_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-completing-the-vscode-setup&quot;&gt;3. Completing the VSCode Setup&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Accept&lt;/strong&gt; the agreetment.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_agreetment.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Destination&lt;/strong&gt; folder and click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_destination_location.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Start Menu&lt;/strong&gt; folder and click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_start_menu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Additional Tasks&lt;/strong&gt; as desired and click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_additional_tasks.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_09_wait_installation_process.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Check the &lt;strong&gt;Launch Visual Studio Code&lt;/strong&gt; box and click on &lt;strong&gt;Finish&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_10_finish.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-visual-studio-code&quot;&gt;4. Visual Studio Code!!&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We are now ready to start working with &lt;strong&gt;VSCode&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://code.visualstudio.com/&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="vscode" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Installing Python Extension for Visual Studio Code - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_python_extension_vscode" rel="alternate" type="text/html" title="Installing Python Extension for Visual Studio Code - Windows" />
+      <published>2020-12-01T07:00:00-05:00</published>
+      <updated>2020-12-01T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_python_extension_vscode</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_extension_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-searching-for-python-extension&quot;&gt;1. Searching for Python extension&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Open VSCode application.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_vscode_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Extensions&lt;/strong&gt; from the &lt;strong&gt;View&lt;/strong&gt; menu, .&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_view_extensions.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Search for &lt;strong&gt;Python&lt;/strong&gt; and select the one provided by &lt;strong&gt;Microsoft&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_python_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-installing-python-extension&quot;&gt;2. Installing Python extension&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Install&lt;/strong&gt; and wait ofr the installation to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_wait_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The Python extension for VSCode was successfully installed.&lt;/li&gt;
+  &lt;li&gt;This extension has a dependency with the &lt;strong&gt;Jupyter&lt;/strong&gt; extension, also provided by Microsoft.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_python_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Because of this dependency, the &lt;strong&gt;Jupyter&lt;/strong&gt; extension was also installed with the Python extension.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_Jupyter_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="python" />
+      
+        <category term="vscode" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>
