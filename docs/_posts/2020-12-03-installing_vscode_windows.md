@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/2020-12-01_00_vscode_blog_cover.png
 navigation: True
 title: Installing Visual Studio Code - Windows
-date: 2020-12-01 12:00:00
+date: 2020-12-03 12:00:00
 tags: [vscode]
 class: post-template
 subclass: 'post'

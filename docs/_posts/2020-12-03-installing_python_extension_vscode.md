@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/2020-12-01_00_python_extension_cover.jpg
 navigation: True
 title: Installing Python Extension for Visual Studio Code - Windows
-date: 2020-12-01 12:00:00
+date: 2020-12-03 12:00:00
 tags: [python, vscode]
 class: post-template
 subclass: 'post'

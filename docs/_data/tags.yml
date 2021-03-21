@@ -59,3 +59,6 @@ vscode:
 python:
   name: python
   description: Programming language that lets you work quickly and integrate systems more effectively.
+jekyll:
+  name: jekyll
+  description: Transform your plain text into static websites and blogs.

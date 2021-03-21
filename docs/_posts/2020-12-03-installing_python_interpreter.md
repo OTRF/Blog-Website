@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/2020-12-01_00_python_interpreter_cover.jpg
 navigation: True
 title: Installing Python Interpreter - Windows
-date: 2020-12-01 12:00:00
+date: 2020-12-03 12:00:00
 tags: [python]
 class: post-template
 subclass: 'post'
@@ -48,6 +48,12 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 ![](assets/images/blog/2020-12-01_07_python_successful_installation.jpg)
 
 * Click on **Close**.
+
+## 4. Validating Python Interpreter Installation
+
+* Open a **command prompt** window and run **py -3 -- version**.
+
+![](assets/images/blog/2020-12-01_08_python_installation_validation.jpg)
 
 ## References:
 
