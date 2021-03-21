@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/jekyll/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2021-03-21T01:29:55-04:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/jekyll/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Installing Jekyll - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_jekyll" rel="alternate" type="text/html" title="Installing Jekyll - Windows" />
+      <published>2020-12-01T07:00:00-05:00</published>
+      <updated>2020-12-01T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_jekyll</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-downloading-ruby--devkit-executable&quot;&gt;1. Downloading Ruby + Devkit Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://rubyinstaller.org/downloads/&quot;&gt;Ruby Installers Downloads&lt;/a&gt; website.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Ruby+Devkit 2.7.2-1 (x64)&lt;/strong&gt; under the &lt;strong&gt;WITH DEVKIT&lt;/strong&gt; section.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_jekyll_ruby_download.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-running-ruby--devkit-executable&quot;&gt;2. Running Ruby + Devkit Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_jekyll_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the Ruby + Devkit executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_jekyll_open_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-completing-the-ruby--devkit-setup&quot;&gt;3. Completing the Ruby + Devkit Setup&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Accept&lt;/strong&gt; the license and click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_jekyll_accept_license.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the installation &lt;strong&gt;Destination&lt;/strong&gt; folder and click on &lt;strong&gt;Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_jekyll_installation_destination.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the components that should be installed. Check &lt;strong&gt;Ruby RI&lt;/strong&gt; and &lt;strong&gt;MSYS2 development toolchain&lt;/strong&gt; boxes.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Next&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_jekyll_select_components.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_jekyll_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Check the &lt;strong&gt;Run ridk install&lt;/strong&gt; box and click on &lt;strong&gt;Finish&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;A command prompt window will be opened.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_jekyll_finish_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-installing-msys2&quot;&gt;3. Installing MSYS2&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Type &lt;strong&gt;1&lt;/strong&gt; and press enter in order to install the &lt;strong&gt;MYSYS2 base&lt;/strong&gt; component.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_09_jekyll_msys2_installer.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_10_jekyll_msys2_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After the installation process is completed, &lt;strong&gt;close&lt;/strong&gt; the command prompt window.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_msys2_installation_complete.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-installing-jekyll&quot;&gt;4. Installing Jekyll&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install jekyll&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;jekyll -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Close the command prompt window.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;5-installing-bundler&quot;&gt;5. Installing Bundler&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install bundler&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;bundle -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Close the command prompt window.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://jekyllrb.com/&lt;/li&gt;
+  &lt;li&gt;https://rubyinstaller.org/downloads/&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="jekyll" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

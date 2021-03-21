@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/python/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-20T19:54:22-04:00</updated>
+  <updated>2021-03-21T01:29:55-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/python/feed.xml</id>
 
   
@@ -40,8 +40,8 @@
     <entry>
       <title type="html">Installing Python Interpreter - Windows</title>
       <link href="https://blog.openthreatresearch.com/installing_python_interpreter" rel="alternate" type="text/html" title="Installing Python Interpreter - Windows" />
-      <published>2020-12-01T07:00:00-05:00</published>
-      <updated>2020-12-01T07:00:00-05:00</updated>
+      <published>2020-12-03T07:00:00-05:00</published>
+      <updated>2020-12-03T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_python_interpreter</id>
       <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_interpreter">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
@@ -97,6 +97,14 @@
   &lt;li&gt;Click on &lt;strong&gt;Close&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;h2 id=&quot;4-validating-python-interpreter-installation&quot;&gt;4. Validating Python Interpreter Installation&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Open a &lt;strong&gt;command prompt&lt;/strong&gt; window and run &lt;strong&gt;py -3 – version&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_python_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
 
 &lt;ul&gt;
@@ -132,8 +140,8 @@
     <entry>
       <title type="html">Installing Python Extension for Visual Studio Code - Windows</title>
       <link href="https://blog.openthreatresearch.com/installing_python_extension_vscode" rel="alternate" type="text/html" title="Installing Python Extension for Visual Studio Code - Windows" />
-      <published>2020-12-01T07:00:00-05:00</published>
-      <updated>2020-12-01T07:00:00-05:00</updated>
+      <published>2020-12-03T07:00:00-05:00</published>
+      <updated>2020-12-03T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_python_extension_vscode</id>
       <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_extension_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
