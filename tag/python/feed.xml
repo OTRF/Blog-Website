@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/python/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-21T23:54:10-04:00</updated>
+  <updated>2021-03-22T18:10:50-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/python/feed.xml</id>
 
   
@@ -36,6 +36,197 @@
   
   
 
+  
+    <entry>
+      <title type="html">My First Jupyter Notebook on Visual Studio Code (Python kernel)</title>
+      <link href="https://blog.openthreatresearch.com/first_jupyter_notebook_vscode" rel="alternate" type="text/html" title="My First Jupyter Notebook on Visual Studio Code (Python kernel)" />
+      <published>2021-01-01T07:00:00-05:00</published>
+      <updated>2021-01-01T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/first_jupyter_notebook_vscode</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/first_jupyter_notebook_vscode">&lt;p&gt;In this blogpost, I will share the steps that you can follow in order to generate and use a Jupyter Notebook on Visual Studio Code (VSCode). During the development of this blogpost I used a Python kernel in a Windows computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;0-pre-requisites&quot;&gt;0. Pre-requisites&lt;/h2&gt;
+&lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Extension for Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Interpreter&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-creating-a-workspace-on-vscode&quot;&gt;1. Creating a Workspace on VSCode&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;The first step of this guide will be to create a folder to store all our Jupyter Notebook projects. For this blog post, I am creating the folder &lt;strong&gt;Jupyter-Notebooks&lt;/strong&gt; in the following directory &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\Users\User1\Documents\Cyb3rPandaH&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_01_notebook_project_directory.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Open the &lt;strong&gt;VSCode&lt;/strong&gt; application.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_02_notebook_vscode_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;File&lt;/strong&gt; menu and select &lt;strong&gt;Open Folder&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_notebook_open_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Search for the &lt;strong&gt;Jupyter-Notebooks&lt;/strong&gt; that we created previously and click on &lt;strong&gt;Select Folder&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_04_notebook_select_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;By opening the Jupyter-Notebook folder, it becomes your &lt;strong&gt;workspace&lt;/strong&gt; within Visual Studio Code. We are now ready to create our first Jupyter Notebook file.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_05_notebook_vscode_workspace.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-creating-a-jupyter-notebook&quot;&gt;2. Creating a Jupyter Notebook&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Click on the &lt;strong&gt;New File&lt;/strong&gt; icon, next to the name of our workspace.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_06_notebook_new_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Type a name for your file using the &lt;strong&gt;ipynb&lt;/strong&gt; extension and press enter.&lt;/li&gt;
+  &lt;li&gt;By using this extension, we are telling VSCode to process this file as a &lt;strong&gt;Jupyter Notebook&lt;/strong&gt; file.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_07_notebook_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After hitting the &lt;strong&gt;Enter&lt;/strong&gt; key, you will see a message at the bottom left of your screen that says &lt;strong&gt;Python Extension Loading&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_08_notebook_python_extension_loading.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In additon, because this is your first time creating a Jupyter Notebook using VSCode, you will get an additional message that says &lt;strong&gt;Python requires ipykernel to be installed&lt;/strong&gt;. This message is telling us that we need to install a Kernel.&lt;/li&gt;
+  &lt;li&gt;A &lt;strong&gt;kernel&lt;/strong&gt; is a process that runs interactive code in a particular language such as Python or R and return output to us.&lt;/li&gt;
+  &lt;li&gt;In this example we are using &lt;strong&gt;Python&lt;/strong&gt; language, therefore you need to install the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel for VSCode. Click on &lt;strong&gt;Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_09_notebook_ipykernel.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;VSCode will open a terminal and install the &lt;strong&gt;ipykernel&lt;/strong&gt; component for you.&lt;/li&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_10_notebook_ipykernel_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After the installation process is completed successfully, VSCode will connect your &lt;strong&gt;Jupyter Notebook&lt;/strong&gt; to the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_11_notebook_ipykernel_successful_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can close the VSCode terminal window by clicking on the &lt;strong&gt;Close Panel&lt;/strong&gt; button that is located at the top right of the terminal window.&lt;/li&gt;
+  &lt;li&gt;The installation process for the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel will not be required when creating future Jupyter Notebooks because we just installed it in VSCode.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_12_notebook_close_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Awesome!! VSCode has created a &lt;strong&gt;Jupyter Notebook server&lt;/strong&gt; locally in your computer. We now have our first Jupyter Notebook file created with the Python extension loaded and connected to a Python Kernel.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_13_notebook_ready_to_start.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-basic-interaction-with-jupyter-notebooks&quot;&gt;3. Basic Interaction With Jupyter Notebooks&lt;/h2&gt;
+&lt;h3 id=&quot;a-inserting-and-deleting-cells&quot;&gt;a. Inserting and Deleting Cells&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;You can add a new cell by clicking on the &lt;strong&gt;Insert Cell Bellow&lt;/strong&gt; ➕ (At the bottom left of each cell) button or by hitting the &lt;strong&gt;B&lt;/strong&gt; key one time after selecting a cell.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_14_notebook_add_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can delete a cell by clicking on the &lt;strong&gt;Delete Cell&lt;/strong&gt; button 🗑️ (At the right of each cell) or by hitting the &lt;strong&gt;D&lt;/strong&gt; key two times after selecting a cell.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_15_notebook_delete_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;b-switch-cell-content-type&quot;&gt;b. Switch Cell Content Type&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;By default, the content type of a cell is &lt;strong&gt;code&lt;/strong&gt;. You can change the content type to &lt;strong&gt;narrative text&lt;/strong&gt; by clicking on the &lt;strong&gt;Change to Markdown&lt;/strong&gt; button &lt;strong&gt;M&lt;/strong&gt;⬇️ (At the top left of each cell).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_16_notebook_to_markdown.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_17_notebook_to_markdown_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can change the content type of a cell back to &lt;strong&gt;code&lt;/strong&gt; by clicking on the &lt;strong&gt;Change to Code&lt;/strong&gt; buttom &lt;strong&gt;{ }&lt;/strong&gt; (At the top left of each cell).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_18_notebook_to_code_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;c-running-markdown-and-code-cells&quot;&gt;c. Running Markdown and Code Cells&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;After adding content to a &lt;strong&gt;Markdown&lt;/strong&gt; cell, you can get the output of this type of cell just by clicking on anywhere outside the cell or by hitting &lt;strong&gt;Shift + Enter&lt;/strong&gt; keys combination (Using the second option will also add a new cell below).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_19_notebook_markdown_cell_run_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After adding content to a &lt;strong&gt;Code&lt;/strong&gt; cell, you can get the output of this type of cell just by clicking on the &lt;strong&gt;Run Cell&lt;/strong&gt; button ▶️ (At the top left of each cell) or by hitting &lt;strong&gt;Shift + Enter&lt;/strong&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_20_notebook_code_cell_run.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_22_notebook_code_cell_run_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-importing-non-installed-python-libraries&quot;&gt;4. Importing Non-Installed Python Libraries&lt;/h2&gt;
+&lt;p&gt;When trying to import a non-installed Python library, we will get an error similar to the one showed in the image below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_23_notebook_code_cell_run_importing_library_error.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can find all the steps required to install a Python library using &lt;strong&gt;pip&lt;/strong&gt; in a VSCode terminal &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;. After completing these steps, you can try and run the code within the cell again.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://code.visualstudio.com/docs/python/jupyter-support&lt;/li&gt;
+  &lt;li&gt;https://blog.openthreatresearch.com/installing_vscode_windows&lt;/li&gt;
+  &lt;li&gt;https://blog.openthreatresearch.com/installing_python_extension_vscode&lt;/li&gt;
+  &lt;li&gt;https://blog.openthreatresearch.com/installing_python_interpreter&lt;/li&gt;
+  &lt;li&gt;https://blog.openthreatresearch.com/installing_python_library_vscode&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="jupyter-notebook" />
+      
+        <category term="vscode" />
+      
+        <category term="python" />
+      
+
+      
+        <summary type="html">In this blogpost, I will share the steps that you can follow in order to generate and use a Jupyter Notebook on Visual Studio Code (VSCode). During the development of this blogpost I used a Python kernel in a Windows computer.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
