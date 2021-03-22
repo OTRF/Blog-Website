@@ -100,6 +100,6 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ## 4. Validating Git Installation
 
-* Open a command prompt window and run **git --version**.
+* Open a command prompt window and run ```git --version```.
 
 ![](assets/images/blog/2020-12-02_21_git_install_validation.jpg)

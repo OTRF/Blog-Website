@@ -68,7 +68,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ## 4. Installing Jekyll
 
-* **Open** a new command prompt window and run **gem install jekyll**.
+* **Open** a new command prompt window and run ```gem install jekyll```.
 
 ![](assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg)
 
@@ -76,7 +76,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg)
 
-* After the installation process is completed, run **jekyll -v** to validate that the installation was successful.
+* After the installation process is completed, run ```jekyll -v``` to validate that the installation was successful.
 
 ![](assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg)
 
@@ -84,7 +84,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ## 5. Installing Bundler
 
-* **Open** a new command prompt window and run **gem install bundler**.
+* **Open** a new command prompt window and run ```gem install bundler```.
 
 ![](assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg)
 
@@ -92,7 +92,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg)
 
-* After the installation process is completed, run **bundle -v** to validate that the installation was successful.
+* After the installation process is completed, run ```bundle -v``` to validate that the installation was successful.
 
 ![](assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg)
 
