@@ -62,3 +62,9 @@ python:
 jekyll:
   name: jekyll
   description: Transform your plain text into static websites and blogs.
+git:
+  name: git
+  description: It is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+jupyter-notebook:
+  name: jupyter notebook
+  description: It is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.

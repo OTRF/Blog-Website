@@ -11,7 +11,7 @@ subclass: 'post'
 author: jose
 ---
 
-In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.
+In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.
 
 ## 1. Downloading Python Executable
 * Go to [Python](https://www.python.org/downloads/) website.
@@ -51,7 +51,7 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ## 4. Validating Python Interpreter Installation
 
-* Open a **command prompt** window and run **py -3 -- version**.
+* Open a **command prompt** window and run ```py -3 -- version```.
 
 ![](assets/images/blog/2020-12-01_08_python_installation_validation.jpg)
 
