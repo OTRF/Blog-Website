@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/vscode/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-21T01:29:55-04:00</updated>
+  <updated>2021-03-21T23:54:10-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/vscode/feed.xml</id>
 
   
@@ -38,12 +38,93 @@
 
   
     <entry>
+      <title type="html">Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_python_library_vscode" rel="alternate" type="text/html" title="Installing a Python Library Using the Visual Studio Code Terminal - Windows" />
+      <published>2020-12-04T07:00:00-05:00</published>
+      <updated>2020-12-04T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_python_library_vscode</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;0-pre-requisites&quot;&gt;0. Pre-requisites&lt;/h2&gt;
+&lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Extension for Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Interpreter&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-accessing-visual-studio-code-terminal&quot;&gt;1. Accessing Visual Studio Code Terminal&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Open VSCode application&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_01_pip__vscode_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Terminal&lt;/strong&gt; menu and select &lt;strong&gt;New Terminal&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_02_pip_new_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A new &lt;strong&gt;terminal&lt;/strong&gt; (PowerShell based) window is opened.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-importing-a-python-library&quot;&gt;2. Importing a Python Library&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip --version&lt;/code&gt; to validate that pip is installed in your computer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_04_pip_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let us say that you want to install &lt;strong&gt;Pandas&lt;/strong&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install pandas&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_05_pip_install_pandas.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="vscode" />
+      
+        <category term="python" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
       <title type="html">Installing Visual Studio Code - Windows</title>
       <link href="https://blog.openthreatresearch.com/installing_vscode_windows" rel="alternate" type="text/html" title="Installing Visual Studio Code - Windows" />
       <published>2020-12-03T07:00:00-05:00</published>
       <updated>2020-12-03T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_vscode_windows</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-vscode-executable&quot;&gt;1. Downloading VSCode Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -118,6 +199,25 @@
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/li&gt;
+  &lt;li&gt;Select &lt;strong&gt;Preferences&lt;/strong&gt;  and then select &lt;strong&gt;Color Theme&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_vscode_color_theme.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select, for example, &lt;strong&gt;Light (Visual Studio)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_vscode_color_theme_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is how it looks like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_vscode_color_theme_light_vscode.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
 
 &lt;ul&gt;
@@ -143,7 +243,7 @@
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) (VSCode) on a Windows computer using Firefox as web browser.</summary>
       
 
       

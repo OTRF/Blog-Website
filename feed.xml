@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-03-21T01:29:55-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-03-21T23:54:10-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
 
 &lt;p&gt;In this post, I will show you how to use a PowerShell module named &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager/&quot;&gt;NtObjectManager&lt;/a&gt;, developed by James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt;, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the Server Message Block (SMB) Protocol, and we will go step-by-step calling each RPC method needed to create and start the service.&lt;/p&gt;
 
@@ -1316,7 +1316,52 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
   &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9637/68/how-can-i-complete-the-domain-control-validation-dcv-for-my-ssl-certificate/?_ga=2.199643694.1278617947.1608673309-1707679281.1608673309&lt;/li&gt;
   &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/&lt;/li&gt;
   &lt;li&gt;https://decoder.link/result&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="SSL Certificates" /><category term="Getting Started" /><summary type="html">Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).</summary></entry><entry><title type="html">Installing Visual Studio Code - Windows</title><link href="https://blog.openthreatresearch.com/installing_vscode_windows" rel="alternate" type="text/html" title="Installing Visual Studio Code - Windows" /><published>2020-12-03T07:00:00-05:00</published><updated>2020-12-03T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_vscode_windows</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="SSL Certificates" /><category term="Getting Started" /><summary type="html">Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).</summary></entry><entry><title type="html">Installing a Python Library Using the Visual Studio Code Terminal - Windows</title><link href="https://blog.openthreatresearch.com/installing_python_library_vscode" rel="alternate" type="text/html" title="Installing a Python Library Using the Visual Studio Code Terminal - Windows" /><published>2020-12-04T07:00:00-05:00</published><updated>2020-12-04T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_python_library_vscode</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;0-pre-requisites&quot;&gt;0. Pre-requisites&lt;/h2&gt;
+&lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Extension for Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Interpreter&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-accessing-visual-studio-code-terminal&quot;&gt;1. Accessing Visual Studio Code Terminal&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Open VSCode application&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_01_pip__vscode_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Terminal&lt;/strong&gt; menu and select &lt;strong&gt;New Terminal&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_02_pip_new_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A new &lt;strong&gt;terminal&lt;/strong&gt; (PowerShell based) window is opened.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-importing-a-python-library&quot;&gt;2. Importing a Python Library&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip --version&lt;/code&gt; to validate that pip is installed in your computer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_04_pip_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let us say that you want to install &lt;strong&gt;Pandas&lt;/strong&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install pandas&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_05_pip_install_pandas.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Jose Rodriguez</name></author><category term="vscode" /><category term="python" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.</summary></entry><entry><title type="html">Installing Visual Studio Code - Windows</title><link href="https://blog.openthreatresearch.com/installing_vscode_windows" rel="alternate" type="text/html" title="Installing Visual Studio Code - Windows" /><published>2020-12-03T07:00:00-05:00</published><updated>2020-12-03T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_vscode_windows</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-vscode-executable&quot;&gt;1. Downloading VSCode Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -1391,11 +1436,30 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/li&gt;
+  &lt;li&gt;Select &lt;strong&gt;Preferences&lt;/strong&gt;  and then select &lt;strong&gt;Color Theme&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_vscode_color_theme.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select, for example, &lt;strong&gt;Light (Visual Studio)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_vscode_color_theme_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is how it looks like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_vscode_color_theme_light_vscode.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;https://code.visualstudio.com/&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Jose Rodriguez</name></author><category term="vscode" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary></entry><entry><title type="html">Installing Python Interpreter - Windows</title><link href="https://blog.openthreatresearch.com/installing_python_interpreter" rel="alternate" type="text/html" title="Installing Python Interpreter - Windows" /><published>2020-12-03T07:00:00-05:00</published><updated>2020-12-03T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_python_interpreter</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_interpreter">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Jose Rodriguez</name></author><category term="vscode" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) (VSCode) on a Windows computer using Firefox as web browser.</summary></entry><entry><title type="html">Installing Python Interpreter - Windows</title><link href="https://blog.openthreatresearch.com/installing_python_interpreter" rel="alternate" type="text/html" title="Installing Python Interpreter - Windows" /><published>2020-12-03T07:00:00-05:00</published><updated>2020-12-03T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_python_interpreter</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_interpreter">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-python-executable&quot;&gt;1. Downloading Python Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -1452,7 +1516,7 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
 &lt;h2 id=&quot;4-validating-python-interpreter-installation&quot;&gt;4. Validating Python Interpreter Installation&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Open a &lt;strong&gt;command prompt&lt;/strong&gt; window and run &lt;strong&gt;py -3 – version&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Open a &lt;strong&gt;command prompt&lt;/strong&gt; window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;py -3 -- version&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_python_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1461,43 +1525,4 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
 
 &lt;ul&gt;
   &lt;li&gt;https://www.python.org/downloads/&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Jose Rodriguez</name></author><category term="python" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.</summary></entry><entry><title type="html">Installing Python Extension for Visual Studio Code - Windows</title><link href="https://blog.openthreatresearch.com/installing_python_extension_vscode" rel="alternate" type="text/html" title="Installing Python Extension for Visual Studio Code - Windows" /><published>2020-12-03T07:00:00-05:00</published><updated>2020-12-03T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/installing_python_extension_vscode</id><content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_extension_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-searching-for-python-extension&quot;&gt;1. Searching for Python extension&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Open VSCode application.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_vscode_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Extensions&lt;/strong&gt; from the &lt;strong&gt;View&lt;/strong&gt; menu, .&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_view_extensions.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Search for &lt;strong&gt;Python&lt;/strong&gt; and select the one provided by &lt;strong&gt;Microsoft&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_python_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-installing-python-extension&quot;&gt;2. Installing Python extension&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Install&lt;/strong&gt; and wait ofr the installation to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_wait_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The Python extension for VSCode was successfully installed.&lt;/li&gt;
-  &lt;li&gt;This extension has a dependency with the &lt;strong&gt;Jupyter&lt;/strong&gt; extension, also provided by Microsoft.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_python_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Because of this dependency, the &lt;strong&gt;Jupyter&lt;/strong&gt; extension was also installed with the Python extension.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_Jupyter_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>Jose Rodriguez</name></author><category term="python" /><category term="vscode" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Jose Rodriguez</name></author><category term="python" /><summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.</summary></entry></feed>

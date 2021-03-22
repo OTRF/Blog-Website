@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/jekyll/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-21T01:29:55-04:00</updated>
+  <updated>2021-03-21T23:54:10-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/jekyll/feed.xml</id>
 
   
@@ -43,7 +43,7 @@
       <published>2020-12-01T07:00:00-05:00</published>
       <updated>2020-12-01T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_jekyll</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-ruby--devkit-executable&quot;&gt;1. Downloading Ruby + Devkit Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -123,7 +123,7 @@
 &lt;h2 id=&quot;4-installing-jekyll&quot;&gt;4. Installing Jekyll&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install jekyll&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -135,7 +135,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;jekyll -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll -v&lt;/code&gt; to validate that the installation was successful.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -147,7 +147,7 @@
 &lt;h2 id=&quot;5-installing-bundler&quot;&gt;5. Installing Bundler&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install bundler&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install bundler&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -159,7 +159,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;bundle -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle -v&lt;/code&gt; to validate that the installation was successful.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -194,7 +194,7 @@
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
       
 
       

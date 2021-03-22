@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/jose/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-21T01:29:55-04:00</updated>
+  <updated>2021-03-21T23:54:10-04:00</updated>
   <id>https://blog.openthreatresearch.com/author/jose/feed.xml</id>
 
   
@@ -36,6 +36,87 @@
   
   
 
+  
+    <entry>
+      <title type="html">Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_python_library_vscode" rel="alternate" type="text/html" title="Installing a Python Library Using the Visual Studio Code Terminal - Windows" />
+      <published>2020-12-04T07:00:00-05:00</published>
+      <updated>2020-12-04T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_python_library_vscode</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;0-pre-requisites&quot;&gt;0. Pre-requisites&lt;/h2&gt;
+&lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Extension for Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Python Interpreter&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-accessing-visual-studio-code-terminal&quot;&gt;1. Accessing Visual Studio Code Terminal&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Open VSCode application&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_01_pip__vscode_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Terminal&lt;/strong&gt; menu and select &lt;strong&gt;New Terminal&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_02_pip_new_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A new &lt;strong&gt;terminal&lt;/strong&gt; (PowerShell based) window is opened.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-importing-a-python-library&quot;&gt;2. Importing a Python Library&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip --version&lt;/code&gt; to validate that pip is installed in your computer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_04_pip_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let us say that you want to install &lt;strong&gt;Pandas&lt;/strong&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install pandas&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_05_pip_install_pandas.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="vscode" />
+      
+        <category term="python" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">Installing Python Extension for Visual Studio Code - Windows</title>
@@ -118,7 +199,7 @@
       <published>2020-12-03T07:00:00-05:00</published>
       <updated>2020-12-03T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_python_interpreter</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_interpreter">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_interpreter">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-python-executable&quot;&gt;1. Downloading Python Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -175,7 +256,7 @@
 &lt;h2 id=&quot;4-validating-python-interpreter-installation&quot;&gt;4. Validating Python Interpreter Installation&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Open a &lt;strong&gt;command prompt&lt;/strong&gt; window and run &lt;strong&gt;py -3 – version&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Open a &lt;strong&gt;command prompt&lt;/strong&gt; window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;py -3 -- version&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_python_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -205,7 +286,7 @@
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python 3.9 interpreter on a Windows computer using Firefox as web browser.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.</summary>
       
 
       
@@ -218,7 +299,7 @@
       <published>2020-12-03T07:00:00-05:00</published>
       <updated>2020-12-03T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_vscode_windows</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-vscode-executable&quot;&gt;1. Downloading VSCode Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -293,6 +374,25 @@
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/li&gt;
+  &lt;li&gt;Select &lt;strong&gt;Preferences&lt;/strong&gt;  and then select &lt;strong&gt;Color Theme&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_vscode_color_theme.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select, for example, &lt;strong&gt;Light (Visual Studio)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_vscode_color_theme_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is how it looks like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_vscode_color_theme_light_vscode.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
 
 &lt;ul&gt;
@@ -318,7 +418,174 @@
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) (VSCode) on a Windows computer using Firefox as web browser.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">Installing Git - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_git" rel="alternate" type="text/html" title="Installing Git - Windows" />
+      <published>2020-12-02T07:00:00-05:00</published>
+      <updated>2020-12-02T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_git</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_git">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install git(2.31.0) on a Windows computer using Firefox as web browser. After completing all the steps of this blog, you should be able to execute git commands using the command prompt.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-downloading-git-executable&quot;&gt;1. Downloading Git Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://git-scm.com/downloads&quot;&gt;Git Downloads&lt;/a&gt; website.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Windows&lt;/strong&gt; under the &lt;strong&gt;Downloads&lt;/strong&gt; section.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_01_git_download_executable.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2-running-git-executable&quot;&gt;2. Running Git Executable&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_02_git_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the Git executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_03_git_open_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Allow the app to make changes clicking on &lt;strong&gt;Yes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_04_git_allow_changes.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-completing-the-git-setup&quot;&gt;3. Completing the Git Setup&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_05_git_license.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Destination&lt;/strong&gt; folder and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_06_git_destination_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Components&lt;/strong&gt; that will be installed and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_07_git_components.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Start Menu&lt;/strong&gt; folder and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_08_git_start_menu_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Default Editor&lt;/strong&gt; application and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_09_git_editor_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Let Git Decide&lt;/strong&gt; the name of the initial branch in new repositories and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_10_git_let_git_decide.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the &lt;strong&gt;Recommended&lt;/strong&gt; option for adjusting your PATH environment and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_11_git_adjust_path_environment.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Use the OpenSSL libray&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_12_git_https_transport_backend.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Checkout Windows-style, commit Unix-style line endings&lt;/strong&gt; (Recommended setting on Windows) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_13_git_line_ending_conversion.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Use MinTTY&lt;/strong&gt; (Default terminal of MSYS2) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_14_git_use_git_bash.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Default&lt;/strong&gt; (fast-forward or merge) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_15_git_behavior_git_pull.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Git Credential Manager Core&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_16_git_credential_helper.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Enable file system caching&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_17_git_extra_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;strong&gt;Install&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_18_git_install.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_19_git_install_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Uncheck the &lt;strong&gt;View Release Notes&lt;/strong&gt; box and click on &lt;strong&gt;Finish&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_20_git_install_finish.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4-validating-git-installation&quot;&gt;4. Validating Git Installation&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Open a command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;git --version&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_21_git_install_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="git" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install git(2.31.0) on a Windows computer using Firefox as web browser. After completing all the steps of this blog, you should be able to execute git commands using the command prompt.</summary>
       
 
       
@@ -331,7 +598,7 @@
       <published>2020-12-01T07:00:00-05:00</published>
       <updated>2020-12-01T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_jekyll</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-downloading-ruby--devkit-executable&quot;&gt;1. Downloading Ruby + Devkit Executable&lt;/h2&gt;
 &lt;ul&gt;
@@ -411,7 +678,7 @@
 &lt;h2 id=&quot;4-installing-jekyll&quot;&gt;4. Installing Jekyll&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install jekyll&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -423,7 +690,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;jekyll -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll -v&lt;/code&gt; to validate that the installation was successful.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -435,7 +702,7 @@
 &lt;h2 id=&quot;5-installing-bundler&quot;&gt;5. Installing Bundler&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;strong&gt;gem install bundler&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Open&lt;/strong&gt; a new command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install bundler&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -447,7 +714,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, run &lt;strong&gt;bundle -v&lt;/strong&gt; to validate that the installation was successful.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed, run &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle -v&lt;/code&gt; to validate that the installation was successful.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -482,7 +749,7 @@
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
       
 
       
