@@ -11,7 +11,7 @@ subclass: 'post'
 author: jose
 ---
 
-In this quick blogpost, I will share the steps that you can follow in order to install jekyll on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.
+In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.
 
 ## 1. Downloading Ruby + Devkit Executable
 * Go to [Ruby Installers Downloads](https://rubyinstaller.org/downloads/) website.
