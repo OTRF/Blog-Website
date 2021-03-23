@@ -19,11 +19,11 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_01_jekyll_ruby_download.jpg)
 
-## 2. Running Ruby + Devkit Executable
 * Click on **Save File**.
 
 ![](assets/images/blog/2020-12-01_02_jekyll_save_file.jpg)
 
+## 2. Running Ruby + Devkit Executable
 * In your **Downloads** directory, right click on the Ruby + Devkit executable and select **Open**.
 
 ![](assets/images/blog/2020-12-01_03_jekyll_open_file.jpg)

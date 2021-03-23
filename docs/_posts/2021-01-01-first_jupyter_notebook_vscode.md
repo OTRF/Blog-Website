@@ -93,6 +93,11 @@ In order to complete the steps of this blogpost, you need to install the followi
 
 ![](assets/images/blog/2021-01-01_16_notebook_to_markdown.jpg)
 
+```
+# This is my first Jupyter Notebook
+Thank you!
+```
+
 ![](assets/images/blog/2021-01-01_17_notebook_to_markdown_example.jpg)
 
 * You can change the content type of a cell back to **code** by clicking on the **Change to Code** buttom **{ }** (At the top left of each cell).
@@ -106,6 +111,17 @@ In order to complete the steps of this blogpost, you need to install the followi
 
 * After adding content to a **Code** cell, you can get the output of this type of cell just by clicking on the **Run Cell** button ▶️ (At the top left of each cell) or by hitting **Shift + Enter** keys combination (Using either both options will add a new cell below).
 
+```
+# Importing Python library
+import pandas as pd
+
+# Initializing a Dictionary
+data = {'User': ['Cyb3rPandaH','Cyb3rCuy'], 'Country': ['Peru','United Sttes']}
+
+# Creating a Pandas Dataframe
+pd.DataFrame.from_dict(data)
+```
+
 ![](assets/images/blog/2021-01-01_20_notebook_code_cell_run.jpg)
 
 ![](assets/images/blog/2021-01-01_22_notebook_code_cell_run_example.jpg)
@@ -113,9 +129,14 @@ In order to complete the steps of this blogpost, you need to install the followi
 ## 4. Importing Non-Installed Python Libraries
 When trying to import a non-installed Python library, we will get an error similar to the one showed in the image below.
 
+```
+# Importing Python library
+import requests
+```
+
 ![](assets/images/blog/2021-01-01_23_notebook_code_cell_run_importing_library_error.jpg)
 
-You can find all the steps required to install a Python library using **pip** in a VSCode terminal [here](https://blog.openthreatresearch.com/installing_python_library_vscode). After completing these steps, you can try and run the code within the cell again.
+You can find all the steps required to install a Python library using **pip** in VSCode [here](https://blog.openthreatresearch.com/installing_python_library_vscode). After completing these steps, you can try and run the code within the cell again.
 
 
 ## References
