@@ -19,11 +19,11 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_01_python_interpreter_download.jpg)
 
-## 2. Running Python Executable
 * Click on **Save File**.
 
 ![](assets/images/blog/2020-12-01_02_python_interpreter_save_file.jpg)
 
+## 2. Running Python Executable
 * In your **Downloads** directory, right click on the Python executable and select **Open**.
 
 ![](assets/images/blog/2020-12-01_03_python_interpreter_open_executable.jpg)

@@ -19,11 +19,11 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-02_01_git_download_executable.jpg)
 
-## 2. Running Git Executable
 * Click on **Save File**.
 
 ![](assets/images/blog/2020-12-02_02_git_save_file.jpg)
 
+## 2. Running Git Executable
 * In your **Downloads** directory, right click on the Git executable and select **Open**.
 
 ![](assets/images/blog/2020-12-02_03_git_open_file.jpg)

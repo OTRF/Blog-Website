@@ -19,11 +19,11 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_01_download_vscode_windows.png)
 
-## 2. Running VSCode Executable
 * Click on **Save File**.
 
 ![](assets/images/blog/2020-12-01_02_saving_vscode_executable.png)
 
+## 2. Running VSCode Executable
 * In your **Downloads** directory, right click on the VSCode executable and select **Open**.
 
 ![](assets/images/blog/2020-12-01_03_open_vscode_executable.png)

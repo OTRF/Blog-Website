@@ -68,3 +68,6 @@ git:
 jupyter-notebook:
   name: jupyter-notebook
   description: It is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text.
+java:
+  name: java
+  description: It is a programming language and computing platform first released by Sun Microsystems in 1995.
