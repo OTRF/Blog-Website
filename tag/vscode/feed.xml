@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/vscode/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-22T18:10:50-04:00</updated>
+  <updated>2021-03-23T14:11:07-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/vscode/feed.xml</id>
 
   
@@ -159,6 +159,10 @@
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_16_notebook_to_markdown.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is my first Jupyter Notebook
+Thank you!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_17_notebook_to_markdown_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -178,6 +182,16 @@
   &lt;li&gt;After adding content to a &lt;strong&gt;Code&lt;/strong&gt; cell, you can get the output of this type of cell just by clicking on the &lt;strong&gt;Run Cell&lt;/strong&gt; button ▶️ (At the top left of each cell) or by hitting &lt;strong&gt;Shift + Enter&lt;/strong&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+import pandas as pd
+
+# Initializing a Dictionary
+data = {'User': ['Cyb3rPandaH','Cyb3rCuy'], 'Country': ['Peru','United Sttes']}
+
+# Creating a Pandas Dataframe
+pd.DataFrame.from_dict(data)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_20_notebook_code_cell_run.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_22_notebook_code_cell_run_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -185,9 +199,13 @@
 &lt;h2 id=&quot;4-importing-non-installed-python-libraries&quot;&gt;4. Importing Non-Installed Python Libraries&lt;/h2&gt;
 &lt;p&gt;When trying to import a non-installed Python library, we will get an error similar to the one showed in the image below.&lt;/p&gt;
 
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+import requests
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_23_notebook_code_cell_run_importing_library_error.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You can find all the steps required to install a Python library using &lt;strong&gt;pip&lt;/strong&gt; in a VSCode terminal &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;. After completing these steps, you can try and run the code within the cell again.&lt;/p&gt;
+&lt;p&gt;You can find all the steps required to install a Python library using &lt;strong&gt;pip&lt;/strong&gt; in VSCode &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;. After completing these steps, you can try and run the code within the cell again.&lt;/p&gt;
 
 &lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
 &lt;ul&gt;
@@ -229,14 +247,14 @@
     </entry>
   
     <entry>
-      <title type="html">Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
-      <link href="https://blog.openthreatresearch.com/installing_python_library_vscode" rel="alternate" type="text/html" title="Installing a Python Library Using the Visual Studio Code Terminal - Windows" />
+      <title type="html">Installing a Python Library in Visual Studio Code - Windows</title>
+      <link href="https://blog.openthreatresearch.com/installing_python_library_vscode" rel="alternate" type="text/html" title="Installing a Python Library in Visual Studio Code - Windows" />
       <published>2020-12-04T07:00:00-05:00</published>
       <updated>2020-12-04T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_python_library_vscode</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;strong&gt;Terminal&lt;/strong&gt; or a &lt;strong&gt;Jupyter Notebook&lt;/strong&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
 
-&lt;h2 id=&quot;0-pre-requisites&quot;&gt;0. Pre-requisites&lt;/h2&gt;
+&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
@@ -244,7 +262,8 @@
   &lt;li&gt;&lt;strong&gt;Python Interpreter&lt;/strong&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;1-accessing-visual-studio-code-terminal&quot;&gt;1. Accessing Visual Studio Code Terminal&lt;/h2&gt;
+&lt;h2 id=&quot;installing-a-python-library-using-the-terminal-in-vscode&quot;&gt;Installing a Python Library Using the Terminal in VSCode&lt;/h2&gt;
+&lt;h3 id=&quot;1-accessing-visual-studio-code-terminal&quot;&gt;1. Accessing Visual Studio Code Terminal&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Open VSCode application&lt;/li&gt;
 &lt;/ul&gt;
@@ -263,7 +282,7 @@
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-importing-a-python-library&quot;&gt;2. Importing a Python Library&lt;/h2&gt;
+&lt;h3 id=&quot;2-importing-a-python-library&quot;&gt;2. Importing a Python Library&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;pip --version&lt;/code&gt; to validate that pip is installed in your computer.&lt;/li&gt;
 &lt;/ul&gt;
@@ -276,6 +295,32 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_05_pip_install_pandas.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;installing-a-python-library-using-a-jupyter-notebook-in-vscode&quot;&gt;Installing a Python Library Using a Jupyter Notebook in VSCode&lt;/h2&gt;
+&lt;h3 id=&quot;1-creating-a-jupyter-notebook-in-vscode&quot;&gt;1. Creating a Jupyter Notebook in VSCode&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Create a Jupyter Notebook following the steps of &lt;a href=&quot;https://blog.openthreatresearch.com/first_jupyter_notebook_vscode&quot;&gt;My First Jupyter Notebook on Visual Studio Code (Python kernel)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_06_pip_vscode_jupyter_notebook.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-importing-a-python-library-1&quot;&gt;2. Importing a Python Library&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;!pip --version&lt;/code&gt; to validate that pip is installed in your computer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_07_pip_vscode_jupyter_notebook_pip_version.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let us say that you want to install &lt;strong&gt;Pandas&lt;/strong&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Run &lt;code class=&quot;highlighter-rouge&quot;&gt;!pip install pandas&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_08_pip_vscode_jupyter_notebook_pip_install.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.&lt;/li&gt;
@@ -296,13 +341,15 @@
       
 
       
+        <category term="jupyter-notebook" />
+      
         <category term="vscode" />
       
         <category term="python" />
       
 
       
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.</summary>
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the Terminal or a Jupyter Notebook in Visual Studio Code (VSCode) on a Windows computer.</summary>
       
 
       
@@ -325,13 +372,13 @@
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_download_vscode_windows.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-running-vscode-executable&quot;&gt;2. Running VSCode Executable&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_saving_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;2-running-vscode-executable&quot;&gt;2. Running VSCode Executable&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the VSCode executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;

@@ -128,9 +128,9 @@
     
       
       <item>
-        <title>Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
+        <title>Installing a Python Library in Visual Studio Code - Windows</title>
         
-          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.&lt;/p&gt;
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;strong&gt;Terminal&lt;/strong&gt; or a &lt;strong&gt;Jupyter Notebook&lt;/strong&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
 
 </description>
         
@@ -213,6 +213,21 @@
         <link>
         https://blog.openthreatresearch.com/installing_jekyll</link>
         <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_jekyll</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Installing Java - Windows</title>
+        
+          <description>&lt;p&gt;In this blogpost, I will share the steps that you can follow in order to install Java (1.8.0_281) on a Windows computer using Firefox as web browser.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 01 Dec 2020 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/installing_java</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_java</guid>
       </item>
       
     

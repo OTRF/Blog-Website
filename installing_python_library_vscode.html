@@ -11,7 +11,7 @@
 
 
 
-    <title>Installing a Python Library Using the Visual Studio Code Terminal - Windows</title>
+    <title>Installing a Python Library in Visual Studio Code - Windows</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -42,24 +42,24 @@
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Installing a Python Library Using the Visual Studio Code Terminal - Windows" />
-    <meta property="og:description" content="In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer. 0. Pre-requisites In order to complete the steps of this blogpost, you need to install the following" />
+    <meta property="og:title" content="Installing a Python Library in Visual Studio Code - Windows" />
+    <meta property="og:description" content="In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the Terminal or a Jupyter Notebook in Visual Studio Code (VSCode) on a Windows computer. Pre-requisites In order to complete the steps of this blogpost, you" />
     <meta property="og:url" content="https://blog.openthreatresearch.com/installing_python_library_vscode" />
     <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-04_00_pip_cover.jpg" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
     <meta property="article:published_time" content="2020-12-04T07:00:00-05:00" />
     <meta property="article:modified_time" content="2020-12-04T07:00:00-05:00" />
-    <meta property="article:tag" content="Vscode" />
+    <meta property="article:tag" content="Jupyter-notebook" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Installing a Python Library Using the Visual Studio Code Terminal - Windows" />
-    <meta name="twitter:description" content="In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer. 0. Pre-requisites In order to complete the steps of this blogpost, you need to install the following" />
+    <meta name="twitter:title" content="Installing a Python Library in Visual Studio Code - Windows" />
+    <meta name="twitter:description" content="In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the Terminal or a Jupyter Notebook in Visual Studio Code (VSCode) on a Windows computer. Pre-requisites In order to complete the steps of this blogpost, you" />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
     <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/2020-12-04_00_pip_cover.jpg" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Open Threat Research Blog" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Vscode" />
+    <meta name="twitter:data2" content="Jupyter-notebook" />
     <meta name="twitter:site" content="@OTR_Community" />
     <meta name="twitter:creator" content="@OTR_Community" />
     <meta property="og:image:width" content="1400" />
@@ -85,7 +85,7 @@
         "@type": "WebPage",
         "@id": "https://blog.openthreatresearch.com/installing_python_library_vscode"
     },
-    "description": "In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer. 0. Pre-requisites In order to complete the steps of this blogpost, you need to install the following"
+    "description": "In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the Terminal or a Jupyter Notebook in Visual Studio Code (VSCode) on a Windows computer. Pre-requisites In order to complete the steps of this blogpost, you"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Installing a Python Library Using the Visual Studio Code Terminal - Windows" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Installing a Python Library in Visual Studio Code - Windows" href="/feed.xml" />
 
 
 </head>
@@ -153,13 +153,17 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-vscode tag-python post ">
+        <article class="post-full  tag-jupyter-notebook tag-vscode tag-python post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
                     <time class="post-full-meta-date" datetime=" 4 December 2020"> 4 December 2020</time>
                     
                         <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/jupyter-notebook/'>JUPYTER-NOTEBOOK</a>,
+                            
                         
                             
                                <a href='/tag/vscode/'>VSCODE</a>,
@@ -171,7 +175,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Installing a Python Library Using the Visual Studio Code Terminal - Windows</h1>
+                <h1 class="post-full-title">Installing a Python Library in Visual Studio Code - Windows</h1>
             </header>
 
             
@@ -181,9 +185,9 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through the Visual Studio Code (VSCode) terminal on a Windows computer.</p>
+                    <p>In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the <strong>Terminal</strong> or a <strong>Jupyter Notebook</strong> in Visual Studio Code (VSCode) on a Windows computer.</p>
 
-<h2 id="0-pre-requisites">0. Pre-requisites</h2>
+<h2 id="pre-requisites">Pre-requisites</h2>
 <p>In order to complete the steps of this blogpost, you need to install the following in your windows computer:</p>
 <ul>
   <li><strong>Visual Studio Code</strong>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_vscode_windows">here</a>.</li>
@@ -191,7 +195,8 @@ into the {body} of the default.hbs template -->
   <li><strong>Python Interpreter</strong>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_interpreter">here</a>.</li>
 </ul>
 
-<h2 id="1-accessing-visual-studio-code-terminal">1. Accessing Visual Studio Code Terminal</h2>
+<h2 id="installing-a-python-library-using-the-terminal-in-vscode">Installing a Python Library Using the Terminal in VSCode</h2>
+<h3 id="1-accessing-visual-studio-code-terminal">1. Accessing Visual Studio Code Terminal</h3>
 <ul>
   <li>Open VSCode application</li>
 </ul>
@@ -210,7 +215,7 @@ into the {body} of the default.hbs template -->
 
 <p><img src="assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg" alt="" /></p>
 
-<h2 id="2-importing-a-python-library">2. Importing a Python Library</h2>
+<h3 id="2-importing-a-python-library">2. Importing a Python Library</h3>
 <ul>
   <li>Run <code class="highlighter-rouge">pip --version</code> to validate that pip is installed in your computer.</li>
 </ul>
@@ -223,6 +228,32 @@ into the {body} of the default.hbs template -->
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_05_pip_install_pandas.jpg" alt="" /></p>
+
+<ul>
+  <li>Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.</li>
+</ul>
+
+<h2 id="installing-a-python-library-using-a-jupyter-notebook-in-vscode">Installing a Python Library Using a Jupyter Notebook in VSCode</h2>
+<h3 id="1-creating-a-jupyter-notebook-in-vscode">1. Creating a Jupyter Notebook in VSCode</h3>
+<ul>
+  <li>Create a Jupyter Notebook following the steps of <a href="https://blog.openthreatresearch.com/first_jupyter_notebook_vscode">My First Jupyter Notebook on Visual Studio Code (Python kernel)</a></li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-04_06_pip_vscode_jupyter_notebook.jpg" alt="" /></p>
+
+<h3 id="2-importing-a-python-library-1">2. Importing a Python Library</h3>
+<ul>
+  <li>Run <code class="highlighter-rouge">!pip --version</code> to validate that pip is installed in your computer.</li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-04_07_pip_vscode_jupyter_notebook_pip_version.jpg" alt="" /></p>
+
+<ul>
+  <li>Let us say that you want to install <strong>Pandas</strong> Python library.</li>
+  <li>Run <code class="highlighter-rouge">!pip install pandas</code></li>
+</ul>
+
+<p><img src="assets/images/blog/2020-12-04_08_pip_vscode_jupyter_notebook_pip_install.jpg" alt="" /></p>
 
 <ul>
   <li>Pandas library is now ready to be imported by any python application. You can repeat this process for any Python library.</li>
@@ -307,7 +338,7 @@ into the {body} of the default.hbs template -->
                         <header class="read-next-card-header">
                             <small class="read-next-card-header-sitetitle">&mdash; Open Threat Research Blog &mdash;</small>
                             
-                                <h3 class="read-next-card-header-title"><a href="/tag/vscode/">Vscode</a></h3>
+                                <h3 class="read-next-card-header-title"><a href="/tag/jupyter-notebook/">Jupyter-notebook</a></h3>
                             
                         </header>
                         <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
@@ -344,23 +375,11 @@ into the {body} of the default.hbs template -->
                                   
                                 
                                   
-                                    
-                                        
-                                        
-                                            <li><a href="/installing_vscode_windows">Installing Visual Studio Code - Windows</a></li>
-                                        
-                                    
-                                  
                                 
                                   
                                 
                                   
-                                    
-                                        
-                                        
-                                            <li><a href="/installing_python_extension_vscode">Installing Python Extension for Visual Studio Code - Windows</a></li>
-                                        
-                                    
+                                
                                   
                                 
                                   
@@ -370,9 +389,9 @@ into the {body} of the default.hbs template -->
                             </ul>
                         </div>
                         <footer class="read-next-card-footer">
-                            <a href="/tag/vscode/">
+                            <a href="/tag/jupyter-notebook/">
                                 
-                                    See all 3 posts  →
+                                    See all 1 posts  →
                                 
                             </a>
                         </footer>
@@ -519,13 +538,13 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Installing a Python Library Using the Visual Studio Code Terminal - Windows</div>
+    <div class="floating-header-title">Installing a Python Library in Visual Studio Code - Windows</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Installing+a+Python+Library+Using+the+Visual+Studio+Code+Terminal+-+Windows&amp;url=installing_python_library_vscode"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Installing+a+Python+Library+in+Visual+Studio+Code+-+Windows&amp;url=installing_python_library_vscode"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
