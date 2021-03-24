@@ -15,7 +15,7 @@ In this blogpost, I will share the steps that you can follow in order to execute
 
 ## Pre-requisites
 In order to complete the steps of this blogpost, you need to install the following in your windows computer:
-* `Java`: you can find the steps to install it [here](https://blog.openthreatresearch.com/installing_vscode_windows).
+* `Java`: you can find the steps to install it [here](https://blog.openthreatresearch.com/installing_java).
 * `Visual Studio Code`: you can find the steps to install it [here](https://blog.openthreatresearch.com/installing_vscode_windows).
 * `Python Extension for Visual Studio Code`: you can find the steps to install it [here](https://blog.openthreatresearch.com/installing_python_extension_vscode).
 * `Python Interpreter`: you can find the steps to install it [here](https://blog.openthreatresearch.com/installing_python_interpreter).
