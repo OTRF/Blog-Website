@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/git/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-23T14:11:07-04:00</updated>
+  <updated>2021-03-24T11:03:46-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/git/feed.xml</id>
 
   
@@ -45,115 +45,116 @@
       <id>https://blog.openthreatresearch.com/installing_git</id>
       <content type="html" xml:base="https://blog.openthreatresearch.com/installing_git">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install git(2.31.0) on a Windows computer using Firefox as web browser. After completing all the steps of this blog, you should be able to execute git commands using the command prompt.&lt;/p&gt;
 
-&lt;h2 id=&quot;1-downloading-git-executable&quot;&gt;1. Downloading Git Executable&lt;/h2&gt;
+&lt;h2 id=&quot;installing-git-for-windows&quot;&gt;Installing Git for Windows&lt;/h2&gt;
+&lt;h3 id=&quot;1-downloading-git-executable&quot;&gt;1) Downloading Git Executable&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Go to &lt;a href=&quot;https://git-scm.com/downloads&quot;&gt;Git Downloads&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Windows&lt;/strong&gt; under the &lt;strong&gt;Downloads&lt;/strong&gt; section.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Windows&lt;/code&gt; under the &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; section.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_01_git_download_executable.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Save File&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_02_git_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;2-running-git-executable&quot;&gt;2. Running Git Executable&lt;/h2&gt;
+&lt;h3 id=&quot;2-running-git-executable&quot;&gt;2) Running Git Executable&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In your &lt;strong&gt;Downloads&lt;/strong&gt; directory, right click on the Git executable and select &lt;strong&gt;Open&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Git executable and select &lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_03_git_open_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Allow the app to make changes clicking on &lt;strong&gt;Yes&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Allow the app to make changes clicking on &lt;code class=&quot;highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_04_git_allow_changes.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;3-completing-the-git-setup&quot;&gt;3. Completing the Git Setup&lt;/h2&gt;
+&lt;h3 id=&quot;3-completing-the-git-setup&quot;&gt;3) Completing the Git Setup&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_05_git_license.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Destination&lt;/strong&gt; folder and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Destination&lt;/code&gt; folder and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_06_git_destination_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Components&lt;/strong&gt; that will be installed and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Components&lt;/code&gt; that will be installed and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_07_git_components.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Start Menu&lt;/strong&gt; folder and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Start Menu&lt;/code&gt; folder and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_08_git_start_menu_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Default Editor&lt;/strong&gt; application and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Default Editor&lt;/code&gt; application and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_09_git_editor_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Let Git Decide&lt;/strong&gt; the name of the initial branch in new repositories and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Let Git Decide&lt;/code&gt; the name of the initial branch in new repositories and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_10_git_let_git_decide.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select the &lt;strong&gt;Recommended&lt;/strong&gt; option for adjusting your PATH environment and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select the &lt;code class=&quot;highlighter-rouge&quot;&gt;Recommended&lt;/code&gt; option for adjusting your PATH environment and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_11_git_adjust_path_environment.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Use the OpenSSL libray&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Use the OpenSSL libray&lt;/code&gt; and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_12_git_https_transport_backend.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Checkout Windows-style, commit Unix-style line endings&lt;/strong&gt; (Recommended setting on Windows) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Checkout Windows-style, commit Unix-style line endings&lt;/code&gt; (Recommended setting on Windows) and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_13_git_line_ending_conversion.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Use MinTTY&lt;/strong&gt; (Default terminal of MSYS2) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Use MinTTY&lt;/code&gt; (Default terminal of MSYS2) and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_14_git_use_git_bash.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Default&lt;/strong&gt; (fast-forward or merge) and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Default&lt;/code&gt; (fast-forward or merge) and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_15_git_behavior_git_pull.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Git Credential Manager Core&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Git Credential Manager Core&lt;/code&gt; and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_16_git_credential_helper.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Enable file system caching&lt;/strong&gt; and Click on &lt;strong&gt;Next&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Enable file system caching&lt;/code&gt; and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_17_git_extra_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;strong&gt;Install&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_18_git_install.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -165,15 +166,18 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_19_git_install_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Uncheck the &lt;strong&gt;View Release Notes&lt;/strong&gt; box and click on &lt;strong&gt;Finish&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Uncheck the &lt;code class=&quot;highlighter-rouge&quot;&gt;View Release Notes&lt;/code&gt; box and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Finish&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_20_git_install_finish.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;4-validating-git-installation&quot;&gt;4. Validating Git Installation&lt;/h2&gt;
+&lt;h2 id=&quot;validating-git-installation&quot;&gt;Validating Git Installation&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Open a command prompt window and run &lt;code class=&quot;highlighter-rouge&quot;&gt;git --version&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Open a &lt;code class=&quot;highlighter-rouge&quot;&gt;command prompt&lt;/code&gt; window and run the following command.
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git --version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-02_21_git_install_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>

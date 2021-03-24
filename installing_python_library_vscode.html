@@ -185,18 +185,18 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the <strong>Terminal</strong> or a <strong>Jupyter Notebook</strong> in Visual Studio Code (VSCode) on a Windows computer.</p>
+                    <p>In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the <code class="highlighter-rouge">Terminal</code> or a <code class="highlighter-rouge">Jupyter Notebook</code> in Visual Studio Code (VSCode) on a Windows computer.</p>
 
 <h2 id="pre-requisites">Pre-requisites</h2>
 <p>In order to complete the steps of this blogpost, you need to install the following in your windows computer:</p>
 <ul>
-  <li><strong>Visual Studio Code</strong>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_vscode_windows">here</a>.</li>
-  <li><strong>Python Extension for Visual Studio Code</strong>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_extension_vscode">here</a>.</li>
-  <li><strong>Python Interpreter</strong>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_interpreter">here</a>.</li>
+  <li><code class="highlighter-rouge">Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_vscode_windows">here</a>.</li>
+  <li><code class="highlighter-rouge">Python Extension for Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_extension_vscode">here</a>.</li>
+  <li><code class="highlighter-rouge">Python Interpreter</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_interpreter">here</a>.</li>
 </ul>
 
 <h2 id="installing-a-python-library-using-the-terminal-in-vscode">Installing a Python Library Using the Terminal in VSCode</h2>
-<h3 id="1-accessing-visual-studio-code-terminal">1. Accessing Visual Studio Code Terminal</h3>
+<h3 id="1-accessing-visual-studio-code-terminal">1) Accessing Visual Studio Code Terminal</h3>
 <ul>
   <li>Open VSCode application</li>
 </ul>
@@ -204,27 +204,33 @@ into the {body} of the default.hbs template -->
 <p><img src="assets/images/blog/2020-12-04_01_pip__vscode_application.jpg" alt="" /></p>
 
 <ul>
-  <li>Go to the <strong>Terminal</strong> menu and select <strong>New Terminal</strong>.</li>
+  <li>Go to the <code class="highlighter-rouge">Terminal</code> menu and select <code class="highlighter-rouge">New Terminal</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_02_pip_new_terminal.jpg" alt="" /></p>
 
 <ul>
-  <li>A new <strong>terminal</strong> (PowerShell based) window is opened.</li>
+  <li>A new <code class="highlighter-rouge">terminal</code> (PowerShell based) window is opened.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg" alt="" /></p>
 
-<h3 id="2-importing-a-python-library">2. Importing a Python Library</h3>
+<h3 id="2-importing-a-python-library">2) Importing a Python Library</h3>
 <ul>
-  <li>Run <code class="highlighter-rouge">pip --version</code> to validate that pip is installed in your computer.</li>
+  <li>Run the following command to validate that pip is installed in your computer.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip --version
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_04_pip_installation_validation.jpg" alt="" /></p>
 
 <ul>
-  <li>Let us say that you want to install <strong>Pandas</strong> Python library.</li>
-  <li>Run <code class="highlighter-rouge">pip install pandas</code></li>
+  <li>Let us say that you want to install <code class="highlighter-rouge">Pandas</code> Python library.</li>
+  <li>Run the following command
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install pandas
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_05_pip_install_pandas.jpg" alt="" /></p>
@@ -234,23 +240,29 @@ into the {body} of the default.hbs template -->
 </ul>
 
 <h2 id="installing-a-python-library-using-a-jupyter-notebook-in-vscode">Installing a Python Library Using a Jupyter Notebook in VSCode</h2>
-<h3 id="1-creating-a-jupyter-notebook-in-vscode">1. Creating a Jupyter Notebook in VSCode</h3>
+<h3 id="1-creating-a-jupyter-notebook-in-vscode">1) Creating a Jupyter Notebook in VSCode</h3>
 <ul>
   <li>Create a Jupyter Notebook following the steps of <a href="https://blog.openthreatresearch.com/first_jupyter_notebook_vscode">My First Jupyter Notebook on Visual Studio Code (Python kernel)</a></li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_06_pip_vscode_jupyter_notebook.jpg" alt="" /></p>
 
-<h3 id="2-importing-a-python-library-1">2. Importing a Python Library</h3>
+<h3 id="2-importing-a-python-library-1">2) Importing a Python Library</h3>
 <ul>
-  <li>Run <code class="highlighter-rouge">!pip --version</code> to validate that pip is installed in your computer.</li>
+  <li>Run the following command to validate that pip is installed in your computer.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!pip --version
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_07_pip_vscode_jupyter_notebook_pip_version.jpg" alt="" /></p>
 
 <ul>
-  <li>Let us say that you want to install <strong>Pandas</strong> Python library.</li>
-  <li>Run <code class="highlighter-rouge">!pip install pandas</code></li>
+  <li>Let us say that you want to install <code class="highlighter-rouge">Pandas</code> Python library.</li>
+  <li>Run the following command.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!pip install pandas
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-04_08_pip_vscode_jupyter_notebook_pip_install.jpg" alt="" /></p>
@@ -355,6 +367,24 @@ into the {body} of the default.hbs template -->
                                     
                                         
                                         
+                                            <li><a href="/spark_jupyter_notebook_vscode">PySpark.SQL and Jupyter Notebooks on Visual Studio Code (Python kernel)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/importing-mordor-dataset-jupyter-notebook-vscode">Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
                                             <li><a href="/first_jupyter_notebook_vscode">My First Jupyter Notebook on Visual Studio Code (Python kernel)</a></li>
                                         
                                     
@@ -391,7 +421,7 @@ into the {body} of the default.hbs template -->
                         <footer class="read-next-card-footer">
                             <a href="/tag/jupyter-notebook/">
                                 
-                                    See all 1 posts  →
+                                    See all 3 posts  →
                                 
                             </a>
                         </footer>

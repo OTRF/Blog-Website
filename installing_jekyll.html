@@ -179,44 +179,45 @@ into the {body} of the default.hbs template -->
                 <div class="kg-card-markdown">
                     <p>In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</p>
 
-<h2 id="1-downloading-ruby--devkit-executable">1. Downloading Ruby + Devkit Executable</h2>
+<h2 id="installing-jekyll">Installing Jekyll</h2>
+<h3 id="1-downloading-ruby--devkit-executable">1) Downloading Ruby + Devkit Executable</h3>
 <ul>
   <li>Go to <a href="https://rubyinstaller.org/downloads/">Ruby Installers Downloads</a> website.</li>
-  <li>Click on <strong>Ruby+Devkit 2.7.2-1 (x64)</strong> under the <strong>WITH DEVKIT</strong> section.</li>
+  <li>Click on <code class="highlighter-rouge">Ruby+Devkit 2.7.2-1 (x64)</code> under the <code class="highlighter-rouge">WITH DEVKIT</code> section.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_01_jekyll_ruby_download.jpg" alt="" /></p>
 
 <ul>
-  <li>Click on <strong>Save File</strong>.</li>
+  <li>Click on <code class="highlighter-rouge">Save File</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_02_jekyll_save_file.jpg" alt="" /></p>
 
-<h2 id="2-running-ruby--devkit-executable">2. Running Ruby + Devkit Executable</h2>
+<h3 id="2-running-ruby--devkit-executable">2) Running Ruby + Devkit Executable</h3>
 <ul>
-  <li>In your <strong>Downloads</strong> directory, right click on the Ruby + Devkit executable and select <strong>Open</strong>.</li>
+  <li>In your <code class="highlighter-rouge">Downloads</code> directory, right click on the Ruby + Devkit executable and select <code class="highlighter-rouge">Open</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_03_jekyll_open_file.jpg" alt="" /></p>
 
-<h2 id="3-completing-the-ruby--devkit-setup">3. Completing the Ruby + Devkit Setup</h2>
+<h3 id="3-completing-the-ruby--devkit-setup">3) Completing the Ruby + Devkit Setup</h3>
 
 <ul>
-  <li><strong>Accept</strong> the license and click on <strong>Next</strong>.</li>
+  <li><code class="highlighter-rouge">Accept</code> the license and click on <code class="highlighter-rouge">Next</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_04_jekyll_accept_license.jpg" alt="" /></p>
 
 <ul>
-  <li>Select the installation <strong>Destination</strong> folder and click on <strong>Install</strong>.</li>
+  <li>Select the installation <code class="highlighter-rouge">Destination</code> folder and click on <code class="highlighter-rouge">Install</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_05_jekyll_installation_destination.jpg" alt="" /></p>
 
 <ul>
-  <li>Select the components that should be installed. Check <strong>Ruby RI</strong> and <strong>MSYS2 development toolchain</strong> boxes.</li>
-  <li>Click on <strong>Next</strong></li>
+  <li>Select the components that should be installed. Check <code class="highlighter-rouge">Ruby RI</code> and <code class="highlighter-rouge">MSYS2 development toolchain</code> boxes.</li>
+  <li>Click on <code class="highlighter-rouge">Next</code>.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_06_jekyll_select_components.jpg" alt="" /></p>
@@ -228,48 +229,54 @@ into the {body} of the default.hbs template -->
 <p><img src="assets/images/blog/2020-12-01_07_jekyll_waiting_installation.jpg" alt="" /></p>
 
 <ul>
-  <li>Check the <strong>Run ridk install</strong> box and click on <strong>Finish</strong>.</li>
+  <li>Check the <code class="highlighter-rouge">Run ridk install</code> box and click on <code class="highlighter-rouge">Finish</code>.</li>
   <li>A command prompt window will be opened.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_08_jekyll_finish_installation.jpg" alt="" /></p>
 
-<h2 id="3-installing-msys2">3. Installing MSYS2</h2>
+<h3 id="3-installing-msys2">3) Installing MSYS2</h3>
 
 <ul>
-  <li>Type <strong>1</strong> and press enter in order to install the <strong>MYSYS2 base</strong> component.</li>
+  <li>Type <strong>1</strong> and press enter in order to install the <code class="highlighter-rouge">MYSYS2 base</code> component.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_09_jekyll_msys2_installer.jpg" alt="" /></p>
 
 <ul>
-  <li>Wait for the installation process to complete.</li>
+  <li><code class="highlighter-rouge">Wait</code> for the installation process to complete.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_10_jekyll_msys2_waiting_installation.jpg" alt="" /></p>
 
 <ul>
-  <li>After the installation process is completed, <strong>close</strong> the command prompt window.</li>
+  <li>After the installation process is completed, <code class="highlighter-rouge">close</code> the command prompt window.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_11_jekyll_msys2_installation_complete.jpg" alt="" /></p>
 
-<h2 id="4-installing-jekyll">4. Installing Jekyll</h2>
+<h3 id="4-installing-jekyll">4) Installing Jekyll</h3>
 
 <ul>
-  <li><strong>Open</strong> a new command prompt window and run <code class="highlighter-rouge">gem install jekyll</code>.</li>
+  <li><code class="highlighter-rouge">Open</code> a new command prompt window and run the following command.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg" alt="" /></p>
 
 <ul>
-  <li>Wait for the installation process to complete.</li>
+  <li><code class="highlighter-rouge">Wai</code>t for the installation process to complete.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg" alt="" /></p>
 
 <ul>
-  <li>After the installation process is completed, run <code class="highlighter-rouge">jekyll -v</code> to validate that the installation was successful.</li>
+  <li>After the installation process is completed, <code class="highlighter-rouge">run</code> the following command to validate that the installation was successful.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll -v
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg" alt="" /></p>
@@ -278,28 +285,34 @@ into the {body} of the default.hbs template -->
   <li>Close the command prompt window.</li>
 </ul>
 
-<h2 id="5-installing-bundler">5. Installing Bundler</h2>
+<h2 id="installing-additional-components-bundler">Installing Additional Components: Bundler</h2>
 
 <ul>
-  <li><strong>Open</strong> a new command prompt window and run <code class="highlighter-rouge">gem install bundler</code>.</li>
+  <li><code class="highlighter-rouge">Open</code> a new command prompt window and run the following command.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install bundler
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg" alt="" /></p>
 
 <ul>
-  <li>Wait for the installation process to complete.</li>
+  <li><code class="highlighter-rouge">Wait</code> for the installation process to complete.</li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg" alt="" /></p>
 
 <ul>
-  <li>After the installation process is completed, run <code class="highlighter-rouge">bundle -v</code> to validate that the installation was successful.</li>
+  <li>After the installation process is completed, <code class="highlighter-rouge">run</code> the following command to validate that the installation was successful.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle -v
+</code></pre></div>    </div>
+  </li>
 </ul>
 
 <p><img src="assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg" alt="" /></p>
 
 <ul>
-  <li>Close the command prompt window.</li>
+  <li><code class="highlighter-rouge">Close</code> the command prompt window.</li>
 </ul>
 
 <h2 id="references">References</h2>
