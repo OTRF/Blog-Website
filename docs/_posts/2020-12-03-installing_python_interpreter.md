@@ -13,29 +13,30 @@ author: jose
 
 In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.
 
-## 1. Downloading Python Executable
+## Installing Python Interpreter
+### 1) Downloading Python Executable
 * Go to [Python](https://www.python.org/downloads/) website.
-* Click on **Download Python 3.9**.
+* Click on `Download Python 3.9`.
 
 ![](assets/images/blog/2020-12-01_01_python_interpreter_download.jpg)
 
-* Click on **Save File**.
+* Click on `Save File`.
 
 ![](assets/images/blog/2020-12-01_02_python_interpreter_save_file.jpg)
 
-## 2. Running Python Executable
-* In your **Downloads** directory, right click on the Python executable and select **Open**.
+### 2) Running Python Executable
+* In your `Downloads` directory, right click on the Python executable and select `Open`.
 
 ![](assets/images/blog/2020-12-01_03_python_interpreter_open_executable.jpg)
 
-## 3. Completing the Python Setup
+### 3) Completing the Python Setup
 
-* Check both **Install launcher for all users** and **Add Python 3.9 to PATH** boxes.
-* Click on **Install Now**.
+* Check both `Install launcher for all users` and `Add Python 3.9 to PATH` boxes.
+* Click on `Install Now`.
 
 ![](assets/images/blog/2020-12-01_04_python_setup_install.jpg)
 
-* Allow the app to make changes clicking on **Yes**.
+* Allow the app to make changes clicking on `Yes`.
 
 ![](assets/images/blog/2020-12-01_05_python_make_changes.jpg)
 
@@ -47,11 +48,14 @@ In this quick blogpost, I will share the steps that you can follow in order to i
 
 ![](assets/images/blog/2020-12-01_07_python_successful_installation.jpg)
 
-* Click on **Close**.
+* Click on `Close`.
 
-## 4. Validating Python Interpreter Installation
+## Validating Python Interpreter Installation
 
-* Open a **command prompt** window and run ```py -3 -- version```.
+* Open a `command prompt` window and run the following command.
+```
+py -3 -- version
+```
 
 ![](assets/images/blog/2020-12-01_08_python_installation_validation.jpg)
 
