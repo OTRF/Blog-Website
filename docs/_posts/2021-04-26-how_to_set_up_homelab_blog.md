@@ -98,7 +98,7 @@ Now that we have our base Win 10 machine up and running we can get FireEye's FLA
 
     ```
     Else: Unzip the flare vm zip file on your Desktop
-2. Open up Powershell as an Administrator. Type Powershell in the `Type here to search` bar and then right click on `Windows Powershell` and select `Run as Administrator. In the Powershell prompt, navigate to the FLARE vm folder:
+2. Open up Powershell as an Administrator. Type Powershell in the `Type here to search` bar and then right click on `Windows Powershell` and select `Run as Administrator`. In the Powershell prompt, navigate to the FLARE vm folder:
     ```
     cd C:\Users\IEUser\Desktop\FLARE-vm
     ```
