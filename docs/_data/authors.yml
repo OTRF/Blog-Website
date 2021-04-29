@@ -42,3 +42,14 @@ mauricio:
   facebook: False
   twitter: False
   cover: False
+joshua:
+  username: joshua
+  name: Joshua Dunn
+  Location: USA
+  url_full: https://github.com/R3-d4ct3d
+  url: github.com/R3-d4ct3d
+  bio: Threat Intel Analyst, Wanna be Malware Researcher
+  picture: assets/images/authors/avatar-joshua.jpeg
+  facebook: False
+  twitter: Cyber_Sec_JD
+  cover: False
