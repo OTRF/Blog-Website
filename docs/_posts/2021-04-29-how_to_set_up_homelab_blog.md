@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg
 navigation: True
 title: Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab
-date: 2021-04-26 12:00:00
+date: 2021-04-29 12:00:00
 tags: [VMware, Malware, Malware_Analysis, REMnux, FLARE]
 class: post-template
 subclass: 'post'
