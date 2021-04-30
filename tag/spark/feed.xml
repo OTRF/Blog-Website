@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/spark/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-24T11:13:49-04:00</updated>
+  <updated>2021-04-30T00:06:12-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/spark/feed.xml</id>
 
   
@@ -31,6 +31,8 @@
     
       
     
+      
+    
   
 
   
@@ -48,10 +50,10 @@
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;setting-up-a-pysparksql-session&quot;&gt;Setting Up a PySpark.SQL Session&lt;/h2&gt;
@@ -64,8 +66,8 @@
 
 &lt;h3 id=&quot;2-installing-pyspark-python-library&quot;&gt;2) Installing PySpark Python Library&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
+  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;You can also use the VSCode terminal in order to install PySpark. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
@@ -76,8 +78,8 @@
 &lt;h3 id=&quot;3-importing-sparksession-class&quot;&gt;3) Importing SparkSession Class&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;We start by importing the class &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession&quot;&gt;SparkSession&lt;/a&gt; from the PySpark SQL module.&lt;/li&gt;
-  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
+  &lt;li&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -87,9 +89,9 @@
 &lt;h3 id=&quot;4-creating-a-sparksession&quot;&gt;4) Creating a SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;In order to create a SparkSession, we use the &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession.Builder&quot;&gt;Builder&lt;/a&gt; class.&lt;/li&gt;
-  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
-  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
+  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
+  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -99,7 +101,7 @@
 &lt;h3 id=&quot;5-verifying-sparksession&quot;&gt;5) Verifying SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Once the SparkSession is built, we can run the spark variable for verification.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -109,9 +111,9 @@
 &lt;h2 id=&quot;running-more-spark-commands&quot;&gt;Running More Spark Commands&lt;/h2&gt;
 &lt;p&gt;For the last section of this blogpost, I am sharing three more basic commands that are very helpful when performing tasks with Spark:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;0-importing-a-mordor-dataset&quot;&gt;0) Importing a Mordor Dataset&lt;/h3&gt;
@@ -121,7 +123,7 @@
   &lt;li&gt;Download the Mordor dataset (json file) following the steps described on &lt;a href=&quot;https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode&quot;&gt;Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
 import requests
 from io import BytesIO
 from zipfile import ZipFile
@@ -137,9 +139,9 @@ jsonFilePath
 
 &lt;h3 id=&quot;1-creating-a-spark-dataframe&quot;&gt;1) Creating a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
+  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
 df = spark.read.json(jsonFilePath)
 # Validating Type of Output
 type(df)
@@ -151,10 +153,10 @@ type(df)
 
 &lt;h3 id=&quot;2-creating-a-temporary-view-of-a-spark-dataframe&quot;&gt;2) Creating a Temporary View of a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
-  &lt;li&gt;We will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
+  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
+  &lt;li&gt;We will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -163,10 +165,10 @@ type(df)
 
 &lt;h3 id=&quot;3-executing-a-sql-like-query&quot;&gt;3) Executing a SQL-like Query&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
-  &lt;li&gt;We are performing a &lt;code class=&quot;highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
+  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
+  &lt;li&gt;We are performing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
 '''
 SELECT Hostname,Channel,EventID, Count(*) as count
 FROM mordorTable

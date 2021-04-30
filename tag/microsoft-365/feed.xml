@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/microsoft-365/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-24T11:13:49-04:00</updated>
+  <updated>2021-04-30T00:06:12-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/microsoft-365/feed.xml</id>
 
   
@@ -31,6 +31,8 @@
     
       
     
+      
+    
   
 
   
@@ -47,7 +49,7 @@
 
 &lt;p&gt;In this post, I will show you how to do that through the Microsoft 365 admin console.&lt;/p&gt;
 
-&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
+&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
 
 &lt;p&gt;Once again, if you want on-prem AD user accounts to authenticate to Office 365 apps in the cloud with the same on-prem password, you need to synchronize them with the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription which requires you to add the on-prem domain to Microsoft 365.&lt;/p&gt;
 
@@ -88,7 +90,7 @@
 
 &lt;h2 id=&quot;3-add-custom-domain&quot;&gt;3. Add Custom Domain&lt;/h2&gt;
 
-&lt;p&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
+&lt;p&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_02_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 

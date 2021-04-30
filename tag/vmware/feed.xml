@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/vmware/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2021-04-30T00:06:12-04:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/vmware/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
+      <link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+      <published>2021-04-29T08:00:00-04:00</published>
+      <updated>2021-04-29T08:00:00-04:00</updated>
+      <id>https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog">&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+&lt;p&gt;Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-to-expect-from-this-post&quot;&gt;What to Expect from this Post:&lt;/h2&gt;
+&lt;p&gt;My aim for this post, and ideally for a continued series, is to provide a simple straight forward approach to setting up a malware analysis lab. The best part is that nearly all the tools I will be using are open source or have an open source alternative, meaning there isn’t any cost to get started.  Only expense will be a physical machine to host several VMs at one time. I’m hoping this will help out others, while also reinforcing old concepts and learning new ones for myself.&lt;/p&gt;
+
+&lt;h2 id=&quot;before-we-start&quot;&gt;Before We Start:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;I will be using VMware Fusion Pro for this walkthrough.  I have had the best experience by far with VMWare’s line of virtualization software.  However, VirtualBox can be a great, free, substitute for VMWare.&lt;/li&gt;
+  &lt;li&gt;Troubleshooting the installation of virtualization software and/or the individual VMs is out-of-scope for this post.  There are just too many things that might go wrong.  If you do run into trouble, Google is your best friend.&lt;/li&gt;
+  &lt;li&gt;When you run multiple virtual machines(VMs) on a single host machine, the host machine will slow down.  Because of this, it is important to give each VM its recommended settings for optimal performance.  For Windows 10, I recommend at least 2 processor cores and 4GBs of RAM.  For REMnux, 1 processor cores and 2GBs of RAM.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VMWare Fusion(MAC)/ Workstation(Windows/Linux)&lt;/code&gt;: VMWare has some great, comprehensive guides to install both &lt;a href=&quot;https://kb.vmware.com/s/article/2014097&quot;&gt;Fusion&lt;/a&gt; and &lt;a href=&quot;https://kb.vmware.com/s/article/2057907&quot;&gt;Workstation&lt;/a&gt;.  VMWare does offer trial licenses for those interested in trying out the full feature set VMWare Pro line(Fusion Pro and Workstation Pro). VMware also has its Player line, which is free for personal use.  Only downside is that the Player version doesn’t allow network customization that you should use for your lab.  Additionally, only Fusion Player has the ability to take snapshots.  Which is the major difference between Workstation Player and Fusion Player.  Hopefully VMware fixes that in the future.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt;: Is the free alternative to VMware and some of the other virtualization software out there.  It also has all the feature you need in a VM solution starting out.  You can get a copy of VirtualBox &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Edge Developer ISO&lt;/code&gt;: You can download a Windows ISO file: &lt;a href=&quot;https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/&quot;&gt;here&lt;/a&gt;.  We will be doing this later in the post.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FLARE VM&lt;/code&gt;: FLARE VM is free malware analysis VM with a ton of tools and features pre-installed by FireEye. Its a great addition to your malware analysis toolset.  You can find instructions to install it &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/11/flare-vm-update.html&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REMnux&lt;/code&gt;: REMnux is a powerful Linux VM that has a great collection of tools for Malware Analysis by Lenny Zeltzer &lt;a href=&quot;https://remnux.org/&quot;&gt;here&lt;/a&gt;.  You can find a lot of helpful reasources on his site including REMnux and reversing cheatsheets as well as blog posts that you might find useful.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;downloading-virtualization-software&quot;&gt;Downloading Virtualization Software:&lt;/h2&gt;
+&lt;p&gt;Using the links above, navigate to your preferred virtualization software site.  Follow the instructions provided by each vendor. Installation shouldn’t take too long and might ask for certain permissions it needs to modify network settings and such. After you get it installed jump to the next section.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuring-your-network-settings&quot;&gt;Configuring your Network Settings:&lt;/h2&gt;
+&lt;p&gt;First thing we should do is set up our isolated custom network we will be using for our lab.  Being able to control how the network interacts with a malware sample is extremely important for analysis.  You also don’t want the malware sample to have access to the Internet(at least at first) until you have a decent understanding of what the malware is trying to do. In VMware Fusion, it is pretty straight forward and easy to do.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Select the tab VMware &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fusion&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Preferences&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network&lt;/code&gt;. Click the lock icon at the bottom left side to make changes.&lt;/li&gt;
+  &lt;li&gt;Hit the + button just above the lock icon. You should see a new network call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; mine is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet2&lt;/code&gt; but yours could be a different number.  Highlight that then uncheck the radio button labeled &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;allow virtual machines on network to connect to external networks(using NAT)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Configure your subnet IP.  I want an IP subnet that will stand out when I see it. So I went with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.0&lt;/code&gt;.  Keep the Subnet Mask as is. Then click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;installing-virtual-machines&quot;&gt;Installing Virtual Machines:&lt;/h2&gt;
+&lt;h3 id=&quot;downloading-a-windows-10-edge-developer-image&quot;&gt;Downloading a Windows 10 Edge Developer image:&lt;/h3&gt;
+&lt;p&gt;Now that you have virtualization software installed, we need to get a Win 10 developer image from Microsoft. This Win 10 image will serve as the base image.  FLARE can only be install on an already existing physical or virtual Windows machine. Using the link above, select the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSEdge on Win10 (x64) {Some_Stable_Version}&lt;/code&gt;.  Then select the VM platform you have, in this case I will select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VMware (Windows, Mac)&lt;/code&gt;. The download is several GBs so depending on your download speed, it could take some time. &lt;strong&gt;Please note the password for the VM:&lt;/strong&gt; “Passw0rd!” with a zero.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_01_select_win10_image_from_microsoft.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-and-setting-up-windows-10-machine-in-vmware-fusion&quot;&gt;Installing and Setting up Windows 10 Machine in VMWare Fusion:&lt;/h3&gt;
+&lt;p&gt;Lets unzip the file and store it in a location of your choice. Open up VMware’s Virtual Machine Library and follow these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Unzip the MSEdge-Win10-VMware file, if not automatically done by your host machine.  You can store the unzipped contents anywhere.  I’m going to put them on my Desktop.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Import&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Choose File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSEdge-Win10-VMWare.ovf&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Continue&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.  You can change the name and location of where the VM is stored if you would like.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Customize Settings&lt;/code&gt; after the image has been imported successfully.&lt;/li&gt;
+  &lt;li&gt;Navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Processors &amp;amp; Memory&lt;/code&gt;.  Confirm that the VM is allocated 2 processor cores and 4Gbs of RAM(4096MBs).
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_02_checking_processor&amp;amp;memory_settings_win10.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh Win10 Install&lt;/code&gt;. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.&lt;/li&gt;
+  &lt;li&gt;When you start the machine, if VMWare prompts you to upgrade, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Upgrade&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /alo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.&lt;/li&gt;
+  &lt;li&gt;After the machine logs in successfully after installing VM Virtual Tools.  Take another snapshot and name it something to the effect of, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Win 10 Activated with VM Tools installed&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_03_taking_snapshot_in_VMware.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One thing to note, snapshots are a must when working with malware.  The ability to revert back to a clean state after performing some behavior analysis on one file is very powerful and time saving.  It allows you to test other hypotheses or another file in a clean environment before infection.  It also saves time so you don’t have to rebuild a whole new VM from scratch because you don’t have a clean starting image.&lt;/p&gt;
+
+&lt;h4 id=&quot;virtualbox-users&quot;&gt;VirtualBox Users:&lt;/h4&gt;
+&lt;p&gt;VirtualBox tends to require more manual configuration to get your VMs to work properly.  One thing I always look at is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Invalid Setting&lt;/code&gt; notification(shown below) that appears at the bottom of the individul VMs settings window. These settings errors are normally pretty straight forward and easy to address in the setting menu.&lt;/p&gt;
+
+&lt;p&gt;Last thing that tends to be more complicated in VirtualBox is installing VB Guest Additions. I recommend following the instructions VirtualBox has on their manual page &lt;a href=&quot;https://www.virtualbox.org/manual/ch04.html&quot;&gt;here&lt;/a&gt; Section &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4.2.1.1. Installing the Windows Guest Additions&lt;/code&gt;.  Sometimes, you will get an error that you can’t attach the guest additions due to no optical drive.  If thats the case, you need to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mount Guest Additions manually&lt;/code&gt; steps.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_04_invalid_display_settings_notification.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;install-flare-on-your-fresh-install-of-win-10&quot;&gt;Install FLARE on your fresh install of WIN 10:&lt;/h3&gt;
+&lt;p&gt;Now that we have our base Win 10 machine up and running we can get FireEye’s FLARE VM installed:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional:&lt;/strong&gt; Install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git&lt;/code&gt; on our Win10 box.  Open up a browser on your Win10 VM and Google: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install git windows&lt;/code&gt; or copy and past this url: https://git-scm.com/download/win. Click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;64 bit Windows Version&lt;/code&gt; and keep all the settings default during installations.  When it finishes with the settings, hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;install&lt;/code&gt; then after it installs hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finish&lt;/code&gt;.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to https:/github.com/fireeye/flare-vm. Download the code as a zip file.  If you performed the optional step then open up a cmd prompt:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; cd Desktop &amp;amp;&amp;amp; git clone https://github.com/fireeye/flare-vm
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Else: Unzip the flare vm zip file on your Desktop&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open up Powershell as an Administrator. Type Powershell in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Type here to search&lt;/code&gt; bar and then right click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Powershell&lt;/code&gt; and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run as Administrator&lt;/code&gt;. In the Powershell prompt, navigate to the FLARE vm folder:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; cd C:\Users\IEUser\Desktop\FLARE-vm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Next enable unrestricted execution policy for PowerShell by executing the following command and answering “Y” when prompted by PowerShell:&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Set-ExecutionPolicy unrestricted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Execute the install.ps1 installation script. You will be prompted to enter the current user’s password. FLARE VM needs the current user’s password to automatically login after a reboot when installing. Optionally, you can specify the current user’s password by passing the “-password &lt;current_user_password&gt;” at the command line.
+&lt;/current_user_password&gt;    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ./install.ps1 -password Passw0rd!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_05_running_powershell_installFLARE_script.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The rest of the installation process is fully automated. Depending upon your internet speed the entire installation may take up to one hour to finish. The VM also reboots multiple times due to the numerous software installations’ requirements. Once the installation completes, the PowerShell prompt remains open waiting for you to hit any key before exiting. After completing the installation, you will be presented with the following desktop environment:&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the install is done, run the command to update FLARE:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cup all
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the update is finished, reboot and log back in.  Then take another snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of FLARE-VM&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;download-and-configure-remnux&quot;&gt;Download and Configure REMnux:&lt;/h3&gt;
+
+&lt;p&gt;Navigate to the REMnux page link shared above and hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download -&amp;gt;&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;General OVA&lt;/code&gt;(Or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualBox OVA&lt;/code&gt; if using VirtualBox) -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Box&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download&lt;/code&gt; save the file and import just like we did with the Win10 image:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Unzip the file downloaded containing REMnux if not automatically done by your host machine.  You can store the unzipped contents anywhere.  Again, i’m going to put them on my Desktop.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Import&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Choose File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remnux-v7&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Continue&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.  You can change the name and location of where the VM is stored if you would like.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Customize Settings&lt;/code&gt; after the image has been imported successfully.&lt;/li&gt;
+  &lt;li&gt;Navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Processors &amp;amp; Memory&lt;/code&gt;.  Confirm that the VM is allocated 1 processor cores and 2Gbs of RAM(2048MBs).&lt;/li&gt;
+  &lt;li&gt;Go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt; and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Device&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Share with my Mac&lt;/code&gt;. When you click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Show All&lt;/code&gt; button you should now see two network adapters.&lt;/li&gt;
+  &lt;li&gt;Go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 1&lt;/code&gt; and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; that you created in the first section.&lt;/li&gt;
+  &lt;li&gt;Start up REMnux, if prompted, upgrade the virtual machine like we did with our Windows 10 machine.&lt;/li&gt;
+  &lt;li&gt;Log in to the REMnux machine; credentials are user: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remnux&lt;/code&gt; pass: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;malware&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;First thing we want to do is grab the IP of our machine for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 1&lt;/code&gt;. Make sure to save that IP address. It should be an IP in the range we selected when we create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt;.  In my case its 10.1.1.2:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ifconfig -a 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux update &amp;amp;&amp;amp; remnux upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;After running the upgrade command we should reboot:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Unattach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 2&lt;/code&gt; from the REMnux VM.  When you want to update or use internet on the VM just reattach.&lt;/li&gt;
+  &lt;li&gt;Power off the REMnux VM and take a snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of REMnux {date}&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;final-configurations-and-network-testing&quot;&gt;Final Configurations and Network Testing:&lt;/h2&gt;
+&lt;p&gt;We need to connect our FLARE VM to the same network so that the REMnux box can run network based analysis on a sample.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Power off the FLARE VM if you haven’t done so already.&lt;/li&gt;
+  &lt;li&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt;.  Change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt; to our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; we set up in the first section of the post.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Start up FLARE and open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Control Panel&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network and Internet&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network and Sharing Center&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change adapter settings&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ethernet0&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Properties&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Internet Protocol Version 4 (TCP/IPv4)&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Use the following address&lt;/code&gt;-&amp;gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;Use the IP of your REMnux box.  It might be different than mine.&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;IP address: 10.1.1.3 or any IP you want in this subnet. This will be the IP of our FLARE VM&lt;/li&gt;
+      &lt;li&gt;Subnet mask: 255.255.255.0&lt;/li&gt;
+      &lt;li&gt;Default Gateway: 10.1.1.2(Our REMnux VM)&lt;/li&gt;
+      &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;use the following preferred DNS server addresses&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Preferred DNS Server: 10.1.1.2(Our REMnux VM)&lt;/li&gt;
+      &lt;li&gt;Alternate DNS Server: BLANK&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_08_configuring_flare_vm_with_remnux_ip.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ok&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;testing-our-network-setup-with-inetsim&quot;&gt;Testing our Network Setup with INetSim:&lt;/h2&gt;
+&lt;p&gt;Now that we have done all the networking setup in both VMs, we are going to set up a tool call INetSim. INetSim is a software suite for simulating common internet services in a lab environment, e.g. for analyzing the network behavior of unknown malware samples.&lt;/p&gt;
+
+&lt;p&gt;Remnux already comes with INetSim pre-install. However, we need to do some minor configuration steps to make sure it functions properly.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Open up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/inetsim/inetsim.conf&lt;/code&gt;in a text editor:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo nano /etc/inetsim/inetsim.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;By default, INetSim only has a few services active.  However, we are going to uncomment out all the other services by removing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_09_unchecking_all_services_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We now need to bind REMnux’s network adapter IP to INetSim.  To do this scroll down a little bit in the config file until you see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;service_bind_address&lt;/code&gt;. Uncomment it out and add your REMnux IP in place of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.0.0.0&lt;/code&gt;. I would put &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.2&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_10_changing_default_service_bind_address.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Right below that you should see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dns_default_ip&lt;/code&gt;.  Uncomment that out and place your REMnux IP there as well.  I would put &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.2&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_11_changing_default_dns_ip.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ubuntu has a system-resolved system service which provides network name resolution to local applications. This conflicts with INetSim so we need to disable the service. Open up a terminal and type these commands:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo systemctl disable systemd-resolved 
+ sudo systemctl mask systemd-resolved
+ sudo systemctl stop systemd-resolved
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_12_disabling_system-resolve.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now we can start INetSim:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; inetsim
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_13_starting_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start up your FLARE vm and type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www.baddomain.com&lt;/code&gt;. Your browser should show this:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_14_testing_connection_from_flare_to_remnux_with_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;There are infinite possibilities when it comes to setting up a malware analysis lab.  There are tons of tools out there to aid you in your analysis and FLARE is a great VM to start out with because it has a lot of the most popular tools pre-installed.  My hope is that I was able to help you get started in setting up a lab to being looking at malicious files.  I definitely plan on writing up more articles where I will dive into specific malicious files and popular techniques used to analyze malware.  If you have any comments, questions, or just want to chat, you can find me on &lt;a href=&quot;https://twitter.com/Cyber_Sec_JD&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Joshua Dunn</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="VMware" />
+      
+        <category term="Malware" />
+      
+        <category term="Malware_Analysis" />
+      
+        <category term="REMnux" />
+      
+        <category term="FLARE" />
+      
+
+      
+        <summary type="html">Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field. Its also a field that is extremely new to me. I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware. Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

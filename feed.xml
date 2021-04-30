@@ -1,4 +1,198 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-03-24T11:13:49-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-04-30T00:06:12-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title><link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" /><published>2021-04-29T08:00:00-04:00</published><updated>2021-04-29T08:00:00-04:00</updated><id>https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</id><content type="html" xml:base="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog">&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+&lt;p&gt;Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-to-expect-from-this-post&quot;&gt;What to Expect from this Post:&lt;/h2&gt;
+&lt;p&gt;My aim for this post, and ideally for a continued series, is to provide a simple straight forward approach to setting up a malware analysis lab. The best part is that nearly all the tools I will be using are open source or have an open source alternative, meaning there isn’t any cost to get started.  Only expense will be a physical machine to host several VMs at one time. I’m hoping this will help out others, while also reinforcing old concepts and learning new ones for myself.&lt;/p&gt;
+
+&lt;h2 id=&quot;before-we-start&quot;&gt;Before We Start:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;I will be using VMware Fusion Pro for this walkthrough.  I have had the best experience by far with VMWare’s line of virtualization software.  However, VirtualBox can be a great, free, substitute for VMWare.&lt;/li&gt;
+  &lt;li&gt;Troubleshooting the installation of virtualization software and/or the individual VMs is out-of-scope for this post.  There are just too many things that might go wrong.  If you do run into trouble, Google is your best friend.&lt;/li&gt;
+  &lt;li&gt;When you run multiple virtual machines(VMs) on a single host machine, the host machine will slow down.  Because of this, it is important to give each VM its recommended settings for optimal performance.  For Windows 10, I recommend at least 2 processor cores and 4GBs of RAM.  For REMnux, 1 processor cores and 2GBs of RAM.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VMWare Fusion(MAC)/ Workstation(Windows/Linux)&lt;/code&gt;: VMWare has some great, comprehensive guides to install both &lt;a href=&quot;https://kb.vmware.com/s/article/2014097&quot;&gt;Fusion&lt;/a&gt; and &lt;a href=&quot;https://kb.vmware.com/s/article/2057907&quot;&gt;Workstation&lt;/a&gt;.  VMWare does offer trial licenses for those interested in trying out the full feature set VMWare Pro line(Fusion Pro and Workstation Pro). VMware also has its Player line, which is free for personal use.  Only downside is that the Player version doesn’t allow network customization that you should use for your lab.  Additionally, only Fusion Player has the ability to take snapshots.  Which is the major difference between Workstation Player and Fusion Player.  Hopefully VMware fixes that in the future.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualBox&lt;/code&gt;: Is the free alternative to VMware and some of the other virtualization software out there.  It also has all the feature you need in a VM solution starting out.  You can get a copy of VirtualBox &lt;a href=&quot;https://www.virtualbox.org/&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Edge Developer ISO&lt;/code&gt;: You can download a Windows ISO file: &lt;a href=&quot;https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/&quot;&gt;here&lt;/a&gt;.  We will be doing this later in the post.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FLARE VM&lt;/code&gt;: FLARE VM is free malware analysis VM with a ton of tools and features pre-installed by FireEye. Its a great addition to your malware analysis toolset.  You can find instructions to install it &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/11/flare-vm-update.html&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REMnux&lt;/code&gt;: REMnux is a powerful Linux VM that has a great collection of tools for Malware Analysis by Lenny Zeltzer &lt;a href=&quot;https://remnux.org/&quot;&gt;here&lt;/a&gt;.  You can find a lot of helpful reasources on his site including REMnux and reversing cheatsheets as well as blog posts that you might find useful.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;downloading-virtualization-software&quot;&gt;Downloading Virtualization Software:&lt;/h2&gt;
+&lt;p&gt;Using the links above, navigate to your preferred virtualization software site.  Follow the instructions provided by each vendor. Installation shouldn’t take too long and might ask for certain permissions it needs to modify network settings and such. After you get it installed jump to the next section.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuring-your-network-settings&quot;&gt;Configuring your Network Settings:&lt;/h2&gt;
+&lt;p&gt;First thing we should do is set up our isolated custom network we will be using for our lab.  Being able to control how the network interacts with a malware sample is extremely important for analysis.  You also don’t want the malware sample to have access to the Internet(at least at first) until you have a decent understanding of what the malware is trying to do. In VMware Fusion, it is pretty straight forward and easy to do.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Select the tab VMware &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fusion&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Preferences&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network&lt;/code&gt;. Click the lock icon at the bottom left side to make changes.&lt;/li&gt;
+  &lt;li&gt;Hit the + button just above the lock icon. You should see a new network call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; mine is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet2&lt;/code&gt; but yours could be a different number.  Highlight that then uncheck the radio button labeled &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;allow virtual machines on network to connect to external networks(using NAT)&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Configure your subnet IP.  I want an IP subnet that will stand out when I see it. So I went with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.0&lt;/code&gt;.  Keep the Subnet Mask as is. Then click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Apply&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;installing-virtual-machines&quot;&gt;Installing Virtual Machines:&lt;/h2&gt;
+&lt;h3 id=&quot;downloading-a-windows-10-edge-developer-image&quot;&gt;Downloading a Windows 10 Edge Developer image:&lt;/h3&gt;
+&lt;p&gt;Now that you have virtualization software installed, we need to get a Win 10 developer image from Microsoft. This Win 10 image will serve as the base image.  FLARE can only be install on an already existing physical or virtual Windows machine. Using the link above, select the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSEdge on Win10 (x64) {Some_Stable_Version}&lt;/code&gt;.  Then select the VM platform you have, in this case I will select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VMware (Windows, Mac)&lt;/code&gt;. The download is several GBs so depending on your download speed, it could take some time. &lt;strong&gt;Please note the password for the VM:&lt;/strong&gt; “Passw0rd!” with a zero.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_01_select_win10_image_from_microsoft.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-and-setting-up-windows-10-machine-in-vmware-fusion&quot;&gt;Installing and Setting up Windows 10 Machine in VMWare Fusion:&lt;/h3&gt;
+&lt;p&gt;Lets unzip the file and store it in a location of your choice. Open up VMware’s Virtual Machine Library and follow these steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Unzip the MSEdge-Win10-VMware file, if not automatically done by your host machine.  You can store the unzipped contents anywhere.  I’m going to put them on my Desktop.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Import&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Choose File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSEdge-Win10-VMWare.ovf&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Continue&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.  You can change the name and location of where the VM is stored if you would like.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Customize Settings&lt;/code&gt; after the image has been imported successfully.&lt;/li&gt;
+  &lt;li&gt;Navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Processors &amp;amp; Memory&lt;/code&gt;.  Confirm that the VM is allocated 2 processor cores and 4Gbs of RAM(4096MBs).
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_02_checking_processor&amp;amp;memory_settings_win10.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh Win10 Install&lt;/code&gt;. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.&lt;/li&gt;
+  &lt;li&gt;When you start the machine, if VMWare prompts you to upgrade, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Upgrade&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /alo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.&lt;/li&gt;
+  &lt;li&gt;After the machine logs in successfully after installing VM Virtual Tools.  Take another snapshot and name it something to the effect of, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Win 10 Activated with VM Tools installed&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_03_taking_snapshot_in_VMware.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;One thing to note, snapshots are a must when working with malware.  The ability to revert back to a clean state after performing some behavior analysis on one file is very powerful and time saving.  It allows you to test other hypotheses or another file in a clean environment before infection.  It also saves time so you don’t have to rebuild a whole new VM from scratch because you don’t have a clean starting image.&lt;/p&gt;
+
+&lt;h4 id=&quot;virtualbox-users&quot;&gt;VirtualBox Users:&lt;/h4&gt;
+&lt;p&gt;VirtualBox tends to require more manual configuration to get your VMs to work properly.  One thing I always look at is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Invalid Setting&lt;/code&gt; notification(shown below) that appears at the bottom of the individul VMs settings window. These settings errors are normally pretty straight forward and easy to address in the setting menu.&lt;/p&gt;
+
+&lt;p&gt;Last thing that tends to be more complicated in VirtualBox is installing VB Guest Additions. I recommend following the instructions VirtualBox has on their manual page &lt;a href=&quot;https://www.virtualbox.org/manual/ch04.html&quot;&gt;here&lt;/a&gt; Section &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4.2.1.1. Installing the Windows Guest Additions&lt;/code&gt;.  Sometimes, you will get an error that you can’t attach the guest additions due to no optical drive.  If thats the case, you need to use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mount Guest Additions manually&lt;/code&gt; steps.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_04_invalid_display_settings_notification.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;install-flare-on-your-fresh-install-of-win-10&quot;&gt;Install FLARE on your fresh install of WIN 10:&lt;/h3&gt;
+&lt;p&gt;Now that we have our base Win 10 machine up and running we can get FireEye’s FLARE VM installed:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Optional:&lt;/strong&gt; Install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git&lt;/code&gt; on our Win10 box.  Open up a browser on your Win10 VM and Google: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install git windows&lt;/code&gt; or copy and past this url: https://git-scm.com/download/win. Click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;64 bit Windows Version&lt;/code&gt; and keep all the settings default during installations.  When it finishes with the settings, hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;install&lt;/code&gt; then after it installs hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finish&lt;/code&gt;.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to https:/github.com/fireeye/flare-vm. Download the code as a zip file.  If you performed the optional step then open up a cmd prompt:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; cd Desktop &amp;amp;&amp;amp; git clone https://github.com/fireeye/flare-vm
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Else: Unzip the flare vm zip file on your Desktop&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open up Powershell as an Administrator. Type Powershell in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Type here to search&lt;/code&gt; bar and then right click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Powershell&lt;/code&gt; and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run as Administrator&lt;/code&gt;. In the Powershell prompt, navigate to the FLARE vm folder:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; cd C:\Users\IEUser\Desktop\FLARE-vm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Next enable unrestricted execution policy for PowerShell by executing the following command and answering “Y” when prompted by PowerShell:&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Set-ExecutionPolicy unrestricted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Execute the install.ps1 installation script. You will be prompted to enter the current user’s password. FLARE VM needs the current user’s password to automatically login after a reboot when installing. Optionally, you can specify the current user’s password by passing the “-password &lt;current_user_password&gt;” at the command line.
+&lt;/current_user_password&gt;    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ./install.ps1 -password Passw0rd!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_05_running_powershell_installFLARE_script.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The rest of the installation process is fully automated. Depending upon your internet speed the entire installation may take up to one hour to finish. The VM also reboots multiple times due to the numerous software installations’ requirements. Once the installation completes, the PowerShell prompt remains open waiting for you to hit any key before exiting. After completing the installation, you will be presented with the following desktop environment:&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once the install is done, run the command to update FLARE:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cup all
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the update is finished, reboot and log back in.  Then take another snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of FLARE-VM&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;download-and-configure-remnux&quot;&gt;Download and Configure REMnux:&lt;/h3&gt;
+
+&lt;p&gt;Navigate to the REMnux page link shared above and hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download -&amp;gt;&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;General OVA&lt;/code&gt;(Or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VirtualBox OVA&lt;/code&gt; if using VirtualBox) -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Box&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download&lt;/code&gt; save the file and import just like we did with the Win10 image:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Unzip the file downloaded containing REMnux if not automatically done by your host machine.  You can store the unzipped contents anywhere.  Again, i’m going to put them on my Desktop.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Import&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Choose File&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remnux-v7&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Continue&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.  You can change the name and location of where the VM is stored if you would like.&lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Customize Settings&lt;/code&gt; after the image has been imported successfully.&lt;/li&gt;
+  &lt;li&gt;Navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Processors &amp;amp; Memory&lt;/code&gt;.  Confirm that the VM is allocated 1 processor cores and 2Gbs of RAM(2048MBs).&lt;/li&gt;
+  &lt;li&gt;Go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt; and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Device&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Share with my Mac&lt;/code&gt;. When you click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Show All&lt;/code&gt; button you should now see two network adapters.&lt;/li&gt;
+  &lt;li&gt;Go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 1&lt;/code&gt; and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; that you created in the first section.&lt;/li&gt;
+  &lt;li&gt;Start up REMnux, if prompted, upgrade the virtual machine like we did with our Windows 10 machine.&lt;/li&gt;
+  &lt;li&gt;Log in to the REMnux machine; credentials are user: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remnux&lt;/code&gt; pass: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;malware&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;First thing we want to do is grab the IP of our machine for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 1&lt;/code&gt;. Make sure to save that IP address. It should be an IP in the range we selected when we create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt;.  In my case its 10.1.1.2:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; ifconfig -a 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux update &amp;amp;&amp;amp; remnux upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;After running the upgrade command we should reboot:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Unattach &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter 2&lt;/code&gt; from the REMnux VM.  When you want to update or use internet on the VM just reattach.&lt;/li&gt;
+  &lt;li&gt;Power off the REMnux VM and take a snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of REMnux {date}&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;final-configurations-and-network-testing&quot;&gt;Final Configurations and Network Testing:&lt;/h2&gt;
+&lt;p&gt;We need to connect our FLARE VM to the same network so that the REMnux box can run network based analysis on a sample.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Power off the FLARE VM if you haven’t done so already.&lt;/li&gt;
+  &lt;li&gt;Open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt;.  Change the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Adapter&lt;/code&gt; to our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmnet#&lt;/code&gt; we set up in the first section of the post.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Start up FLARE and open &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Control Panel&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network and Internet&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network and Sharing Center&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change adapter settings&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ethernet0&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Properties&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Internet Protocol Version 4 (TCP/IPv4)&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Use the following address&lt;/code&gt;-&amp;gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;strong&gt;Use the IP of your REMnux box.  It might be different than mine.&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;IP address: 10.1.1.3 or any IP you want in this subnet. This will be the IP of our FLARE VM&lt;/li&gt;
+      &lt;li&gt;Subnet mask: 255.255.255.0&lt;/li&gt;
+      &lt;li&gt;Default Gateway: 10.1.1.2(Our REMnux VM)&lt;/li&gt;
+      &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;use the following preferred DNS server addresses&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Preferred DNS Server: 10.1.1.2(Our REMnux VM)&lt;/li&gt;
+      &lt;li&gt;Alternate DNS Server: BLANK&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_08_configuring_flare_vm_with_remnux_ip.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ok&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;testing-our-network-setup-with-inetsim&quot;&gt;Testing our Network Setup with INetSim:&lt;/h2&gt;
+&lt;p&gt;Now that we have done all the networking setup in both VMs, we are going to set up a tool call INetSim. INetSim is a software suite for simulating common internet services in a lab environment, e.g. for analyzing the network behavior of unknown malware samples.&lt;/p&gt;
+
+&lt;p&gt;Remnux already comes with INetSim pre-install. However, we need to do some minor configuration steps to make sure it functions properly.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Open up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/inetsim/inetsim.conf&lt;/code&gt;in a text editor:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo nano /etc/inetsim/inetsim.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;By default, INetSim only has a few services active.  However, we are going to uncomment out all the other services by removing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_09_unchecking_all_services_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;We now need to bind REMnux’s network adapter IP to INetSim.  To do this scroll down a little bit in the config file until you see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;service_bind_address&lt;/code&gt;. Uncomment it out and add your REMnux IP in place of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0.0.0.0&lt;/code&gt;. I would put &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.2&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_10_changing_default_service_bind_address.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Right below that you should see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dns_default_ip&lt;/code&gt;.  Uncomment that out and place your REMnux IP there as well.  I would put &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.1.1.2&lt;/code&gt;:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_11_changing_default_dns_ip.jpg&quot; alt=&quot;&quot; width=&quot;60%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Ubuntu has a system-resolved system service which provides network name resolution to local applications. This conflicts with INetSim so we need to disable the service. Open up a terminal and type these commands:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo systemctl disable systemd-resolved 
+ sudo systemctl mask systemd-resolved
+ sudo systemctl stop systemd-resolved
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_12_disabling_system-resolve.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now we can start INetSim:
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; inetsim
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_13_starting_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Start up your FLARE vm and type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www.baddomain.com&lt;/code&gt;. Your browser should show this:
+    &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_14_testing_connection_from_flare_to_remnux_with_inetsim.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;There are infinite possibilities when it comes to setting up a malware analysis lab.  There are tons of tools out there to aid you in your analysis and FLARE is a great VM to start out with because it has a lot of the most popular tools pre-installed.  My hope is that I was able to help you get started in setting up a lab to being looking at malicious files.  I definitely plan on writing up more articles where I will dive into specific malicious files and popular techniques used to analyze malware.  If you have any comments, questions, or just want to chat, you can find me on &lt;a href=&quot;https://twitter.com/Cyber_Sec_JD&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joshua Dunn</name></author><category term="VMware" /><category term="Malware" /><category term="Malware_Analysis" /><category term="REMnux" /><category term="FLARE" /><summary type="html">Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field. Its also a field that is extremely new to me. I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware. Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.</summary></entry><entry><title type="html">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title><link href="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm" rel="alternate" type="text/html" title="Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB" /><published>2021-02-05T07:00:00-05:00</published><updated>2021-02-05T07:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm</id><content type="html" xml:base="https://blog.openthreatresearch.com/ntobjectmanager_rpc_smb_scm">&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
 
 &lt;p&gt;In this post, I will show you how to use a PowerShell module named &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager/&quot;&gt;NtObjectManager&lt;/a&gt;, developed by James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt;, to create a Remote Procedure Call (RPC) client to interact with the Service Control Manager (SCM) RPC Server of a remote endpoint and be able to create and start a service. The RPC traffic will be transported over the Server Message Block (SMB) Protocol, and we will go step-by-step calling each RPC method needed to create and start the service.&lt;/p&gt;
 
@@ -12,11 +206,11 @@
 
 &lt;h2 id=&quot;what-is-the-service-control-manager-scm&quot;&gt;What is the Service Control Manager (SCM)?&lt;/h2&gt;
 
-&lt;p&gt;The SCM is an RPC server that enables service configuration and control of service programs. This service is started at system boot and it maintains a database of installed services in the registry. The database, known as the &lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt; database or the SCM database, is used by the SCM and programs that add, modify, or configure services.&lt;/p&gt;
+&lt;p&gt;The SCM is an RPC server that enables service configuration and control of service programs. This service is started at system boot and it maintains a database of installed services in the registry. The database, known as the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt; database or the SCM database, is used by the SCM and programs that add, modify, or configure services.&lt;/p&gt;
 
-&lt;p&gt;The following is the registry key for this database: &lt;code class=&quot;highlighter-rouge&quot;&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services&lt;/code&gt;. This key contains a subkey for each installed service and driver service. The name of the subkey is the name of the service.&lt;/p&gt;
+&lt;p&gt;The following is the registry key for this database: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services&lt;/code&gt;. This key contains a subkey for each installed service and driver service. The name of the subkey is the name of the service.&lt;/p&gt;
 
-&lt;p&gt;Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The SCM RPC server interface universally unique identifier (UUID) is &lt;code class=&quot;highlighter-rouge&quot;&gt;367ABB81-9844-35F1-AD32-98F038001003&lt;/code&gt; and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint &lt;code class=&quot;highlighter-rouge&quot;&gt;\PIPE\svcctl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Starting with Windows Vista, the service control manager (SCM) supports remote procedure calls over both Transmission Control Protocol (RPC/TCP) and named pipes (RPC/NP). The SCM RPC server interface universally unique identifier (UUID) is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;367ABB81-9844-35F1-AD32-98F038001003&lt;/code&gt; and when SMB is used as a transport protocol, the RPC server listens on the RPC endpoint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\PIPE\svcctl&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-is-ntobjectmanager&quot;&gt;What is NtObjectManager?&lt;/h2&gt;
 
@@ -28,7 +222,7 @@
 
 &lt;p&gt;&lt;em&gt;(Russinovich, Mark,Solomon, David,Ionescu, Alex. Windows Internals, Part 1 (6th Edition) (Developer Reference))&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;According to &lt;a href=&quot;https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library&quot;&gt;MS docs&lt;/a&gt;, the Windows operating system uses the term &lt;code class=&quot;highlighter-rouge&quot;&gt;executive layer&lt;/code&gt; to refer to kernel-mode components that provide a variety of services to device drivers, including:&lt;/p&gt;
+&lt;p&gt;According to &lt;a href=&quot;https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/windows-kernel-mode-executive-support-library&quot;&gt;MS docs&lt;/a&gt;, the Windows operating system uses the term &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;executive layer&lt;/code&gt; to refer to kernel-mode components that provide a variety of services to device drivers, including:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Object management&lt;/li&gt;
@@ -38,18 +232,18 @@
   &lt;li&gt;Configuration management&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;This is an image showing the major internal components of the Windows operating system where we can see at what layer the &lt;code class=&quot;highlighter-rouge&quot;&gt;object manager&lt;/code&gt; operates:&lt;/p&gt;
+&lt;p&gt;This is an image showing the major internal components of the Windows operating system where we can see at what layer the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object manager&lt;/code&gt; operates:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_01_windows_components_overview.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;what-does-ntobjectmanager-have-to-do-with-rpc-and-scm&quot;&gt;What does NtObjectManager have to do with RPC and SCM?&lt;/h2&gt;
 
-&lt;p&gt;Last year, December 18th, 2020, James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt; updated the &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; project to support &lt;code class=&quot;highlighter-rouge&quot;&gt;Named Pipes - RPC Transport&lt;/code&gt; for RPC Clients. Then, on January 15th, 20201, he officially updated the module in &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager&quot;&gt;PowerShell Gallery&lt;/a&gt; to version v.1.1.30 for anyone to simply install, import and play with it.&lt;/p&gt;
+&lt;p&gt;Last year, December 18th, 2020, James Forshaw &lt;a href=&quot;https://twitter.com/tiraniddo&quot;&gt;@tiraniddo&lt;/a&gt; updated the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; project to support &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Named Pipes - RPC Transport&lt;/code&gt; for RPC Clients. Then, on January 15th, 20201, he officially updated the module in &lt;a href=&quot;https://www.powershellgallery.com/packages/NtObjectManager&quot;&gt;PowerShell Gallery&lt;/a&gt; to version v.1.1.30 for anyone to simply install, import and play with it.&lt;/p&gt;
 
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Released v1.1.30 of NtObjectManager to the PS gallery. Main addition is the support for named pipe RPC clients. Also updated the NuGet packages, they now contain multi-target (no more &amp;quot;Core&amp;quot; versions) as well as full symbols and source link support. &lt;a href=&quot;https://t.co/PQBVIyIrNy&quot;&gt;https://t.co/PQBVIyIrNy&lt;/a&gt;&lt;/p&gt;&amp;mdash; James Forshaw (@tiraniddo) &lt;a href=&quot;https://twitter.com/tiraniddo/status/1350118676091949057?ref_src=twsrc%5Etfw&quot;&gt;January 15, 2021&lt;/a&gt;&lt;/blockquote&gt;
 &lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;This was great because instead of using command-line utilities such as &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/win32/services/controlling-a-service-using-sc&quot;&gt;SC.exe&lt;/a&gt;, we could now use &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; to programmatically create a RPC client, run a few remote procedure calls and interact with the SCM RPC server of a remote endpoint, all over SMB.&lt;/p&gt;
+&lt;p&gt;This was great because instead of using command-line utilities such as &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/win32/services/controlling-a-service-using-sc&quot;&gt;SC.exe&lt;/a&gt;, we could now use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; to programmatically create a RPC client, run a few remote procedure calls and interact with the SCM RPC server of a remote endpoint, all over SMB.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;I find this fascinating for threat research because I can go remote procedure call - by - remote procedure call and understand the underlying behavior of someone creating a service remotely over SMB.&lt;/p&gt;
@@ -106,7 +300,7 @@ Start-Process &quot;C:\ProgramData\winsdksetup.exe&quot; -Wait -ArgumentList '/f
 
 &lt;h2 id=&quot;start-and-create-services-via-rpc-model&quot;&gt;Start and Create Services via RPC Model&lt;/h2&gt;
 
-&lt;p&gt;Now that we have &lt;code class=&quot;highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; imported and our symbols resolving path set, let’s take a look at what we are going to do next.
+&lt;p&gt;Now that we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NtObjectManager&lt;/code&gt; imported and our symbols resolving path set, let’s take a look at what we are going to do next.
 The image below is a simple representation of some of the remote procedure calls that we can use to create and start a service.&lt;/p&gt;
 
 &lt;p&gt;I also added the two type of transports one could use to carry the RPC traffic. All this is based on &lt;a href=&quot;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-scmr/4c8b7701-b043-400c-9350-dc29cfaa5e7a&quot;&gt;SCM Remote Protocol documentation&lt;/a&gt;. Of course there are other ways to create a service remotely.&lt;/p&gt;
@@ -117,7 +311,7 @@ The image below is a simple representation of some of the remote procedure calls
 
 &lt;h2 id=&quot;parse-scm-rpc-server&quot;&gt;Parse SCM RPC Server&lt;/h2&gt;
 
-&lt;p&gt;First, we need to find and parse the SCM RPC server in order to create a RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is &lt;code class=&quot;highlighter-rouge&quot;&gt;367abb81-9844-35f1-ad32-98f038001003&lt;/code&gt;. Therefore, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Get-RpcServer&lt;/code&gt; command to find the &lt;code class=&quot;highlighter-rouge&quot;&gt;.dll or .exe&lt;/code&gt; that hosts the SCM RPC server code. As you can see, we are looking for objects with &lt;code class=&quot;highlighter-rouge&quot;&gt;InterfaceId&lt;/code&gt; that matches our RPC server interface UUID.&lt;/p&gt;
+&lt;p&gt;First, we need to find and parse the SCM RPC server in order to create a RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;367abb81-9844-35f1-ad32-98f038001003&lt;/code&gt;. Therefore, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Get-RpcServer&lt;/code&gt; command to find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.dll or .exe&lt;/code&gt; that hosts the SCM RPC server code. As you can see, we are looking for objects with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InterfaceId&lt;/code&gt; that matches our RPC server interface UUID.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$lookRPC = Get-ChildItem C:\Windows\System32\* -Include '*.dll','*.exe' | Get-RpcServer
 $scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003'}
@@ -126,14 +320,14 @@ $scmServer | fl
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_03_ntobjectmanager_scm_rpc_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The commands above take about 2-3 minutes. Since you already know that &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\Windows\System32\services.exe&lt;/code&gt; contains the SCM RPC server code, you can simply run this command to expedite the process:&lt;/p&gt;
+&lt;p&gt;The commands above take about 2-3 minutes. Since you already know that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Windows\System32\services.exe&lt;/code&gt; contains the SCM RPC server code, you can simply run this command to expedite the process:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmServer = Get-RpcServer C:\Windows\System32\services.exe | Where-Object { $_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003' }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;create-rpc-client&quot;&gt;Create RPC Client&lt;/h2&gt;
 
-&lt;p&gt;Next, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Get-RpcClient&lt;/code&gt; command to create a new RPC client from the parsed RPC server.&lt;/p&gt;
+&lt;p&gt;Next, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Get-RpcClient&lt;/code&gt; command to create a new RPC client from the parsed RPC server.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient = Get-RpcClient $scmServer
 &lt;/code&gt;&lt;/pre&gt;
@@ -147,7 +341,7 @@ $scmServer | fl
 
 &lt;h2 id=&quot;connect-rpc-client-to-remote-rpc-endpoint&quot;&gt;Connect RPC Client to Remote RPC Endpoint&lt;/h2&gt;
 
-&lt;p&gt;As you can see in the image below, the RPC client starts off disconnected. Therefore, we can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command to connect the RPC client to the remote RPC endpoint (&lt;code class=&quot;highlighter-rouge&quot;&gt;\pipe\svcctl&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;As you can see in the image below, the RPC client starts off disconnected. Therefore, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command to connect the RPC client to the remote RPC endpoint (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\pipe\svcctl&lt;/code&gt;).&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmClient
 &lt;/code&gt;&lt;/pre&gt;
@@ -158,7 +352,7 @@ $scmServer | fl
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;Client&lt;/strong&gt;: Our new RPC client object&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;EndpointPath&lt;/strong&gt;: The named pipe &lt;code class=&quot;highlighter-rouge&quot;&gt;\pipe\svcctl&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;EndpointPath&lt;/strong&gt;: The named pipe &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\pipe\svcctl&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;ProtocolSequence&lt;/strong&gt;: ncacn_np (named pipes)&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;NetworkAddress&lt;/strong&gt;: The IP address of the remote endpoint&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;SecurityQualityOfService&lt;/strong&gt;: Impersonation level (i.e. Impersonation)&lt;/li&gt;
@@ -174,7 +368,7 @@ $scmServer | fl
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_06_ntobjectmanager_rpc_client_connected.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command:&lt;/p&gt;
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Connect-RpcClient&lt;/code&gt; command:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_07_wireshark_connect_rpcclient.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -192,13 +386,13 @@ $scmServer | fl
 
 &lt;h2 id=&quot;send-ropenscmanagerw-call&quot;&gt;Send ROpenSCManagerW Call&lt;/h2&gt;
 
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; method establishes a connection to the server and opens the SCM database on the specified server.&lt;/p&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; method establishes a connection to the server and opens the SCM database on the specified server.&lt;/p&gt;
 
 &lt;p&gt;The parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;MachineName&lt;/strong&gt;: Name of remote endpoint&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;DatabaseName&lt;/strong&gt;: Name of the database (i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;DatabaseName&lt;/strong&gt;: Name of the database (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt;)&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access to the database&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -214,7 +408,7 @@ $scmServer | fl
   &lt;li&gt;SC_MANAGER_QUERY_LOCK_STATUS (0x0010): Required to call the QueryServiceLockStatus function to retrieve the lock status information for the database.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We can run the following to connect to our remote workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;, open the SCM Database (&lt;code class=&quot;highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt;) and get a handle with &lt;code class=&quot;highlighter-rouge&quot;&gt;SC_MANAGER_CREATE_SERVICE&lt;/code&gt; access rights.&lt;/p&gt;
+&lt;p&gt;We can run the following to connect to our remote workstation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;, open the SCM Database (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ServicesActive&lt;/code&gt;) and get a handle with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SC_MANAGER_CREATE_SERVICE&lt;/code&gt; access rights.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result = $scmClient.ROpenSCManagerW(&quot;WORKSTATION6&quot;,&quot;ServicesActive&quot;,[NtApiDotNet.Win32.ServiceControlManagerAccessRights]::CreateService)
 
@@ -225,19 +419,19 @@ $scmHandle
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_08_ntobjectmanager_ropenscmanagerw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_09_wireshark_ropenscmanagerw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;send-rcreateservicew-call&quot;&gt;Send RCreateServiceW Call&lt;/h2&gt;
 
-&lt;p&gt;After obtaining a handle to the SCM database, we can send the &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; call to create a service remotely.
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; method creates the service record in the SCM database.&lt;/p&gt;
+&lt;p&gt;After obtaining a handle to the SCM database, we can send the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; call to create a service remotely.
+The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; method creates the service record in the SCM database.&lt;/p&gt;
 
 &lt;p&gt;Most of the parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;ServiceName&lt;/strong&gt;: Name of the service to install remotely&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;DisplayName&lt;/strong&gt;: Display name by which user interface programs identify the service.&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access to the service.&lt;/li&gt;
@@ -247,7 +441,7 @@ The &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt;
   &lt;li&gt;&lt;strong&gt;BinaryPathName&lt;/strong&gt;: Fully qualified path to the service binary file. The path MAY include arguments.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We can run the following to create the service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint using the &lt;code class=&quot;highlighter-rouge&quot;&gt;SCM Handle&lt;/code&gt; we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; call. When we later start the&lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service, it will execute &lt;code class=&quot;highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; and list the files and folders in the &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\&lt;/code&gt; drive to then push the results to a file located at &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\programdata\WardogLog.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;We can run the following to create the service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SCM Handle&lt;/code&gt; we obtained initially with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; call. When we later start the&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service, it will execute &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; and list the files and folders in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\&lt;/code&gt; drive to then push the results to a file located at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\programdata\WardogLog.txt&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Set the binarypath with arguments
 $BinaryPathName = '%COMSPEC% /C dir C:\ &amp;gt; C:\programdata\WardogLog.txt'
@@ -261,7 +455,7 @@ $Result2
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_10_ntobjectmanager_rcreateservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RCreateServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_11_wireshark_rcreateservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -272,7 +466,7 @@ $Result2
 &lt;h2 id=&quot;send-rcloseservicehandle-call&quot;&gt;Send RCloseServiceHandle Call&lt;/h2&gt;
 
 &lt;p&gt;We can close the handle we got back after creating the service. We are going to request another handle later to start the service.
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;RCloseServiceHandle&lt;/code&gt; method is called by the client and in response the server releases the handle to the specified service or the SCM database.&lt;/p&gt;
+The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RCloseServiceHandle&lt;/code&gt; method is called by the client and in response the server releases the handle to the specified service or the SCM database.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Extract the handle
 $ServiceCreationHandle = $Result2.p15
@@ -294,14 +488,14 @@ $scmClient.RCloseServiceHandle($ServiceCreationHandle)
 &lt;h2 id=&quot;send-ropenservicew-call&quot;&gt;Send ROpenServiceW Call&lt;/h2&gt;
 
 &lt;p&gt;Now that our service has been created, we can start it remotely.
-First, we need to open a handle to the existing Windows service (&lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service).
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; method creates an RPC context handle to an existing service record.&lt;/p&gt;
+First, we need to open a handle to the existing Windows service (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service).
+The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; method creates an RPC context handle to an existing service record.&lt;/p&gt;
 
 &lt;p&gt;The parameters that we are going to pass to our remote procedure call are the following:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Servicename&lt;/strong&gt;: The name of the service record (i.e. &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;SCManager handle&lt;/strong&gt;: SCM handle we obtained initially with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; remote procedure call&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Servicename&lt;/strong&gt;: The name of the service record (i.e. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt;).&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;DesiredAccess&lt;/strong&gt;: A value that specifies the access right.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -320,7 +514,7 @@ The &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; m
   &lt;li&gt;SERVICE_USER_DEFINED_CONTROL(0x0100): Required to call the ControlService function to specify a user-defined control code.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We can run the following to get a handle to the service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint with access rights &lt;code class=&quot;highlighter-rouge&quot;&gt;SERVICE_START (0x0010)&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;We can run the following to get a handle to the service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint with access rights &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICE_START (0x0010)&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result3 = $scmClient.ROpenServiceW($scmHandle,'Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::Start)
 $Result3
@@ -328,28 +522,28 @@ $Result3
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_13_ntobjectmanager_ropenservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
+&lt;p&gt;We can also see the traffic generated in &lt;a href=&quot;https://www.wireshark.org/&quot;&gt;Wireshark&lt;/a&gt; after running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_14_wireshark_ropenservicew.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;send-rstartservicew-call&quot;&gt;Send RStartServiceW Call&lt;/h2&gt;
 
-&lt;p&gt;We can now start our &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service remotely using the handle we obtained after running the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call.
-The &lt;code class=&quot;highlighter-rouge&quot;&gt;RStartServiceW&lt;/code&gt; method starts a specified service.&lt;/p&gt;
+&lt;p&gt;We can now start our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service remotely using the handle we obtained after running the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call.
+The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RStartServiceW&lt;/code&gt; method starts a specified service.&lt;/p&gt;
 
 &lt;p&gt;The parameter that we are going to pass to our remote procedure call is the following:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Service handle&lt;/strong&gt;: Handle we obtained with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call. The &lt;code class=&quot;highlighter-rouge&quot;&gt;SERVICE_START&lt;/code&gt; access right MUST have been granted to the caller when the RPC context handle to the service record was created.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Service handle&lt;/strong&gt;: Handle we obtained with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenServiceW&lt;/code&gt; remote procedure call. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICE_START&lt;/code&gt; access right MUST have been granted to the caller when the RPC context handle to the service record was created.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We can first check if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.
+&lt;p&gt;We can first check if the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.
 It should not exist since we have not started the service yet.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt' 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;We can run the following to start service &lt;code class=&quot;highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint:&lt;/p&gt;
+&lt;p&gt;We can run the following to start service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Extract handle
 $OpenServiceHandle = $Result3.p3
@@ -372,7 +566,7 @@ else{
 
 &lt;p&gt;We are going to get an error message which is expected since we are simply running a few cmd commands.
 However, the file gets created since the service actually starts, but it just does not stay up.
-We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.&lt;/p&gt;
+We can check again if the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt'
 &lt;/code&gt;&lt;/pre&gt;
@@ -385,11 +579,11 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 
 &lt;h2 id=&quot;why-did-i-do-all-this&quot;&gt;Why did I do all this?&lt;/h2&gt;
 
-&lt;p&gt;From a defensive perspective, walking through the execution of each remote procedue call, helped me to understand and validate the underlying behavior of the technique &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;Create and Start services remotely&quot;&lt;/code&gt;. It also helped me to validate the detection model I had created based on initial documentation. Finally, I was able to map event logs to several of the actions taken in this specific technique variation.&lt;/p&gt;
+&lt;p&gt;From a defensive perspective, walking through the execution of each remote procedue call, helped me to understand and validate the underlying behavior of the technique &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;Create and Start services remotely&quot;&lt;/code&gt;. It also helped me to validate the detection model I had created based on initial documentation. Finally, I was able to map event logs to several of the actions taken in this specific technique variation.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-02-05_16_create_start_services_remotely.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You can always extend this model and look of other security events that might not be as practical yet to collect and consume such as the ones coming from &lt;code class=&quot;highlighter-rouge&quot;&gt;RPC ETW provider (Microsoft-Windows-RPC)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;You can always extend this model and look of other security events that might not be as practical yet to collect and consume such as the ones coming from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RPC ETW provider (Microsoft-Windows-RPC)&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;I hope you enjoyed this short post and learned as much as I did while going through this process.&lt;/p&gt;
 
@@ -500,10 +694,10 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;setting-up-a-pysparksql-session&quot;&gt;Setting Up a PySpark.SQL Session&lt;/h2&gt;
@@ -516,8 +710,8 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 
 &lt;h3 id=&quot;2-installing-pyspark-python-library&quot;&gt;2) Installing PySpark Python Library&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
+  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;You can also use the VSCode terminal in order to install PySpark. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
@@ -528,8 +722,8 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 &lt;h3 id=&quot;3-importing-sparksession-class&quot;&gt;3) Importing SparkSession Class&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;We start by importing the class &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession&quot;&gt;SparkSession&lt;/a&gt; from the PySpark SQL module.&lt;/li&gt;
-  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
+  &lt;li&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -539,9 +733,9 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 &lt;h3 id=&quot;4-creating-a-sparksession&quot;&gt;4) Creating a SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;In order to create a SparkSession, we use the &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession.Builder&quot;&gt;Builder&lt;/a&gt; class.&lt;/li&gt;
-  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
-  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
+  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
+  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -551,7 +745,7 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 &lt;h3 id=&quot;5-verifying-sparksession&quot;&gt;5) Verifying SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Once the SparkSession is built, we can run the spark variable for verification.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -561,9 +755,9 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
 &lt;h2 id=&quot;running-more-spark-commands&quot;&gt;Running More Spark Commands&lt;/h2&gt;
 &lt;p&gt;For the last section of this blogpost, I am sharing three more basic commands that are very helpful when performing tasks with Spark:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;0-importing-a-mordor-dataset&quot;&gt;0) Importing a Mordor Dataset&lt;/h3&gt;
@@ -573,7 +767,7 @@ We can check again if the file &lt;code class=&quot;highlighter-rouge&quot;&gt;C
   &lt;li&gt;Download the Mordor dataset (json file) following the steps described on &lt;a href=&quot;https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode&quot;&gt;Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
 import requests
 from io import BytesIO
 from zipfile import ZipFile
@@ -589,9 +783,9 @@ jsonFilePath
 
 &lt;h3 id=&quot;1-creating-a-spark-dataframe&quot;&gt;1) Creating a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
+  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
 df = spark.read.json(jsonFilePath)
 # Validating Type of Output
 type(df)
@@ -603,10 +797,10 @@ type(df)
 
 &lt;h3 id=&quot;2-creating-a-temporary-view-of-a-spark-dataframe&quot;&gt;2) Creating a Temporary View of a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
-  &lt;li&gt;We will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
+  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
+  &lt;li&gt;We will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -615,10 +809,10 @@ type(df)
 
 &lt;h3 id=&quot;3-executing-a-sql-like-query&quot;&gt;3) Executing a SQL-like Query&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
-  &lt;li&gt;We are performing a &lt;code class=&quot;highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
+  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
+  &lt;li&gt;We are performing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
 '''
 SELECT Hostname,Channel,EventID, Count(*) as count
 FROM mordorTable
@@ -644,9 +838,9 @@ df.show(truncate=False)
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;importing-a-mordor-dataset-to-my-vscode-workspace&quot;&gt;Importing a Mordor Dataset to my VSCode Workspace&lt;/h2&gt;
@@ -659,9 +853,9 @@ df.show(truncate=False)
 
 &lt;h3 id=&quot;2-importing-python-liraries&quot;&gt;2) Importing Python Liraries&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;For the purpose of this blog, we are using the following libraries: &lt;code class=&quot;highlighter-rouge&quot;&gt;requests&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;io&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;zipfile&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;For the purpose of this blog, we are using the following libraries: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;io&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipfile&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;If you have not installed any of this libraries, you can install them using a Jupyter Notebook or the terminal on VSCode. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import requests
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import requests
 from io import BytesIO
 from zipfile import ZipFile
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
@@ -673,14 +867,14 @@ from zipfile import ZipFile
 &lt;h3 id=&quot;3-getting-mordor-json-file&quot;&gt;3) Getting Mordor Json File&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Let us pick &lt;a href=&quot;https://mordordatasets.com/notebooks/small/windows/02_execution/SDWIN-210314014019.html&quot;&gt;Exchange ProxyLogon SSRF RCE Vuln POC&lt;/a&gt; Mordor dataset as the example for this blogpost.&lt;/li&gt;
-  &lt;li&gt;Within the metadata provided for this dataset, we can find a url that links the GitHub raw file. We are assingning this link to the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;url&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;get&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;requests&lt;/code&gt; library, so we can get the content of the raw file.&lt;/li&gt;
-  &lt;li&gt;We are creating a &lt;code class=&quot;highlighter-rouge&quot;&gt;ZipFile&lt;/code&gt; object after processing the content of our request. The type of content that we received is &lt;code class=&quot;highlighter-rouge&quot;&gt;Bytes&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;extract&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file that contains multiple security event logs.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;namelist&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the name of the file extracted. The name also includes the path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file is sotred. We are assigning the name of the file to the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Within the metadata provided for this dataset, we can find a url that links the GitHub raw file. We are assingning this link to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt; library, so we can get the content of the raw file.&lt;/li&gt;
+  &lt;li&gt;We are creating a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZipFile&lt;/code&gt; object after processing the content of our request. The type of content that we received is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bytes&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extract&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file that contains multiple security event logs.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;namelist&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the name of the file extracted. The name also includes the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file is sotred. We are assigning the name of the file to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
 zipFileRequest = requests.get(url)
 zipFile = ZipFile(BytesIO(zipFileRequest.content))
 jsonFilePath = zipFile.extract(zipFile.namelist()[0])
@@ -689,8 +883,8 @@ jsonFilePath
 
 &lt;ul&gt;
   &lt;li&gt;There will be two outputs after running the code of this cell.&lt;/li&gt;
-  &lt;li&gt;At the bottom of the cell, We are getting the complete path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.&lt;/li&gt;
-  &lt;li&gt;On the left side of your screen, you will see a new file with the &lt;code class=&quot;highlighter-rouge&quot;&gt;.json&lt;/code&gt; extension. This is the mordor dataset that is stored in our VSCode worspace.&lt;/li&gt;
+  &lt;li&gt;At the bottom of the cell, We are getting the complete path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.&lt;/li&gt;
+  &lt;li&gt;On the left side of your screen, you will see a new file with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.json&lt;/code&gt; extension. This is the mordor dataset that is stored in our VSCode worspace.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_mordor_json_file_imported.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -707,15 +901,15 @@ jsonFilePath
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;setting-up-a-jupyter-notebook-on-vscode&quot;&gt;Setting Up a Jupyter Notebook on VSCode&lt;/h2&gt;
 &lt;h3 id=&quot;1-creating-a-workspace-on-vscode&quot;&gt;1) Creating a Workspace on VSCode&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;The first step of this guide will be to create a folder to store all our Jupyter Notebook projects. For this blog post, I am creating the folder &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; in the following directory &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\Users\User1\Documents\Cyb3rPandaH&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The first step of this guide will be to create a folder to store all our Jupyter Notebook projects. For this blog post, I am creating the folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; in the following directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Users\User1\Documents\Cyb3rPandaH&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_01_notebook_project_directory.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -733,67 +927,67 @@ jsonFilePath
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_notebook_open_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Search for the &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; folder that was created previously and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Select Folder&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Search for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; folder that was created previously and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Select Folder&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_04_notebook_select_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;By opening the Jupyter-Notebook folder, it becomes your &lt;code class=&quot;highlighter-rouge&quot;&gt;workspace&lt;/code&gt; within Visual Studio Code. We are now ready to create our first Jupyter Notebook file.&lt;/li&gt;
+  &lt;li&gt;By opening the Jupyter-Notebook folder, it becomes your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;workspace&lt;/code&gt; within Visual Studio Code. We are now ready to create our first Jupyter Notebook file.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_05_notebook_vscode_workspace.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-creating-a-jupyter-notebook&quot;&gt;2) Creating a Jupyter Notebook&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Click on the &lt;code class=&quot;highlighter-rouge&quot;&gt;New File&lt;/code&gt; icon, next to the name of our workspace.&lt;/li&gt;
+  &lt;li&gt;Click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;New File&lt;/code&gt; icon, next to the name of our workspace.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_06_notebook_new_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Type a name for your file using the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipynb&lt;/code&gt; extension and press enter.&lt;/li&gt;
-  &lt;li&gt;By using this extension, we are telling VSCode to process this file as a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; file.&lt;/li&gt;
+  &lt;li&gt;Type a name for your file using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipynb&lt;/code&gt; extension and press enter.&lt;/li&gt;
+  &lt;li&gt;By using this extension, we are telling VSCode to process this file as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; file.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_07_notebook_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After hitting the &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt; key, you will see a message at the bottom left of your screen that says &lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension Loading&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;After hitting the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enter&lt;/code&gt; key, you will see a message at the bottom left of your screen that says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension Loading&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_08_notebook_python_extension_loading.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;In additon, because this is your first time creating a Jupyter Notebook using VSCode, you will get an additional message that says &lt;code class=&quot;highlighter-rouge&quot;&gt;Python requires ipykernel to be installed&lt;/code&gt;. This message is telling us that we need to install a Kernel.&lt;/li&gt;
+  &lt;li&gt;In additon, because this is your first time creating a Jupyter Notebook using VSCode, you will get an additional message that says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python requires ipykernel to be installed&lt;/code&gt;. This message is telling us that we need to install a Kernel.&lt;/li&gt;
   &lt;li&gt;A &lt;strong&gt;kernel&lt;/strong&gt; is a process that runs interactive code in a particular language such as Python or R and return output to us.&lt;/li&gt;
-  &lt;li&gt;In this example we are using &lt;code class=&quot;highlighter-rouge&quot;&gt;Python&lt;/code&gt; language, therefore you need to install the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel for VSCode. Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In this example we are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt; language, therefore you need to install the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel for VSCode. Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_09_notebook_ipykernel.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;VSCode will open a terminal and install the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; component for you.&lt;/li&gt;
+  &lt;li&gt;VSCode will open a terminal and install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; component for you.&lt;/li&gt;
   &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_10_notebook_ipykernel_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed successfully, VSCode will connect your &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; to the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed successfully, VSCode will connect your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_11_notebook_ipykernel_successful_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can close the VSCode terminal window by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Close Panel&lt;/code&gt; button that is located at the top right of the terminal window.&lt;/li&gt;
-  &lt;li&gt;The installation process for the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel will not be required when creating future Jupyter Notebooks because we just installed it in VSCode.&lt;/li&gt;
+  &lt;li&gt;You can close the VSCode terminal window by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Close Panel&lt;/code&gt; button that is located at the top right of the terminal window.&lt;/li&gt;
+  &lt;li&gt;The installation process for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel will not be required when creating future Jupyter Notebooks because we just installed it in VSCode.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_12_notebook_close_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Awesome!! VSCode has created a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook server&lt;/code&gt; locally in your computer. We now have our first Jupyter Notebook file created with the Python extension loaded and connected to a Python Kernel.&lt;/li&gt;
+  &lt;li&gt;Awesome!! VSCode has created a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook server&lt;/code&gt; locally in your computer. We now have our first Jupyter Notebook file created with the Python extension loaded and connected to a Python Kernel.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_13_notebook_ready_to_start.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -801,48 +995,48 @@ jsonFilePath
 &lt;h2 id=&quot;basic-interaction-with-jupyter-notebooks&quot;&gt;Basic Interaction With Jupyter Notebooks&lt;/h2&gt;
 &lt;h3 id=&quot;1-inserting-and-deleting-cells&quot;&gt;1) Inserting and Deleting Cells&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;You can add a new cell by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert Cell Bellow&lt;/code&gt; ➕ (At the bottom left of each cell) button or by hitting the &lt;strong&gt;B&lt;/strong&gt; key one time after selecting a cell.&lt;/li&gt;
+  &lt;li&gt;You can add a new cell by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Insert Cell Bellow&lt;/code&gt; ➕ (At the bottom left of each cell) button or by hitting the &lt;strong&gt;B&lt;/strong&gt; key one time after selecting a cell.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_14_notebook_add_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can delete a cell by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Delete Cell&lt;/code&gt; button 🗑️ (At the right of each cell) or by hitting the &lt;strong&gt;D&lt;/strong&gt; key two times after selecting a cell.&lt;/li&gt;
+  &lt;li&gt;You can delete a cell by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Delete Cell&lt;/code&gt; button 🗑️ (At the right of each cell) or by hitting the &lt;strong&gt;D&lt;/strong&gt; key two times after selecting a cell.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_15_notebook_delete_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-switch-cell-content-type&quot;&gt;2) Switch Cell Content Type&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;By default, the content type of a cell is &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt;. You can change the content type to &lt;code class=&quot;highlighter-rouge&quot;&gt;narrative text&lt;/code&gt; by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Change to Markdown&lt;/code&gt; button &lt;strong&gt;M&lt;/strong&gt;⬇️ (At the top left of each cell).&lt;/li&gt;
+  &lt;li&gt;By default, the content type of a cell is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt;. You can change the content type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;narrative text&lt;/code&gt; by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change to Markdown&lt;/code&gt; button &lt;strong&gt;M&lt;/strong&gt;⬇️ (At the top left of each cell).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_16_notebook_to_markdown.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is my first Jupyter Notebook
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is my first Jupyter Notebook
 Thank you!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_17_notebook_to_markdown_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can change the content type of a cell back to &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt; by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Change to Code&lt;/code&gt; buttom &lt;strong&gt;{ }&lt;/strong&gt; (At the top left of each cell).&lt;/li&gt;
+  &lt;li&gt;You can change the content type of a cell back to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt; by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change to Code&lt;/code&gt; buttom &lt;strong&gt;{ }&lt;/strong&gt; (At the top left of each cell).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_18_notebook_to_code_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;3-running-markdown-and-code-cells&quot;&gt;3) Running Markdown and Code Cells&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;After adding content to a &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on anywhere outside the cell or by hitting &lt;code class=&quot;highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using the second option will also add a new cell below).&lt;/li&gt;
+  &lt;li&gt;After adding content to a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on anywhere outside the cell or by hitting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using the second option will also add a new cell below).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_19_notebook_markdown_cell_run_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After adding content to a &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Run Cell&lt;/code&gt; button ▶️ (At the top left of each cell) or by hitting &lt;code class=&quot;highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
+  &lt;li&gt;After adding content to a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run Cell&lt;/code&gt; button ▶️ (At the top left of each cell) or by hitting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
 import pandas as pd
 
 # Initializing a Dictionary
@@ -859,7 +1053,7 @@ pd.DataFrame.from_dict(data)
 &lt;h2 id=&quot;importing-non-installed-python-libraries&quot;&gt;Importing Non-Installed Python Libraries&lt;/h2&gt;
 &lt;p&gt;When trying to import a non-installed Python library, we will get an error similar to the one showed in the image below.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
 import requests
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -916,13 +1110,13 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 
 &lt;h2 id=&quot;custom-setup&quot;&gt;Custom Setup&lt;/h2&gt;
 
-&lt;p&gt;Select the &lt;code class=&quot;highlighter-rouge&quot;&gt;Customize&lt;/code&gt; option&lt;/p&gt;
+&lt;p&gt;Select the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Customize&lt;/code&gt; option&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_02_dc_azuread_connect_custom.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;required-components&quot;&gt;Required Components&lt;/h2&gt;
 
-&lt;p&gt;Do not select any options. Just keep the default setup and click &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Do not select any options. Just keep the default setup and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_03_dc_azuread_connect_required.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -930,7 +1124,7 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 
 &lt;h2 id=&quot;select-sign-in-methods&quot;&gt;Select Sign-In Methods&lt;/h2&gt;
 
-&lt;p&gt;We are going to use our “on-prem” ADFS server as the indentity provider to handle federation services. Therefore, we need to click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Federation with AD FS&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We are going to use our “on-prem” ADFS server as the indentity provider to handle federation services. Therefore, we need to click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Federation with AD FS&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-31_05_dc_azuread_connect_signon_method.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -997,7 +1191,7 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 &lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;https://docs.microsoft.com/en-us/azure/active-directory/hybrid/whatis-azure-ad-connect&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="Azure" /><category term="ADFS" /><summary type="html">I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.</summary></entry><entry><title type="html">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title><link href="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files" rel="alternate" type="text/html" title="How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files" /><published>2020-12-31T05:00:00-05:00</published><updated>2020-12-31T05:00:00-05:00</updated><id>https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</id><content type="html" xml:base="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="Azure" /><category term="ADFS" /><summary type="html">I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.</summary></entry><entry><title type="html">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title><link href="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files" rel="alternate" type="text/html" title="How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files" /><published>2020-12-31T05:00:00-05:00</published><updated>2020-12-31T05:00:00-05:00</updated><id>https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</id><content type="html" xml:base="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
 
 &lt;p&gt;In this post, I will show you how to create an Azure storage account via an ARM template, and how you can upload and download files in a secured way.&lt;/p&gt;
 
@@ -1060,12 +1254,12 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;_artifactsLocation&lt;/strong&gt;: This is the Account Storage / Container URL (e.g https://name-of-storage-account.blob.core.windows.net/name-of-container/)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;_artifactsLocationSasToken&lt;/strong&gt;: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; character before your SAS token.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;_artifactsLocationSasToken&lt;/strong&gt;: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?&lt;/code&gt; character before your SAS token.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;That’s it! I hope you enjoyed this short post. I use this setup for several projects already!&lt;/p&gt;
@@ -1091,7 +1285,7 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
   &lt;li&gt;On the Domain Joined Computer:
     &lt;ul&gt;
       &lt;li&gt;Install &lt;a href=&quot;https://www.telerik.com/download/fiddler&quot;&gt;Fiddler Classic&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;Install &lt;a href=&quot;https://github.com/dotnet/Kerberos.NET/releases&quot;&gt;Fiddler extension&lt;/a&gt; based on the &lt;a href=&quot;https://github.com/dotnet/Kerberos.NET&quot;&gt;Kerberos.NET&lt;/a&gt; library : Download &lt;code class=&quot;highlighter-rouge&quot;&gt;setup.exe&lt;/code&gt; and run it.&lt;/li&gt;
+      &lt;li&gt;Install &lt;a href=&quot;https://github.com/dotnet/Kerberos.NET/releases&quot;&gt;Fiddler extension&lt;/a&gt; based on the &lt;a href=&quot;https://github.com/dotnet/Kerberos.NET&quot;&gt;Kerberos.NET&lt;/a&gt; library : Download &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;setup.exe&lt;/code&gt; and run it.&lt;/li&gt;
       &lt;li&gt;Install &lt;a href=&quot;https://www.wireshark.org/download.html&quot;&gt;Wireshark&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
@@ -1120,7 +1314,7 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_01_adfs_server_check_properties.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can get the ADFS Service &lt;code class=&quot;highlighter-rouge&quot;&gt;HostName&lt;/code&gt; by running the following command (You will need that value in the next section)
+  &lt;li&gt;You can get the ADFS Service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HostName&lt;/code&gt; by running the following command (You will need that value in the next section)
     &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-AdfsProperties | select-object HostName
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
@@ -1130,16 +1324,16 @@ Invoke-Expression &quot;&amp;amp; `&quot;$exe`&quot; /i $MSIPath /qn /passive /n
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_02_adfs_server_check_adfs_servers.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;We are going to be using the ADFS Sign On page via the Intranet so we also need to check if that feature is enabled. We do it by verifying if the ADFS property &lt;code class=&quot;highlighter-rouge&quot;&gt;EnableIdpInitiatedSignonPage&lt;/code&gt; is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt;
+  &lt;li&gt;We are going to be using the ADFS Sign On page via the Intranet so we also need to check if that feature is enabled. We do it by verifying if the ADFS property &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EnableIdpInitiatedSignonPage&lt;/code&gt; is set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;True&lt;/code&gt;
     &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-AdfsProperties | select-object EnableIdpInitiatedSignonPage
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
-  &lt;li&gt;If property is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;False&lt;/code&gt;, run this command to enable it and restart the ADFS service
+  &lt;li&gt;If property is set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;False&lt;/code&gt;, run this command to enable it and restart the ADFS service
     &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Set-AdfsProperties -EnableIdpInitiatedSignonPage $true
 Restart-Service -Name adfssrv
 &lt;/code&gt;&lt;/pre&gt;
   &lt;/li&gt;
-  &lt;li&gt;In order to avoid continuous credentials prompt while authenticating and capturing/proxying traffic with fiddler, we need to disable the &lt;code class=&quot;highlighter-rouge&quot;&gt;Extended Protection for Authentication&lt;/code&gt; property in the ADFS server.
+  &lt;li&gt;In order to avoid continuous credentials prompt while authenticating and capturing/proxying traffic with fiddler, we need to disable the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Extended Protection for Authentication&lt;/code&gt; property in the ADFS server.
     &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-AdfsProperties | select ExtendedProtectionTokenCheck
 Set-ADFSProperties -ExtendedProtectionTokenCheck:None
 Restart-Service -Name adfssrv
@@ -1155,17 +1349,17 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 
 &lt;ul&gt;
   &lt;li&gt;RDP to domain joined endpoint&lt;/li&gt;
-  &lt;li&gt;Browse to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://&amp;lt;ADFS HostName&amp;gt;/adfs/fs/federationserverservice.asmx&lt;/code&gt; (replace &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;ADFS HostName&amp;gt;&lt;/code&gt; with the &lt;code class=&quot;highlighter-rouge&quot;&gt;HostName&lt;/code&gt; value of the ADFS service obtained in the previous section)&lt;/li&gt;
+  &lt;li&gt;Browse to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&amp;lt;ADFS HostName&amp;gt;/adfs/fs/federationserverservice.asmx&lt;/code&gt; (replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;ADFS HostName&amp;gt;&lt;/code&gt; with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HostName&lt;/code&gt; value of the ADFS service obtained in the previous section)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_03_adfs_client_check_server_metadata.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Another easy way to validate that the federation service is running an handling kerberos authentication is by browsing to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://&amp;lt;ADFS HostName&amp;gt;/adfs/ls/IdpInitiatedSignon.aspx&lt;/code&gt; and entering domain credentials (replace &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;ADFS HostName&amp;gt;&lt;/code&gt; with the &lt;code class=&quot;highlighter-rouge&quot;&gt;HostName&lt;/code&gt; value of the ADFS service obtained in the previous section)&lt;/p&gt;
+&lt;p&gt;Another easy way to validate that the federation service is running an handling kerberos authentication is by browsing to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&amp;lt;ADFS HostName&amp;gt;/adfs/ls/IdpInitiatedSignon.aspx&lt;/code&gt; and entering domain credentials (replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;ADFS HostName&amp;gt;&lt;/code&gt; with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HostName&lt;/code&gt; value of the ADFS service obtained in the previous section)&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_04_adfs_client_check.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;If everything is working properly (at least on-prem via the intranet), you will get the &lt;code class=&quot;highlighter-rouge&quot;&gt;You are signed in&lt;/code&gt; message&lt;/li&gt;
+  &lt;li&gt;If everything is working properly (at least on-prem via the intranet), you will get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;You are signed in&lt;/code&gt; message&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_05_adfs_client_check.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1176,7 +1370,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 &lt;ul&gt;
   &lt;li&gt;Log on (if you disconnected) to domain joined computer&lt;/li&gt;
   &lt;li&gt;Open fiddler&lt;/li&gt;
-  &lt;li&gt;Enable &lt;code class=&quot;highlighter-rouge&quot;&gt;Decrypt HTTPS traffic&lt;/code&gt; option in Tools &amp;gt; Options &amp;gt; HTTPs&lt;/li&gt;
+  &lt;li&gt;Enable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Decrypt HTTPS traffic&lt;/code&gt; option in Tools &amp;gt; Options &amp;gt; HTTPs&lt;/li&gt;
   &lt;li&gt;Trust the fiddler root certificate&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1189,7 +1383,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_09_adfs_client_appcontainer.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Make sure you are capturing traffic and that the &lt;code class=&quot;highlighter-rouge&quot;&gt;Kerberos&lt;/code&gt; extension is available under the &lt;code class=&quot;highlighter-rouge&quot;&gt;Inspectors&lt;/code&gt; options. You can simply open Microsoft Edge and go to any site (just to generate traffic and not to validate Kerberos parsers)&lt;/li&gt;
+  &lt;li&gt;Make sure you are capturing traffic and that the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kerberos&lt;/code&gt; extension is available under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Inspectors&lt;/code&gt; options. You can simply open Microsoft Edge and go to any site (just to generate traffic and not to validate Kerberos parsers)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_10_adfs_client_capture_extension.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1216,7 +1410,7 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
   &lt;li&gt;Open Wireshark and apply the following filter:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ip.addr == &amp;lt;DC IP Address&amp;gt; or ip.addr == &amp;lt;ADFS IP Address&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip.addr == &amp;lt;DC IP Address&amp;gt; or ip.addr == &amp;lt;ADFS IP Address&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_12_client_wireshark_filter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1225,13 +1419,13 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
   &lt;li&gt;Open Wireshark and apply the following filter:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ip.addr == &amp;lt;DC IP Address&amp;gt; or ip.addr == &amp;lt;Domain Joined Computer IP Address&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip.addr == &amp;lt;DC IP Address&amp;gt; or ip.addr == &amp;lt;Domain Joined Computer IP Address&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_12_adfs_server_wireshark_filter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;capture-network-traffic&quot;&gt;Capture Network Traffic&lt;/h2&gt;
 &lt;ul&gt;
-  &lt;li&gt;Once again, on the client, browse to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://&amp;lt;ADFS FQDN&amp;gt;/adfs/ls/IdpInitiatedSignon.aspx&lt;/code&gt; and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Sign In&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Once again, on the client, browse to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&amp;lt;ADFS FQDN&amp;gt;/adfs/ls/IdpInitiatedSignon.aspx&lt;/code&gt; and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sign In&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_15_adfs_client_signon_page.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1243,13 +1437,13 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_16_adfs_client_enter_creds.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You will see a few events captured by fiddler. I recommend to filter the results on the specific &lt;code class=&quot;highlighter-rouge&quot;&gt;microsoftedgecp&lt;/code&gt; process that handled the authentication as shown below:&lt;/li&gt;
+  &lt;li&gt;You will see a few events captured by fiddler. I recommend to filter the results on the specific &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;microsoftedgecp&lt;/code&gt; process that handled the authentication as shown below:&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_17_adfs_client_filter_traffic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You will also see a few events in Wireshark (both client and server). I am interested in the &lt;code class=&quot;highlighter-rouge&quot;&gt;KRB5&lt;/code&gt; protocol ones as shown below&lt;/li&gt;
+  &lt;li&gt;You will also see a few events in Wireshark (both client and server). I am interested in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;KRB5&lt;/code&gt; protocol ones as shown below&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_18_client_server_krb5_traffic.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -1261,37 +1455,37 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 &lt;h2 id=&quot;inspect-network-traffic&quot;&gt;Inspect Network Traffic&lt;/h2&gt;
 
 &lt;h3 id=&quot;1-access-to-adfs-sign-on-page&quot;&gt;1. Access to ADFS Sign On Page&lt;/h3&gt;
-&lt;p&gt;Client Connects to the ADFS server via &lt;code class=&quot;highlighter-rouge&quot;&gt;https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx &lt;/code&gt; . Here is where we get to the Open Threat Research banner with the option to &lt;code class=&quot;highlighter-rouge&quot;&gt;Sign In&lt;/code&gt; and the message &lt;code class=&quot;highlighter-rouge&quot;&gt;You are not signed in. Sign in to this site&lt;/code&gt;. Nothing special. Just a simple GET request to get to ADFS sign on page.&lt;/p&gt;
+&lt;p&gt;Client Connects to the ADFS server via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx &lt;/code&gt; . Here is where we get to the Open Threat Research banner with the option to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sign In&lt;/code&gt; and the message &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;You are not signed in. Sign in to this site&lt;/code&gt;. Nothing special. Just a simple GET request to get to ADFS sign on page.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_19_adfs_client_fiddler_otr_banner.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-redirection-to-adfs-server-and-samlrequest-generation&quot;&gt;2. Redirection to ADFS Server and SamlRequest Generation&lt;/h3&gt;
-&lt;p&gt;Client clicks on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Sign In&lt;/code&gt; button. That click makes a &lt;code class=&quot;highlighter-rouge&quot;&gt;POST&lt;/code&gt; request to &lt;code class=&quot;highlighter-rouge&quot;&gt;POST https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Client clicks on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sign In&lt;/code&gt; button. That click makes a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;POST&lt;/code&gt; request to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;POST https://adfs.solorigatelabs.com/adfs/ls/idpinitiatedsignon.aspx?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The ADFS server receives the requests and returns a &lt;code class=&quot;highlighter-rouge&quot;&gt;302 Response Code&lt;/code&gt; and it sets the new &lt;code class=&quot;highlighter-rouge&quot;&gt;Location&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5&lt;/code&gt; where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization’s internal network (intranet) for any application that uses a browser for its authentication.&lt;/p&gt;
+&lt;p&gt;The ADFS server receives the requests and returns a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;302 Response Code&lt;/code&gt; and it sets the new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Location&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://adfs.solorigatelabs.com:443/adfs/ls/wia?client-request-id=6717a4e4-50f7-4655-7700-0080000000d5&lt;/code&gt; where we can see the use of Windows Integrated Authentication (WIA) which is used for authentication requests that occur within the organization’s internal network (intranet) for any application that uses a browser for its authentication.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_20_adfs_client_samlrequest_302.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;One thing also that was provided in the 302 Redirect Message was a &lt;code class=&quot;highlighter-rouge&quot;&gt;MSISSamlRequest&lt;/code&gt; value inside of a cookie which contained the &lt;code class=&quot;highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt; (AuthnRequest). A SAML Request is usually sent by the SAML service before the user is redirected to the Identify Provider (ADFS Server itself). The identity provider then decodes the SAML request and gets ready to authenticate the user.&lt;/p&gt;
+&lt;p&gt;One thing also that was provided in the 302 Redirect Message was a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSISSamlRequest&lt;/code&gt; value inside of a cookie which contained the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt; (AuthnRequest). A SAML Request is usually sent by the SAML service before the user is redirected to the Identify Provider (ADFS Server itself). The identity provider then decodes the SAML request and gets ready to authenticate the user.&lt;/p&gt;
 
-&lt;p&gt;This was the &lt;code class=&quot;highlighter-rouge&quot;&gt;MSISSamlRequest&lt;/code&gt; value inside of the cookie (Base64 Encoded)&lt;/p&gt;
+&lt;p&gt;This was the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSISSamlRequest&lt;/code&gt; value inside of the cookie (Base64 Encoded)&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Block&quot;&gt;QmFzZVVybD1odHRwcyUzYSUyZiUyZmFkZnMuc29sb3JpZ2F0ZWxhYnMuY29tJTJmYWRmcyUyZmxzJTJmXFNBTUxSZXF1ZXN0PWZaRkJhNFF3RUlYJTJmU3NoZEUyM1ZOYmlDVkFwQ2UlMmJtV0hub3BNY1p1SUNZMms1VCUyYiUyZkVZOWxpN002ZkhldlBtWUJ2aWlWOVlGZnpVdjhpdEk4R2pveiUyZmpqUkxOVHpzY3B5U2JCayUyZnVNRjBsZDB6R1pxckVveXJJcTZUeGo5Q1lkS0d2T09FOHBSZ05Ba0lNQno0MlBFczJ6aE1ZcFhtbkY2QjNMYUVyciUyZkIyalByWW93JTJmMmV2SHElMmZBaU9FVHpPa1lMVjE2cE43cWZrSXFiRExyaE1OQktNSGEwQnVtNE16ekhKUXdBeGZKREF2MktWN2ZtTHhDQ1lPRXdzR1ZpblVyT1NFMGMlMmJpRGJBZDlYWjZkZFpiWVRWdW14M0dIZEhiSVE0ZzNRYUQydzBtc25UOTQlMmJWZmxtaiUyYlZrSUM4UzZBYjhoUjFEYms3eXZhWHclM2QlM2RcUHJvdG9jb2xCaW5kaW5nPXVybiUzYW9hc2lzJTNhbmFtZXMlM2F0YyUzYVNBTUwlM2EyLjAlM2FiaW5kaW5ncyUzYUhUVFAtUmVkaXJlY3RcU2lnbmF0dXJlPVJtQlJxa1ZDYjB0cUtPeEFSR1BTJTJiUFFGS3JXVkUyTEM0JTJiJTJiR2tMZENSVmVXUkFJdTElMmZGeUFYWW10R3d3WVhlS2VOYVBMMjdnUExmSWVWanltYyUyYmdlWmhXOUV4UFdkQUM1djlYUEtmNzFSQ29wNE45Y0ZodWV2M1FGY09vV0E0Z2d2NU1sY3VLMXl4eGVOZDJXQ0JFc2VDSFE5WCUyZmlCSWg2ZldxeXNKWjlrRlBOSkMlMmJkWWZ5UFpPTkpqRWRYUUViTHVueWVwM0Y4bkpUbFBUdjBMZ04ydWRKdWxpdzhORm0lMmIyNDR3OFdlNmVBOFJGYURYU2FaSDA3Rm1pdkxPNTQ2MDV4WDg0djh4bWUlMmJQV0xhRkU3U3N0aEtiSjloJTJidk4lMmJ3MURQenR1d3IxVng5NTFVQUNJMkhJdUdYT0N2WFVHendVWFVyNGRlWHdtMlBMYkVDckZ4OGclM2QlM2RcU2lnQWxnPWh0dHAlM2ElMmYlMmZ3d3cudzMub3JnJTJmMjAwMSUyZjA0JTJmeG1sZHNpZy1tb3JlJTIzcnNhLXNoYTI1NlxRdWVyeVN0cmluZ0hhc2g9OWkzZmpUcHFxY1RlUDl3MktBYk5HZmM4RHdnV0k1ZmZXaE5SM0lrMm1IYyUzZA==
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_20_adfs_client_samlrequest_strings.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;After base64 decoding that value, we get to the Url encoded value of &lt;code class=&quot;highlighter-rouge&quot;&gt;BaseUrl&lt;/code&gt; which contains the &lt;code class=&quot;highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;After base64 decoding that value, we get to the Url encoded value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;BaseUrl&lt;/code&gt; which contains the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Block&quot;&gt;BaseUrl=https%3a%2f%2fadfs.solorigatelabs.com%2fadfs%2fls%2f\SAMLRequest=fZFBa4QwEIX%2fSshdE23VNbiCVApCe%2bmWHnopMcZuICY2k5T%2b%2fEY9li7M6fHevPmYBviiV9YFfzUv8itI8Gjoz%2fjjRLNTzscpySbBk%2fuMF0ld0zGZqrEoyrIq6Txj9CYdKGvOOE8pRgNAkIMBz42PEs2zhMYpXmnF6B3LaErr%2fB2jPrYow%2f2evHq%2fAiOETzOkYLV16pN7qfkIqbDLrhMNBKMHa0Bum4MzzHJQwAxfJDAv2KV7fmLxCCYOEwsGVinUrOSE0c%2biDbAd9XZ6ddZbYTVumx3GHdHbIQ4g3QaD2w0msnT94%2bVflmj%2bVkIC8S6Ab8hR1Dbk7yvaXw%3d%3d\ProtocolBinding=urn%3aoasis%3anames%3atc%3aSAML%3a2.0%3abindings%3aHTTP-Redirect\Signature=RmBRqkVCb0tqKOxARGPS%2bPQFKrWVE2LC4%2b%2bGkLdCRVeWRAIu1%2fFyAXYmtGwwYXeKeNaPL27gPLfIeVjymc%2bgeZhW9ExPWdAC5v9XPKf71RCop4N9cFhuev3QFcOoWA4ggv5MlcuK1yxxeNd2WCBEseCHQ9X%2fiBIh6fWqysJZ9kFPNJC%2bdYfyPZONJjEdXQEbLunyep3F8nJTlPTv0LgN2udJuliw8NFm%2b244w8We6eA8RFaDXSaZH07FmivLO54605xX84v8xme%2bPWLaFE7SsthKbJ9h%2bvN%2bw1DPztuwr1Vx951UACI2HIuGXOCvXUGzwUXUr4deXwm2PLbECrFx8g%3d%3d\SigAlg=http%3a%2f%2fwww.w3.org%2f2001%2f04%2fxmldsig-more%23rsa-sha256\QueryStringHash=9i3fjTpqqcTeP9w2KAbNGfc8DwgWI5ffWhNR3Ik2mHc%3d
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;After Url decoding the &lt;code class=&quot;highlighter-rouge&quot;&gt;baseUrl&lt;/code&gt; value, we get the following value:&lt;/p&gt;
+&lt;p&gt;After Url decoding the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baseUrl&lt;/code&gt; value, we get the following value:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Block&quot;&gt;https://adfs.solorigatelabs.com/adfs/ls/\SAMLRequest=fZFBa4QwEIX/SshdE23VNbiCVApCe+mWHnopMcZuICY2k5T+/EY9li7M6fHevPmYBviiV9YFfzUv8itI8Gjoz/jjRLNTzscpySbBk/uMF0ld0zGZqrEoyrIq6Txj9CYdKGvOOE8pRgNAkIMBz42PEs2zhMYpXmnF6B3LaErr/B2jPrYow/2evHq/AiOETzOkYLV16pN7qfkIqbDLrhMNBKMHa0Bum4MzzHJQwAxfJDAv2KV7fmLxCCYOEwsGVinUrOSE0c+iDbAd9XZ6ddZbYTVumx3GHdHbIQ4g3QaD2w0msnT94+Vflmj+VkIC8S6Ab8hR1Dbk7yvaXw==
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;We can then take the deflated base64 encoded SAML Message inside of the &lt;code class=&quot;highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt; and decode and inflate it.&lt;/p&gt;
+&lt;p&gt;We can then take the deflated base64 encoded SAML Message inside of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SamlRequest&lt;/code&gt; and decode and inflate it.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-Block&quot;&gt;&amp;lt;samlp:AuthnRequest ID=&quot;_80182abd-1dca-41a5-990b-d7b5566760ff&quot; Version=&quot;2.0&quot; IssueInstant=&quot;2021-01-05T07:03:10.092Z&quot; Destination=&quot;https://adfs.solorigatelabs.com/adfs/ls/&quot; Consent=&quot;urn:oasis:names:tc:SAML:2.0:consent:unspecified&quot; xmlns:samlp=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;&amp;gt;&amp;lt;Issuer xmlns=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;&amp;gt;http://ADFS.solorigatelabs.com/adfs/services/trust&amp;lt;/Issuer&amp;gt;&amp;lt;/samlp:AuthnRequest&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
@@ -1306,12 +1500,12 @@ Get-AdfsProperties | select ExtendedProtectionTokenCheck
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;3-enter-credentials-in-logon-form&quot;&gt;3. Enter Credentials in Logon Form&lt;/h3&gt;
-&lt;p&gt;After the previous redirection, the client receives a &lt;code class=&quot;highlighter-rouge&quot;&gt;401 Response Code&lt;/code&gt;. This is simply telling the client to authenticate against the ADFS server (Identity Provider). Here is where we entered our domain credentials &lt;code class=&quot;highlighter-rouge&quot;&gt;User:pgustavo&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;After the previous redirection, the client receives a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;401 Response Code&lt;/code&gt;. This is simply telling the client to authenticate against the ADFS server (Identity Provider). Here is where we entered our domain credentials &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User:pgustavo&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_21_adfs_client_401_login_form.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;4-kerberos-authentication&quot;&gt;4. Kerberos Authentication&lt;/h3&gt;
-&lt;p&gt;The Identity Provider decodes the &lt;code class=&quot;highlighter-rouge&quot;&gt;SAMLRequest&lt;/code&gt; and performs the user authentication via Kerberos.&lt;/p&gt;
+&lt;p&gt;The Identity Provider decodes the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SAMLRequest&lt;/code&gt; and performs the user authentication via Kerberos.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;AS-REQ&lt;/strong&gt; (Client -&amp;gt; Domain Controller
 The client first sends a request to the Kerberos Authentication Service (AS) to get TGT.&lt;/p&gt;
@@ -1343,12 +1537,12 @@ Client receives a response with a TGT for user pgustavo. This is just to request
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_22_client_wireshark_asresp.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;TGS-REQ&lt;/strong&gt; (Client -&amp;gt; Domain Controller)
-Client requests access to &lt;code class=&quot;highlighter-rouge&quot;&gt;adfs.solorigatelabs.com&lt;/code&gt; to the Ticket Granting Server (TGS)&lt;/p&gt;
+Client requests access to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adfs.solorigatelabs.com&lt;/code&gt; to the Ticket Granting Server (TGS)&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_22_client_wireshark_tgsreq.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;TGS-REP&lt;/strong&gt; (Domain Controller -&amp;gt; Client)
-TGS responds with a service ticket to the &lt;code class=&quot;highlighter-rouge&quot;&gt;adfs.solorigatelabs.com&lt;/code&gt; (HTTP)&lt;/p&gt;
+TGS responds with a service ticket to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adfs.solorigatelabs.com&lt;/code&gt; (HTTP)&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_22_client_wireshark_tgsresp.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1368,7 +1562,7 @@ After pgustavo enters its credentials, the ADFS server handles the authenticatio
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_23_adfs_server_wireshark_preauth.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;S4U2self TGS Exchange (Delegation) - TGS-REQ&lt;/strong&gt; (ADFS -&amp;gt; Domain Controller)
-S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket on behalf of &lt;code class=&quot;highlighter-rouge&quot;&gt;pgustavo&lt;/code&gt;&lt;/p&gt;
+S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket on behalf of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pgustavo&lt;/code&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;In a KRB_TGS_REQ and KRB_TGS_REP subprotocol message sequence, a Kerberos principal uses its ticket-granting ticket (TGT) to request a service ticket to a service. The TGS uses the requesting principal’s identity from the TGT passed in the KRB_TGS_REQ message to create the service ticket.&lt;/p&gt;
@@ -1378,7 +1572,7 @@ S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket 
   &lt;p&gt;In the S4U2self TGS exchange subprotocol extension, a service requests a service ticket to itself on behalf of a user. The user is identified to the KDC by the user name and user realm. Alternatively, the user might be identified using the user’s certificate.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;The service uses its own TGT and adds a new type of padata&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;The service uses its own TGT and adds a new type of padata&lt;/code&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;If the service possesses the user certificate, it can obtain a service ticket to itself on that user’s behalf using the S4U2self TGS exchange subprotocol extension, with a new padata type PA-S4U-X509-USER (ID 130)&lt;/p&gt;
@@ -1389,12 +1583,12 @@ S4U2Self delegation sub-protocol is used by the ADFS service to obtain a ticket 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_25_adfs_server_wireshark_s4u2self.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;S4U2self TGS Exchange (Delegation) - TGS-REP&lt;/strong&gt; (Domain Controller -&amp;gt; ADFS)
-The ADFS service gets a ticket with the username &lt;code class=&quot;highlighter-rouge&quot;&gt;pgustavo&lt;/code&gt; and the service name mapped to the &lt;code class=&quot;highlighter-rouge&quot;&gt;adfsuser&lt;/code&gt; account.&lt;/p&gt;
+The ADFS service gets a ticket with the username &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pgustavo&lt;/code&gt; and the service name mapped to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;adfsuser&lt;/code&gt; account.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_26_adfs_server_wireshark_s4u2self.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;AP-REQ&lt;/strong&gt; (Client -&amp;gt; ADFS)
-After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in the authorization header (Negotiate). This is parsed by the Fiddler &lt;code class=&quot;highlighter-rouge&quot;&gt;Kerberos&lt;/code&gt; extension.&lt;/p&gt;
+After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in the authorization header (Negotiate). This is parsed by the Fiddler &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kerberos&lt;/code&gt; extension.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_27-adfs_client_fiddler_kerberos_apreq.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1403,7 +1597,7 @@ After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-30_28_adfs_client_fiddler_redirection.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We also finally get “Authentication Cookies” such as &lt;code class=&quot;highlighter-rouge&quot;&gt;MSISAuth&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We also finally get “Authentication Cookies” such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSISAuth&lt;/code&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;The MSISAuth (MSISAuth + MSISAuth1 + …) are the encrypted cookies used to validate the SAML assertion produced for the client. The cookie is used for subsequent authentications against the ADFS. These are what we call the “authentication cookies”, and you will see these cookies ONLY when AD FS 2.0 is the IdP. Without these, the client will not experience SSO.&lt;/p&gt;
@@ -1439,7 +1633,7 @@ After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in
 
 &lt;p&gt;In this post, I will show you how to do that through the Microsoft 365 admin console.&lt;/p&gt;
 
-&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
+&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
 
 &lt;p&gt;Once again, if you want on-prem AD user accounts to authenticate to Office 365 apps in the cloud with the same on-prem password, you need to synchronize them with the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription which requires you to add the on-prem domain to Microsoft 365.&lt;/p&gt;
 
@@ -1480,7 +1674,7 @@ After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in
 
 &lt;h2 id=&quot;3-add-custom-domain&quot;&gt;3. Add Custom Domain&lt;/h2&gt;
 
-&lt;p&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
+&lt;p&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_02_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1542,157 +1736,4 @@ After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in
   &lt;li&gt;https://www.zdnet.com/article/what-is-microsoft-365-microsofts-most-important-subscription-bundle-explained/&lt;/li&gt;
   &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/admin/get-help-with-domains/what-is-a-domain?view=o365-worldwide&lt;/li&gt;
   &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="Azure" /><category term="Microsoft 365" /><summary type="html">I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow federated authentication to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.</summary></entry><entry><title type="html">Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate</title><link href="https://blog.openthreatresearch.com/csr-ssl-certificate-activation" rel="alternate" type="text/html" title="Getting a Certificate Signing Request and Activating a Trusted CA Signed SSL Certificate" /><published>2020-12-28T06:00:00-05:00</published><updated>2020-12-28T06:00:00-05:00</updated><id>https://blog.openthreatresearch.com/csr-ssl-certificate-activation</id><content type="html" xml:base="https://blog.openthreatresearch.com/csr-ssl-certificate-activation">&lt;p&gt;Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).&lt;/p&gt;
-
-&lt;h2 id=&quot;adfs-certificates&quot;&gt;ADFS Certificates&lt;/h2&gt;
-
-&lt;p&gt;There are 4 types of ADFS certificates&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Token Signing
-    &lt;ul&gt;
-      &lt;li&gt;Used to digitally sign security tokens issued by ADFS&lt;/li&gt;
-      &lt;li&gt;Automatically generated and can be &lt;strong&gt;self-signed&lt;/strong&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Token Decrypting
-    &lt;ul&gt;
-      &lt;li&gt;Used to decrypt tokens received&lt;/li&gt;
-      &lt;li&gt;It can be &lt;strong&gt;self-signed&lt;/strong&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Service Communications
-    &lt;ul&gt;
-      &lt;li&gt;Server authentication certificate used for windows communication foundation (WCF) Message security&lt;/li&gt;
-      &lt;li&gt;It can be self-signed or issued and signed by a trusted third-party Certificate Authority&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Security Sockets Layer (SSL)
-    &lt;ul&gt;
-      &lt;li&gt;Used to secure web traffic&lt;/li&gt;
-      &lt;li&gt;It can be self-signed or issued and signed by a trusted third-party Certificate Authority (CA)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The SSL and Service Communications certificates can be the same&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In previous setups, I had set up ADFS servers with self-signed certificates for the &lt;strong&gt;Service Communications&lt;/strong&gt; and &lt;strong&gt;SSL&lt;/strong&gt;. However, in order to simulate the federated trust between my lab environment and office 365, I needed to set up my ADFS server with a &lt;strong&gt;trusted third party CA Signed SSL Certificate&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;In this post. I will show you all the steps I took to generate a trusted CA signed SSL certificate all the way from the certificate signing request (CSR) to the activation and installation of the new certificate.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-is-certificate-authority&quot;&gt;What is Certificate Authority?&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Certificate Authority (CA) is an organization that is trusted to sign digital certificates. CA verifies identity and legitimacy of company or individual that requested a certificate and if the verification is successful, CA issues signed certificate.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;quick-recipe&quot;&gt;Quick Recipe:&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Create certificate signing request (.csr) file.&lt;/li&gt;
-  &lt;li&gt;Buy SSL Certificate.&lt;/li&gt;
-  &lt;li&gt;Activate SSL certificate. Here is where you would use the .csr file.&lt;/li&gt;
-  &lt;li&gt;Download trusted SSL certificate&lt;/li&gt;
-  &lt;li&gt;Install trusted certificate&lt;/li&gt;
-  &lt;li&gt;Export certificate and private keys as a .pfx file&lt;/li&gt;
-  &lt;li&gt;Share certificate with servers (i.e. Domain Controller and ADFS)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-create-certificate-signing-request-csr-file&quot;&gt;1. Create Certificate Signing Request (.CSR) File&lt;/h2&gt;
-
-&lt;p&gt;A CSR or Certificate Signing request is a block of encoded text that is given to a Certificate Authority when applying for an SSL Certificate.&lt;/p&gt;
-
-&lt;p&gt;I put together a PowerShell script named &lt;a href=&quot;https://github.com/OTRF/Blacksmith/blob/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1&quot;&gt;Get-CertSigningReq.ps1&lt;/a&gt; to generate a .csr file. You would usually execute that script on the server where you would install the trusted certificate once you obtain one. However, you can do it on a separate system to then install and export the certificate and share it with other servers (I usually do this to use the trusted certificate in deployments as code).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Import PowerShell Module&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Log on to a Windows box (physical or virtual)&lt;/li&gt;
-  &lt;li&gt;Open PowerShell as Administrator&lt;/li&gt;
-  &lt;li&gt;Import the following module directly from GitHub&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1')
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Create .CSR File&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;As I mentioned before, in my environment, I decided to use a Positive SSL Wildcard (multidomain) certificate. Therefore, when creating the .csr file, I set a &lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt; wildcard as a prefix of my domain &lt;code class=&quot;highlighter-rouge&quot;&gt;.yourdomain.com&lt;/code&gt; for the&lt;code class=&quot;highlighter-rouge&quot;&gt;Subject Common Name&lt;/code&gt; property of the request. You do not have to do that. That is just an option.&lt;/p&gt;
-
-&lt;p&gt;You can simple have &lt;code class=&quot;highlighter-rouge&quot;&gt;yourdomain.com&lt;/code&gt; and that’s it. It is cheaper to buy a single domain SSL certificate.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;Get-CertSigningReq -FriendlyName &quot;*.youdomain.com site certificate&quot; -Description &quot;ADFS yourdomain.com certificate&quot; -SubjectCommonName &quot;*.yourdomain.com&quot; -SubjectOrganizationUnit &quot;Research&quot; -SubjectOrganization &quot;yourdomain.com&quot; -SubjectCountry &quot;US&quot; -SubjectState &quot;Texas&quot; -SubjectLocality &quot;Texas&quot; -CertFilePath &quot;Request.csr&quot;
-
-get-content .\Request.csr 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Copy the contents of the .csr file and get ready to use it during the activation process of your new SSL certificate.&lt;/p&gt;
-
-&lt;h2 id=&quot;2-buy-ssl-certificate&quot;&gt;2. Buy SSL Certificate&lt;/h2&gt;
-
-&lt;p&gt;I bought mine at &lt;a href=&quot;https://www.namecheap.com/&quot;&gt;namecheap.com&lt;/a&gt; and I usually get a PositiveSSL Wildcard certificate to secure multiple domains of a single one (i.e *.mydomain.com). Here are all the options you have in that site: &lt;a href=&quot;https://www.namecheap.com/security/ssl-certificates/&quot;&gt;https://www.namecheap.com/security/ssl-certificates/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_02_ssl_certificates_price.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;You should then be ready to active the certificate. You will need the .csr file for the next steps&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_03_positivessl_cert_product.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If you want to validate your base64 encoded CSR blob, you can do it with this tool provided by namecheap called &lt;a href=&quot;https://decoder.link/result&quot;&gt;Decoder&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;3-activate-ssl-certificate&quot;&gt;3. Activate SSL certificate&lt;/h2&gt;
-
-&lt;p&gt;In my case, I started the process by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Activate&lt;/code&gt; button shown in the previous image. I then was prompted to enter the contents of the .csr file&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_04_activate_cert_csr_input.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Either you bought your SSL certificate via namecheap.com or other provider, you will get to a step where you need to confirm that you own the domain which you requested the SSL certificate for. When you get to that step you will have a few options:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Email:&lt;/strong&gt; You would simply provide an e-mail address to which an approval e-mail will be sent.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;HTTP-Based:&lt;/strong&gt; It usually involves uploading an activation file (i.e .txt) with a code to a hosting server.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;DNS-Based:&lt;/strong&gt; You would usually need to create a CNAME record in the DNS settings of the domain.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_05_domain_owner_validation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;After validating that you own the domain, you will be able to download the certificate (you might have to wait for a few minutes)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-28_06_certificate_download.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-install-certificate&quot;&gt;4. Install Certificate&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Log on to the computer where you created the .csr file&lt;/li&gt;
-  &lt;li&gt;Open PowerShell as Administrator&lt;/li&gt;
-  &lt;li&gt;Install the new SSL certificate (.cer or .crt files provided by your trusted provider) with the following command&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$CertFile = Get-Item -Path NewSSLCert.cer
-Import-Certificate -FilePath $CertFile.FullName -CertStoreLocation &quot;cert:\LocalMachine\My&quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&quot;5-export-certificate-and-private-key-pfx-format&quot;&gt;5. Export Certificate and Private Key (.PFX Format)&lt;/h2&gt;
-
-&lt;p&gt;On the same PowerShell console run the following commands to export the newly installed certificate as a .PFX file. The password that you use to export the certificate will be the same password that you will use to import the certificate file to your other servers. In my case it would be the Domain Controller and ADFS servers of my lab environment.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$InstalledCert = Get-ChildItem -Path &quot;cert:\LocalMachine\My\&quot; -DnsName &quot;yourdomain.com&quot;
-Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (ConvertTo-SecureString &quot;YOURPASSWORD&quot; -AsPlainText -Force)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That’s it! I hope this short post was helpful and maybe serve you as a reference for future projects.&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/334/38/what-is-certificate-authority-ca/&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/10095/67/how-to-enable-an-ssl-certificate/&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/794/67/how-do-i-activate-an-ssl-certificate/&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/467/67/how-to-generate-csr-certificate-signing-request-code/&lt;/li&gt;
-  &lt;li&gt;https://www.ssls.com/knowledgebase/what-is-csr/&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9637/68/how-can-i-complete-the-domain-control-validation-dcv-for-my-ssl-certificate/?_ga=2.199643694.1278617947.1608673309-1707679281.1608673309&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/support/knowledgebase/article.aspx/9646/2237/how-to-create-a-cname-record-for-your-domain/&lt;/li&gt;
-  &lt;li&gt;https://decoder.link/result&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="SSL Certificates" /><category term="Getting Started" /><summary type="html">Recently, I had to deploy an Active Directory Federation Services (ADFS) server in my lab environment and integrate it with Office 365. One thing that I did not know was that O365 required a valid SSL certificate from a trusted third party certificate authority (CA).</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="Azure" /><category term="Microsoft 365" /><summary type="html">I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow federated authentication to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.</summary></entry></feed>

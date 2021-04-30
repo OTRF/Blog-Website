@@ -8,6 +8,22 @@
     
       
       <item>
+        <title>Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
+        
+          <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+&lt;p&gt;Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 29 Apr 2021 08:00:00 -0400</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</title>
         
           <description>&lt;p&gt;I wanted to learn more about NtObjectManager and the latest support for named pipes RPC clients so I decided to give it a try.&lt;/p&gt;
@@ -100,7 +116,7 @@
       <item>
         <title>How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</title>
         
-          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
+          <description>&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
 
 </description>
         
@@ -160,7 +176,7 @@
       <item>
         <title>Installing a Python Library in Visual Studio Code - Windows</title>
         
-          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; or a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; or a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
 
 </description>
         

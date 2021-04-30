@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
+    <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Open Threat Research Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+    <meta property="og:description" content="Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field." />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-04-29T08:00:00-04:00" />
+    <meta property="article:modified_time" content="2021-04-29T08:00:00-04:00" />
+    <meta property="article:tag" content="Vmware" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+    <meta name="twitter:description" content="Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field." />
+    <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Open Threat Research Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Vmware" />
+    <meta name="twitter:site" content="@OTR_Community" />
+    <meta name="twitter:creator" content="@OTR_Community" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Open Threat Research Blog",
+        "logo": "https://blog.openthreatresearch.com/false"
+    },
+    "url": "https://blog.openthreatresearch.com/how_to_set_up_homelab_blog",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.openthreatresearch.com/how_to_set_up_homelab_blog"
+    },
+    "description": "Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field."
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
+    <!--<li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>-->
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/OTR_Community" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-vmware tag-malware tag-malware-analysis tag-remnux tag-flare post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="29 April 2021">29 April 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/vmware/'>VMWARE</a>,
+                            
+                        
+                            
+                               <a href='/tag/malware/'>MALWARE</a>,
+                            
+                        
+                            
+                               <a href='/tag/malware-analysis/'>MALWARE_ANALYSIS</a>,
+                            
+                        
+                            
+                               <a href='/tag/remnux/'>REMNUX</a>,
+                            
+                        
+                            
+                               <a href='/tag/flare/'>FLARE</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1 id="introduction">Introduction:</h1>
+<p>Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.</p>
+
+<h2 id="what-to-expect-from-this-post">What to Expect from this Post:</h2>
+<p>My aim for this post, and ideally for a continued series, is to provide a simple straight forward approach to setting up a malware analysis lab. The best part is that nearly all the tools I will be using are open source or have an open source alternative, meaning there isn’t any cost to get started.  Only expense will be a physical machine to host several VMs at one time. I’m hoping this will help out others, while also reinforcing old concepts and learning new ones for myself.</p>
+
+<h2 id="before-we-start">Before We Start:</h2>
+<ul>
+  <li>I will be using VMware Fusion Pro for this walkthrough.  I have had the best experience by far with VMWare’s line of virtualization software.  However, VirtualBox can be a great, free, substitute for VMWare.</li>
+  <li>Troubleshooting the installation of virtualization software and/or the individual VMs is out-of-scope for this post.  There are just too many things that might go wrong.  If you do run into trouble, Google is your best friend.</li>
+  <li>When you run multiple virtual machines(VMs) on a single host machine, the host machine will slow down.  Because of this, it is important to give each VM its recommended settings for optimal performance.  For Windows 10, I recommend at least 2 processor cores and 4GBs of RAM.  For REMnux, 1 processor cores and 2GBs of RAM.</li>
+</ul>
+
+<h2 id="pre-requisites">Pre-requisites</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">VMWare Fusion(MAC)/ Workstation(Windows/Linux)</code>: VMWare has some great, comprehensive guides to install both <a href="https://kb.vmware.com/s/article/2014097">Fusion</a> and <a href="https://kb.vmware.com/s/article/2057907">Workstation</a>.  VMWare does offer trial licenses for those interested in trying out the full feature set VMWare Pro line(Fusion Pro and Workstation Pro). VMware also has its Player line, which is free for personal use.  Only downside is that the Player version doesn’t allow network customization that you should use for your lab.  Additionally, only Fusion Player has the ability to take snapshots.  Which is the major difference between Workstation Player and Fusion Player.  Hopefully VMware fixes that in the future.</li>
+  <li><code class="language-plaintext highlighter-rouge">VirtualBox</code>: Is the free alternative to VMware and some of the other virtualization software out there.  It also has all the feature you need in a VM solution starting out.  You can get a copy of VirtualBox <a href="https://www.virtualbox.org/">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Windows Edge Developer ISO</code>: You can download a Windows ISO file: <a href="https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/">here</a>.  We will be doing this later in the post.</li>
+  <li><code class="language-plaintext highlighter-rouge">FLARE VM</code>: FLARE VM is free malware analysis VM with a ton of tools and features pre-installed by FireEye. Its a great addition to your malware analysis toolset.  You can find instructions to install it <a href="https://www.fireeye.com/blog/threat-research/2018/11/flare-vm-update.html">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">REMnux</code>: REMnux is a powerful Linux VM that has a great collection of tools for Malware Analysis by Lenny Zeltzer <a href="https://remnux.org/">here</a>.  You can find a lot of helpful reasources on his site including REMnux and reversing cheatsheets as well as blog posts that you might find useful.</li>
+</ul>
+
+<h2 id="downloading-virtualization-software">Downloading Virtualization Software:</h2>
+<p>Using the links above, navigate to your preferred virtualization software site.  Follow the instructions provided by each vendor. Installation shouldn’t take too long and might ask for certain permissions it needs to modify network settings and such. After you get it installed jump to the next section.</p>
+
+<h2 id="configuring-your-network-settings">Configuring your Network Settings:</h2>
+<p>First thing we should do is set up our isolated custom network we will be using for our lab.  Being able to control how the network interacts with a malware sample is extremely important for analysis.  You also don’t want the malware sample to have access to the Internet(at least at first) until you have a decent understanding of what the malware is trying to do. In VMware Fusion, it is pretty straight forward and easy to do.</p>
+
+<ol>
+  <li>Select the tab VMware <code class="language-plaintext highlighter-rouge">Fusion</code> -&gt; <code class="language-plaintext highlighter-rouge">Preferences</code> -&gt; <code class="language-plaintext highlighter-rouge">Network</code>. Click the lock icon at the bottom left side to make changes.</li>
+  <li>Hit the + button just above the lock icon. You should see a new network call <code class="language-plaintext highlighter-rouge">vmnet#</code> mine is <code class="language-plaintext highlighter-rouge">vmnet2</code> but yours could be a different number.  Highlight that then uncheck the radio button labeled <code class="language-plaintext highlighter-rouge">allow virtual machines on network to connect to external networks(using NAT)</code></li>
+  <li>Configure your subnet IP.  I want an IP subnet that will stand out when I see it. So I went with <code class="language-plaintext highlighter-rouge">10.1.1.0</code>.  Keep the Subnet Mask as is. Then click <code class="language-plaintext highlighter-rouge">Apply</code>.</li>
+</ol>
+
+<h2 id="installing-virtual-machines">Installing Virtual Machines:</h2>
+<h3 id="downloading-a-windows-10-edge-developer-image">Downloading a Windows 10 Edge Developer image:</h3>
+<p>Now that you have virtualization software installed, we need to get a Win 10 developer image from Microsoft. This Win 10 image will serve as the base image.  FLARE can only be install on an already existing physical or virtual Windows machine. Using the link above, select the <code class="language-plaintext highlighter-rouge">MSEdge on Win10 (x64) {Some_Stable_Version}</code>.  Then select the VM platform you have, in this case I will select <code class="language-plaintext highlighter-rouge">VMware (Windows, Mac)</code>. The download is several GBs so depending on your download speed, it could take some time. <strong>Please note the password for the VM:</strong> “Passw0rd!” with a zero.</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_01_select_win10_image_from_microsoft.jpg" alt="" width="80%" class="shadow" /></p>
+
+<h3 id="installing-and-setting-up-windows-10-machine-in-vmware-fusion">Installing and Setting up Windows 10 Machine in VMWare Fusion:</h3>
+<p>Lets unzip the file and store it in a location of your choice. Open up VMware’s Virtual Machine Library and follow these steps:</p>
+
+<ol>
+  <li>Unzip the MSEdge-Win10-VMware file, if not automatically done by your host machine.  You can store the unzipped contents anywhere.  I’m going to put them on my Desktop.</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">File</code> -&gt; <code class="language-plaintext highlighter-rouge">Import</code> -&gt; <code class="language-plaintext highlighter-rouge">Choose File</code> -&gt; <code class="language-plaintext highlighter-rouge">MSEdge-Win10-VMWare.ovf</code> -&gt; <code class="language-plaintext highlighter-rouge">Continue</code> -&gt; <code class="language-plaintext highlighter-rouge">Save</code>.  You can change the name and location of where the VM is stored if you would like.</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">Customize Settings</code> after the image has been imported successfully.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">Processors &amp; Memory</code>.  Confirm that the VM is allocated 2 processor cores and 4Gbs of RAM(4096MBs).
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_02_checking_processor&amp;memory_settings_win10.jpg" alt="" width="80%" class="shadow" /></p>
+  </li>
+  <li>Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like <code class="language-plaintext highlighter-rouge">Fresh Win10 Install</code>. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.</li>
+  <li>When you start the machine, if VMWare prompts you to upgrade, click <code class="language-plaintext highlighter-rouge">Upgrade</code>.</li>
+  <li>The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>slmgr.vbs /alo
+</code></pre></div>    </div>
+  </li>
+  <li>VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.</li>
+  <li>After the machine logs in successfully after installing VM Virtual Tools.  Take another snapshot and name it something to the effect of, <code class="language-plaintext highlighter-rouge">Win 10 Activated with VM Tools installed</code>.</li>
+</ol>
+<p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_03_taking_snapshot_in_VMware.jpg" alt="" width="80%" class="shadow" /></p>
+
+<p>One thing to note, snapshots are a must when working with malware.  The ability to revert back to a clean state after performing some behavior analysis on one file is very powerful and time saving.  It allows you to test other hypotheses or another file in a clean environment before infection.  It also saves time so you don’t have to rebuild a whole new VM from scratch because you don’t have a clean starting image.</p>
+
+<h4 id="virtualbox-users">VirtualBox Users:</h4>
+<p>VirtualBox tends to require more manual configuration to get your VMs to work properly.  One thing I always look at is the <code class="language-plaintext highlighter-rouge">Invalid Setting</code> notification(shown below) that appears at the bottom of the individul VMs settings window. These settings errors are normally pretty straight forward and easy to address in the setting menu.</p>
+
+<p>Last thing that tends to be more complicated in VirtualBox is installing VB Guest Additions. I recommend following the instructions VirtualBox has on their manual page <a href="https://www.virtualbox.org/manual/ch04.html">here</a> Section <code class="language-plaintext highlighter-rouge">4.2.1.1. Installing the Windows Guest Additions</code>.  Sometimes, you will get an error that you can’t attach the guest additions due to no optical drive.  If thats the case, you need to use the <code class="language-plaintext highlighter-rouge">mount Guest Additions manually</code> steps.</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_04_invalid_display_settings_notification.jpg" alt="" width="80%" class="shadow" /></p>
+
+<h3 id="install-flare-on-your-fresh-install-of-win-10">Install FLARE on your fresh install of WIN 10:</h3>
+<p>Now that we have our base Win 10 machine up and running we can get FireEye’s FLARE VM installed:</p>
+
+<p><strong>Optional:</strong> Install <code class="language-plaintext highlighter-rouge">git</code> on our Win10 box.  Open up a browser on your Win10 VM and Google: <code class="language-plaintext highlighter-rouge">Install git windows</code> or copy and past this url: https://git-scm.com/download/win. Click the <code class="language-plaintext highlighter-rouge">64 bit Windows Version</code> and keep all the settings default during installations.  When it finishes with the settings, hit <code class="language-plaintext highlighter-rouge">install</code> then after it installs hit <code class="language-plaintext highlighter-rouge">finish</code>.</p>
+
+<ol>
+  <li>Go to https:/github.com/fireeye/flare-vm. Download the code as a zip file.  If you performed the optional step then open up a cmd prompt:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd Desktop &amp;&amp; git clone https://github.com/fireeye/flare-vm
+
+</code></pre></div>    </div>
+    <p>Else: Unzip the flare vm zip file on your Desktop</p>
+  </li>
+  <li>Open up Powershell as an Administrator. Type Powershell in the <code class="language-plaintext highlighter-rouge">Type here to search</code> bar and then right click on <code class="language-plaintext highlighter-rouge">Windows Powershell</code> and select <code class="language-plaintext highlighter-rouge">Run as Administrator</code>. In the Powershell prompt, navigate to the FLARE vm folder:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd C:\Users\IEUser\Desktop\FLARE-vm
+</code></pre></div>    </div>
+    <p>Next enable unrestricted execution policy for PowerShell by executing the following command and answering “Y” when prompted by PowerShell:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Set-ExecutionPolicy unrestricted
+</code></pre></div>    </div>
+  </li>
+  <li>Execute the install.ps1 installation script. You will be prompted to enter the current user’s password. FLARE VM needs the current user’s password to automatically login after a reboot when installing. Optionally, you can specify the current user’s password by passing the “-password <current_user_password>” at the command line.
+</current_user_password>    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ./install.ps1 -password Passw0rd!
+</code></pre></div>    </div>
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_05_running_powershell_installFLARE_script.jpg" alt="" width="80%" class="shadow" /></p>
+  </li>
+</ol>
+
+<p>The rest of the installation process is fully automated. Depending upon your internet speed the entire installation may take up to one hour to finish. The VM also reboots multiple times due to the numerous software installations’ requirements. Once the installation completes, the PowerShell prompt remains open waiting for you to hit any key before exiting. After completing the installation, you will be presented with the following desktop environment:</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg" alt="" width="80%" class="shadow" /></p>
+
+<p>Once the install is done, run the command to update FLARE:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cup all
+</code></pre></div></div>
+
+<p>After the update is finished, reboot and log back in.  Then take another snapshot and name it something like <code class="language-plaintext highlighter-rouge">Fresh install of FLARE-VM</code>.</p>
+
+<h3 id="download-and-configure-remnux">Download and Configure REMnux:</h3>
+
+<p>Navigate to the REMnux page link shared above and hit <code class="language-plaintext highlighter-rouge">Download -&gt;</code> -&gt; <code class="language-plaintext highlighter-rouge">General OVA</code>(Or <code class="language-plaintext highlighter-rouge">VirtualBox OVA</code> if using VirtualBox) -&gt; <code class="language-plaintext highlighter-rouge">Box</code> -&gt; <code class="language-plaintext highlighter-rouge">Download</code> save the file and import just like we did with the Win10 image:</p>
+
+<ol>
+  <li>Unzip the file downloaded containing REMnux if not automatically done by your host machine.  You can store the unzipped contents anywhere.  Again, i’m going to put them on my Desktop.</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">File</code> -&gt; <code class="language-plaintext highlighter-rouge">Import</code> -&gt; <code class="language-plaintext highlighter-rouge">Choose File</code> -&gt; <code class="language-plaintext highlighter-rouge">remnux-v7</code> -&gt; <code class="language-plaintext highlighter-rouge">Continue</code> -&gt; <code class="language-plaintext highlighter-rouge">Save</code>.  You can change the name and location of where the VM is stored if you would like.</li>
+  <li>Click <code class="language-plaintext highlighter-rouge">Customize Settings</code> after the image has been imported successfully.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">Processors &amp; Memory</code>.  Confirm that the VM is allocated 1 processor cores and 2Gbs of RAM(2048MBs).</li>
+  <li>Go to <code class="language-plaintext highlighter-rouge">Settings</code> and click <code class="language-plaintext highlighter-rouge">Add Device</code> -&gt; <code class="language-plaintext highlighter-rouge">Network Adapter</code> -&gt; <code class="language-plaintext highlighter-rouge">Add</code> -&gt; <code class="language-plaintext highlighter-rouge">Share with my Mac</code>. When you click the <code class="language-plaintext highlighter-rouge">Show All</code> button you should now see two network adapters.</li>
+  <li>Go to <code class="language-plaintext highlighter-rouge">Network Adapter 1</code> and select <code class="language-plaintext highlighter-rouge">vmnet#</code> that you created in the first section.</li>
+  <li>Start up REMnux, if prompted, upgrade the virtual machine like we did with our Windows 10 machine.</li>
+  <li>Log in to the REMnux machine; credentials are user: <code class="language-plaintext highlighter-rouge">remnux</code> pass: <code class="language-plaintext highlighter-rouge">malware</code>.</li>
+  <li>First thing we want to do is grab the IP of our machine for <code class="language-plaintext highlighter-rouge">Network Adapter 1</code>. Make sure to save that IP address. It should be an IP in the range we selected when we create <code class="language-plaintext highlighter-rouge">vmnet#</code>.  In my case its 10.1.1.2:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ifconfig -a 
+</code></pre></div>    </div>
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg" alt="" width="80%" class="shadow" /></p>
+  </li>
+  <li>Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> remnux update &amp;&amp; remnux upgrade
+</code></pre></div>    </div>
+  </li>
+  <li>After running the upgrade command we should reboot:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reboot
+</code></pre></div>    </div>
+  </li>
+  <li>Unattach <code class="language-plaintext highlighter-rouge">Network Adapter 2</code> from the REMnux VM.  When you want to update or use internet on the VM just reattach.</li>
+  <li>Power off the REMnux VM and take a snapshot and name it something like <code class="language-plaintext highlighter-rouge">Fresh install of REMnux {date}</code>.</li>
+</ol>
+
+<h2 id="final-configurations-and-network-testing">Final Configurations and Network Testing:</h2>
+<p>We need to connect our FLARE VM to the same network so that the REMnux box can run network based analysis on a sample.</p>
+<ol>
+  <li>Power off the FLARE VM if you haven’t done so already.</li>
+  <li>Open <code class="language-plaintext highlighter-rouge">Settings</code> -&gt; <code class="language-plaintext highlighter-rouge">Network Adapter</code>.  Change the <code class="language-plaintext highlighter-rouge">Network Adapter</code> to our <code class="language-plaintext highlighter-rouge">vmnet#</code> we set up in the first section of the post.</li>
+  <li>
+    <p>Start up FLARE and open <code class="language-plaintext highlighter-rouge">Control Panel</code> -&gt; <code class="language-plaintext highlighter-rouge">Network and Internet</code> -&gt; <code class="language-plaintext highlighter-rouge">Network and Sharing Center</code> -&gt; <code class="language-plaintext highlighter-rouge">Change adapter settings</code> -&gt; <code class="language-plaintext highlighter-rouge">Ethernet0</code> -&gt; <code class="language-plaintext highlighter-rouge">Properties</code> -&gt; <code class="language-plaintext highlighter-rouge">Internet Protocol Version 4 (TCP/IPv4)</code> -&gt; <code class="language-plaintext highlighter-rouge">Use the following address</code>-&gt;</p>
+
+    <p><strong>Use the IP of your REMnux box.  It might be different than mine.</strong></p>
+    <ul>
+      <li>IP address: 10.1.1.3 or any IP you want in this subnet. This will be the IP of our FLARE VM</li>
+      <li>Subnet mask: 255.255.255.0</li>
+      <li>Default Gateway: 10.1.1.2(Our REMnux VM)</li>
+      <li>Select <code class="language-plaintext highlighter-rouge">use the following preferred DNS server addresses</code></li>
+      <li>Preferred DNS Server: 10.1.1.2(Our REMnux VM)</li>
+      <li>Alternate DNS Server: BLANK</li>
+    </ul>
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_08_configuring_flare_vm_with_remnux_ip.jpg" alt="" width="100%" class="shadow" /></p>
+  </li>
+  <li>Click <code class="language-plaintext highlighter-rouge">Ok</code></li>
+</ol>
+
+<h2 id="testing-our-network-setup-with-inetsim">Testing our Network Setup with INetSim:</h2>
+<p>Now that we have done all the networking setup in both VMs, we are going to set up a tool call INetSim. INetSim is a software suite for simulating common internet services in a lab environment, e.g. for analyzing the network behavior of unknown malware samples.</p>
+
+<p>Remnux already comes with INetSim pre-install. However, we need to do some minor configuration steps to make sure it functions properly.</p>
+<ol>
+  <li>Open up <code class="language-plaintext highlighter-rouge">/etc/inetsim/inetsim.conf</code>in a text editor:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo nano /etc/inetsim/inetsim.conf
+</code></pre></div>    </div>
+  </li>
+  <li>By default, INetSim only has a few services active.  However, we are going to uncomment out all the other services by removing the <code class="language-plaintext highlighter-rouge">#</code>:
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_09_unchecking_all_services_inetsim.jpg" alt="" width="60%" class="shadow" /></p>
+  </li>
+  <li>We now need to bind REMnux’s network adapter IP to INetSim.  To do this scroll down a little bit in the config file until you see <code class="language-plaintext highlighter-rouge">service_bind_address</code>. Uncomment it out and add your REMnux IP in place of the <code class="language-plaintext highlighter-rouge">0.0.0.0</code>. I would put <code class="language-plaintext highlighter-rouge">10.1.1.2</code>:
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_10_changing_default_service_bind_address.jpg" alt="" width="60%" class="shadow" /></p>
+  </li>
+  <li>Right below that you should see <code class="language-plaintext highlighter-rouge">dns_default_ip</code>.  Uncomment that out and place your REMnux IP there as well.  I would put <code class="language-plaintext highlighter-rouge">10.1.1.2</code>:
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_11_changing_default_dns_ip.jpg" alt="" width="60%" class="shadow" /></p>
+  </li>
+  <li>Ubuntu has a system-resolved system service which provides network name resolution to local applications. This conflicts with INetSim so we need to disable the service. Open up a terminal and type these commands:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo systemctl disable systemd-resolved 
+ sudo systemctl mask systemd-resolved
+ sudo systemctl stop systemd-resolved
+</code></pre></div>    </div>
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_12_disabling_system-resolve.jpg" alt="" width="80%" class="shadow" /></p>
+  </li>
+  <li>Now we can start INetSim:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> inetsim
+</code></pre></div>    </div>
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_13_starting_inetsim.jpg" alt="" width="80%" class="shadow" /></p>
+  </li>
+  <li>Start up your FLARE vm and type <code class="language-plaintext highlighter-rouge">www.baddomain.com</code>. Your browser should show this:
+    <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_14_testing_connection_from_flare_to_remnux_with_inetsim.jpg" alt="" width="100%" class="shadow" /></p>
+  </li>
+</ol>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>There are infinite possibilities when it comes to setting up a malware analysis lab.  There are tons of tools out there to aid you in your analysis and FLARE is a great VM to start out with because it has a lot of the most popular tools pre-installed.  My hope is that I was able to help you get started in setting up a lab to being looking at malicious files.  I definitely plan on writing up more articles where I will dive into specific malicious files and popular techniques used to analyze malware.  If you have any comments, questions, or just want to chat, you can find me on <a href="https://twitter.com/Cyber_Sec_JD">Twitter</a>.</p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Open Threat Research Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-joshua.jpeg" alt="joshua" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/joshua">Joshua Dunn</a></h4>
+                                
+                                    <p>Threat Intel Analyst, Wanna be Malware Researcher</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/joshua">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/ntobjectmanager_rpc_smb_scm">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/2021-02-05_0_cover.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/ntobjectmanager_rpc_smb_scm">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Ntobjectmanager</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Rpc</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Creating and Starting a Windows Service Remotely Using NtObjectManager Via Remote Procedure Calls (RPC) Over SMB</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="Roberto Rodriguez" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/roberto/">Roberto Rodriguez</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://blog.openthreatresearch.com/">
+            
+                <img src="/assets/images/favicon.png" alt="Open Threat Research Blog icon" />
+            
+            <span>Open Threat Research Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Malware+Analysis+Series+-+Setting+Up+a+Basic+Malware+Analysis+Virtual+Lab&amp;url=how_to_set_up_homelab_blog"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=how_to_set_up_homelab_blog"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/OTR_Community" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Open Threat Research Blog</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

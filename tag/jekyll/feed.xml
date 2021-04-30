@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/jekyll/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-24T11:13:49-04:00</updated>
+  <updated>2021-04-30T00:06:12-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/jekyll/feed.xml</id>
 
   
@@ -22,6 +22,8 @@
   
 
   
+    
+      
     
       
     
@@ -49,20 +51,20 @@
 &lt;h3 id=&quot;1-downloading-ruby--devkit-executable&quot;&gt;1) Downloading Ruby + Devkit Executable&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Go to &lt;a href=&quot;https://rubyinstaller.org/downloads/&quot;&gt;Ruby Installers Downloads&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby+Devkit 2.7.2-1 (x64)&lt;/code&gt; under the &lt;code class=&quot;highlighter-rouge&quot;&gt;WITH DEVKIT&lt;/code&gt; section.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby+Devkit 2.7.2-1 (x64)&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WITH DEVKIT&lt;/code&gt; section.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_jekyll_ruby_download.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_jekyll_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-running-ruby--devkit-executable&quot;&gt;2) Running Ruby + Devkit Executable&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Ruby + Devkit executable and select &lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Ruby + Devkit executable and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_jekyll_open_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -70,20 +72,20 @@
 &lt;h3 id=&quot;3-completing-the-ruby--devkit-setup&quot;&gt;3) Completing the Ruby + Devkit Setup&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Accept&lt;/code&gt; the license and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accept&lt;/code&gt; the license and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_jekyll_accept_license.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select the installation &lt;code class=&quot;highlighter-rouge&quot;&gt;Destination&lt;/code&gt; folder and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Select the installation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Destination&lt;/code&gt; folder and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_jekyll_installation_destination.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select the components that should be installed. Check &lt;code class=&quot;highlighter-rouge&quot;&gt;Ruby RI&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;MSYS2 development toolchain&lt;/code&gt; boxes.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Select the components that should be installed. Check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby RI&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSYS2 development toolchain&lt;/code&gt; boxes.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_jekyll_select_components.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -95,7 +97,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_jekyll_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Check the &lt;code class=&quot;highlighter-rouge&quot;&gt;Run ridk install&lt;/code&gt; box and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Finish&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run ridk install&lt;/code&gt; box and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Finish&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;A command prompt window will be opened.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -104,19 +106,19 @@
 &lt;h3 id=&quot;3-installing-msys2&quot;&gt;3) Installing MSYS2&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Type &lt;strong&gt;1&lt;/strong&gt; and press enter in order to install the &lt;code class=&quot;highlighter-rouge&quot;&gt;MYSYS2 base&lt;/code&gt; component.&lt;/li&gt;
+  &lt;li&gt;Type &lt;strong&gt;1&lt;/strong&gt; and press enter in order to install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MYSYS2 base&lt;/code&gt; component.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_09_jekyll_msys2_installer.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_10_jekyll_msys2_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;highlighter-rouge&quot;&gt;close&lt;/code&gt; the command prompt window.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;close&lt;/code&gt; the command prompt window.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_msys2_installation_complete.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -124,8 +126,8 @@
 &lt;h3 id=&quot;4-installing-jekyll&quot;&gt;4) Installing Jekyll&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -133,14 +135,14 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Wai&lt;/code&gt;t for the installation process to complete.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wai&lt;/code&gt;t for the installation process to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll -v
+  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll -v
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -154,8 +156,8 @@
 &lt;h2 id=&quot;installing-additional-components-bundler&quot;&gt;Installing Additional Components: Bundler&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install bundler
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install bundler
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -163,14 +165,14 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle -v
+  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle -v
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -178,7 +180,7 @@
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Close&lt;/code&gt; the command prompt window.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Close&lt;/code&gt; the command prompt window.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;

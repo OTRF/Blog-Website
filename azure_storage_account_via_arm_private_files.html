@@ -178,7 +178,7 @@ into the {body} of the default.hbs template -->
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (<code class="highlighter-rouge">securestring</code>) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview">Azure Storage Account</a> to host the certificate in a private container and access it via its own <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview">Shared Access Signature (SAS)</a> string.</p>
+                    <p>I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (<code class="language-plaintext highlighter-rouge">securestring</code>) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview">Azure Storage Account</a> to host the certificate in a private container and access it via its own <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview">Shared Access Signature (SAS)</a> string.</p>
 
 <p>In this post, I will show you how to create an Azure storage account via an ARM template, and how you can upload and download files in a secured way.</p>
 
@@ -241,12 +241,12 @@ into the {body} of the default.hbs template -->
 
 <ul>
   <li><strong>_artifactsLocation</strong>: This is the Account Storage / Container URL (e.g https://name-of-storage-account.blob.core.windows.net/name-of-container/)</li>
-  <li><strong>_artifactsLocationSasToken</strong>: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the <code class="highlighter-rouge">?</code> character before your SAS token.</li>
+  <li><strong>_artifactsLocationSasToken</strong>: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the <code class="language-plaintext highlighter-rouge">?</code> character before your SAS token.</li>
 </ul>
 
 <p><strong>Example</strong>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]"
 </code></pre></div></div>
 
 <p>That’s it! I hope you enjoyed this short post. I use this setup for several projects already!</p>
@@ -305,6 +305,8 @@ into the {body} of the default.hbs template -->
                 
                     
                 
+                    
+                
                 <!-- /author  -->
             </footer>
 
@@ -343,6 +345,8 @@ into the {body} of the default.hbs template -->
                         <div class="read-next-card-content">
                             <ul>
                                 
+                                
+                                  
                                 
                                   
                                 
@@ -460,6 +464,8 @@ into the {body} of the default.hbs template -->
                 
                     
                 
+                    
+                
                 <span class="reading-time">
                     
                     
@@ -518,6 +524,8 @@ into the {body} of the default.hbs template -->
                         <span class="post-card-author">
                             <a href="/author/roberto/">Roberto Rodriguez</a>
                         </span>
+                    
+                
                     
                 
                     

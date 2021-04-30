@@ -262,9 +262,9 @@ into the {body} of the default.hbs template -->
 
 <p><strong>Create .CSR File</strong></p>
 
-<p>As I mentioned before, in my environment, I decided to use a Positive SSL Wildcard (multidomain) certificate. Therefore, when creating the .csr file, I set a <code class="highlighter-rouge">*</code> wildcard as a prefix of my domain <code class="highlighter-rouge">.yourdomain.com</code> for the<code class="highlighter-rouge">Subject Common Name</code> property of the request. You do not have to do that. That is just an option.</p>
+<p>As I mentioned before, in my environment, I decided to use a Positive SSL Wildcard (multidomain) certificate. Therefore, when creating the .csr file, I set a <code class="language-plaintext highlighter-rouge">*</code> wildcard as a prefix of my domain <code class="language-plaintext highlighter-rouge">.yourdomain.com</code> for the<code class="language-plaintext highlighter-rouge">Subject Common Name</code> property of the request. You do not have to do that. That is just an option.</p>
 
-<p>You can simple have <code class="highlighter-rouge">yourdomain.com</code> and that’s it. It is cheaper to buy a single domain SSL certificate.</p>
+<p>You can simple have <code class="language-plaintext highlighter-rouge">yourdomain.com</code> and that’s it. It is cheaper to buy a single domain SSL certificate.</p>
 
 <pre><code class="language-PowerShell">Get-CertSigningReq -FriendlyName "*.youdomain.com site certificate" -Description "ADFS yourdomain.com certificate" -SubjectCommonName "*.yourdomain.com" -SubjectOrganizationUnit "Research" -SubjectOrganization "yourdomain.com" -SubjectCountry "US" -SubjectState "Texas" -SubjectLocality "Texas" -CertFilePath "Request.csr"
 
@@ -287,7 +287,7 @@ get-content .\Request.csr
 
 <h2 id="3-activate-ssl-certificate">3. Activate SSL certificate</h2>
 
-<p>In my case, I started the process by clicking on the <code class="highlighter-rouge">Activate</code> button shown in the previous image. I then was prompted to enter the contents of the .csr file</p>
+<p>In my case, I started the process by clicking on the <code class="language-plaintext highlighter-rouge">Activate</code> button shown in the previous image. I then was prompted to enter the contents of the .csr file</p>
 
 <p><img src="assets/images/blog/2020-12-28_04_activate_cert_csr_input.png" alt="" /></p>
 
@@ -388,6 +388,8 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
                 
                     
                 
+                    
+                
                 <!-- /author  -->
             </footer>
 
@@ -427,6 +429,8 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
                         <div class="read-next-card-content">
                             <ul>
                                 
+                                
+                                  
                                 
                                   
                                 
@@ -538,6 +542,8 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
                 
                     
                 
+                    
+                
                 <span class="reading-time">
                     
                     
@@ -598,6 +604,8 @@ Export-PfxCertificate -FilePath C:\ADFS.PFX -Cert $InstalledCert -Password (Conv
                         <span class="post-card-author">
                             <a href="/author/jose/">Jose Rodriguez</a>
                         </span>
+                    
+                
                     
                 
                     

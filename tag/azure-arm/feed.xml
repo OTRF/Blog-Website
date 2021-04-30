@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/azure-arm/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-24T11:13:49-04:00</updated>
+  <updated>2021-04-30T00:06:12-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/azure-arm/feed.xml</id>
 
   
@@ -31,6 +31,8 @@
     
       
     
+      
+    
   
 
   
@@ -43,7 +45,7 @@
       <published>2020-12-31T05:00:00-05:00</published>
       <updated>2020-12-31T05:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/azure_storage_account_via_arm_private_files">&lt;p&gt;I recently created an Azure Resource Manager (ARM) template where I needed to install a Trusted Certificate Authority (CA) signed SSL certificate on a Windows server VM at deployment time. I tried to pass it as a base64 blob (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;securestring&lt;/code&gt;) to one of the template parameters, but it was still showing in PowerShell logs. Therefore, I decided to use an &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview&quot;&gt;Azure Storage Account&lt;/a&gt; to host the certificate in a private container and access it via its own &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview&quot;&gt;Shared Access Signature (SAS)&lt;/a&gt; string.&lt;/p&gt;
 
 &lt;p&gt;In this post, I will show you how to create an Azure storage account via an ARM template, and how you can upload and download files in a secured way.&lt;/p&gt;
 
@@ -106,12 +108,12 @@
 
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;_artifactsLocation&lt;/strong&gt;: This is the Account Storage / Container URL (e.g https://name-of-storage-account.blob.core.windows.net/name-of-container/)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;_artifactsLocationSasToken&lt;/strong&gt;: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; character before your SAS token.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;_artifactsLocationSasToken&lt;/strong&gt;: This is the Account SAS Token that you get after deploying your Azure Account Storage and Private container via the ARM template. Go to deployments, select your deployment and look at the Deployment Output values. Do NOT forget to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?&lt;/code&gt; character before your SAS token.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Example&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]&quot;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;[uri(parameters('_artifactsLocation'), concat('private-script.ps1', parameters('_artifactsLocationSasToken')))]&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;That’s it! I hope you enjoyed this short post. I use this setup for several projects already!&lt;/p&gt;

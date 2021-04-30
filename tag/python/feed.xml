@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
-  <generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator>
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/python/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-03-24T11:13:49-04:00</updated>
+  <updated>2021-04-30T00:06:12-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/python/feed.xml</id>
 
   
@@ -31,6 +31,8 @@
     
       
     
+      
+    
   
 
   
@@ -48,10 +50,10 @@
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Java&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_java&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;setting-up-a-pysparksql-session&quot;&gt;Setting Up a PySpark.SQL Session&lt;/h2&gt;
@@ -64,8 +66,8 @@
 
 &lt;h3 id=&quot;2-installing-pyspark-python-library&quot;&gt;2) Installing PySpark Python Library&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
+  &lt;li&gt;Using the first cell of our notebook, run the following code to install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python API&lt;/code&gt; for Spark.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pyspark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;You can also use the VSCode terminal in order to install PySpark. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
@@ -76,8 +78,8 @@
 &lt;h3 id=&quot;3-importing-sparksession-class&quot;&gt;3) Importing SparkSession Class&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;We start by importing the class &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession&quot;&gt;SparkSession&lt;/a&gt; from the PySpark SQL module.&lt;/li&gt;
-  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
+  &lt;li&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SparkSession&lt;/code&gt; is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from pyspark.sql import SparkSession
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -87,9 +89,9 @@
 &lt;h3 id=&quot;4-creating-a-sparksession&quot;&gt;4) Creating a SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;In order to create a SparkSession, we use the &lt;a href=&quot;https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession.Builder&quot;&gt;Builder&lt;/a&gt; class.&lt;/li&gt;
-  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
-  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
+  &lt;li&gt;We give our Spark application a name (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OTR&lt;/code&gt;) and add a caseSensitive config.&lt;/li&gt;
+  &lt;li&gt;We are assigning the SparkSession to a variable named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;spark&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark = SparkSession.builder.appName(&quot;OTR&quot;).config(&quot;spark.sql.caseSensitive&quot;, &quot;True&quot;).getOrCreate()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -99,7 +101,7 @@
 &lt;h3 id=&quot;5-verifying-sparksession&quot;&gt;5) Verifying SparkSession&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Once the SparkSession is built, we can run the spark variable for verification.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;spark
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -109,9 +111,9 @@
 &lt;h2 id=&quot;running-more-spark-commands&quot;&gt;Running More Spark Commands&lt;/h2&gt;
 &lt;p&gt;For the last section of this blogpost, I am sharing three more basic commands that are very helpful when performing tasks with Spark:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Creating a Temporary View of a Spark dataframe using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Executing a SQL-like query using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;0-importing-a-mordor-dataset&quot;&gt;0) Importing a Mordor Dataset&lt;/h3&gt;
@@ -121,7 +123,7 @@
   &lt;li&gt;Download the Mordor dataset (json file) following the steps described on &lt;a href=&quot;https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode&quot;&gt;Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing libraries
 import requests
 from io import BytesIO
 from zipfile import ZipFile
@@ -137,9 +139,9 @@ jsonFilePath
 
 &lt;h3 id=&quot;1-creating-a-spark-dataframe&quot;&gt;1) Creating a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
+  &lt;li&gt;In order to create a Spark dataframe from a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read.json&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt; variable from the previous section that contains the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Creating a Spark Dataframe
 df = spark.read.json(jsonFilePath)
 # Validating Type of Output
 type(df)
@@ -151,10 +153,10 @@ type(df)
 
 &lt;h3 id=&quot;2-creating-a-temporary-view-of-a-spark-dataframe&quot;&gt;2) Creating a Temporary View of a Spark Dataframe&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
-  &lt;li&gt;We will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
+  &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
+  &lt;li&gt;We will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -163,10 +165,10 @@ type(df)
 
 &lt;h3 id=&quot;3-executing-a-sql-like-query&quot;&gt;3) Executing a SQL-like Query&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
-  &lt;li&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
-  &lt;li&gt;We are performing a &lt;code class=&quot;highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
+  &lt;li&gt;In order to execute a SQL-like query, we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sql&lt;/code&gt; method.&lt;/li&gt;
+  &lt;li&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
+  &lt;li&gt;We are performing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
 '''
 SELECT Hostname,Channel,EventID, Count(*) as count
 FROM mordorTable
@@ -232,9 +234,9 @@ df.show(truncate=False)
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;importing-a-mordor-dataset-to-my-vscode-workspace&quot;&gt;Importing a Mordor Dataset to my VSCode Workspace&lt;/h2&gt;
@@ -247,9 +249,9 @@ df.show(truncate=False)
 
 &lt;h3 id=&quot;2-importing-python-liraries&quot;&gt;2) Importing Python Liraries&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;For the purpose of this blog, we are using the following libraries: &lt;code class=&quot;highlighter-rouge&quot;&gt;requests&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;io&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;zipfile&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;For the purpose of this blog, we are using the following libraries: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;io&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipfile&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;If you have not installed any of this libraries, you can install them using a Jupyter Notebook or the terminal on VSCode. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import requests
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import requests
 from io import BytesIO
 from zipfile import ZipFile
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
@@ -261,14 +263,14 @@ from zipfile import ZipFile
 &lt;h3 id=&quot;3-getting-mordor-json-file&quot;&gt;3) Getting Mordor Json File&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Let us pick &lt;a href=&quot;https://mordordatasets.com/notebooks/small/windows/02_execution/SDWIN-210314014019.html&quot;&gt;Exchange ProxyLogon SSRF RCE Vuln POC&lt;/a&gt; Mordor dataset as the example for this blogpost.&lt;/li&gt;
-  &lt;li&gt;Within the metadata provided for this dataset, we can find a url that links the GitHub raw file. We are assingning this link to the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;url&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;get&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;requests&lt;/code&gt; library, so we can get the content of the raw file.&lt;/li&gt;
-  &lt;li&gt;We are creating a &lt;code class=&quot;highlighter-rouge&quot;&gt;ZipFile&lt;/code&gt; object after processing the content of our request. The type of content that we received is &lt;code class=&quot;highlighter-rouge&quot;&gt;Bytes&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;extract&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file that contains multiple security event logs.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;highlighter-rouge&quot;&gt;namelist&lt;/code&gt; method from the &lt;code class=&quot;highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the name of the file extracted. The name also includes the path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file is sotred. We are assigning the name of the file to the variable &lt;code class=&quot;highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Within the metadata provided for this dataset, we can find a url that links the GitHub raw file. We are assingning this link to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt; library, so we can get the content of the raw file.&lt;/li&gt;
+  &lt;li&gt;We are creating a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZipFile&lt;/code&gt; object after processing the content of our request. The type of content that we received is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bytes&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extract&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file that contains multiple security event logs.&lt;/li&gt;
+  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;namelist&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the name of the file extracted. The name also includes the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file is sotred. We are assigning the name of the file to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
 zipFileRequest = requests.get(url)
 zipFile = ZipFile(BytesIO(zipFileRequest.content))
 jsonFilePath = zipFile.extract(zipFile.namelist()[0])
@@ -277,8 +279,8 @@ jsonFilePath
 
 &lt;ul&gt;
   &lt;li&gt;There will be two outputs after running the code of this cell.&lt;/li&gt;
-  &lt;li&gt;At the bottom of the cell, We are getting the complete path or directory where the &lt;code class=&quot;highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.&lt;/li&gt;
-  &lt;li&gt;On the left side of your screen, you will see a new file with the &lt;code class=&quot;highlighter-rouge&quot;&gt;.json&lt;/code&gt; extension. This is the mordor dataset that is stored in our VSCode worspace.&lt;/li&gt;
+  &lt;li&gt;At the bottom of the cell, We are getting the complete path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.&lt;/li&gt;
+  &lt;li&gt;On the left side of your screen, you will see a new file with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.json&lt;/code&gt; extension. This is the mordor dataset that is stored in our VSCode worspace.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_mordor_json_file_imported.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -335,15 +337,15 @@ jsonFilePath
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;setting-up-a-jupyter-notebook-on-vscode&quot;&gt;Setting Up a Jupyter Notebook on VSCode&lt;/h2&gt;
 &lt;h3 id=&quot;1-creating-a-workspace-on-vscode&quot;&gt;1) Creating a Workspace on VSCode&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;The first step of this guide will be to create a folder to store all our Jupyter Notebook projects. For this blog post, I am creating the folder &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; in the following directory &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\Users\User1\Documents\Cyb3rPandaH&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;The first step of this guide will be to create a folder to store all our Jupyter Notebook projects. For this blog post, I am creating the folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; in the following directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Users\User1\Documents\Cyb3rPandaH&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_01_notebook_project_directory.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -361,67 +363,67 @@ jsonFilePath
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_notebook_open_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Search for the &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; folder that was created previously and click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Select Folder&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Search for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter-Notebooks&lt;/code&gt; folder that was created previously and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Select Folder&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_04_notebook_select_folder.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;By opening the Jupyter-Notebook folder, it becomes your &lt;code class=&quot;highlighter-rouge&quot;&gt;workspace&lt;/code&gt; within Visual Studio Code. We are now ready to create our first Jupyter Notebook file.&lt;/li&gt;
+  &lt;li&gt;By opening the Jupyter-Notebook folder, it becomes your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;workspace&lt;/code&gt; within Visual Studio Code. We are now ready to create our first Jupyter Notebook file.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_05_notebook_vscode_workspace.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-creating-a-jupyter-notebook&quot;&gt;2) Creating a Jupyter Notebook&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Click on the &lt;code class=&quot;highlighter-rouge&quot;&gt;New File&lt;/code&gt; icon, next to the name of our workspace.&lt;/li&gt;
+  &lt;li&gt;Click on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;New File&lt;/code&gt; icon, next to the name of our workspace.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_06_notebook_new_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Type a name for your file using the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipynb&lt;/code&gt; extension and press enter.&lt;/li&gt;
-  &lt;li&gt;By using this extension, we are telling VSCode to process this file as a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; file.&lt;/li&gt;
+  &lt;li&gt;Type a name for your file using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipynb&lt;/code&gt; extension and press enter.&lt;/li&gt;
+  &lt;li&gt;By using this extension, we are telling VSCode to process this file as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; file.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_07_notebook_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After hitting the &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt; key, you will see a message at the bottom left of your screen that says &lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension Loading&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;After hitting the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enter&lt;/code&gt; key, you will see a message at the bottom left of your screen that says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension Loading&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_08_notebook_python_extension_loading.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;In additon, because this is your first time creating a Jupyter Notebook using VSCode, you will get an additional message that says &lt;code class=&quot;highlighter-rouge&quot;&gt;Python requires ipykernel to be installed&lt;/code&gt;. This message is telling us that we need to install a Kernel.&lt;/li&gt;
+  &lt;li&gt;In additon, because this is your first time creating a Jupyter Notebook using VSCode, you will get an additional message that says &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python requires ipykernel to be installed&lt;/code&gt;. This message is telling us that we need to install a Kernel.&lt;/li&gt;
   &lt;li&gt;A &lt;strong&gt;kernel&lt;/strong&gt; is a process that runs interactive code in a particular language such as Python or R and return output to us.&lt;/li&gt;
-  &lt;li&gt;In this example we are using &lt;code class=&quot;highlighter-rouge&quot;&gt;Python&lt;/code&gt; language, therefore you need to install the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel for VSCode. Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In this example we are using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt; language, therefore you need to install the &lt;strong&gt;ipykernel&lt;/strong&gt; Python kernel for VSCode. Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_09_notebook_ipykernel.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;VSCode will open a terminal and install the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; component for you.&lt;/li&gt;
+  &lt;li&gt;VSCode will open a terminal and install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; component for you.&lt;/li&gt;
   &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_10_notebook_ipykernel_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After the installation process is completed successfully, VSCode will connect your &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; to the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel.&lt;/li&gt;
+  &lt;li&gt;After the installation process is completed successfully, VSCode will connect your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_11_notebook_ipykernel_successful_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can close the VSCode terminal window by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Close Panel&lt;/code&gt; button that is located at the top right of the terminal window.&lt;/li&gt;
-  &lt;li&gt;The installation process for the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel will not be required when creating future Jupyter Notebooks because we just installed it in VSCode.&lt;/li&gt;
+  &lt;li&gt;You can close the VSCode terminal window by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Close Panel&lt;/code&gt; button that is located at the top right of the terminal window.&lt;/li&gt;
+  &lt;li&gt;The installation process for the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ipykernel&lt;/code&gt; Python kernel will not be required when creating future Jupyter Notebooks because we just installed it in VSCode.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_12_notebook_close_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Awesome!! VSCode has created a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook server&lt;/code&gt; locally in your computer. We now have our first Jupyter Notebook file created with the Python extension loaded and connected to a Python Kernel.&lt;/li&gt;
+  &lt;li&gt;Awesome!! VSCode has created a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook server&lt;/code&gt; locally in your computer. We now have our first Jupyter Notebook file created with the Python extension loaded and connected to a Python Kernel.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_13_notebook_ready_to_start.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -429,48 +431,48 @@ jsonFilePath
 &lt;h2 id=&quot;basic-interaction-with-jupyter-notebooks&quot;&gt;Basic Interaction With Jupyter Notebooks&lt;/h2&gt;
 &lt;h3 id=&quot;1-inserting-and-deleting-cells&quot;&gt;1) Inserting and Deleting Cells&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;You can add a new cell by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Insert Cell Bellow&lt;/code&gt; ➕ (At the bottom left of each cell) button or by hitting the &lt;strong&gt;B&lt;/strong&gt; key one time after selecting a cell.&lt;/li&gt;
+  &lt;li&gt;You can add a new cell by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Insert Cell Bellow&lt;/code&gt; ➕ (At the bottom left of each cell) button or by hitting the &lt;strong&gt;B&lt;/strong&gt; key one time after selecting a cell.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_14_notebook_add_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can delete a cell by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Delete Cell&lt;/code&gt; button 🗑️ (At the right of each cell) or by hitting the &lt;strong&gt;D&lt;/strong&gt; key two times after selecting a cell.&lt;/li&gt;
+  &lt;li&gt;You can delete a cell by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Delete Cell&lt;/code&gt; button 🗑️ (At the right of each cell) or by hitting the &lt;strong&gt;D&lt;/strong&gt; key two times after selecting a cell.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_15_notebook_delete_cell.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-switch-cell-content-type&quot;&gt;2) Switch Cell Content Type&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;By default, the content type of a cell is &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt;. You can change the content type to &lt;code class=&quot;highlighter-rouge&quot;&gt;narrative text&lt;/code&gt; by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Change to Markdown&lt;/code&gt; button &lt;strong&gt;M&lt;/strong&gt;⬇️ (At the top left of each cell).&lt;/li&gt;
+  &lt;li&gt;By default, the content type of a cell is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt;. You can change the content type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;narrative text&lt;/code&gt; by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change to Markdown&lt;/code&gt; button &lt;strong&gt;M&lt;/strong&gt;⬇️ (At the top left of each cell).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_16_notebook_to_markdown.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is my first Jupyter Notebook
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# This is my first Jupyter Notebook
 Thank you!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_17_notebook_to_markdown_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;You can change the content type of a cell back to &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt; by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Change to Code&lt;/code&gt; buttom &lt;strong&gt;{ }&lt;/strong&gt; (At the top left of each cell).&lt;/li&gt;
+  &lt;li&gt;You can change the content type of a cell back to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt; by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Change to Code&lt;/code&gt; buttom &lt;strong&gt;{ }&lt;/strong&gt; (At the top left of each cell).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_18_notebook_to_code_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;3-running-markdown-and-code-cells&quot;&gt;3) Running Markdown and Code Cells&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;After adding content to a &lt;code class=&quot;highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on anywhere outside the cell or by hitting &lt;code class=&quot;highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using the second option will also add a new cell below).&lt;/li&gt;
+  &lt;li&gt;After adding content to a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Markdown&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on anywhere outside the cell or by hitting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using the second option will also add a new cell below).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_19_notebook_markdown_cell_run_example.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;After adding content to a &lt;code class=&quot;highlighter-rouge&quot;&gt;code&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on the &lt;code class=&quot;highlighter-rouge&quot;&gt;Run Cell&lt;/code&gt; button ▶️ (At the top left of each cell) or by hitting &lt;code class=&quot;highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
+  &lt;li&gt;After adding content to a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;code&lt;/code&gt; cell, you can get the output of this type of cell just by clicking on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run Cell&lt;/code&gt; button ▶️ (At the top left of each cell) or by hitting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + Enter&lt;/code&gt; keys combination (Using either both options will add a new cell below).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
 import pandas as pd
 
 # Initializing a Dictionary
@@ -487,7 +489,7 @@ pd.DataFrame.from_dict(data)
 &lt;h2 id=&quot;importing-non-installed-python-libraries&quot;&gt;Importing Non-Installed Python Libraries&lt;/h2&gt;
 &lt;p&gt;When trying to import a non-installed Python library, we will get an error similar to the one showed in the image below.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# Importing Python library
 import requests
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -540,14 +542,14 @@ import requests
       <published>2020-12-04T07:00:00-05:00</published>
       <updated>2020-12-04T07:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/installing_python_library_vscode</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; or a &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_library_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; or a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter Notebook&lt;/code&gt; in Visual Studio Code (VSCode) on a Windows computer.&lt;/p&gt;
 
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;installing-a-python-library-using-the-terminal-in-vscode&quot;&gt;Installing a Python Library Using the Terminal in VSCode&lt;/h2&gt;
@@ -559,13 +561,13 @@ import requests
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_01_pip__vscode_application.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Go to the &lt;code class=&quot;highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; menu and select &lt;code class=&quot;highlighter-rouge&quot;&gt;New Terminal&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Terminal&lt;/code&gt; menu and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;New Terminal&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_02_pip_new_terminal.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;A new &lt;code class=&quot;highlighter-rouge&quot;&gt;terminal&lt;/code&gt; (PowerShell based) window is opened.&lt;/li&gt;
+  &lt;li&gt;A new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terminal&lt;/code&gt; (PowerShell based) window is opened.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_03_pip_new_terminal_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -573,7 +575,7 @@ import requests
 &lt;h3 id=&quot;2-importing-a-python-library&quot;&gt;2) Importing a Python Library&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Run the following command to validate that pip is installed in your computer.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip --version
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip --version
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -581,9 +583,9 @@ import requests
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_04_pip_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Let us say that you want to install &lt;code class=&quot;highlighter-rouge&quot;&gt;Pandas&lt;/code&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Let us say that you want to install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pandas&lt;/code&gt; Python library.&lt;/li&gt;
   &lt;li&gt;Run the following command
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install pandas
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install pandas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -605,7 +607,7 @@ import requests
 &lt;h3 id=&quot;2-importing-a-python-library-1&quot;&gt;2) Importing a Python Library&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Run the following command to validate that pip is installed in your computer.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip --version
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip --version
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -613,9 +615,9 @@ import requests
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-04_07_pip_vscode_jupyter_notebook_pip_version.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Let us say that you want to install &lt;code class=&quot;highlighter-rouge&quot;&gt;Pandas&lt;/code&gt; Python library.&lt;/li&gt;
+  &lt;li&gt;Let us say that you want to install &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pandas&lt;/code&gt; Python library.&lt;/li&gt;
   &lt;li&gt;Run the following command.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pandas
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;!pip install pandas
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -668,20 +670,20 @@ import requests
 &lt;h3 id=&quot;1-downloading-python-executable&quot;&gt;1) Downloading Python Executable&lt;/h3&gt;
 &lt;ul&gt;
   &lt;li&gt;Go to &lt;a href=&quot;https://www.python.org/downloads/&quot;&gt;Python&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Download Python 3.9&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download Python 3.9&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_python_interpreter_download.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_python_interpreter_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-running-python-executable&quot;&gt;2) Running Python Executable&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;In your &lt;code class=&quot;highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Python executable and select &lt;code class=&quot;highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Python executable and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_python_interpreter_open_executable.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -689,14 +691,14 @@ import requests
 &lt;h3 id=&quot;3-completing-the-python-setup&quot;&gt;3) Completing the Python Setup&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Check both &lt;code class=&quot;highlighter-rouge&quot;&gt;Install launcher for all users&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;Add Python 3.9 to PATH&lt;/code&gt; boxes.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install Now&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Check both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install launcher for all users&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Python 3.9 to PATH&lt;/code&gt; boxes.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install Now&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_python_setup_install.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Allow the app to make changes clicking on &lt;code class=&quot;highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Allow the app to make changes clicking on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_python_make_changes.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -714,14 +716,14 @@ import requests
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_python_successful_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Close&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Close&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;validating-python-interpreter-installation&quot;&gt;Validating Python Interpreter Installation&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Open a &lt;code class=&quot;highlighter-rouge&quot;&gt;command prompt&lt;/code&gt; window and run the following command.
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;py -3 -- version
+  &lt;li&gt;Open a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;command prompt&lt;/code&gt; window and run the following command.
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;py -3 -- version
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -777,33 +779,33 @@ import requests
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_vscode_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Select &lt;code class=&quot;highlighter-rouge&quot;&gt;Extensions&lt;/code&gt; from the &lt;code class=&quot;highlighter-rouge&quot;&gt;View&lt;/code&gt; menu, .&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Extensions&lt;/code&gt; from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;View&lt;/code&gt; menu, .&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_view_extensions.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Search for &lt;code class=&quot;highlighter-rouge&quot;&gt;Python&lt;/code&gt; and select the one provided by &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt; and select the one provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Microsoft&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_python_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;2-installing-python-extension&quot;&gt;2) Installing Python extension&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;highlighter-rouge&quot;&gt;Install&lt;/code&gt; and wait ofr the installation to complete.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt; and wait ofr the installation to complete.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_wait_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;The Python extension for VSCode was successfully installed.&lt;/li&gt;
-  &lt;li&gt;This extension has a dependency with the &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension, also provided by Microsoft.&lt;/li&gt;
+  &lt;li&gt;This extension has a dependency with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension, also provided by Microsoft.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_python_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Because of this dependency, the &lt;code class=&quot;highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension was also installed with the Python extension.&lt;/li&gt;
+  &lt;li&gt;Because of this dependency, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension was also installed with the Python extension.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_Jupyter_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>

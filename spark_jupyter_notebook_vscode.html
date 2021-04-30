@@ -194,10 +194,10 @@ into the {body} of the default.hbs template -->
 <h2 id="pre-requisites">Pre-requisites</h2>
 <p>In order to complete the steps of this blogpost, you need to install the following in your windows computer:</p>
 <ul>
-  <li><code class="highlighter-rouge">Java</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_java">here</a>.</li>
-  <li><code class="highlighter-rouge">Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_vscode_windows">here</a>.</li>
-  <li><code class="highlighter-rouge">Python Extension for Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_extension_vscode">here</a>.</li>
-  <li><code class="highlighter-rouge">Python Interpreter</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_interpreter">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Java</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_java">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_vscode_windows">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Python Extension for Visual Studio Code</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_extension_vscode">here</a>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Python Interpreter</code>: you can find the steps to install it <a href="https://blog.openthreatresearch.com/installing_python_interpreter">here</a>.</li>
 </ul>
 
 <h2 id="setting-up-a-pysparksql-session">Setting Up a PySpark.SQL Session</h2>
@@ -210,8 +210,8 @@ into the {body} of the default.hbs template -->
 
 <h3 id="2-installing-pyspark-python-library">2) Installing PySpark Python Library</h3>
 <ul>
-  <li>Using the first cell of our notebook, run the following code to install the <code class="highlighter-rouge">Python API</code> for Spark.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!pip install pyspark
+  <li>Using the first cell of our notebook, run the following code to install the <code class="language-plaintext highlighter-rouge">Python API</code> for Spark.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>!pip install pyspark
 </code></pre></div>    </div>
   </li>
   <li>You can also use the VSCode terminal in order to install PySpark. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described <a href="https://blog.openthreatresearch.com/installing_python_library_vscode">here</a>.</li>
@@ -222,8 +222,8 @@ into the {body} of the default.hbs template -->
 <h3 id="3-importing-sparksession-class">3) Importing SparkSession Class</h3>
 <ul>
   <li>We start by importing the class <a href="https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession">SparkSession</a> from the PySpark SQL module.</li>
-  <li>The <code class="highlighter-rouge">SparkSession</code> is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from pyspark.sql import SparkSession
+  <li>The <code class="language-plaintext highlighter-rouge">SparkSession</code> is the main entry point for DataFrame and SQL functionality. A parkSession can be used create a DataFrame, register DataFrame as tables, execute SQL over tables, cache tables, and even read parquet files.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from pyspark.sql import SparkSession
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -233,9 +233,9 @@ into the {body} of the default.hbs template -->
 <h3 id="4-creating-a-sparksession">4) Creating a SparkSession</h3>
 <ul>
   <li>In order to create a SparkSession, we use the <a href="https://spark.apache.org/docs/2.4.0/api/python/pyspark.sql.html#pyspark.sql.SparkSession.Builder">Builder</a> class.</li>
-  <li>We give our Spark application a name (<code class="highlighter-rouge">OTR</code>) and add a caseSensitive config.</li>
-  <li>We are assigning the SparkSession to a variable named <code class="highlighter-rouge">spark</code>.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark = SparkSession.builder.appName("OTR").config("spark.sql.caseSensitive", "True").getOrCreate()
+  <li>We give our Spark application a name (<code class="language-plaintext highlighter-rouge">OTR</code>) and add a caseSensitive config.</li>
+  <li>We are assigning the SparkSession to a variable named <code class="language-plaintext highlighter-rouge">spark</code>.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark = SparkSession.builder.appName("OTR").config("spark.sql.caseSensitive", "True").getOrCreate()
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -245,7 +245,7 @@ into the {body} of the default.hbs template -->
 <h3 id="5-verifying-sparksession">5) Verifying SparkSession</h3>
 <ul>
   <li>Once the SparkSession is built, we can run the spark variable for verification.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -255,9 +255,9 @@ into the {body} of the default.hbs template -->
 <h2 id="running-more-spark-commands">Running More Spark Commands</h2>
 <p>For the last section of this blogpost, I am sharing three more basic commands that are very helpful when performing tasks with Spark:</p>
 <ul>
-  <li>Creating a Spark dataframe using <code class="highlighter-rouge">read.json</code> method.</li>
-  <li>Creating a Temporary View of a Spark dataframe using <code class="highlighter-rouge">createOrReplaceTempView</code> method.</li>
-  <li>Executing a SQL-like query using the <code class="highlighter-rouge">sql</code> method.</li>
+  <li>Creating a Spark dataframe using <code class="language-plaintext highlighter-rouge">read.json</code> method.</li>
+  <li>Creating a Temporary View of a Spark dataframe using <code class="language-plaintext highlighter-rouge">createOrReplaceTempView</code> method.</li>
+  <li>Executing a SQL-like query using the <code class="language-plaintext highlighter-rouge">sql</code> method.</li>
 </ul>
 
 <h3 id="0-importing-a-mordor-dataset">0) Importing a Mordor Dataset</h3>
@@ -267,7 +267,7 @@ into the {body} of the default.hbs template -->
   <li>Download the Mordor dataset (json file) following the steps described on <a href="https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode">Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)</a>.</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Importing libraries
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Importing libraries
 import requests
 from io import BytesIO
 from zipfile import ZipFile
@@ -283,9 +283,9 @@ jsonFilePath
 
 <h3 id="1-creating-a-spark-dataframe">1) Creating a Spark Dataframe</h3>
 <ul>
-  <li>In order to create a Spark dataframe from a <code class="highlighter-rouge">json</code> file, we use the <code class="highlighter-rouge">read.json</code> method.</li>
-  <li>We are using the <code class="highlighter-rouge">jsonFilePath</code> variable from the previous section that contains the path or directory where the <code class="highlighter-rouge">json</code> file was stored.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Creating a Spark Dataframe
+  <li>In order to create a Spark dataframe from a <code class="language-plaintext highlighter-rouge">json</code> file, we use the <code class="language-plaintext highlighter-rouge">read.json</code> method.</li>
+  <li>We are using the <code class="language-plaintext highlighter-rouge">jsonFilePath</code> variable from the previous section that contains the path or directory where the <code class="language-plaintext highlighter-rouge">json</code> file was stored.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Creating a Spark Dataframe
 df = spark.read.json(jsonFilePath)
 # Validating Type of Output
 type(df)
@@ -297,10 +297,10 @@ type(df)
 
 <h3 id="2-creating-a-temporary-view-of-a-spark-dataframe">2) Creating a Temporary View of a Spark Dataframe</h3>
 <ul>
-  <li>In order to create a temporary view of a Spark dataframe , we use the <code class="highlighter-rouge">creteOrReplaceTempView</code> method.</li>
-  <li>We can use this temporary view of a Spark dataframe as a <code class="highlighter-rouge">SQL</code> table and define SQL-like queries to analyze our data.</li>
-  <li>We will use the <code class="highlighter-rouge">df</code> Spark dataframe defined in the previous section. The name that we are using for our temporary view is <code class="highlighter-rouge">mordorTable</code>.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df.createOrReplaceTempView('mordorTable')
+  <li>In order to create a temporary view of a Spark dataframe , we use the <code class="language-plaintext highlighter-rouge">creteOrReplaceTempView</code> method.</li>
+  <li>We can use this temporary view of a Spark dataframe as a <code class="language-plaintext highlighter-rouge">SQL</code> table and define SQL-like queries to analyze our data.</li>
+  <li>We will use the <code class="language-plaintext highlighter-rouge">df</code> Spark dataframe defined in the previous section. The name that we are using for our temporary view is <code class="language-plaintext highlighter-rouge">mordorTable</code>.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df.createOrReplaceTempView('mordorTable')
 </code></pre></div>    </div>
   </li>
 </ul>
@@ -309,10 +309,10 @@ type(df)
 
 <h3 id="3-executing-a-sql-like-query">3) Executing a SQL-like Query</h3>
 <ul>
-  <li>In order to execute a SQL-like query, we use the <code class="highlighter-rouge">sql</code> method.</li>
-  <li>Using <code class="highlighter-rouge">mordorTable</code> as a reference, we will execute the following code to summarize security event logs provided by the dataset.</li>
-  <li>We are performing a <code class="highlighter-rouge">stack counting</code> operation on the data, and we are grouping the result by <code class="highlighter-rouge">Hostname</code>, <code class="highlighter-rouge">Channel</code>, and <code class="highlighter-rouge">EventID</code>.
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df = spark.sql(
+  <li>In order to execute a SQL-like query, we use the <code class="language-plaintext highlighter-rouge">sql</code> method.</li>
+  <li>Using <code class="language-plaintext highlighter-rouge">mordorTable</code> as a reference, we will execute the following code to summarize security event logs provided by the dataset.</li>
+  <li>We are performing a <code class="language-plaintext highlighter-rouge">stack counting</code> operation on the data, and we are grouping the result by <code class="language-plaintext highlighter-rouge">Hostname</code>, <code class="language-plaintext highlighter-rouge">Channel</code>, and <code class="language-plaintext highlighter-rouge">EventID</code>.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df = spark.sql(
 '''
 SELECT Hostname,Channel,EventID, Count(*) as count
 FROM mordorTable
@@ -378,6 +378,8 @@ df.show(truncate=False)
                         <div class="post-full-footer-right">
                             <a class="author-card-button" href="/author/jose">Read More</a>
                         </div>
+                    
+                
                     
                 
                     
@@ -454,6 +456,8 @@ df.show(truncate=False)
                 
                     
                 
+                    
+                
                 <span class="reading-time">
                     
                     
@@ -518,6 +522,8 @@ df.show(truncate=False)
                         <span class="post-card-author">
                             <a href="/author/jose/">Jose Rodriguez</a>
                         </span>
+                    
+                
                     
                 
                     
