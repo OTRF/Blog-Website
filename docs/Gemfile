@@ -20,13 +20,16 @@ source "https://rubygems.org"
 
 source "https://rubygems.org"
    
-gem "jekyll", "~> 3.8.7", group: :jekyll_plugins                                                
+#gem "jekyll", "~> 3.8.7", group: :jekyll_plugins
+gem "jekyll", "~> 3.9.1", group: :jekyll_plugins                                              
 group :jekyll_plugins do                                                                        
   gem "jekyll-paginate", "~> 1.1.0"                                                             
   gem "jekyll-remote-theme", "~> 0.4.1"
   gem "jekyll-feed", "~> 0.12"                                                       
 end                                    
 gem "slugify", "~> 1.0"
+gem "kramdown", "~> 2.0.0"
+gem "kramdown-parser-gfm", "~> 1.1.0"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
@@ -37,4 +40,5 @@ end
 
 # Performance-booster for watching directories on Windows
 gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
-
+gem "webrick", "~> 1.7"
+gem "i18n", "~>0.9.5"
