@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg
 navigation: True
-title: Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab
+title: Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab
 date: 2021-04-29 12:00:00
 tags: [VMware, Malware, Malware_Analysis, REMnux, FLARE]
 class: post-template
@@ -115,9 +115,9 @@ The rest of the installation process is fully automated. Depending upon your int
 {: refdef} 
 
 Once the install is done, run the command to update FLARE:
-```
-cup all
-``` 
+    ```
+    cup all
+    ``` 
 
 After the update is finished, reboot and log back in.  Then take another snapshot and name it something like `Fresh install of FLARE-VM`.
 
