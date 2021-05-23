@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg
 navigation: True
 title: Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation
-date: 2021-05-13 12:00:00
+date: 2021-05-24 12:00:00
 tags: [Firewalla_Gold, Unifi, Malware, Malware_Analysis]
 class: post-template
 subclass: 'post'
