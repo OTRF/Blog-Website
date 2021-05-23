@@ -143,7 +143,7 @@ Navigate to the REMnux page link shared above and hit `Download ->` -> `General 
 
 9. Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
     ```
-    remnux update && remnux upgrade
+    remnux upgrade
     ```
 10. After running the upgrade command we should reboot:
     ```
