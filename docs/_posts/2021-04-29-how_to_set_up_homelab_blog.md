@@ -61,7 +61,7 @@ Lets unzip the file and store it in a location of your choice. Open up VMware's 
 6. When you start the machine, if VMWare prompts you to upgrade, click `Upgrade`.
 7. The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type: 
 ``` 
-slmgr.vbs /alo
+slmgr.vbs /ato
 ```
 8. VMWare should prompt you to install VMware's Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware's Virtual Tools.
 9. After the machine logs in successfully after installing VM Virtual Tools.  Take another snapshot and name it something to the effect of, `Win 10 Activated with VM Tools installed`.
