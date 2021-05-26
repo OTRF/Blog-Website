@@ -1,4 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-04-30T00:06:12-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title><link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" /><published>2021-04-29T08:00:00-04:00</published><updated>2021-04-29T08:00:00-04:00</updated><id>https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</id><content type="html" xml:base="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog">&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator><link href="https://blog.openthreatresearch.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" /><updated>2021-05-26T10:25:33-04:00</updated><id>https://blog.openthreatresearch.com/feed.xml</id><title type="html">Open Threat Research Blog</title><subtitle>Sharing and collaborating to empower the Infosec community!</subtitle><entry><title type="html">Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</title><link href="https://blog.openthreatresearch.com/how_to_isolate_homelab" rel="alternate" type="text/html" title="Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation" /><published>2021-05-26T08:00:00-04:00</published><updated>2021-05-26T08:00:00-04:00</updated><id>https://blog.openthreatresearch.com/how_to_isolate_homelab</id><content type="html" xml:base="https://blog.openthreatresearch.com/how_to_isolate_homelab">&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+
+&lt;p&gt;In part one of this series, we established a solid foundation to begin our malware analysis journey.  We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use REMnux as its Gateway and DNS so that we could monitor its network communications.  We tested this by setting up INetSim on REMnux and trying to connect to a “malicious” site on our FLARE VM.&lt;/p&gt;
+
+&lt;p&gt;In part 2, we will be looking at isolating our home lab machine from the rest of our network through network segmentation.  Network segmentation is a critical component of secure network architecture.  It is a way of dividing a network into various segments, usually referred as subnets, that act as their own smaller network.  This offers several benefits including better control over the flow of traffic between different subnets through the use of policies which enhances security.  Businesses and enterprises have used network segmentation for years but can be just as beneficial to home networks.  These benefits can extend way beyond our malware analysis series as well.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-is-network-segmentation-important-for-malware-analysis&quot;&gt;Why is network segmentation important for malware analysis?&lt;/h2&gt;
+
+&lt;p&gt;You might be thinking, “Why do I need network segmentation when I already have my VMs on an isolated VM network?”.  The honest answer is you don’t.  You can still use the setup we created in part 1 to analyze all kinds of malicious samples and be adequately protected from them.  However, it isn’t good practice to have your home lab machine and VMs on the same network and able to communicate with the rest of your devices.   There are several reasons for this:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;You will need to get your file samples from somewhere and normally you will be grabbing samples from public repositories like VirusTotal.  Doing so on a machine that shares the same network as the rest of your devices puts them at risk of infection if you accidentally detonate the file on your physical machine.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;In some instances you might want to provide your malware sample with a live internet connection.  Possibly as a way of getting a secondary file from a downloader you’re analyzing.  If your home lab machine is on the same network it opens up possible routes for the malware to spread itself.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;In extremely rare cases, malware might be able to exploit a vulnerability and ‘escape’ the VM.  If this happens, the malware could infect your actual machine and possibly the rest of your network.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;before-we-get-started&quot;&gt;Before we get started:&lt;/h2&gt;
+
+&lt;p&gt;Not all networking devices are created equal.  Many home users will have all-in-one router/switch/access point combos. Netgear’s Nighthawk series is a popular example. These devices do tend to be limited in the configurability of your network.  Most allow for the creation of a separate guest network that is ‘isolated’ from the regular network.  If your particular device doesn’t offer VLAN or subnetting capabilities, and you don’t want to spend money on other devices, putting your home lab on your ‘guest network’ is your best option.&lt;/p&gt;
+
+&lt;p&gt;I’ll be doing a walkthrough using the network appliances I have below.  For those that have these, should be straightforward to follow along.  For those who have different appliances the concept is still the same:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Setup a Home Lab VLAN on your router.&lt;/li&gt;
+  &lt;li&gt;Assign the VLAN to the proper ports on your router and/or switches so that it can either reach your hardwired lab or your access point so you can create a home lab wifi network.&lt;/li&gt;
+  &lt;li&gt;Configure some basic firewall rules to block traffic between your home lab and your other internal networks.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Make sure to read up on the documentation for your particular devices.  They should have instructions to perform these tasks if the capablities are present.&lt;/p&gt;
+
+&lt;h2 id=&quot;my-setup&quot;&gt;My setup:&lt;/h2&gt;
+
+&lt;p&gt;First and foremost, I am not affiliated with any of the devices or companies I am about to share.  However, I am a fan of these products and would recommend them to those looking to do similar things.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Firewall/Router: &lt;a href=&quot;https://firewalla.com/collections/firewalla-products/products/firewalla-gold&quot;&gt;Firewalla Gold&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Switches: Ubiquiti &lt;a href=&quot;https://www.amazon.com/Ubiquiti-Networks-Managed-Network-Ethernet/dp/B01N362YPG/ref=sr_1_1_sspa?dchild=1&amp;amp;keywords=US-8+Unifi+switch&amp;amp;qid=1621698718&amp;amp;sr=8-1-spons&amp;amp;psc=1&amp;amp;smid=A1CWARKP010ISH&amp;amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzTFlKRDdHNFNHN1BaJmVuY3J5cHRlZElkPUEwMTI5NzIzM0tPVUxORkhXSTZRSyZlbmNyeXB0ZWRBZElkPUEwMzMwOTI5MlRJWlpWUVZEQjhaSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=&quot;&gt;US-8 Unifi Switch&lt;/a&gt; and &lt;a href=&quot;https://www.amazon.com/Switch-US-8-60W-Managed-Gigabit-802-3af/dp/B08KYGXZ8V/ref=sr_1_3?dchild=1&amp;amp;keywords=US-8-60W+Unifi+switch&amp;amp;qid=1621698768&amp;amp;sr=8-3&quot;&gt;UniFi Switch 8 US-8-60W 8-Port Fully Managed Gigabit Switch 802.3af PoE Ports&lt;/a&gt;(If you only need one, definitely go with the PoE capable switch little more pricey but totally worth it)&lt;/li&gt;
+  &lt;li&gt;Access Point: &lt;a href=&quot;https://www.amazon.com/Ubiquiti-UAP-AC-LITE-802-11ac-Gigabit-Dual-Radio/dp/B01DRM6MLI/ref=sr_1_3?dchild=1&amp;amp;keywords=Unifi+Ap-AC+Lite&amp;amp;qid=1621698886&amp;amp;sr=8-3&quot;&gt;Unifi Ap-AC Lite&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;What my network looks like:&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_isolate_homelab_images/2021-05-24_01_Network_diagram.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-vlans-on-my-firewalla-goldrouterfirewall&quot;&gt;Setting up VLANs on my Firewalla Gold(router/firewall):&lt;/h2&gt;
+
+&lt;p&gt;Firewalla’s iPhone app makes this part very easy. In the app, select&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Edit&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Create Network&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Local Network&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Type in the name for the VLAN, I am going with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Homelab&lt;/code&gt; . Change Type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VLAN&lt;/code&gt; . Then make sure to add the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VLAN ID&lt;/code&gt;.  Based off of my network diagram above, I’ll select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;30&lt;/code&gt; .  Now make sure to check the right ethernet port on your router so that it can actually reach your internal network.  Mine uses the 3rd port on my router. After that, make sure that your IP address range and subnet mask is what you want.  To make things easier for myself I tend to make the third set of two bits the same number as my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VLAN ID&lt;/code&gt; so in my case I’ll change my IP address to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;192.168.30.1&lt;/code&gt; and I’ll leave the subnet mask as is.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_isolate_homelab_images/2021-05-24_02_creating_homelab_vlan_network.jpg&quot; alt=&quot;&quot; width=&quot;40%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we can click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Done&lt;/code&gt; at the top right and then make sure to hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt; on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network Manager&lt;/code&gt; screen so that Firewalla Gold saves all the configurations you set up.&lt;/p&gt;
+
+&lt;h2 id=&quot;creating-homelab-network-on-my-unifi-equipment&quot;&gt;Creating Homelab Network on my Unifi Equipment:&lt;/h2&gt;
+
+&lt;p&gt;Log into your Unifi Cloud Key or the VM that is hosting your Cloud Key software.  If you have Cloud log in enabled you can do this through the &lt;a href=&quot;https://account.ui.com/login?redirect=https%3A%2F%2Funifi.ui.com&quot;&gt;cloud login portal&lt;/a&gt;.  If not, then type in the IP address of the VM or Cloud Key and log in that way.&lt;/p&gt;
+
+&lt;p&gt;Once you’re logged on, click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gear Icon&lt;/code&gt; at the bottom left of the navigation panel.  Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Networks&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add New Network&lt;/code&gt; . Create the name you want for your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network&lt;/code&gt; . I will continue to us &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Homelab&lt;/code&gt; as the name of the network.  Click the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; tab.  Change the VLAN ID to the number you set.  For me that is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;30&lt;/code&gt; .&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_isolate_homelab_images/2021-05-24_03_Unifi_network_settings_screen.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This next step is very important and depends on the setup you have.  My Firewalla Gold provides DHCP, so I will set mine to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;None&lt;/code&gt; .  If you have a non-Unifi router that provides DHCP to your network then you will likely need to do the same.  If you are using a Unifi Gateway like their USG line then I would refer you to their instructions to make sure nothing gets broken.&lt;/p&gt;
+
+&lt;p&gt;Click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Network&lt;/code&gt; . Once on the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Networks&lt;/code&gt; main page, you might notice a subnet range that does not match what you set up in the last section.  You can ignore that, it isn’t correct and when you actually join your home lab it will have an IP assigned by your Firewalla Gold that is in the subnet of your home lab.&lt;/p&gt;
+
+&lt;p&gt;For my setup, I want to have a wireless home lab network.  To set this up, I’ll select the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WiFi&lt;/code&gt; tab in the same settings menu.  Create the name of your wireless network.  I’m keeping the same trend as before, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Home Lab Network&lt;/code&gt; (boring I know).  Create a unique password for your home lab network.  Lastly, make sure to select the newly created &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Network&lt;/code&gt; that we created just before this.  The network name I created is called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Homelab&lt;/code&gt; .  The last thing I like to do before clicking &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add WiFi Network&lt;/code&gt; is click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Advanced&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security&lt;/code&gt; → check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hide WiFi Name&lt;/code&gt; .  I like to hide the SSID of my Home Lab network just so it doesn’t show up when people are actively looking for WiFi networks to join.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_isolate_homelab_images/2021-05-24_04_configuring_wifi_network_on_unifi.jpg&quot; alt=&quot;&quot; width=&quot;100%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After hitting &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add WiFi Network&lt;/code&gt; you should now see your newly created WiFi network in the list of current WiFi networks.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuring-firewall-rule-to-block-traffic-between-internal-networks&quot;&gt;Configuring Firewall Rule to Block Traffic between Internal Networks:&lt;/h2&gt;
+
+&lt;p&gt;Now that we have our newly created home lab network up and running, we should create some firewall rules to make sure we properly isolate our home lab network from the rest of our internally created networks.  To do this, we need to jump back into our Firewalla Gold app.&lt;/p&gt;
+
+&lt;p&gt;From the app select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Rules&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Rule&lt;/code&gt; .  For the action, I’ll select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Block&lt;/code&gt; . In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Matching&lt;/code&gt; section we have two fields we need to configure.  First, we need to set a target: select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Local Network&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;All Local Networks&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Traffic from &amp;amp; to All Local Networks&lt;/code&gt; . Now we need to select which device this rule will apply to.  Click the Select field and select your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Homelab&lt;/code&gt; network.  The schedule I will keep always and I’ll add a quick note to the rule &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Isolating Homelab network from all other internal networks&lt;/code&gt; .  Hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt; and you should now see another rule in the list specifically for your home lab.&lt;/p&gt;
+
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_isolate_homelab_images/2021-05-24_05_Creating_firewall_rule.jpg&quot; alt=&quot;&quot; width=&quot;40%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Thats all that I need to do to create a homelab wifi network and properly isolate it from the rest of my internal networks.  Firewalla Gold makes this process extremely easy and is probably different from how other devices create VLANs and firewall rules.  If you run into trouble with your device, check out forums for assistance.  I’ve found Reddit extremely helpful for finding help. Especially if you join that device’s specific subreddit.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-thoughts&quot;&gt;Final Thoughts:&lt;/h2&gt;
+
+&lt;p&gt;The network appliances that you have at home might be vastly different from the ones I have. You might even only have that Netgear Nighthawk router and thats ok.  It is an investment to grab some of the equipment I have in this post and is something I bought over a number of months.  It might not even be something that you want to invest in and thats ok too.  Most of these all-in-one routers have the ‘Guest Network’ feature that can be easily turned on and sufficiently blocks the Guest Network from accessing the rest of your devices.  Thats really all that is needed.&lt;/p&gt;
+
+&lt;p&gt;If you are someone trying to get into networking and understanding firewall rules, investing in this type of gear can be extremely beneficial for you.  I myself tend to learn the best when I build things and set things up on my own vs watching videos or reading a book about it.&lt;/p&gt;
+
+&lt;p&gt;Hopefully you found this post helpful in some way.  If you have any questions, comments or just want to chat you can find me on &lt;a href=&quot;https://twitter.com/Cyber_Sec_JD&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joshua Dunn</name></author><category term="Firewalla_Gold" /><category term="Unifi" /><category term="Malware" /><category term="Malware_Analysis" /><summary type="html">Introduction:</summary></entry><entry><title type="html">Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</title><link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab" /><published>2021-04-29T08:00:00-04:00</published><updated>2021-04-29T08:00:00-04:00</updated><id>https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</id><content type="html" xml:base="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog">&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
 &lt;p&gt;Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-to-expect-from-this-post&quot;&gt;What to Expect from this Post:&lt;/h2&gt;
@@ -51,7 +145,7 @@
   &lt;li&gt;Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh Win10 Install&lt;/code&gt;. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.&lt;/li&gt;
   &lt;li&gt;When you start the machine, if VMWare prompts you to upgrade, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Upgrade&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /alo
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /ato
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.&lt;/li&gt;
@@ -98,9 +192,10 @@
 
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Once the install is done, run the command to update FLARE:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cup all
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Once the install is done, run the command to update FLARE:
+    &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;
+    cup all
+   &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;After the update is finished, reboot and log back in.  Then take another snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of FLARE-VM&lt;/code&gt;.&lt;/p&gt;
 
@@ -123,7 +218,7 @@
     &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux update &amp;amp;&amp;amp; remnux upgrade
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux upgrade
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;After running the upgrade command we should reboot:
@@ -1629,111 +1724,4 @@ After pgustavo is authenticated via Kerberos, it then sends a kerberos ticket in
   &lt;li&gt;http://www.ipfonix.com/single-sign-on.pdf&lt;/li&gt;
   &lt;li&gt;https://medium.com/@robert.broeckelmann/active-directory-federation-services-adfs-and-kerberos-f36c71e13be5&lt;/li&gt;
   &lt;li&gt;https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/cd9d5ca7-ce20-4693-872b-2f5dd41cbff6&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="ADFS" /><category term="Fiddler" /><category term="Wireshark" /><summary type="html">I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) template to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.</summary></entry><entry><title type="html">Adding a Custom Domain to Microsoft 365</title><link href="https://blog.openthreatresearch.com/ms365-add-custom-domain" rel="alternate" type="text/html" title="Adding a Custom Domain to Microsoft 365" /><published>2020-12-29T06:00:00-05:00</published><updated>2020-12-29T06:00:00-05:00</updated><id>https://blog.openthreatresearch.com/ms365-add-custom-domain</id><content type="html" xml:base="https://blog.openthreatresearch.com/ms365-add-custom-domain">&lt;p&gt;I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow &lt;a href=&quot;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&quot;&gt;federated authentication&lt;/a&gt; to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.&lt;/p&gt;
-
-&lt;p&gt;In this post, I will show you how to do that through the Microsoft 365 admin console.&lt;/p&gt;
-
-&lt;p&gt;Every new Azure AD tenant comes with an initial domain name, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;domainname&amp;gt;&lt;/code&gt;.onmicrosoft.com. However, you can’t change or delete the initial domain name, but you can add new custom domain names.&lt;/p&gt;
-
-&lt;p&gt;Once again, if you want on-prem AD user accounts to authenticate to Office 365 apps in the cloud with the same on-prem password, you need to synchronize them with the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription which requires you to add the on-prem domain to Microsoft 365.&lt;/p&gt;
-
-&lt;h2 id=&quot;what-is-microsoft-365&quot;&gt;What is Microsoft 365?&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Microsoft 365 is an integrated bundle of Windows 10, Office 365 and Enterprise Mobility + Security (aka EMS, which includes Intune device management, analytics and some Azure Active Directory capabilities), sold on a subscription basis.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;what-is-office-365&quot;&gt;What is Office 365?&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;It is a set of cloud based business applications like Exchange, Office Apps, SharePoint, OneDrive. It is a part of Microsoft 365.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;quick-recipe&quot;&gt;Quick Recipe&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Purchase Domain&lt;/li&gt;
-  &lt;li&gt;Access Microsoft 365 admin console&lt;/li&gt;
-  &lt;li&gt;Add custom domain&lt;/li&gt;
-  &lt;li&gt;Verify domain ownership&lt;/li&gt;
-  &lt;li&gt;Connect domain to MS 365 Services (Optional)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-purchase-domain&quot;&gt;1. Purchase Domain&lt;/h2&gt;
-
-&lt;p&gt;You need to use a domain that you already own or purchase one. If this is for a lab environment, most likely you will have to buy one. I purchased mine from &lt;a href=&quot;https://www.namecheap.com/&quot;&gt;namecheap.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_01_purchase_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-access-microsoft-365-admin-console&quot;&gt;2. Access Microsoft 365 Admin Console&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://admin.microsoft.com&quot;&gt;https://admin.microsoft.com&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Go to Settings &amp;gt; Domains&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-add-custom-domain&quot;&gt;3. Add Custom Domain&lt;/h2&gt;
-
-&lt;p&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add Domain&lt;/code&gt; as shown in the image below&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_02_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Enter the name of the domain you just purchased or you already own&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_03_add_custom_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;4-verify-domain-ownership&quot;&gt;4. Verify Domain Ownership&lt;/h2&gt;
-
-&lt;p&gt;You will need to proof that you own the domain. I usually choose the verification option to add a TXT record to the DNS records of my domain.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_04_verify_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Add TXT Records to Domain Settings&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Log on to your domain provider console&lt;/li&gt;
-  &lt;li&gt;Select domain DNS settings&lt;/li&gt;
-  &lt;li&gt;Add TXT record&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_05_verify_domain.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_06_update_domain_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;5-connect-domain-to-ms-365-services-optional&quot;&gt;5. Connect Domain to MS 365 Services (Optional)&lt;/h2&gt;
-
-&lt;p&gt;Next, you will have the option to attach specific Microsoft 365 services (i.e. Exchange) to your domain.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_07_connect_ms_services.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Add Additional DNS Records&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_08_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_09_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_10_additional_dns_records.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;That’s it! You have successfully added a custom domain to your Microsoft 365 subscription.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_11_custom_domain_complete.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_12_current_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;One thing you can do is check the Azure Active Directory (Azure AD) tenant of your Microsoft 365 subscription, and you will now see the custom domain there and verified. Go to &lt;a href=&quot;https://aad.portal.azure.com&quot;&gt;https://aad.portal.azure.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-29_13_ad_custom_domains.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;I hope you enjoyed this post!&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/admin/setup/add-domain?view=o365-worldwide&lt;/li&gt;
-  &lt;li&gt;https://admin.microsoft.com&lt;/li&gt;
-  &lt;li&gt;https://www.namecheap.com/&lt;/li&gt;
-  &lt;li&gt;https://www.onmsft.com/feature/whats-the-difference-between-office-365-and-microsoft-365&lt;/li&gt;
-  &lt;li&gt;https://www.zdnet.com/article/what-is-microsoft-365-microsofts-most-important-subscription-bundle-explained/&lt;/li&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/admin/get-help-with-domains/what-is-a-domain?view=o365-worldwide&lt;/li&gt;
-  &lt;li&gt;https://docs.microsoft.com/en-us/microsoft-365/enterprise/plan-for-directory-synchronization?view=o365-worldwide#federated-authentication&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="DNS" /><category term="Azure" /><category term="Microsoft 365" /><summary type="html">I wanted to set up a federated trust between my on-prem Active Directory (AD) in my lab environment and my Microsoft 365 subscription to allow federated authentication to Office 365 applications. One of the main steps was to add the domain name I used in my on-prem AD lab to the Azure Active Directory (Azure AD) tenant of my Microsoft 365 subscription.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Roberto Rodriguez</name></author><category term="ADFS" /><category term="Fiddler" /><category term="Wireshark" /><summary type="html">I recently wanted to learn more about the internals of Active Directory Federation Services (ADFS) and created an Azure Resource Manager (ARM) template to deploy a basic lab environment. As part of my initial research process, I wanted to understand how a user got authenticated before getting an authentication token to access a cloud service. Thefore, I figured it would be good to document some of it by inspecting the network traffic it generates.</summary></entry></feed>

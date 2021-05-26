@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
+    <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/how_to_isolate_homelab" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Open Threat Research Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation" />
+    <meta property="og:description" content="Introduction: In part one of this series, we established a solid foundation to begin our malware analysis journey. We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/how_to_isolate_homelab" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2021-05-26T08:00:00-04:00" />
+    <meta property="article:modified_time" content="2021-05-26T08:00:00-04:00" />
+    <meta property="article:tag" content="Firewalla_gold" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation" />
+    <meta name="twitter:description" content="Introduction: In part one of this series, we established a solid foundation to begin our malware analysis journey. We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use" />
+    <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Open Threat Research Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Firewalla_gold" />
+    <meta name="twitter:site" content="@OTR_Community" />
+    <meta name="twitter:creator" content="@OTR_Community" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Open Threat Research Blog",
+        "logo": "https://blog.openthreatresearch.com/false"
+    },
+    "url": "https://blog.openthreatresearch.com/how_to_isolate_homelab",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.openthreatresearch.com/how_to_isolate_homelab"
+    },
+    "description": "Introduction: In part one of this series, we established a solid foundation to begin our malware analysis journey. We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
+    <!--<li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>-->
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/OTR_Community" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-firewalla-gold tag-unifi tag-malware tag-malware-analysis post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="26 May 2021">26 May 2021</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/firewalla-gold/'>FIREWALLA_GOLD</a>,
+                            
+                        
+                            
+                               <a href='/tag/unifi/'>UNIFI</a>,
+                            
+                        
+                            
+                               <a href='/tag/malware/'>MALWARE</a>,
+                            
+                        
+                            
+                               <a href='/tag/malware-analysis/'>MALWARE_ANALYSIS</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <h1 id="introduction">Introduction:</h1>
+
+<p>In part one of this series, we established a solid foundation to begin our malware analysis journey.  We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use REMnux as its Gateway and DNS so that we could monitor its network communications.  We tested this by setting up INetSim on REMnux and trying to connect to a “malicious” site on our FLARE VM.</p>
+
+<p>In part 2, we will be looking at isolating our home lab machine from the rest of our network through network segmentation.  Network segmentation is a critical component of secure network architecture.  It is a way of dividing a network into various segments, usually referred as subnets, that act as their own smaller network.  This offers several benefits including better control over the flow of traffic between different subnets through the use of policies which enhances security.  Businesses and enterprises have used network segmentation for years but can be just as beneficial to home networks.  These benefits can extend way beyond our malware analysis series as well.</p>
+
+<h2 id="why-is-network-segmentation-important-for-malware-analysis">Why is network segmentation important for malware analysis?</h2>
+
+<p>You might be thinking, “Why do I need network segmentation when I already have my VMs on an isolated VM network?”.  The honest answer is you don’t.  You can still use the setup we created in part 1 to analyze all kinds of malicious samples and be adequately protected from them.  However, it isn’t good practice to have your home lab machine and VMs on the same network and able to communicate with the rest of your devices.   There are several reasons for this:</p>
+
+<ol>
+  <li>
+    <p>You will need to get your file samples from somewhere and normally you will be grabbing samples from public repositories like VirusTotal.  Doing so on a machine that shares the same network as the rest of your devices puts them at risk of infection if you accidentally detonate the file on your physical machine.</p>
+  </li>
+  <li>
+    <p>In some instances you might want to provide your malware sample with a live internet connection.  Possibly as a way of getting a secondary file from a downloader you’re analyzing.  If your home lab machine is on the same network it opens up possible routes for the malware to spread itself.</p>
+  </li>
+  <li>
+    <p>In extremely rare cases, malware might be able to exploit a vulnerability and ‘escape’ the VM.  If this happens, the malware could infect your actual machine and possibly the rest of your network.</p>
+  </li>
+</ol>
+
+<h2 id="before-we-get-started">Before we get started:</h2>
+
+<p>Not all networking devices are created equal.  Many home users will have all-in-one router/switch/access point combos. Netgear’s Nighthawk series is a popular example. These devices do tend to be limited in the configurability of your network.  Most allow for the creation of a separate guest network that is ‘isolated’ from the regular network.  If your particular device doesn’t offer VLAN or subnetting capabilities, and you don’t want to spend money on other devices, putting your home lab on your ‘guest network’ is your best option.</p>
+
+<p>I’ll be doing a walkthrough using the network appliances I have below.  For those that have these, should be straightforward to follow along.  For those who have different appliances the concept is still the same:</p>
+<ol>
+  <li>Setup a Home Lab VLAN on your router.</li>
+  <li>Assign the VLAN to the proper ports on your router and/or switches so that it can either reach your hardwired lab or your access point so you can create a home lab wifi network.</li>
+  <li>Configure some basic firewall rules to block traffic between your home lab and your other internal networks.</li>
+</ol>
+
+<p>Make sure to read up on the documentation for your particular devices.  They should have instructions to perform these tasks if the capablities are present.</p>
+
+<h2 id="my-setup">My setup:</h2>
+
+<p>First and foremost, I am not affiliated with any of the devices or companies I am about to share.  However, I am a fan of these products and would recommend them to those looking to do similar things.</p>
+
+<ol>
+  <li>Firewall/Router: <a href="https://firewalla.com/collections/firewalla-products/products/firewalla-gold">Firewalla Gold</a></li>
+  <li>Switches: Ubiquiti <a href="https://www.amazon.com/Ubiquiti-Networks-Managed-Network-Ethernet/dp/B01N362YPG/ref=sr_1_1_sspa?dchild=1&amp;keywords=US-8+Unifi+switch&amp;qid=1621698718&amp;sr=8-1-spons&amp;psc=1&amp;smid=A1CWARKP010ISH&amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzTFlKRDdHNFNHN1BaJmVuY3J5cHRlZElkPUEwMTI5NzIzM0tPVUxORkhXSTZRSyZlbmNyeXB0ZWRBZElkPUEwMzMwOTI5MlRJWlpWUVZEQjhaSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=">US-8 Unifi Switch</a> and <a href="https://www.amazon.com/Switch-US-8-60W-Managed-Gigabit-802-3af/dp/B08KYGXZ8V/ref=sr_1_3?dchild=1&amp;keywords=US-8-60W+Unifi+switch&amp;qid=1621698768&amp;sr=8-3">UniFi Switch 8 US-8-60W 8-Port Fully Managed Gigabit Switch 802.3af PoE Ports</a>(If you only need one, definitely go with the PoE capable switch little more pricey but totally worth it)</li>
+  <li>Access Point: <a href="https://www.amazon.com/Ubiquiti-UAP-AC-LITE-802-11ac-Gigabit-Dual-Radio/dp/B01DRM6MLI/ref=sr_1_3?dchild=1&amp;keywords=Unifi+Ap-AC+Lite&amp;qid=1621698886&amp;sr=8-3">Unifi Ap-AC Lite</a></li>
+</ol>
+
+<p>What my network looks like:</p>
+<p style="text-align: center;"><img src="assets/images/blog/how_to_isolate_homelab_images/2021-05-24_01_Network_diagram.jpg" alt="" width="100%" class="shadow" /></p>
+
+<h2 id="setting-up-vlans-on-my-firewalla-goldrouterfirewall">Setting up VLANs on my Firewalla Gold(router/firewall):</h2>
+
+<p>Firewalla’s iPhone app makes this part very easy. In the app, select</p>
+
+<p><code class="language-plaintext highlighter-rouge">Network</code> → <code class="language-plaintext highlighter-rouge">Edit</code> → <code class="language-plaintext highlighter-rouge">Create Network</code> → <code class="language-plaintext highlighter-rouge">Local Network</code></p>
+
+<p>Type in the name for the VLAN, I am going with <code class="language-plaintext highlighter-rouge">Homelab</code> . Change Type to <code class="language-plaintext highlighter-rouge">VLAN</code> . Then make sure to add the <code class="language-plaintext highlighter-rouge">VLAN ID</code>.  Based off of my network diagram above, I’ll select <code class="language-plaintext highlighter-rouge">30</code> .  Now make sure to check the right ethernet port on your router so that it can actually reach your internal network.  Mine uses the 3rd port on my router. After that, make sure that your IP address range and subnet mask is what you want.  To make things easier for myself I tend to make the third set of two bits the same number as my <code class="language-plaintext highlighter-rouge">VLAN ID</code> so in my case I’ll change my IP address to <code class="language-plaintext highlighter-rouge">192.168.30.1</code> and I’ll leave the subnet mask as is.</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_isolate_homelab_images/2021-05-24_02_creating_homelab_vlan_network.jpg" alt="" width="40%" class="shadow" /></p>
+
+<p>Now we can click <code class="language-plaintext highlighter-rouge">Done</code> at the top right and then make sure to hit <code class="language-plaintext highlighter-rouge">Save</code> on the <code class="language-plaintext highlighter-rouge">Network Manager</code> screen so that Firewalla Gold saves all the configurations you set up.</p>
+
+<h2 id="creating-homelab-network-on-my-unifi-equipment">Creating Homelab Network on my Unifi Equipment:</h2>
+
+<p>Log into your Unifi Cloud Key or the VM that is hosting your Cloud Key software.  If you have Cloud log in enabled you can do this through the <a href="https://account.ui.com/login?redirect=https%3A%2F%2Funifi.ui.com">cloud login portal</a>.  If not, then type in the IP address of the VM or Cloud Key and log in that way.</p>
+
+<p>Once you’re logged on, click the <code class="language-plaintext highlighter-rouge">Gear Icon</code> at the bottom left of the navigation panel.  Select <code class="language-plaintext highlighter-rouge">Networks</code> and <code class="language-plaintext highlighter-rouge">Add New Network</code> . Create the name you want for your <code class="language-plaintext highlighter-rouge">Network</code> . I will continue to us <code class="language-plaintext highlighter-rouge">Homelab</code> as the name of the network.  Click the <code class="language-plaintext highlighter-rouge">Advanced</code> tab.  Change the VLAN ID to the number you set.  For me that is <code class="language-plaintext highlighter-rouge">30</code> .</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_isolate_homelab_images/2021-05-24_03_Unifi_network_settings_screen.jpg" alt="" width="100%" class="shadow" /></p>
+
+<p>This next step is very important and depends on the setup you have.  My Firewalla Gold provides DHCP, so I will set mine to <code class="language-plaintext highlighter-rouge">None</code> .  If you have a non-Unifi router that provides DHCP to your network then you will likely need to do the same.  If you are using a Unifi Gateway like their USG line then I would refer you to their instructions to make sure nothing gets broken.</p>
+
+<p>Click <code class="language-plaintext highlighter-rouge">Add Network</code> . Once on the <code class="language-plaintext highlighter-rouge">Networks</code> main page, you might notice a subnet range that does not match what you set up in the last section.  You can ignore that, it isn’t correct and when you actually join your home lab it will have an IP assigned by your Firewalla Gold that is in the subnet of your home lab.</p>
+
+<p>For my setup, I want to have a wireless home lab network.  To set this up, I’ll select the <code class="language-plaintext highlighter-rouge">WiFi</code> tab in the same settings menu.  Create the name of your wireless network.  I’m keeping the same trend as before, <code class="language-plaintext highlighter-rouge">Home Lab Network</code> (boring I know).  Create a unique password for your home lab network.  Lastly, make sure to select the newly created <code class="language-plaintext highlighter-rouge">Network</code> that we created just before this.  The network name I created is called <code class="language-plaintext highlighter-rouge">Homelab</code> .  The last thing I like to do before clicking <code class="language-plaintext highlighter-rouge">Add WiFi Network</code> is click <code class="language-plaintext highlighter-rouge">Advanced</code> → <code class="language-plaintext highlighter-rouge">Security</code> → check <code class="language-plaintext highlighter-rouge">Hide WiFi Name</code> .  I like to hide the SSID of my Home Lab network just so it doesn’t show up when people are actively looking for WiFi networks to join.</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_isolate_homelab_images/2021-05-24_04_configuring_wifi_network_on_unifi.jpg" alt="" width="100%" class="shadow" /></p>
+
+<p>After hitting <code class="language-plaintext highlighter-rouge">Add WiFi Network</code> you should now see your newly created WiFi network in the list of current WiFi networks.</p>
+
+<h2 id="configuring-firewall-rule-to-block-traffic-between-internal-networks">Configuring Firewall Rule to Block Traffic between Internal Networks:</h2>
+
+<p>Now that we have our newly created home lab network up and running, we should create some firewall rules to make sure we properly isolate our home lab network from the rest of our internally created networks.  To do this, we need to jump back into our Firewalla Gold app.</p>
+
+<p>From the app select <code class="language-plaintext highlighter-rouge">Rules</code> → <code class="language-plaintext highlighter-rouge">Add Rule</code> .  For the action, I’ll select <code class="language-plaintext highlighter-rouge">Block</code> . In the <code class="language-plaintext highlighter-rouge">Matching</code> section we have two fields we need to configure.  First, we need to set a target: select <code class="language-plaintext highlighter-rouge">Local Network</code> → <code class="language-plaintext highlighter-rouge">All Local Networks</code> → <code class="language-plaintext highlighter-rouge">Traffic from &amp; to All Local Networks</code> . Now we need to select which device this rule will apply to.  Click the Select field and select your <code class="language-plaintext highlighter-rouge">Homelab</code> network.  The schedule I will keep always and I’ll add a quick note to the rule <code class="language-plaintext highlighter-rouge">Isolating Homelab network from all other internal networks</code> .  Hit <code class="language-plaintext highlighter-rouge">Save</code> and you should now see another rule in the list specifically for your home lab.</p>
+
+<p style="text-align: center;"><img src="assets/images/blog/how_to_isolate_homelab_images/2021-05-24_05_Creating_firewall_rule.jpg" alt="" width="40%" class="shadow" /></p>
+
+<p>Thats all that I need to do to create a homelab wifi network and properly isolate it from the rest of my internal networks.  Firewalla Gold makes this process extremely easy and is probably different from how other devices create VLANs and firewall rules.  If you run into trouble with your device, check out forums for assistance.  I’ve found Reddit extremely helpful for finding help. Especially if you join that device’s specific subreddit.</p>
+
+<h2 id="final-thoughts">Final Thoughts:</h2>
+
+<p>The network appliances that you have at home might be vastly different from the ones I have. You might even only have that Netgear Nighthawk router and thats ok.  It is an investment to grab some of the equipment I have in this post and is something I bought over a number of months.  It might not even be something that you want to invest in and thats ok too.  Most of these all-in-one routers have the ‘Guest Network’ feature that can be easily turned on and sufficiently blocks the Guest Network from accessing the rest of your devices.  Thats really all that is needed.</p>
+
+<p>If you are someone trying to get into networking and understanding firewall rules, investing in this type of gear can be extremely beneficial for you.  I myself tend to learn the best when I build things and set things up on my own vs watching videos or reading a book about it.</p>
+
+<p>Hopefully you found this post helpful in some way.  If you have any questions, comments or just want to chat you can find me on <a href="https://twitter.com/Cyber_Sec_JD">Twitter</a>.</p>
+
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Open Threat Research Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-joshua.jpeg" alt="joshua" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/joshua">Joshua Dunn</a></h4>
+                                
+                                    <p>Threat Intel Analyst, Wanna be Malware Researcher</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/joshua">Read More</a>
+                        </div>
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/how_to_set_up_homelab_blog">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/how_to_set_up_homelab_blog">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Vmware</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Malware</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Malware_analysis</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Remnux</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Flare</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-joshua.jpeg" alt="Joshua Dunn" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/joshua/">Joshua Dunn</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://blog.openthreatresearch.com/">
+            
+                <img src="/assets/images/favicon.png" alt="Open Threat Research Blog icon" />
+            
+            <span>Open Threat Research Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Malware+Analysis+Series+-+Part+2%2C+How+to+Isolate+our+Homelab+with+Network+Segmentation&amp;url=how_to_isolate_homelab"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=how_to_isolate_homelab"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2021</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/OTR_Community" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Open Threat Research Blog</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

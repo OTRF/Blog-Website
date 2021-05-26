@@ -11,7 +11,7 @@
 
 
 
-    <title>Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
+    <title>Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -42,7 +42,7 @@
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+    <meta property="og:title" content="Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab" />
     <meta property="og:description" content="Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field." />
     <meta property="og:url" content="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" />
     <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg" />
@@ -52,7 +52,7 @@
     <meta property="article:modified_time" content="2021-04-29T08:00:00-04:00" />
     <meta property="article:tag" content="Vmware" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+    <meta name="twitter:title" content="Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab" />
     <meta name="twitter:description" content="Introduction: Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis. The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are. This is something that has always drawn me to the field." />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
     <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg" />
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab" href="/feed.xml" />
 
 
 </head>
@@ -183,7 +183,7 @@ into the {body} of the default.hbs template -->
                         
                     
                 </section>
-                <h1 class="post-full-title">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</h1>
+                <h1 class="post-full-title">Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</h1>
             </header>
 
             
@@ -246,7 +246,7 @@ into the {body} of the default.hbs template -->
   <li>Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like <code class="language-plaintext highlighter-rouge">Fresh Win10 Install</code>. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.</li>
   <li>When you start the machine, if VMWare prompts you to upgrade, click <code class="language-plaintext highlighter-rouge">Upgrade</code>.</li>
   <li>The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>slmgr.vbs /alo
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>slmgr.vbs /ato
 </code></pre></div>    </div>
   </li>
   <li>VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.</li>
@@ -293,9 +293,10 @@ into the {body} of the default.hbs template -->
 
 <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg" alt="" width="80%" class="shadow" /></p>
 
-<p>Once the install is done, run the command to update FLARE:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cup all
-</code></pre></div></div>
+<p>Once the install is done, run the command to update FLARE:
+    <code class="language-plaintext highlighter-rouge">
+    cup all
+   </code></p>
 
 <p>After the update is finished, reboot and log back in.  Then take another snapshot and name it something like <code class="language-plaintext highlighter-rouge">Fresh install of FLARE-VM</code>.</p>
 
@@ -318,7 +319,7 @@ into the {body} of the default.hbs template -->
     <p style="text-align: center;"><img src="assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg" alt="" width="80%" class="shadow" /></p>
   </li>
   <li>Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> remnux update &amp;&amp; remnux upgrade
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> remnux upgrade
 </code></pre></div>    </div>
   </li>
   <li>After running the upgrade command we should reboot:
@@ -465,6 +466,75 @@ into the {body} of the default.hbs template -->
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/how_to_isolate_homelab">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/how_to_isolate_homelab">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Firewalla_gold</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Unifi</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Malware</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Malware_analysis</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-joshua.jpeg" alt="Joshua Dunn" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/joshua/">Joshua Dunn</a>
+                        </span>
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -545,13 +615,13 @@ into the {body} of the default.hbs template -->
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</div>
+    <div class="floating-header-title">Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Malware+Analysis+Series+-+Setting+Up+a+Basic+Malware+Analysis+Virtual+Lab&amp;url=how_to_set_up_homelab_blog"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Malware+Analysis+Series+-+Part+1%2C+Setting+Up+a+Basic+Malware+Analysis+Virtual+Lab&amp;url=how_to_set_up_homelab_blog"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 

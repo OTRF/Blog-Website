@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/vmware/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-04-30T00:06:12-04:00</updated>
+  <updated>2021-05-26T10:25:33-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/vmware/feed.xml</id>
 
   
@@ -40,8 +40,8 @@
 
   
     <entry>
-      <title type="html">Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
-      <link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab" />
+      <title type="html">Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</title>
+      <link href="https://blog.openthreatresearch.com/how_to_set_up_homelab_blog" rel="alternate" type="text/html" title="Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab" />
       <published>2021-04-29T08:00:00-04:00</published>
       <updated>2021-04-29T08:00:00-04:00</updated>
       <id>https://blog.openthreatresearch.com/how_to_set_up_homelab_blog</id>
@@ -98,7 +98,7 @@
   &lt;li&gt;Before we power on the Windows 10 machine for the first time, we should take a snapshot.  Name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh Win10 Install&lt;/code&gt;. Microsoft states that the image expires after 90 days so this could cause problems with your FLARE VM in the future. By taking a snapshot before you start the VM, that snapshot will not start the expiration timer until it is booted up for the first time.&lt;/li&gt;
   &lt;li&gt;When you start the machine, if VMWare prompts you to upgrade, click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Upgrade&lt;/code&gt;.&lt;/li&gt;
   &lt;li&gt;The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type:
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /alo
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slmgr.vbs /ato
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;VMWare should prompt you to install VMware’s Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware’s Virtual Tools.&lt;/li&gt;
@@ -145,9 +145,10 @@
 
 &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_06_flare_vm_desktop_image.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Once the install is done, run the command to update FLARE:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cup all
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Once the install is done, run the command to update FLARE:
+    &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;
+    cup all
+   &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;After the update is finished, reboot and log back in.  Then take another snapshot and name it something like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Fresh install of FLARE-VM&lt;/code&gt;.&lt;/p&gt;
 
@@ -170,7 +171,7 @@
     &lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_07_running_ifconfig_in_remnux.jpg&quot; alt=&quot;&quot; width=&quot;80%&quot; class=&quot;shadow&quot; /&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux update &amp;amp;&amp;amp; remnux upgrade
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; remnux upgrade
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;After running the upgrade command we should reboot:

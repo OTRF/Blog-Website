@@ -8,7 +8,22 @@
     
       
       <item>
-        <title>Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab</title>
+        <title>Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</title>
+        
+          <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
+
+</description>
+        
+        <pubDate>Wed, 26 May 2021 08:00:00 -0400</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/how_to_isolate_homelab</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/how_to_isolate_homelab</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab</title>
         
           <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;
 &lt;p&gt;Since joining the Cyber Security and Intelligence community in 2016, I’ve always had a strong interest in malware analysis.  The process of breaking something down, looking at its individual parts, testing hypotheses as to what its capabilities are.  This is something that has always drawn me to the field.  Its also a field that is extremely new to me.  I’ve only just started to learn how to setup a proper lab and all the various techniques that exist to breakdown and understand malware.  Because of that, I wanted to start a blog series to document my process for others, in hopes that my journey will make it easier for anyone trying to get started in the field.&lt;/p&gt;
