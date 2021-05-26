@@ -13,7 +13,7 @@ author: joshua
 
 # Introduction:
 
-In part one of this series, we established a solid foundation to begin our malware analysis journey.  We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use REMnux as its Gateway and DNS so that we could monitor its network communications.  We tested this by setting up INetSim on REMnux and trying to connect to a "malicious" site on our FLARE VM.
+In [part one](https://blog.openthreatresearch.com/how_to_set_up_homelab_blog) of this series, we established a solid foundation to begin our malware analysis journey.  We successfully stood up two VMs; a Windows(FLARE) machine and a Linux(REMnux) machine. Put them on their own isolated virtual network without access to the internet. Lastly, we configured FLARE to use REMnux as its Gateway and DNS so that we could monitor its network communications.  We tested this by setting up INetSim on REMnux and trying to connect to a "malicious" site on our FLARE VM.
 
 In part 2, we will be looking at isolating our home lab machine from the rest of our network through network segmentation.  Network segmentation is a critical component of secure network architecture.  It is a way of dividing a network into various segments, usually referred as subnets, that act as their own smaller network.  This offers several benefits including better control over the flow of traffic between different subnets through the use of policies which enhances security.  Businesses and enterprises have used network segmentation for years but can be just as beneficial to home networks.  These benefits can extend way beyond our malware analysis series as well.
 
