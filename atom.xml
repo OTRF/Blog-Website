@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Simulating Cobalt Strike Beacon Activity</title>
+        
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using &lt;a href=&quot;https://github.com/NextronSystems/APTSimulator&quot;&gt;APTSimulator&lt;/a&gt; in a Windows 10 virtual machine.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Wed, 16 Jun 2021 08:00:00 -0400</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</title>
         
           <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction:&lt;/h1&gt;

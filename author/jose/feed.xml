@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/jose/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-05-26T11:02:30-04:00</updated>
+  <updated>2021-06-16T11:01:02-04:00</updated>
   <id>https://blog.openthreatresearch.com/author/jose/feed.xml</id>
 
   
@@ -38,6 +38,133 @@
   
   
 
+  
+    <entry>
+      <title type="html">Simulating Cobalt Strike Beacon Activity</title>
+      <link href="https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon" rel="alternate" type="text/html" title="Simulating Cobalt Strike Beacon Activity" />
+      <published>2021-06-16T08:00:00-04:00</published>
+      <updated>2021-06-16T08:00:00-04:00</updated>
+      <id>https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon">&lt;p&gt;In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using &lt;a href=&quot;https://github.com/NextronSystems/APTSimulator&quot;&gt;APTSimulator&lt;/a&gt; in a Windows 10 virtual machine.&lt;/p&gt;
+
+&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
+&lt;p&gt;In order to complete the steps of this blogpost, you need to clone the APTSimulator project in your computer.&lt;/p&gt;
+
+&lt;h3 id=&quot;a-using-git-clone&quot;&gt;a) Using Git Clone&lt;/h3&gt;
+&lt;p&gt;Run the following commands to clone the repository in your preferred directory.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/NextronSystems/APTSimulator.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;b-downloading-the-github-repository-in-zip-format&quot;&gt;b) Downloading the GitHub Repository in Zip Format&lt;/h3&gt;
+&lt;p&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download Zip&lt;/code&gt; option from the GitHub website to download the repository files in your preferred directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_01_zip_download.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If the Windows Defender antivirus application is on, it might block the download process.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_02_threat_found.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are some examples of files categorized as threats by Windows Defender&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_03_current_threats_found.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After turning the Windows Defender antivirus application off, you should be able to download the APTSimulator zip folder.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_04_zip_file_downloaded.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After downloading the zip folder, you will need to extract the APTSimulator files.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_05_extracting_zip_content.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select a preferred destination for the APTSimulator files. For the purpose of this blogpost, I will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Documents&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_06_selecting_zip_destination.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should be able to see the APTSimulator files now.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_07_zip_files_extracted.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;simulating-cobalt-strike-beaconing&quot;&gt;Simulating Cobalt Strike Beaconing&lt;/h2&gt;
+&lt;h3 id=&quot;1-extracting-tools-and-files&quot;&gt;1) Extracting Tools and Files&lt;/h3&gt;
+&lt;p&gt;Open the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Command Prompt (CMD)&lt;/code&gt; with Administrator rights.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_08_cmd_administrator.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Execute the following commands to change your current directory to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APTSimulator-master&lt;/code&gt; folder and run the &lt;strong&gt;build_pack.bat&lt;/strong&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd Documents/APTSimulator-master
+
+build_pack.bat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_09_build_pack.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-executing-aptsimulator&quot;&gt;2) Executing APTSimulator&lt;/h3&gt;
+&lt;p&gt;In the same Command Prompt (CMD) window with Administrator rights, use the following commands to execute the &lt;strong&gt;APTSimulator.bat&lt;/strong&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;APTSimulator.bat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_10_aptsimulator_command.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After executing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.bat&lt;/code&gt; file, you will get a warning message that you need to answer with &lt;strong&gt;Y&lt;/strong&gt; (Yes).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_11_aptsimulator_warning.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After answering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt; to the warning message, you will see all the options provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APTSimulator&lt;/code&gt;. For the purpose of this blogpost, I will use the &lt;strong&gt;CobaltStrike Beacon Simulation&lt;/strong&gt; option that is represented by the letter &lt;strong&gt;C&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_12_aptsimulator_options.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-simulating-cobalt-strike-beaconing&quot;&gt;3) Simulating Cobalt Strike Beaconing&lt;/h3&gt;
+&lt;p&gt;Running option C will allow you to start the simulation process.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_13_cobalt_strike_simulation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After the creation of named pipes and services, you will see HTTP beaconing activity (http://10.0.2.15/pixel.gif).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_14_cobalt_strike_beaconing.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;do-you-want-to-analyze-sample-data-for-this-behavior&quot;&gt;Do you want to analyze sample data for this behavior?&lt;/h2&gt;
+&lt;p&gt;I have created a pre-recorded Mordor dataset with Sysmon, Security, and System events that were triggered when simulating &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cobalt Strike Beacon Activity&lt;/code&gt; using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APTSimulator&lt;/code&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mordordatasets.com/notebooks/small/windows/05_defense_evasion/SDWIN-210611210814.html&quot;&gt;Dataset metadata&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/other/aptsimulator_cobaltstrike.zip&quot;&gt;Dataset&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/NextronSystems/APTSimulator&lt;/li&gt;
+  &lt;li&gt;https://twitter.com/cyb3rops/status/1403253268051107840&lt;/li&gt;
+  &lt;li&gt;https://twitter.com/OTR_Community/status/1403551913459728387&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="cobalt-strike" />
+      
+        <category term="mordor" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using APTSimulator in a Windows 10 virtual machine.</summary>
+      
+
+      
+      
+    </entry>
   
     <entry>
       <title type="html">PySpark.SQL and Jupyter Notebooks on Visual Studio Code (Python kernel)</title>
@@ -1227,183 +1354,6 @@ import requests
 
       
         <summary type="html">In this blogpost, I will share the steps that you can follow in order to install Java (1.8.0_281) on a Windows computer using Firefox as web browser.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Installing Jekyll - Windows</title>
-      <link href="https://blog.openthreatresearch.com/installing_jekyll" rel="alternate" type="text/html" title="Installing Jekyll - Windows" />
-      <published>2020-12-01T07:00:00-05:00</published>
-      <updated>2020-12-01T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/installing_jekyll</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_jekyll">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-jekyll&quot;&gt;Installing Jekyll&lt;/h2&gt;
-&lt;h3 id=&quot;1-downloading-ruby--devkit-executable&quot;&gt;1) Downloading Ruby + Devkit Executable&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://rubyinstaller.org/downloads/&quot;&gt;Ruby Installers Downloads&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby+Devkit 2.7.2-1 (x64)&lt;/code&gt; under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WITH DEVKIT&lt;/code&gt; section.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_jekyll_ruby_download.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_jekyll_save_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-running-ruby--devkit-executable&quot;&gt;2) Running Ruby + Devkit Executable&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;In your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the Ruby + Devkit executable and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_jekyll_open_file.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-completing-the-ruby--devkit-setup&quot;&gt;3) Completing the Ruby + Devkit Setup&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accept&lt;/code&gt; the license and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_jekyll_accept_license.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select the installation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Destination&lt;/code&gt; folder and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_jekyll_installation_destination.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select the components that should be installed. Check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ruby RI&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MSYS2 development toolchain&lt;/code&gt; boxes.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_jekyll_select_components.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_jekyll_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Run ridk install&lt;/code&gt; box and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Finish&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;A command prompt window will be opened.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_jekyll_finish_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-installing-msys2&quot;&gt;3) Installing MSYS2&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Type &lt;strong&gt;1&lt;/strong&gt; and press enter in order to install the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MYSYS2 base&lt;/code&gt; component.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_09_jekyll_msys2_installer.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_10_jekyll_msys2_waiting_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;close&lt;/code&gt; the command prompt window.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_msys2_installation_complete.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-installing-jekyll&quot;&gt;4) Installing Jekyll&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install jekyll
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_jekyll_gem_install_jekyll.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wai&lt;/code&gt;t for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_jekyll_gem_install_jekyll_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll -v
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_jekyll_installation_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Close the command prompt window.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;installing-additional-components-bundler&quot;&gt;Installing Additional Components: Bundler&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; a new command prompt window and run the following command.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install bundler
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_jekyll_gem_install_bundler.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wait&lt;/code&gt; for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_15_jekyll_gem_install_bundler_waiting.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;After the installation process is completed, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;run&lt;/code&gt; the following command to validate that the installation was successful.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle -v
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_16_jekyll_gem_install_bundler_validation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Close&lt;/code&gt; the command prompt window.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://jekyllrb.com/&lt;/li&gt;
-  &lt;li&gt;https://rubyinstaller.org/downloads/&lt;/li&gt;
-&lt;/ul&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Jose Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="jekyll" />
-      
-
-      
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install jekyll (4.2.0) on a Windows computer using Firefox as web browser and the command prompt. After completing all the steps of this blog, you should be able to deploy a website locally in your computer.</summary>
       
 
       

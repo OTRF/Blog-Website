@@ -11,7 +11,7 @@
 
 
 
-    <title>How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</title>
+    <title>Simulating Cobalt Strike Beacon Activity</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
     <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory" />
-    <meta property="og:description" content="I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory. In this post, I will show you" />
-    <meta property="og:url" content="https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup" />
-    <meta property="og:image" content="https://blog.openthreatresearch.com/false" />
+    <meta property="og:title" content="Simulating Cobalt Strike Beacon Activity" />
+    <meta property="og:description" content="In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using APTSimulator in a Windows 10 virtual machine. Pre-requisites In order to complete the steps of this blogpost, you need to clone the APTSimulator project in your computer. a) Using Git Clone" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_00_APTSimulator_blogpost_image.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2020-12-31T10:00:00-05:00" />
-    <meta property="article:modified_time" content="2020-12-31T10:00:00-05:00" />
-    <meta property="article:tag" content="Azure" />
+    <meta property="article:published_time" content="2021-06-16T08:00:00-04:00" />
+    <meta property="article:modified_time" content="2021-06-16T08:00:00-04:00" />
+    <meta property="article:tag" content="Cobalt-strike" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory" />
-    <meta name="twitter:description" content="I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory. In this post, I will show you" />
+    <meta name="twitter:title" content="Simulating Cobalt Strike Beacon Activity" />
+    <meta name="twitter:description" content="In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using APTSimulator in a Windows 10 virtual machine. Pre-requisites In order to complete the steps of this blogpost, you need to clone the APTSimulator project in your computer. a) Using Git Clone" />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
-    <meta name="twitter:image" content="https://blog.openthreatresearch.com/false" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_00_APTSimulator_blogpost_image.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Open Threat Research Blog" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Azure" />
+    <meta name="twitter:data2" content="Cobalt-strike" />
     <meta name="twitter:site" content="@OTR_Community" />
     <meta name="twitter:creator" content="@OTR_Community" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Open Threat Research Blog",
         "logo": "https://blog.openthreatresearch.com/false"
     },
-    "url": "https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup",
+    "url": "https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon",
     "image": {
         "@type": "ImageObject",
-        "url": "https://blog.openthreatresearch.com/false",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_00_APTSimulator_blogpost_image.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.openthreatresearch.com/azure_ad_connect_sync_adfs_setup"
+        "@id": "https://blog.openthreatresearch.com/apt-simulator-cobalt-strike-beacon"
     },
-    "description": "I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory. In this post, I will show you"
+    "description": "In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using APTSimulator in a Windows 10 virtual machine. Pre-requisites In order to complete the steps of this blogpost, you need to clone the APTSimulator project in your computer. a) Using Git Clone"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Simulating Cobalt Strike Beacon Activity" href="/feed.xml" />
 
 
 </head>
@@ -153,154 +153,125 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-azure tag-adfs post no-image">
+        <article class="post-full  tag-cobalt-strike tag-mordor post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="31 December 2020">31 December 2020</time>
+                    <time class="post-full-meta-date" datetime="16 June 2021">16 June 2021</time>
                     
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/azure/'>AZURE</a>,
+                               <a href='/tag/cobalt-strike/'>COBALT-STRIKE</a>,
                             
                         
                             
-                               <a href='/tag/adfs/'>ADFS</a>
+                               <a href='/tag/mordor/'>MORDOR</a>
                             
                         
                     
                 </section>
-                <h1 class="post-full-title">How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</h1>
+                <h1 class="post-full-title">Simulating Cobalt Strike Beacon Activity</h1>
             </header>
 
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_00_APTSimulator_blogpost_image.png)">
+            </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>I deployed a lab environment to learn more about federation access between an “on-prem” lab environment and the cloud. I basically wanted to learn how to federate a custom domain in my Azure AD tenant from my Microsoft 365 subscription with on-prem directory.</p>
+                    <p>In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using <a href="https://github.com/NextronSystems/APTSimulator">APTSimulator</a> in a Windows 10 virtual machine.</p>
 
-<p>In this post, I will show you how to set up <a href="https://docs.microsoft.com/en-us/azure/active-directory/hybrid/whatis-azure-ad-connect">Azure AD connect</a> on a domain controller to sync and federate an Azure AD custom domain with on-prem directory. This is done to leverage on-prem Active Directory Federation Services (ADFS) and allow on-prem users to authenticate to cloud services with the same credentials.</p>
+<h2 id="pre-requisites">Pre-requisites</h2>
+<p>In order to complete the steps of this blogpost, you need to clone the APTSimulator project in your computer.</p>
 
-<h2 id="what-is-azure-ad-connect">What is Azure AD Connect?</h2>
+<h3 id="a-using-git-clone">a) Using Git Clone</h3>
+<p>Run the following commands to clone the repository in your preferred directory.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/NextronSystems/APTSimulator.git
+</code></pre></div></div>
+<h3 id="b-downloading-the-github-repository-in-zip-format">b) Downloading the GitHub Repository in Zip Format</h3>
+<p>Use the <code class="language-plaintext highlighter-rouge">Download Zip</code> option from the GitHub website to download the repository files in your preferred directory.</p>
 
-<blockquote>
-  <p>Azure AD Connect is the Microsoft tool designed to meet and accomplish your hybrid identity goals.</p>
-</blockquote>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_01_zip_download.png" alt="" /></p>
 
-<h2 id="why-use-azure-ad-connect">WHy Use Azure AD Connect?</h2>
+<p>If the Windows Defender antivirus application is on, it might block the download process.</p>
 
-<blockquote>
-  <p>Integrating your on-premises directories with Azure AD makes your users more productive by providing a common identity for accessing both cloud and on-premises resources.</p>
-</blockquote>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_02_threat_found.png" alt="" /></p>
 
-<h2 id="initialize-azure-ad-connect-setup">Initialize Azure AD Connect Setup</h2>
+<p>Here are some examples of files categorized as threats by Windows Defender</p>
 
-<p>Click on the Azure AD connect icon after downloading it and installing it your domain controller. You can download and install it with the following PowerShell commands (Remember this is not setting it up. Only installing Azure AD Connect resources)</p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_03_current_threats_found.png" alt="" /></p>
 
-<pre><code class="language-PowerShell">Resolve-DnsName download.microsoft.com
-$AADConnectDLUrl="https://download.microsoft.com/download/B/0/0/B00291D0-5A83-4DE7-86F5-980BC00DE05A/AzureADConnect.msi"
-$exe="$env:SystemRoot\system32\msiexec.exe"
+<p>After turning the Windows Defender antivirus application off, you should be able to download the APTSimulator zip folder.</p>
 
-$tempfile = [System.IO.Path]::GetTempFileName()
-$folder = [System.IO.Path]::GetDirectoryName($tempfile)
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_04_zip_file_downloaded.png" alt="" /></p>
 
-$webclient = New-Object System.Net.WebClient
-$webclient.DownloadFile($AADConnectDLUrl, $tempfile)
+<p>After downloading the zip folder, you will need to extract the APTSimulator files.</p>
 
-Rename-Item -Path $tempfile -NewName "AzureADConnect.msi"
-$MSIPath = $folder + "\AzureADConnect.msi"
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_05_extracting_zip_content.png" alt="" /></p>
 
-Invoke-Expression "&amp; `"$exe`" /i $MSIPath /qn /passive /norestart"
-</code></pre>
+<p>Select a preferred destination for the APTSimulator files. For the purpose of this blogpost, I will use the <code class="language-plaintext highlighter-rouge">Documents</code> folder.</p>
 
-<p>Double-click on the Azure AD Connect Icon on the desktop</p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_06_selecting_zip_destination.png" alt="" /></p>
 
-<p><img src="assets/images/blog/2020-12-31_01_dc_azuread_connect_setup.png" alt="" /></p>
+<p>You should be able to see the APTSimulator files now.</p>
 
-<h2 id="custom-setup">Custom Setup</h2>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_07_zip_files_extracted.png" alt="" /></p>
 
-<p>Select the <code class="language-plaintext highlighter-rouge">Customize</code> option</p>
+<h2 id="simulating-cobalt-strike-beaconing">Simulating Cobalt Strike Beaconing</h2>
+<h3 id="1-extracting-tools-and-files">1) Extracting Tools and Files</h3>
+<p>Open the <code class="language-plaintext highlighter-rouge">Command Prompt (CMD)</code> with Administrator rights.</p>
 
-<p><img src="assets/images/blog/2020-12-31_02_dc_azuread_connect_custom.png" alt="" /></p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_08_cmd_administrator.png" alt="" /></p>
 
-<h2 id="required-components">Required Components</h2>
+<p>Execute the following commands to change your current directory to the <code class="language-plaintext highlighter-rouge">APTSimulator-master</code> folder and run the <strong>build_pack.bat</strong> file.</p>
 
-<p>Do not select any options. Just keep the default setup and click <code class="language-plaintext highlighter-rouge">Install</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd Documents/APTSimulator-master
 
-<p><img src="assets/images/blog/2020-12-31_03_dc_azuread_connect_required.png" alt="" /></p>
+build_pack.bat
+</code></pre></div></div>
 
-<p><img src="assets/images/blog/2020-12-31_04_dc_azuread_connect_required.png" alt="" /></p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_09_build_pack.png" alt="" /></p>
 
-<h2 id="select-sign-in-methods">Select Sign-In Methods</h2>
+<h3 id="2-executing-aptsimulator">2) Executing APTSimulator</h3>
+<p>In the same Command Prompt (CMD) window with Administrator rights, use the following commands to execute the <strong>APTSimulator.bat</strong> file.</p>
 
-<p>We are going to use our “on-prem” ADFS server as the indentity provider to handle federation services. Therefore, we need to click on <code class="language-plaintext highlighter-rouge">Federation with AD FS</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>APTSimulator.bat
+</code></pre></div></div>
 
-<p><img src="assets/images/blog/2020-12-31_05_dc_azuread_connect_signon_method.png" alt="" /></p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_10_aptsimulator_command.png" alt="" /></p>
 
-<h2 id="enter-azure-ad-global-admin-creds">Enter Azure AD Global Admin Creds</h2>
+<p>After executing the <code class="language-plaintext highlighter-rouge">.bat</code> file, you will get a warning message that you need to answer with <strong>Y</strong> (Yes).</p>
 
-<p><img src="assets/images/blog/2020-12-31_06_dc_azuread_connect_azuread.png" alt="" /></p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_11_aptsimulator_warning.png" alt="" /></p>
 
-<h2 id="set-up-sync">Set Up Sync</h2>
+<p>After answering <code class="language-plaintext highlighter-rouge">Yes</code> to the warning message, you will see all the options provided by <code class="language-plaintext highlighter-rouge">APTSimulator</code>. For the purpose of this blogpost, I will use the <strong>CobaltStrike Beacon Simulation</strong> option that is represented by the letter <strong>C</strong>.</p>
 
-<p>Enter “On-Prem” Active Directory</p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_12_aptsimulator_options.png" alt="" /></p>
 
-<p><img src="assets/images/blog/2020-12-31_07_dc_azuread_connect_sync_ad.png" alt="" /></p>
+<h3 id="3-simulating-cobalt-strike-beaconing">3) Simulating Cobalt Strike Beaconing</h3>
+<p>Running option C will allow you to start the simulation process.</p>
 
-<h2 id="create-azure-ad-sync-account">Create Azure AD Sync Account</h2>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_13_cobalt_strike_simulation.png" alt="" /></p>
 
-<p><img src="assets/images/blog/2020-12-31_08_dc_azuread_connect_sync_account.png" alt="" /></p>
+<p>After the creation of named pipes and services, you will see HTTP beaconing activity (http://10.0.2.15/pixel.gif).</p>
 
-<p><img src="assets/images/blog/2020-12-31_09_dc_azuread_connect_sync_ad.png" alt="" /></p>
+<p><img src="assets/images/blog/cobalt_strike_beacon_simulation/2021-06-14_14_cobalt_strike_beaconing.png" alt="" /></p>
 
-<h2 id="set-up-azure-sign-in-to-use-same-creds-as-our-on-prem-directory">Set Up Azure Sign-In to use same creds as our “On-prem” directory</h2>
+<h2 id="do-you-want-to-analyze-sample-data-for-this-behavior">Do you want to analyze sample data for this behavior?</h2>
+<p>I have created a pre-recorded Mordor dataset with Sysmon, Security, and System events that were triggered when simulating <code class="language-plaintext highlighter-rouge">Cobalt Strike Beacon Activity</code> using <code class="language-plaintext highlighter-rouge">APTSimulator</code>.</p>
 
-<p><img src="assets/images/blog/2020-12-31_10_dc_azuread_connect_sync_signin.png" alt="" /></p>
-
-<h2 id="select-ous-to-sync">Select OUs to Sync</h2>
-
-<p><img src="assets/images/blog/2020-12-31_11_dc_azuread_connect_sync_ou.png" alt="" /></p>
-
-<h2 id="identify-users">Identify Users</h2>
-
-<p><img src="assets/images/blog/2020-12-31_12_dc_azuread_connect_sync_identify_users.png" alt="" /></p>
-
-<h2 id="synchronize-all-users">Synchronize All Users</h2>
-
-<p><img src="assets/images/blog/2020-12-31_13_dc_azuread_connect_sync_all_users.png" alt="" /></p>
-
-<h2 id="skip-optional-features">Skip Optional Features</h2>
-
-<p><img src="assets/images/blog/2020-12-31_14_dc_azuread_connect_sync_skip_opt.png" alt="" /></p>
-
-<h2 id="provide-creds-for-on-prem-domain">Provide Creds for On-prem Domain</h2>
-
-<p><img src="assets/images/blog/2020-12-31_15_dc_azuread_connect_domain_creds.png" alt="" /></p>
-
-<h2 id="choose-existing-adfs-server">Choose Existing ADFS Server</h2>
-
-<p><img src="assets/images/blog/2020-12-31_16_dc_azuread_connect_use_existing_adfs.png" alt="" /></p>
-
-<h2 id="select-azure-ad-domain-to-federate-with-on-prem-directory">Select Azure AD domain to federate with on-prem directory</h2>
-
-<p><img src="assets/images/blog/2020-12-31_17_dc_azuread_connect_use_domain_to_federate.png" alt="" /></p>
-
-<h2 id="ready-to-configure">Ready to configure</h2>
-
-<p><img src="assets/images/blog/2020-12-31_18_dc_azuread_connect_ready_configure.png" alt="" /></p>
-
-<h2 id="configuration-complete">Configuration Complete</h2>
-
-<p><img src="assets/images/blog/2020-12-31_19_dc_azuread_connect_config_complete.png" alt="" /></p>
-
-<h2 id="verify-federation-connectivity">Verify Federation Connectivity</h2>
-
-<p><img src="assets/images/blog/2020-12-31_20_dc_azuread_connect_verify_connectivity.png" alt="" /></p>
+<ul>
+  <li><a href="https://mordordatasets.com/notebooks/small/windows/05_defense_evasion/SDWIN-210611210814.html">Dataset metadata</a></li>
+  <li><a href="https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/other/aptsimulator_cobaltstrike.zip">Dataset</a></li>
+</ul>
 
 <h2 id="references">References</h2>
 <ul>
-  <li>https://docs.microsoft.com/en-us/azure/active-directory/hybrid/whatis-azure-ad-connect</li>
+  <li>https://github.com/NextronSystems/APTSimulator</li>
+  <li>https://twitter.com/cyb3rops/status/1403253268051107840</li>
+  <li>https://twitter.com/OTR_Community/status/1403551913459728387</li>
 </ul>
 
                 </div>
@@ -329,22 +300,22 @@ Invoke-Expression "&amp; `"$exe`" /i $MSIPath /qn /passive /norestart"
                 <!-- #author-->
                 
                     
+                
+                    
                         <section class="author-card">
                             
-                                <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="roberto" />
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="jose" />
                             
                             <section class="author-card-content">
-                                <h4 class="author-card-name"><a href="/author/roberto">Roberto Rodriguez</a></h4>
+                                <h4 class="author-card-name"><a href="/author/jose">Jose Rodriguez</a></h4>
                                 
                                     <p>Security Researcher</p>
                                 
                             </section>
                         </section>
                         <div class="post-full-footer-right">
-                            <a class="author-card-button" href="/author/roberto">Read More</a>
+                            <a class="author-card-button" href="/author/jose">Read More</a>
                         </div>
-                    
-                
                     
                 
                     
@@ -375,189 +346,45 @@ Invoke-Expression "&amp; `"$exe`" /i $MSIPath /qn /passive /norestart"
                 
                 
                 
-                    <article class="read-next-card"
-                        
-                            
-                        
-                    >
-                        <header class="read-next-card-header">
-                            <small class="read-next-card-header-sitetitle">&mdash; Open Threat Research Blog &mdash;</small>
-                            
-                                <h3 class="read-next-card-header-title"><a href="/tag/azure/">Azure</a></h3>
-                            
-                        </header>
-                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
-</div>
-                        <div class="read-next-card-content">
-                            <ul>
-                                
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/microsoft365-identity-sensors-install">How to set up a Microsoft Defender for Identity Sensor on a Domain Controller</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                    
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/azure_storage_account_via_arm_private_files">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                
-                                  
-                                    
-                                        
-                                        
-                                            <li><a href="/ms365-add-custom-domain">Adding a Custom Domain to Microsoft 365</a></li>
-                                        
-                                    
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                                  
-                                
-                            </ul>
-                        </div>
-                        <footer class="read-next-card-footer">
-                            <a href="/tag/azure/">
-                                
-                                    See all 3 posts  →
-                                
-                            </a>
-                        </footer>
-                    </article>
-                
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
-            
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/first_jupyter_notebook_vscode">
-                <div class="post-card-image" style="background-image: url(/assets/images/blog/2021-01-01_00_notebook_cover.jpg)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/first_jupyter_notebook_vscode">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Jupyter-notebook</span>
-                            
-                        
-                            
-                               <span class="post-card-tags">Vscode</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Python</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">My First Jupyter Notebook on Visual Studio Code (Python kernel)</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p></p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="Jose Rodriguez" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/jose/">Jose Rodriguez</a>
-                        </span>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
                 
 
-    <article class="post-card post-template no-image">
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/how_to_isolate_homelab">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/how_to_isolate_homelab_images/2021-05-24_00_cover_image.jpg)"></div>
+            </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/azure_storage_account_via_arm_private_files">
+            <a class="post-card-content-link" href="/how_to_isolate_homelab">
                 <header class="post-card-header">
                     
                         
                             
-                               <span class="post-card-tags">Azure</span>
+                               <span class="post-card-tags">Firewalla_gold</span>
                             
                         
                             
-                                <span class="post-card-tags">Azure arm</span>
+                               <span class="post-card-tags">Unifi</span>
+                            
+                        
+                            
+                               <span class="post-card-tags">Malware</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Malware_analysis</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">How to Create an Azure Storage Account via Azure Resource Manager Templates to Host Private Files</h2>
+                    <h2 class="post-card-title">Malware Analysis Series - Part 2, How to Isolate our Homelab with Network Segmentation</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
@@ -568,20 +395,20 @@ Invoke-Expression "&amp; `"$exe`" /i $MSIPath /qn /passive /norestart"
             <footer class="post-card-meta">
                 
                     
+                
+                    
+                
+                    
+                
+                    
+                
+                    
                         
-                        <img class="author-profile-image" src="/assets/images/authors/avatar-roberto.png" alt="Roberto Rodriguez" />
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-joshua.jpeg" alt="Joshua Dunn" />
                         
                         <span class="post-card-author">
-                            <a href="/author/roberto/">Roberto Rodriguez</a>
+                            <a href="/author/joshua/">Joshua Dunn</a>
                         </span>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
                     
                 
                 <span class="reading-time">
@@ -611,18 +438,18 @@ Invoke-Expression "&amp; `"$exe`" /i $MSIPath /qn /passive /norestart"
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">How to Set Up Azure AD Connect to Sync and Federate Custom Domain with On-Prem Directory</div>
+    <div class="floating-header-title">Simulating Cobalt Strike Beacon Activity</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=How+to+Set+Up+Azure+AD+Connect+to+Sync+and+Federate+Custom+Domain+with+On-Prem+Directory&amp;url=azure_ad_connect_sync_adfs_setup"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Simulating+Cobalt+Strike+Beacon+Activity&amp;url=apt-simulator-cobalt-strike-beacon"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=azure_ad_connect_sync_adfs_setup"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=apt-simulator-cobalt-strike-beacon"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

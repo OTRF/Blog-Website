@@ -2,10 +2,10 @@
 
 <feed xmlns="http://www.w3.org/2005/Atom" >
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
-  <link href="https://blog.openthreatresearch.com/tag/mordor/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/tag/cobalt-strike/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
   <updated>2021-06-16T11:01:02-04:00</updated>
-  <id>https://blog.openthreatresearch.com/tag/mordor/feed.xml</id>
+  <id>https://blog.openthreatresearch.com/tag/cobalt-strike/feed.xml</id>
 
   
   
@@ -160,109 +160,6 @@ build_pack.bat
 
       
         <summary type="html">In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using APTSimulator in a Windows 10 virtual machine.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)</title>
-      <link href="https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode" rel="alternate" type="text/html" title="Importing a Mordor Dataset with Jupyter Notebooks on Visual Studio Code (Python kernel)" />
-      <published>2021-01-01T07:00:00-05:00</published>
-      <updated>2021-01-01T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/importing-mordor-dataset-jupyter-notebook-vscode">&lt;p&gt;In this blogpost, I will share the steps that you can follow in order to import a Mordor dataset to your workspace on Visual Studio Code (VSCode) using a Jupyter Notebook. During the development of this blogpost I used a Python kernel in a Windows computer.&lt;/p&gt;
-
-&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
-&lt;p&gt;In order to complete the steps of this blogpost, you need to install the following in your windows computer:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_vscode_windows&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Extension for Visual Studio Code&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_extension_vscode&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python Interpreter&lt;/code&gt;: you can find the steps to install it &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_interpreter&quot;&gt;here&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;importing-a-mordor-dataset-to-my-vscode-workspace&quot;&gt;Importing a Mordor Dataset to my VSCode Workspace&lt;/h2&gt;
-&lt;h3 id=&quot;1-creating-a-jupyter-notebook-in-vscode&quot;&gt;1) Creating a Jupyter Notebook in VSCode&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Create a Jupyter Notebook following the steps described on &lt;a href=&quot;https://blog.openthreatresearch.com/first_jupyter_notebook_vscode&quot;&gt;My First Jupyter Notebook on Visual Studio Code (Python kernel)&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_01_mordor_new_notebook.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-importing-python-liraries&quot;&gt;2) Importing Python Liraries&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;For the purpose of this blog, we are using the following libraries: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;io&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipfile&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;If you have not installed any of this libraries, you can install them using a Jupyter Notebook or the terminal on VSCode. The steps to install a Python library either through a Jupyter Notebook or the terminal in VSCode are described &lt;a href=&quot;https://blog.openthreatresearch.com/installing_python_library_vscode&quot;&gt;here&lt;/a&gt;.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import requests
-from io import BytesIO
-from zipfile import ZipFile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_02_mordor_importing libraries.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-getting-mordor-json-file&quot;&gt;3) Getting Mordor Json File&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Let us pick &lt;a href=&quot;https://mordordatasets.com/notebooks/small/windows/02_execution/SDWIN-210314014019.html&quot;&gt;Exchange ProxyLogon SSRF RCE Vuln POC&lt;/a&gt; Mordor dataset as the example for this blogpost.&lt;/li&gt;
-  &lt;li&gt;Within the metadata provided for this dataset, we can find a url that links the GitHub raw file. We are assingning this link to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requests&lt;/code&gt; library, so we can get the content of the raw file.&lt;/li&gt;
-  &lt;li&gt;We are creating a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ZipFile&lt;/code&gt; object after processing the content of our request. The type of content that we received is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Bytes&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;extract&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file that contains multiple security event logs.&lt;/li&gt;
-  &lt;li&gt;We are using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;namelist&lt;/code&gt; method from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zipFile&lt;/code&gt; library, so we can get the name of the file extracted. The name also includes the path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file is sotred. We are assigning the name of the file to the variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jsonFilePath&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
-zipFileRequest = requests.get(url)
-zipFile = ZipFile(BytesIO(zipFileRequest.content))
-jsonFilePath = zipFile.extract(zipFile.namelist()[0])
-jsonFilePath
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;There will be two outputs after running the code of this cell.&lt;/li&gt;
-  &lt;li&gt;At the bottom of the cell, We are getting the complete path or directory where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt; file was stored.&lt;/li&gt;
-  &lt;li&gt;On the left side of your screen, you will see a new file with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.json&lt;/code&gt; extension. This is the mordor dataset that is stored in our VSCode worspace.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2021-01-01_03_mordor_json_file_imported.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;https://mordordatasets.com/introduction.html&lt;/li&gt;
-  &lt;li&gt;https://mordordatasets.com/notebooks/small/windows/02_execution/SDWIN-210314014019.html&lt;/li&gt;
-  &lt;li&gt;https://requests.readthedocs.io/en/master/&lt;/li&gt;
-  &lt;li&gt;https://docs.python.org/3/library/io.html&lt;/li&gt;
-  &lt;li&gt;https://docs.python.org/3/library/zipfile.html&lt;/li&gt;
-&lt;/ul&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Jose Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="mordor" />
-      
-        <category term="jupyter-notebook" />
-      
-        <category term="vscode" />
-      
-        <category term="python" />
-      
-
-      
-        <summary type="html">In this blogpost, I will share the steps that you can follow in order to import a Mordor dataset to your workspace on Visual Studio Code (VSCode) using a Jupyter Notebook. During the development of this blogpost I used a Python kernel in a Windows computer.</summary>
       
 
       
