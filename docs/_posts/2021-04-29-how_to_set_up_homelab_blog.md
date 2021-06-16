@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/images/blog/how_to_setup_homelab_blog_images/2021-04-29_00_malware_analysis_blog_cover_photo.jpg
 navigation: True
-title: Malware Analysis Series - Setting Up a Basic Malware Analysis Virtual Lab
+title: Malware Analysis Series - Part 1, Setting Up a Basic Malware Analysis Virtual Lab
 date: 2021-04-29 12:00:00
 tags: [VMware, Malware, Malware_Analysis, REMnux, FLARE]
 class: post-template
@@ -61,7 +61,7 @@ Lets unzip the file and store it in a location of your choice. Open up VMware's 
 6. When you start the machine, if VMWare prompts you to upgrade, click `Upgrade`.
 7. The VM should activate itself after a few minutes but we can do it manually.  Open a command prompt and type: 
 ``` 
-slmgr.vbs /alo
+slmgr.vbs /ato
 ```
 8. VMWare should prompt you to install VMware's Virtual Tools.  Install the tools and then reboot the machine.   The VM might reboot twice, once for settings updates and another time to successfully install VMware's Virtual Tools.
 9. After the machine logs in successfully after installing VM Virtual Tools.  Take another snapshot and name it something to the effect of, `Win 10 Activated with VM Tools installed`.
@@ -115,9 +115,9 @@ The rest of the installation process is fully automated. Depending upon your int
 {: refdef} 
 
 Once the install is done, run the command to update FLARE:
-```
-cup all
-``` 
+    ```
+    cup all
+    ``` 
 
 After the update is finished, reboot and log back in.  Then take another snapshot and name it something like `Fresh install of FLARE-VM`.
 
@@ -143,7 +143,7 @@ Navigate to the REMnux page link shared above and hit `Download ->` -> `General 
 
 9. Update our REMnux machine. This will update and upgrade all of the tools on Remnux to their latest version.  It might take a several minutes to complete:
     ```
-    remnux update && remnux upgrade
+    remnux upgrade
     ```
 10. After running the upgrade command we should reboot:
     ```

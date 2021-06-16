@@ -95,3 +95,9 @@ FLARE:
 cobalt-strike:
   name: cobalt-strike
   description: Cobalt Strike gives you a post-exploitation agent and covert channels to emulate a quiet long-term embedded actor in your network.
+Firewalla_Gold:
+  name: Firewalla_Gold
+  description: Firewalla Gold, Multi-Gigabit Cyber Security Firewall & Router 
+Unifi:
+  name: Unifi
+  description: Unifi devices are a brand of networking devices sold to businesses and personal users
