@@ -101,3 +101,6 @@ Firewalla_Gold:
 Unifi:
   name: Unifi
   description: Unifi devices are a brand of networking devices sold to businesses and personal users
+ossem:
+  name: OSSEM
+  description: The Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems.
