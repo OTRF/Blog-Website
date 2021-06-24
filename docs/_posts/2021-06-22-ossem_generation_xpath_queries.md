@@ -3,7 +3,7 @@ layout: post
 current: post
 cover:  assets/images/blog/ossem_creating_xpath_queries/2021-06-22_00_blog_image.png
 navigation: True
-title: 'OSSEM Detection Modeling: Leveraging Data Relationships to Generate Windows Event XPath Queries'
+title: 'OSSEM Detection Model: Leveraging Data Relationships to Generate Windows Event XPath Queries'
 date: 2021-06-22 12:00:00
 tags: [ossem]
 class: post-template
@@ -11,23 +11,23 @@ subclass: 'post'
 author: jose
 ---
 
-In this blogpost, we will introduce the [OSSEM Detection Modeling](https://github.com/OTRF/OSSEM-DM) project and how we can leverage its content to define **XPath queries** in order to define a more effective data collection strategy when working with [Azure Sentinel To-Go](https://github.com/OTRF/Azure-Sentinel2Go).
+In this blogpost, we will introduce the [OSSEM Detection Model](https://github.com/OTRF/OSSEM-DM) project and show you how to use it to create Windows Event **XPath queries**. These XPath queries can then be used to improve your data collection strategy.
 
 # Prerequisites
 
-In order to get a better understanding of the OSSEM project and its Data Dictionaries component, we recommend you to read the following blogpost: [OSSEM Data Dictionaries: Correlating Security Telemetry](https://blog.openthreatresearch.com/ossem_security_telemetry_correlation)
+We highly recommend reading the following blog post about OSSEM Data Dictionaries (DD): [OSSEM Data Dictionaries: Correlating Security Telemetry](https://blog.openthreatresearch.com/ossem_security_telemetry_correlation). That should provide some context about the project.
 
-# Introducing OSSEM - Detection Modeling
+# OSSEM Detection Model
 
 ### What is OSSEM?
 
-Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a `data dictionary (DD)` format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a `common data model (CDM)` that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. This relationships are stored under the `detection model (DM)` section of the project.
+The Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a `data dictionary (DD)` format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a `common data model (CDM)` that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the `detection model (DM)` section of the project.
 
 ![](assets/images/blog/ossem_correlating_events/2021-06-21_01_ossem_components.png)
 
-### What are Detection Relationships?
+### What are Data Relationships?
 
-Relationships are structures that can help us to describe and represent actions and behaviors (group of related actions) that can be performed within a network environment. The term `detection` helps us to categorize some of these relationships as potentially performed by adversaries. [OSSEM detection relationships](https://github.com/OTRF/OSSEM-DM/tree/main/relationships) are stored in an easy to consume format,`yaml`. Here is an example of a detection relationship that describes the action of a [user requesting access to a file](https://github.com/OTRF/OSSEM-DM/blob/main/relationships/user_requested_access_to_file.yml):
+Data relationships are structures that can help us describe and represent actions and behaviors (group of related actions) that can be performed within a network environment. The [OSSEM relationships](https://github.com/OTRF/OSSEM-DM/tree/main/relationships) are stored in an easy to consume `yaml` format. Here is an example of a relationship that describes the action of a [user requesting access to a file](https://github.com/OTRF/OSSEM-DM/blob/main/relationships/user_requested_access_to_file.yml):
 
 ```yaml
 name: User requested access to File
@@ -57,21 +57,24 @@ notes:
   - 'Event 4656: This event generates only if object’s SACL has required ACE to handle specific access right use.'
 ```
 
-### What metadata is provided by the OSSEM - Detection Modeling project?
+### What metadata is provided by the OSSEM DM project?
 
-- **ATT&CK mapping**: The data sources piece of the [MITRE-ATT&CK framework](https://attack.mitre.org/) has been updated recently, and it now includes more metadata such as platform, collection layer, data components and data relationships. You can find more information about it [here](https://github.com/mitre-attack/attack-datasources). If an OSSEM detection relationship is part of ATT&CK data sources metadata, we are providing the name of the data source and the data component.
+- **ATT&CK mapping**: The data sources piece of the [MITRE-ATT&CK framework](https://attack.mitre.org/) has been updated recently, and it now includes more metadata such as `platform`, `collection layer`, `data components` and `data relationships`. You can find more information about it [here](https://github.com/mitre-attack/attack-datasources). If an OSSEM relationship is part of ATT&CK data sources metadata, we provide the name of the data source and the data component.
 
-- **Behavior**: The activity described by a detection relationship may involve a network concept (`source`) that performs the action, another network concept (`target`) that receives the action or adds more context, and a basic description of the activity itself (`relationship`).
+- **Behavior**: The activity described by a relationship is represented by three elements, `source`, `relationship` and `target`. Source is usually the element that performs the main action in the relationship. For example, `user` -> `created` -> `file`. In this example, `user` is the `source`, `created` is the `relationship` and `file` the target. There are cases where the `source` does not have a `target` and there is because the `relationship` is simply describing the state of the `source`. For example, `file modified`. 
 
-- **Security Events**: Every relationship within the OSSEM-DM project is created based on security telemetry. Therefore, in this section of the yaml file we are sharing event logs that can be collected in you network environment and are related to detection relationships. Most of the metadata provided for every event log is already documented by the telemetry provider, and we are adding a `filter_in` section in each event log where it is applicable. The reason for the filter_in feature is that the context provided by some event logs can be different based on the values of some data fields. If we use Security Auditing event log [4656 (A handle to an object was requested)](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4656) as an example, we can tell that the values of `ObjectType` field can make reference to different objects such as a `file`, a `windows registry key`, and even a `process`. This can be helpful when trying to define an effective data collection strategy.
+- **Security Events**: Every relationship within the OSSEM-DM project is based on security events. Therefore, in this section of the yaml file, we share event logs that can be collected in you network environment. Also, we add a `filter_in` section for each event to provide additional context for those events that might have multiple definitions depending on how they are created. For example, if we use Security event [4656 (A handle to an object was requested)](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4656), we can tell that the values of the `ObjectType` field can reference different objects such as `file`, `windows registry key`, and even `process`.
 
-### How can we define Detection Relationships?
+### How can we define data relationships?
 
-There are three basic steps that you can follow to define a detection relationship.
+There are three basic steps that you can follow to define a relationship:
+* Identify sources of data
+* Identify data entities
+* Identify relationships among data entities
 
-**a) Identifying sources of data**
+**a) Identify sources of data**
 
-As it was mentioned before, every OSSEM detection relationship is created based on security telemetry. Therefore, we need to pick an event log or table that has been collected in your network environment. After that, we need to get a better understanding of the activity that triggered the generation of the event and the data fields provided by it. We can expedite this process by documenting security telemetry through data dictionaries. In fact, The OSSEM project has a data dictionaries component that you can use as a reference. You can learn and find more information about it [here](https://github.com/OTRF/OSSEM-DD). For the purpose of this section, let's continue using event 4656 as an example. You will find the data dictionary for this event [here](https://github.com/OTRF/OSSEM-DD/blob/main/windows/etw-providers/Microsoft-Windows-Security-Auditing/events/event-4656_v1.yml). In the image below you can see an extract of the data dictionary:
+We would start by choosing event logs that have been collected in our network environment. After that, we would try to understand the context behind these events, and check if we have already documented them somewhere. Here is where data dictionaries are very useful because they can expedite the research process. As mentioned before, the OSSEM project has a [data dictionaries](https://github.com/OTRF/OSSEM-DD) component that you can use as a reference. For the purpose of this section, let's use event 4656 as an example. The image below, is the [YAML representation of the event](https://github.com/OTRF/OSSEM-DD/blob/main/windows/etw-providers/Microsoft-Windows-Security-Auditing/events/event-4656_v1.yml)) in the OSSEM DD project:
 
 ```yaml
 title: 'Event ID 4656: A handle to an object was requested'
@@ -114,49 +117,46 @@ tags:
 - Audit Removable Storage
 ```
 
-**b) Identifying data entities**
+**b) Identify data entities**
 
-After understanding the security context provided by an event log or table, we can identify network concepts that are involved in the activity that triggered the generation of telemetry. At Open Threat Research (OTR), we called these network concepts `data entities`. Before we continue, it is important to understand that there is not a right way to define data entities because it depends on the level of detail of your analysis and the relaity of every organization. Continuing with our example, by reviewing event 4656 data dictionary we can identify data entities such as an `user` and an object that can represent a `file`, a `windows registry key`, or a `process`.
+After understanding the context provided by an event log, we can categorize the metadata that it provides. For example, in event 4656, there is information about a `user` requesting access to an `object`. These two elements identified in the event are what we call entities and as we also mentioned before, an object can represent multiple things. Therefore, we can easily document more than 2 entities in this event.
 
-**c) Identifying relationships among data entities**
+**c) Identify relationships among data entities**
 
-Based on the documentation of security event 4656, we were able to understand that this event was generated because there was a `request of access to an object`. We also identified data entities that were involved on this action such as a user, a file, a windows registry key, and a process. Using these concepts as a reference, we can start describing interactions among data entities through detection relationships. The image below shows some of the relationships that we have identified so far:
+Based on the previous section, we can now identify the activity that connects our entities. The main entity performing the action would be the `source` while the other one is the `target`. In event 4656, the `user` is the `source` meanwhile `file`, `Windows registry`, and `process` would be considered `targets`. Finally, the action of `requesting access` would be the `relationship`.
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_01_relationships_among_entities.png)
 
-# Operationalizing Detection Relationships
+# What Can We Do with All this Information?
 
-There are different ways we can leverage OSSEM detection relationships in order to expedite security operations activities within our organization such as `representation of adversary behavior` and `identification of relevant security telemetry`. For the purpose of this blogpost, I will share a use case related to filtering Microsoft Security Auditing telemetry through XPath queries based on detection relationships.
+There are several things you can do with the research shared through OSSEM DM. The example we are covering in this post is related to the creation of Windows Event XPath queries to create custom filters and explore Windows security events. You might be asking yourself how this is possible from YAML files. We carefully worked on the schema of each relationship in the project to allow the output of the research to be in different formats. For example, XML.
 
-### How can we filter Microsoft Security Auditing Telemetry?
+## Can't You Filter Events via Event Viewer?
 
-**a) Collecting telemetry through Event Viewer**
+Yes, but there are some limitations when trying to do it all only via the main UI filters. There are some additional options that could help you to customize your searching. Let's walk through an example of how to filter events via Event Viewer:
 
-When it comes to Security Auditing telemetry collection, one of the main applications used by the InfoSec community is `EventViewer`. In the image below, you can see `Security` logs under the `Windows Logs` group. We have colected different event logs such as `4688`, `4656`, and `5156`.
+**a) Exploring Events via Event Viewer**
+
+If you open Event Viewer and go to `Windows Logs` > `Security`, you can see different event logs such as `4688`, `4656`, and `5156`.
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_02_event_viewer_application.png)
 
 **b) Filtering relevant telemetry**
 
-Even though it is really nice to collect every event log available from our network environment, we need to prioritize the collection of security telemetry to support our analysis. We have two options when trying to filter our current logs, `Filter` and `XML`. Let's filter event `4656` as an example by using the Filter option. When you use the this option, EventViewer will automatically create a `XPath query` in xml format for you.
+If you did not know, when you select the option to filter the current log, there are two ways to do this. One is named `Filter` and the other one `XML`. When you use the `Filter` option, the application will automatically create an `XPath query` that you can see if you switch the filter option to `XML`. Let's use this basic filter to only show events of `EventID` 4656. The difference between `Filter` and `XML` is that with `XML` we have more freedom to search for patterns in the event that go beyond the `EventID`, `Event Level`, `Task Category` and even `Event Sources`. With `XML`, you can access the `EventData` node of the XML representation of the security event.
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_03_event_viewer_filters.png)
 
-In the image below, we can see only events 4656 after applying our filter.
-
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_04_event_4656_filtered.png)
 
-**c) Filtering relevant telemetry (XPath Queries)**
+## Create XPath Queries Mapped to MITRE ATT&CK
 
-Even though the `Filter` option allows you to reduce the number of event logs to review, it has limitations when accessing other parameters to perform a more complex queries. If we want to define a filter considering different data fields and multiple event logs, using `XPath queries` is a better option.
+As mentioned before, if we want to filter Windows Security events using a more complex logic, we would use XPath queries. Let's use all the relationships that we have already mapped to the [MITRE-ATT&CK](https://github.com/OTRF/OSSEM-DM/tree/main/use-cases/mitre_attack) project, translate them to XML documents, validate the search patterns and export XPath queries all via PowerShell.
 
-### Transforming Detection Relationships into XPath Queries using PowerShell
+In OSSEM DM, we programmatically create multiple files as part of the use cases we cover by processing every single relationship in YAML format. As mentioned before, we map everything to ATT&CK and we save the output as [JSON](https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json) and [YAML](https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.yaml) files. For this post, we are going to use the JSON one.
 
-As it was described previously, if we want to filter Microsoft Security Auditing telemetry using a more complex logic and multiple event logs, we should use XPath queries. Let's say we want to filter telemetry documented in the OSSEM detection relationships project. We will need to translate every relationship content, currently in yaml format, in `XPath` form. We will use PowerShell to complete thi process.
 
-**a) Downloading detection relationships mapped to ATT&CK**
-
-Within the OSSEM - Detection Modeling project, the Open Threat Research (OTR) community is documenting different use cases in which we leverage the concept of detection relationships. One of these use cases is [MITRE-ATT&CK](https://github.com/OTRF/OSSEM-DM/tree/main/use-cases/mitre_attack). Within this folder, you can find a `JSON` file that contains all the metadata for every detection relationship that is mapped to the ATT&CK framework. This file is updated programatically after orginial yaml files are created and updated.
+**a) Download relationships mapped to ATT&CK**
 
 - Open PowerShell with Administrator rights.
 
@@ -168,7 +168,7 @@ Within the OSSEM - Detection Modeling project, the Open Threat Research (OTR) co
 [Environment]::CurrentDirectory=(Get-Location -PSProvider FileSystem).ProviderPath
 ```
 
-- Set the url to the raw json file within the GitHub repository.
+- Set the url to the raw json file within the OSSEM DM GitHub repository.
 
 ```PowerShell
 $uri = "https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json"
@@ -187,7 +187,7 @@ $wc = new-object System.Net.WebClient
 $wc.DownloadFile($uri, "techniques_to_events_mapping.json")
 ```
 
-- Read the JSON file as an Array to validate it was downloaded correctly.
+- Read the JSON file as an Array and validate it was downloaded correctly by selecting the first object.
 
 ```PowerShell
 $mappings = Get-Content .\techniques_to_events_mapping.json | ConvertFrom-Json
@@ -196,7 +196,7 @@ $mappings[0]
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_06_downloading_json_file.png)
 
-**b) Creating XML query files**
+**b) Create XML query files**
 
 - Extract the metadata within the JSON file to a dictionary
 
@@ -226,7 +226,7 @@ foreach ($item in $mappings) {
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_07_metadata_dictionary.png)
 
-- Create XML files for each ATT&CK data source. Indeed, the name of each XML file will be the ATTCK data source name.
+- Create XML files for each ATT&CK data source. Indeed, the name of each XML file will be the ATTCK data source mapped on each relationship.
 
 ```PowerShell
 foreach ($ds in $allMappings.Keys){
@@ -318,7 +318,7 @@ ls
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_09_validating_creation_xml_files.png)
 
-- Read the content of the XML file validate it was created correctly. Let's use the `windows registry` data source as an example (Remember that, in case the name of the data source contains a blank space within the name, replace it with a `-` character. For example: user account --> user-account).
+- Read the content of the XML file to validate its syntax (initial validation). Let's use the `windows registry` data source as an example (Remember that, in case the name of the data source contained a blank space within its name, the code replaces the blank space with a `-` character. For example: user account --> user-account).
 
 ```PowerShell
 get-content .\windows-registry.xml
@@ -326,13 +326,13 @@ get-content .\windows-registry.xml
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_10_validating_xml_file_structure.png)
 
-### Testing XPath Queries
+## Test XPath Queries
 
-As a final validation step, let's test our XPath queries using EventViewer and PowerShell.
+As a final validation step, let's run our XPath queries using EventViewer and PowerShell to validate its syntax.
 
 **a) Testing through EventViewer**
 
-- Copy the output of the `get-content` command in the `XML` filter option and click on `OK`.
+- Copy the output of the command that we ran previously named`get-content` in the `XML` Event Viewer filter option and click `OK`.
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_11_validating_xml_query_event_viewer.png)
 
@@ -349,15 +349,24 @@ Get-WinEvent -FilterXml $registry_test
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_13_validating_xml_query_execution.png)
 
-# What else can we do with OSSEM - XPath Queries?
+**C) Exporting XPath Queries**
 
-Within the Open Threat Research (OTR) projects portfolio, you can find the [Azure Sentinel To-Go](https://github.com/OTRF/Azure-Sentinel2Go) project. It allows you to expedite the deployment of an Azure Sentinel lab along with other Azure resources and a data ingestion pipeline to consume pre-recorded datasets for research purposes. You can use XPath queries to ingest security event logs to Azure Sentinel in a more effective way thanks to the new connector for Windows Security Events.
+```PowerShell
+[xml]$Account = get-content ..\windows-registry.xml
+$Account.QueryList.Query | ForEach-Object {-join ($_.Select.Path, '!', $_.Select.'#text') }
+```
+
+# What else can we do with this XPath Queries?
+
+Within the Open Threat Research (OTR) projects portfolio, you can find a project named [Azure Sentinel To-Go](https://github.com/OTRF/Azure-Sentinel2Go). It allows you to expedite the deployment of an Azure Sentinel lab along with other Azure resources and a data ingestion pipeline to consume pre-recorded datasets for research purposes. One of the recent updates to its Windows data connectors allows the use of `XPath` queries to customize the collection of Windows Security events. We could use the previous section and the its output to help `Azure Sentinel` users by giving them an idea of how they can improve their data collection strategy based on the research behind the OSSEM DM project.
 
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_14_windows_security_events_connector.png)
 
-### Creating a JSON file based on OSSEM XML files**
+## Creating Xpath Queries for Azure Sentinel**
 
-To make XPath queries available for Azure Sentinel To-Go, you can use the following PowerShell code to aggregate all the `.xml` files, that we obtained previously, in a `.json` file.
+Even though we were able to export XPath queries from the OSSEM DM project, we need to change the format a little bit to make it compatible with the APIs used to configure the new version of the Windows Security event data connector in Azure Sentinel.
+
+You can use the following PowerShell code to aggregate all the `.xml` files that we created before from the [JSON](https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json) file in the OSSEM DM GitHub repository.
 
 ```PowerShell
 $allFiles = Get-ChildItem -Path *.xml
@@ -402,9 +411,13 @@ get-content .\ossem-attack.json
 ![](assets/images/blog/ossem_creating_xpath_queries/2021-06-22_16_json_file_review.png)
 
 
+# How Can We Use This File in Azure Sentinel?
+
+For that, I recommed readhing the folling blog post written by Roberto Rodriguez ([@Cyb3rWard0g](https://twitter.com/Cyb3rWard0g)) from the MSTIC R&D team.
+
+Thank you! That's it for today. We are working on more use cases to operationalize our researcher shared through the OSSEM project.
 
 # References
-* [Complete PowerShell script to generate XML files with XPath queries based on OSSEM detection relationships](https://github.com/OTRF/OSSEM-DM/blob/main/scripts/ossem_attack_dm_to_xml.ps1)
-* [Complete PowerShell script to generate JSON file with aggregated XPath queries based on OSSEM detection relationships](https://github.com/OTRF/OSSEM-DM/blob/main/scripts/ossem_attack_dm_to_azure_json.ps1)
+* [PowerShell script to generate XML files with XPath queries based on OSSEM relationships mapped to ATT&CK and the creation of the file used with the new Azure Sentinel data connector](https://github.com/OTRF/OSSEM-DM/blob/main/scripts/ossemDM_XPath_Queries.ps1)
 * [OSSEM Detection Modeling GitHub repository](https://github.com/OTRF/OSSEM-DD)
 * [OSSEM Project Website](https://ossemproject.com/intro.html)
