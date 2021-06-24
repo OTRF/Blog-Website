@@ -29,7 +29,7 @@ pip install pandas
 
 ### Jupyter Notebook Available
 
-All the python code used in this blogpost will be available through a notebook [here](), and you can use it as a reference to extend your analysis.
+All the python code used in this blogpost will be available through a notebook [here](https://github.com/OTRF/OSSEM/blob/master/docs/dd/security_telemetry_correlation/security_events_correlation.ipynb), and you can use it as a reference to extend your analysis.
 
 # Introducing OSSEM - Data Dictionaries
 
@@ -80,9 +80,9 @@ One of the most helpful features provided by OSSEM data dictionaries is the stan
 
 One of the benefits of documenting and standardizing security telemetry is that we can correlate it based on data fields such as `ProcessGuid` and `LogonId`. The correlation process might be easier when working with security telemetry provided by a single provider. On the other hand, working with data from different telemetry providers might be more difficult because of the different name syntax used by each provider. Indeed, for this type of use cases is where the standardization feature of OSSEM data dictionaries becomes more relevant.
 
-### Use Case: Microsoft Security Auditing Telemetry Correlation
+### Microsoft Security Auditing Telemetry Correlation
 
-* **Collecting data dictionaries content**
+**a) Collecting data dictionaries content**
 
 We are going to use the [ossem module](https://github.com/OTRF/openhunt/blob/master/openhunt/ossem.py) from Openhunt (Python library) to collect data dictionaries content for Security Auditing telemetry provider. By running the following code, you should be able to get a list with all the yaml files' names for data dictionaries, collect its content, and represent it as a `Pandas dataframe`.
 
@@ -101,7 +101,7 @@ security_auditing_dictionaries.head(10)
 
 ![](assets/images/blog/ossem_correlating_events/2021-06-21_02_security_auditing_dictionaries.png)
 
-* **Identifying security events that contain the same data field: LogonType**
+**b) Identifying security events that contain the same data field: LogonType**
 
 Let's say we are analyzing event **[4624](https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624)** (An account was successfully logged on). An interesting data field provided by this event is `LogonType`. This data field can take values such as 2 (Interactive) and 3 (Network). In fact, a LogonType field with value 3 might be an indicator of an adversary performing lateral movement techniques.
 
@@ -113,7 +113,7 @@ security_auditing_dictionaries[security_auditing_dictionaries['name'] == 'LogonT
 
 ![](assets/images/blog/ossem_correlating_events/2021-06-21_03_logontype_events.png)
 
-* **Adding more security context: LogonType and TagertLogonId**
+**c) Adding more security context: LogonType and TagertLogonId**
 
 Let's continue adding more security context to our analysis by using other data fields from event 4624. I previously mentioned that LogonType field with value 3 gives us security context of an account logging on a computer over the network (remotely), but what is the account that performed this operation? Event 4624 gives us that information through different data fields such as `TargetLogonId`. By running the following code, you should be able to identify all Security Auditing events that provide security context around LogonType and TargetLogonId data fields by filtering our Pandas dataframe.
 
@@ -124,7 +124,7 @@ security_auditing_dictionaries[(security_auditing_dictionaries['name'] == 'Logon
 
 ![](assets/images/blog/ossem_correlating_events/2021-06-21_04_logontype_targetlogonid.png)
 
-* **Visualizing  relationships among security events and data fields in a network graph**
+**d) Visualizing  relationships among security events and data fields in a network graph**
 
 Even though the image above shows us all the Security Auditing events that contain the `LogonType` and `TargetLogonId` fields, sometimes it is easier to visualize this information as a network graph. By running the following code, you should be able to create a network graph to visualize the interaction among security events and data fields.
 
@@ -140,7 +140,7 @@ The image above gives us a network representation of the interaction among secur
 
 Although these security events, `4624` and `4688`, share the `TargetLogonId` data field, we also need to validate that the concept represented by this data field is the same in both security events. Unfortunately, this is not the case for our example. In event 4688, the data field that represents the account that requested the creation of a process is **SubjectLogonId**, not `TargetLogonId`.
 
-* **Using standard names to represent the right network concept among security events**
+**e) Using standard names to represent the right network concept among security events**
 
 After reviewing our previous example, we can conclude that sharing the same data field does not guarantee the representation of the same network concept among security events. That is why it is important for organizations to define a standardization process based on their understanding of the data collected. The [OSSEM-DD](https://github.com/OTRF/OSSEM-DD) component provides standard names for data fields of several security telemetry sources. It is still a work in progress, but we encourage the InfoSec community to take a look at it, test it, and collaborate with us to improve this process.
 
@@ -204,6 +204,7 @@ The `ObjectType` data field can take values that make reference to different typ
 
 We have created a new project within OTR, **OSSEM-DD-MASK**, which will be and extension of the OSSEM-DD project and where we will document all the potential standard structures variations for different security events. This initiative is led by OTR community member [Ricardo Dias](https://twitter.com/hxnoyd). I will share more details about this in a future blogpost.
 
-## References
-* https://ossemproject.com/intro.html
-* https://github.com/OTRF/OSSEM-DD
+# References
+* [Jupyter Notebook related to this blog](https://github.com/OTRF/OSSEM/blob/master/docs/dd/security_telemetry_correlation/security_events_correlation.ipynb)
+* [OSSEM - Data Dictionaries Project GitHub Repository](https://github.com/OTRF/OSSEM-DD)
+* [OSSEM Website](https://ossemproject.com/intro.html)
