@@ -8,6 +8,36 @@
     
       
       <item>
+        <title>OSSEM Detection Model: Leveraging Data Relationships to Generate Windows Event XPath Queries</title>
+        
+          <description>&lt;p&gt;In this blogpost, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create Windows Event &lt;strong&gt;XPath queries&lt;/strong&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 22 Jun 2021 08:00:00 -0400</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/ossem_generation_xpath_queries</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/ossem_generation_xpath_queries</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>OSSEM Data Dictionaries: Correlating Security Telemetry</title>
+        
+          <description>&lt;p&gt;In this blogpost, we will share a basic use case on correlating security telemetry (&lt;a href=&quot;https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/advanced-security-audit-policy-settings&quot;&gt;Microsoft Security Auditing&lt;/a&gt;) through common data fields documented in &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;OSSEM - Data Dictionaries&lt;/a&gt;. We will use original data field names to represent the interaction among security event logs. In addition, we will show how standardizing data fields can help us to improve our analysis of security telemetry considering not only the number of telemetry providers, but also the network concept described by each data fields.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 21 Jun 2021 08:00:00 -0400</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/ossem_security_telemetry_correlation</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/ossem_security_telemetry_correlation</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Simulating Cobalt Strike Beacon Activity</title>
         
           <description>&lt;p&gt;In this quick blogpost, I will share the steps that I completed to simulate Cobalt Strike beacon activity using &lt;a href=&quot;https://github.com/NextronSystems/APTSimulator&quot;&gt;APTSimulator&lt;/a&gt; in a Windows 10 virtual machine.&lt;/p&gt;
