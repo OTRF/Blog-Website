@@ -15,7 +15,7 @@ In this blogpost, we will share a basic use case on correlating security telemet
 
 # Pre-requisites
 
-### Python Libraries Installation
+## Python Libraries Installation
 
 In order to use the 
 * [Openhunt](https://github.com/OTRF/openhunt)
@@ -27,19 +27,19 @@ pip install openhunt
 pip install pandas
 ```
 
-### Jupyter Notebook Available
+## Jupyter Notebook Available
 
-All the python code used in this blogpost will be available through a notebook [here](https://github.com/OTRF/OSSEM/blob/master/docs/dd/security_telemetry_correlation/security_events_correlation.ipynb), and you can use it as a reference to extend your analysis.
+All the python code used in this blogpost will be available through a notebook [here](https://ossemproject.com/dd/notebooks/security_events_correlation.html), and you can use it as a reference to extend your analysis.
 
-# Introducing OSSEM - Data Dictionaries
+# OSSEM - Data Dictionaries
 
-### What is OSSEM?
+## What is OSSEM?
 
-Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a `data dictionary (DD)` format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a `common data model (CDM)` that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. This relationships are stored under the `detection model (DM)` section of the project.
+OSSEM stands for `Open Source Security Events Metadata`, and it is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a `data dictionary (DD)` format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a `common data model (CDM)` that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the `detection model (DM)` section of the project.
 
 ![](assets/images/blog/ossem_correlating_events/2021-06-21_01_ossem_components.png)
 
-### What is a Data Dictionary?
+## What is a Data Dictionary?
 
 Data Dictionaries are structures that can help us to get a better understanding of the security context provided by security telemetry. Most of the metadata within a dictionary is obtained directly from telemtry providers documentation. In addition, the OSSEM project extends the content of data dictionaries with metadata such as the `standard name` for an event field, `references` and `tags`. [OSSEM data dictionaries](https://github.com/OTRF/OSSEM-DD) are stored in an easy to consume format such as `yaml`. Here is an example of a data dictionary for [Sysmon event 1 (Process Creation)](https://github.com/OTRF/OSSEM-DD/blob/main/windows/sysmon/events/event-1.yml):
 
@@ -68,11 +68,11 @@ tags:
 - Windows
 ```
 
-### Why do we need Data Dictionaries?
+## Why do we need Data Dictionaries?
 
 A data dictionary is not just a collection of data provided by a security application. In fact, the main goal of documenting security telemetry is to understand the activity in our network environment that triggered the generation of data. In addition, we need to identify network concepts such as a `user` or `process` that are represented and described by every data field.
 
-### Why do we need Standard Names?
+## Why do we need Standard Names?
 
 One of the most helpful features provided by OSSEM data dictionaries is the standardization of data fields names. This can help us to correlate telemetry not only among data schemas provided by a specific security application, but also among data schemas from different telemetry providers such as `Security Auditing`, `Sysmon`, and `OSQuery`.
 
@@ -80,7 +80,7 @@ One of the most helpful features provided by OSSEM data dictionaries is the stan
 
 One of the benefits of documenting and standardizing security telemetry is that we can correlate it based on data fields such as `ProcessGuid` and `LogonId`. The correlation process might be easier when working with security telemetry provided by a single provider. On the other hand, working with data from different telemetry providers might be more difficult because of the different name syntax used by each provider. Indeed, for this type of use cases is where the standardization feature of OSSEM data dictionaries becomes more relevant.
 
-### Microsoft Security Auditing Telemetry Correlation
+## Microsoft Security Auditing Telemetry Correlation
 
 **a) Collecting data dictionaries content**
 
@@ -162,7 +162,7 @@ ossem.event_to_field_network(data_fields_2,type = 'standard')
 
 As you can see in the image above, the link between secuity events 4624 and 4688 can be defined through the standard data field **user_logon_id** (represented by `TargetLogonId` in 4624 and `SubjectLogonId` in 4688) and not **target_user_logon_id**.
 
-## What Are The Next Steps Regarding Data Dictionaries?
+# What Are The Next Steps Regarding Data Dictionaries?
 
 When we started the standardazitaion process for OSSEM - Data Dictioanries, we considered every security event having a unique standard structure. However, while performing research activities at [Open Threat Research (OTR)](https://blog.openthreatresearch.com/), we realized that, in some cases, the standard structure of some events may change based on the values of some data fields. 
 
