@@ -10,7 +10,7 @@
       <item>
         <title>OSSEM Detection Model: Leveraging Data Relationships to Generate Windows Event XPath Queries</title>
         
-          <description>&lt;p&gt;In this blogpost, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create Windows Event &lt;strong&gt;XPath queries&lt;/strong&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;
+          <description>&lt;p&gt;In this blog post, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Event XPath queries&lt;/code&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;
 
 </description>
         

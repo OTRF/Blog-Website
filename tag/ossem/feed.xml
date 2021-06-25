@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/ossem/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-06-24T19:57:19-04:00</updated>
+  <updated>2021-06-24T23:15:00-04:00</updated>
   <id>https://blog.openthreatresearch.com/tag/ossem/feed.xml</id>
 
   
@@ -45,21 +45,17 @@
       <published>2021-06-22T08:00:00-04:00</published>
       <updated>2021-06-22T08:00:00-04:00</updated>
       <id>https://blog.openthreatresearch.com/ossem_generation_xpath_queries</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/ossem_generation_xpath_queries">&lt;p&gt;In this blogpost, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create Windows Event &lt;strong&gt;XPath queries&lt;/strong&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;
-
-&lt;h1 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h1&gt;
-
-&lt;p&gt;We highly recommend reading the following blog post about OSSEM Data Dictionaries (DD): &lt;a href=&quot;https://blog.openthreatresearch.com/ossem_security_telemetry_correlation&quot;&gt;OSSEM Data Dictionaries: Correlating Security Telemetry&lt;/a&gt;. That should provide some context about the project.&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/ossem_generation_xpath_queries">&lt;p&gt;In this blog post, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Event XPath queries&lt;/code&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;
 
 &lt;h1 id=&quot;ossem-detection-model&quot;&gt;OSSEM Detection Model&lt;/h1&gt;
 
-&lt;h3 id=&quot;what-is-ossem&quot;&gt;What is OSSEM?&lt;/h3&gt;
+&lt;h2 id=&quot;what-is-ossem&quot;&gt;What is OSSEM?&lt;/h2&gt;
 
-&lt;p&gt;The Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data dictionary (DD)&lt;/code&gt; format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;common data model (CDM)&lt;/code&gt; that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;detection model (DM)&lt;/code&gt; section of the project.&lt;/p&gt;
+&lt;p&gt;OSSEM stands for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open Source Security Events Metadata&lt;/code&gt;, and it is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data dictionary (DD)&lt;/code&gt; format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;common data model (CDM)&lt;/code&gt; that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;detection model (DM)&lt;/code&gt; section of the project.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_correlating_events/2021-06-21_01_ossem_components.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;what-are-data-relationships&quot;&gt;What are Data Relationships?&lt;/h3&gt;
+&lt;h2 id=&quot;what-are-data-relationships&quot;&gt;What are Data Relationships?&lt;/h2&gt;
 
 &lt;p&gt;Data relationships are structures that can help us describe and represent actions and behaviors (group of related actions) that can be performed within a network environment. The &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM/tree/main/relationships&quot;&gt;OSSEM relationships&lt;/a&gt; are stored in an easy to consume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yaml&lt;/code&gt; format. Here is an example of a relationship that describes the action of a &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM/blob/main/relationships/user_requested_access_to_file.yml&quot;&gt;user requesting access to a file&lt;/a&gt;:&lt;/p&gt;
 
@@ -90,21 +86,21 @@
   &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;4656:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;This&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;generates&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;object’s&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;SACL&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;has&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ACE&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;specific&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;access&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;use.'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;what-metadata-is-provided-by-the-ossem-dm-project&quot;&gt;What metadata is provided by the OSSEM DM project?&lt;/h3&gt;
+&lt;h2 id=&quot;what-metadata-is-provided-by-the-ossem-dm-project&quot;&gt;What metadata is provided by the OSSEM DM project?&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;ATT&amp;amp;CK mapping&lt;/strong&gt;: The data sources piece of the &lt;a href=&quot;https://attack.mitre.org/&quot;&gt;MITRE-ATT&amp;amp;CK framework&lt;/a&gt; has been updated recently, and it now includes more metadata such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;platform&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;collection layer&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data components&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data relationships&lt;/code&gt;. You can find more information about it &lt;a href=&quot;https://github.com/mitre-attack/attack-datasources&quot;&gt;here&lt;/a&gt;. If an OSSEM relationship is part of ATT&amp;amp;CK data sources metadata, we provide the name of the data source and the data component.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Behavior&lt;/strong&gt;: The activity described by a relationship is represented by three elements, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt;. Source is usually the element that performs the main action in the relationship. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;created&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt;. In this example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;created&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt; the target. There are cases where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; does not have a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt; and there is because the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; is simply describing the state of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file modified&lt;/code&gt;.&lt;/p&gt;
+    &lt;p&gt;&lt;strong&gt;Behavior&lt;/strong&gt;: The activity described by a relationship is represented by three elements, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt;. Source is usually the element that performs the main action in the relationship. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;created&lt;/code&gt; -&amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt;. In this example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;created&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt; the target. There are cases where the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; does not have a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt;, and it is because the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt; is simply describing the state of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt;. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file modified&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;strong&gt;Security Events&lt;/strong&gt;: Every relationship within the OSSEM-DM project is based on security events. Therefore, in this section of the yaml file, we share event logs that can be collected in you network environment. Also, we add a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;filter_in&lt;/code&gt; section for each event to provide additional context for those events that might have multiple definitions depending on how they are created. For example, if we use Security event &lt;a href=&quot;https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4656&quot;&gt;4656 (A handle to an object was requested)&lt;/a&gt;, we can tell that the values of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ObjectType&lt;/code&gt; field can reference different objects such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;windows registry key&lt;/code&gt;, and even &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;process&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;how-can-we-define-data-relationships&quot;&gt;How can we define data relationships?&lt;/h3&gt;
+&lt;h2 id=&quot;how-can-we-define-data-relationships&quot;&gt;How can we define data relationships?&lt;/h2&gt;
 
 &lt;p&gt;There are three basic steps that you can follow to define a relationship:&lt;/p&gt;
 &lt;ul&gt;
@@ -115,7 +111,7 @@
 
 &lt;p&gt;&lt;strong&gt;a) Identify sources of data&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;We would start by choosing event logs that have been collected in our network environment. After that, we would try to understand the context behind these events, and check if we have already documented them somewhere. Here is where data dictionaries are very useful because they can expedite the research process. As mentioned before, the OSSEM project has a &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;data dictionaries&lt;/a&gt; component that you can use as a reference. For the purpose of this section, let’s use event 4656 as an example. The image below, is the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD/blob/main/windows/etw-providers/Microsoft-Windows-Security-Auditing/events/event-4656_v1.yml&quot;&gt;YAML representation of the event&lt;/a&gt;) in the OSSEM DD project:&lt;/p&gt;
+&lt;p&gt;We would start by choosing event logs that have been collected in our network environment. After that, we would try to understand the context behind these events, and check if we have already documented them somewhere. Here is where data dictionaries are very useful because they can expedite the research process. As mentioned before, the OSSEM project has a &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;data dictionaries (DD)&lt;/a&gt; component that you can use as a reference. For the purpose of this section, let’s use event 4656 as an example. The image below, is the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD/blob/main/windows/etw-providers/Microsoft-Windows-Security-Auditing/events/event-4656_v1.yml&quot;&gt;YAML representation of the data dictionary for this event&lt;/a&gt; in the OSSEM DD project:&lt;/p&gt;
 
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;4656:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;an&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;was&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;requested'&lt;/span&gt;
 &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;This event indicates that specific access was requested for an object.&lt;/span&gt;
@@ -159,29 +155,33 @@
 
 &lt;p&gt;&lt;strong&gt;b) Identify data entities&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;After understanding the context provided by an event log, we can categorize the metadata that it provides. For example, in event 4656, there is information about a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; requesting access to an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object&lt;/code&gt;. These two elements identified in the event are what we call entities and as we also mentioned before, an object can represent multiple things. Therefore, we can easily document more than 2 entities in this event.&lt;/p&gt;
+&lt;p&gt;After understanding the context provided by an event log, we can categorize the metadata that it provides. For example, in event 4656, there is information about a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; requesting access to an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;object&lt;/code&gt;. These two elements identified in the event are what we call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;entities&lt;/code&gt;. As we mentioned before, an object can represent multiple things, therefore we can easily document more than 2 entities in this event.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;c) Identify relationships among data entities&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Based on the previous section, we can now identify the activity that connects our entities. The main entity performing the action would be the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; while the other one is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt;. In event 4656, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; meanwhile &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows registry&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;process&lt;/code&gt; would be considered &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;targets&lt;/code&gt;. Finally, the action of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requesting access&lt;/code&gt; would be the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Based on the previous sections, we can now identify the activity that connects our entities. The main entity performing the action would be the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; while the other one is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;target&lt;/code&gt;. In event 4656, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source&lt;/code&gt; meanwhile &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;file&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows registry&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;process&lt;/code&gt; would be considered &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;targets&lt;/code&gt;. Finally, the action of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requesting access&lt;/code&gt; would be the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;relationship&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_01_relationships_among_entities.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;what-can-we-do-with-all-this-information&quot;&gt;What Can We Do with All this Information?&lt;/h1&gt;
 
-&lt;p&gt;There are several things you can do with the research shared through OSSEM DM. The example we are covering in this post is related to the creation of Windows Event XPath queries to create custom filters and explore Windows security events. You might be asking yourself how this is possible from YAML files. We carefully worked on the schema of each relationship in the project to allow the output of the research to be in different formats. For example, XML.&lt;/p&gt;
+&lt;p&gt;There are several things you can do with the research shared through OSSEM DM. The example we are covering in this post is related to the creation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Event XPath queries&lt;/code&gt; to create custom filters and explore Windows security events. You might be asking yourself, &lt;em&gt;how is this possible from YAML files?&lt;/em&gt;. We carefully worked on the schema of each relationship in the project to allow the output of the research to be in different formats. For example, XML.&lt;/p&gt;
 
-&lt;h2 id=&quot;cant-you-filter-events-via-event-viewer&quot;&gt;Can’t You Filter Events via Event Viewer?&lt;/h2&gt;
+&lt;h2 id=&quot;cant-we-filter-events-via-eventviewer-already&quot;&gt;Can’t We Filter Events via EventViewer Already?&lt;/h2&gt;
 
-&lt;p&gt;Yes, but there are some limitations when trying to do it all only via the main UI filters. There are some additional options that could help you to customize your searching. Let’s walk through an example of how to filter events via Event Viewer:&lt;/p&gt;
+&lt;p&gt;Yes, but there are some limitations when trying to do it all only via the main UI filters. There are some additional options that could help you to customize your searching. Let’s walk through an example of how to filter events via EventViewer:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Explore events via EventViewer&lt;/li&gt;
+  &lt;li&gt;Filter relevant telemetry&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;a) Exploring Events via Event Viewer&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;a) Explore events via EventViewer&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;If you open Event Viewer and go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Logs&lt;/code&gt; &amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security&lt;/code&gt;, you can see different event logs such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4688&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4656&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5156&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you open EventViewer and go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Logs&lt;/code&gt; &amp;gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security&lt;/code&gt;, you can see different event logs such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4688&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4656&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;5156&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_02_event_viewer_application.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;b) Filtering relevant telemetry&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;b) Filter relevant telemetry&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;If you did not know, when you select the option to filter the current log, there are two ways to do this. One is named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter&lt;/code&gt; and the other one &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt;. When you use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter&lt;/code&gt; option, the application will automatically create an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XPath query&lt;/code&gt; that you can see if you switch the filter option to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt;. Let’s use this basic filter to only show events of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt; 4656. The difference between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Filter&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt; is that with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt; we have more freedom to search for patterns in the event that go beyond the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Event Level&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Task Category&lt;/code&gt; and even &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Event Sources&lt;/code&gt;. With &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt;, you can access the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventData&lt;/code&gt; node of the XML representation of the security event.&lt;/p&gt;
 
@@ -191,11 +191,15 @@
 
 &lt;h2 id=&quot;create-xpath-queries-mapped-to-mitre-attck&quot;&gt;Create XPath Queries Mapped to MITRE ATT&amp;amp;CK&lt;/h2&gt;
 
-&lt;p&gt;As mentioned before, if we want to filter Windows Security events using a more complex logic, we would use XPath queries. Let’s use all the relationships that we have already mapped to the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM/tree/main/use-cases/mitre_attack&quot;&gt;MITRE-ATT&amp;amp;CK&lt;/a&gt; project, translate them to XML documents, validate the search patterns and export XPath queries all via PowerShell.&lt;/p&gt;
-
-&lt;p&gt;In OSSEM DM, we programmatically create multiple files as part of the use cases we cover by processing every single relationship in YAML format. As mentioned before, we map everything to ATT&amp;amp;CK and we save the output as &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json&quot;&gt;JSON&lt;/a&gt; and &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.yaml&quot;&gt;YAML&lt;/a&gt; files. For this post, we are going to use the JSON one.&lt;/p&gt;
+&lt;p&gt;As mentioned before, if we want to filter Windows Security events using a more complex logic, we would use XPath queries. Let’s use all the relationships that we have already mapped to the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM/tree/main/use-cases/mitre_attack&quot;&gt;MITRE-ATT&amp;amp;CK&lt;/a&gt; project and translate them to XML documents via PowerShell. We will validate the search patterns and export XPath queries in next sections of this post.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download relationships mapped to ATT&amp;amp;CK&lt;/li&gt;
+  &lt;li&gt;Create XML query files&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;a) Download relationships mapped to ATT&amp;amp;CK&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In OSSEM DM, we programmatically create multiple files as part of the use cases we cover by processing every single relationship in YAML format. As mentioned before, we map everything to ATT&amp;amp;CK and we save the output as &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json&quot;&gt;JSON&lt;/a&gt; and &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.yaml&quot;&gt;YAML&lt;/a&gt; files. For this post, we are going to use the JSON one.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Open PowerShell with Administrator rights.&lt;/li&gt;
@@ -379,11 +383,15 @@ ls
 &lt;h2 id=&quot;test-xpath-queries&quot;&gt;Test XPath Queries&lt;/h2&gt;
 
 &lt;p&gt;As a final validation step, let’s run our XPath queries using EventViewer and PowerShell to validate its syntax.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Testing through EventViewer&lt;/li&gt;
+  &lt;li&gt;Testing through PowerShell&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;a) Testing through EventViewer&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Copy the output of the command that we ran previously named&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get-content&lt;/code&gt; in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt; Event Viewer filter option and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OK&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Copy the output of the command that we ran previously named&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get-content&lt;/code&gt; in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XML&lt;/code&gt; EventViewer filter option and click &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OK&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_11_validating_xml_query_event_viewer.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -402,23 +410,27 @@ Get-WinEvent -FilterXml $registry_test
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_13_validating_xml_query_execution.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;C) Exporting XPath Queries&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;export-xpath-queries&quot;&gt;Export XPath Queries&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;[xml]$Account = get-content ..\windows-registry.xml
-$Account.QueryList.Query | ForEach-Object {-join ($_.Select.Path, '!', $_.Select.'#text') }
+&lt;p&gt;Export XPath queries using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;QueryList&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;[xml]$registry = Get-Content .\windows-registry.xml
+$registry.QueryList.Query | ForEach-Object {-join ($_.Select.Path, '!', $_.Select.'#text') }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h1 id=&quot;what-else-can-we-do-with-this-xpath-queries&quot;&gt;What else can we do with this XPath Queries?&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_17_xpath_query_exported.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Within the Open Threat Research (OTR) projects portfolio, you can find a project named &lt;a href=&quot;https://github.com/OTRF/Azure-Sentinel2Go&quot;&gt;Azure Sentinel To-Go&lt;/a&gt;. It allows you to expedite the deployment of an Azure Sentinel lab along with other Azure resources and a data ingestion pipeline to consume pre-recorded datasets for research purposes. One of the recent updates to its Windows data connectors allows the use of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XPath&lt;/code&gt; queries to customize the collection of Windows Security events. We could use the previous section and the its output to help &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Azure Sentinel&lt;/code&gt; users by giving them an idea of how they can improve their data collection strategy based on the research behind the OSSEM DM project.&lt;/p&gt;
+&lt;h1 id=&quot;what-else-can-we-do-with-these-xpath-queries&quot;&gt;What else can we do with these XPath Queries?&lt;/h1&gt;
+
+&lt;p&gt;Within the Open Threat Research (OTR) projects portfolio, you can find a project named &lt;a href=&quot;https://github.com/OTRF/Azure-Sentinel2Go&quot;&gt;Azure Sentinel To-Go&lt;/a&gt;. It allows you to expedite the deployment of an Azure Sentinel lab along with other Azure resources and a data ingestion pipeline to consume pre-recorded datasets for research purposes. One of the recent updates to its &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Security event data connectors&lt;/code&gt; allows the use of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;XPath&lt;/code&gt; queries to customize the collection of Windows Security events. We could use the previous sections and their outputs to help &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Azure Sentinel&lt;/code&gt; users by giving them an idea of how to improve their data collection strategy based on the research behind the OSSEM DM project.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_14_windows_security_events_connector.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;creating-xpath-queries-for-azure-sentinel&quot;&gt;Creating Xpath Queries for Azure Sentinel**&lt;/h2&gt;
+&lt;h2 id=&quot;creating-xpath-queries-for-azure-sentinel&quot;&gt;Creating Xpath Queries for Azure Sentinel&lt;/h2&gt;
 
-&lt;p&gt;Even though we were able to export XPath queries from the OSSEM DM project, we need to change the format a little bit to make it compatible with the APIs used to configure the new version of the Windows Security event data connector in Azure Sentinel.&lt;/p&gt;
+&lt;p&gt;Even though we were able to export XPath queries from the OSSEM DM project, we need to change their format a little bit to make them compatible with the APIs used to configure the new version of the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Security event data connector&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Azure Sentinel&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;You can use the following PowerShell code to aggregate all the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.xml&lt;/code&gt; files that we created before from the &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json&quot;&gt;JSON&lt;/a&gt; file in the OSSEM DM GitHub repository.&lt;/p&gt;
+&lt;p&gt;You can use the following PowerShell code to aggregate all the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.xml&lt;/code&gt; files that we created before from the &lt;a href=&quot;https://raw.githubusercontent.com/OTRF/OSSEM-DM/main/use-cases/mitre_attack/techniques_to_events_mapping.json&quot;&gt;JSON&lt;/a&gt; file in the OSSEM DM GitHub repository, and create a new JSON file that contains all our XPath queries in the right format.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$allFiles = Get-ChildItem -Path *.xml
 
@@ -448,7 +460,7 @@ $AllDataSources += $DataSource
 
 @{
     windowsEventLogs = $AllDataSources
-} | Convertto-Json -Depth 4 | Set-Content &quot;ossem-attack.json&quot; -Encoding UTF8
+} | Convertto-Json -Depth 4 | ForEach-Object { [System.Text.RegularExpressions.Regex]::Unescape($_) } | Set-Content &quot;ossem-attack.json&quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_15_getting_json_file_azure_sentinel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -460,17 +472,19 @@ $AllDataSources += $DataSource
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_creating_xpath_queries/2021-06-22_16_json_file_review.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;how-can-we-use-this-file-in-azure-sentinel&quot;&gt;How Can We Use This File in Azure Sentinel?&lt;/h1&gt;
+&lt;h1 id=&quot;how-can-we-use-this-json-file-in-azure-sentinel&quot;&gt;How Can We Use This JSON File in Azure Sentinel?&lt;/h1&gt;
 
-&lt;p&gt;For that, I recommed readhing the folling blog post written by Roberto Rodriguez (&lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;@Cyb3rWard0g&lt;/a&gt;) from the MSTIC R&amp;amp;D team.&lt;/p&gt;
+&lt;p&gt;For that, I recommed reading the following &lt;a href=&quot;https://techcommunity.microsoft.com/t5/azure-sentinel/testing-the-new-version-of-the-windows-security-events-connector/ba-p/2483369&quot;&gt;blog post&lt;/a&gt; written by Roberto Rodriguez (&lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;@Cyb3rWard0g&lt;/a&gt;) from the MSTIC R&amp;amp;D team.&lt;/p&gt;
 
-&lt;p&gt;Thank you! That’s it for today. We are working on more use cases to operationalize our researcher shared through the OSSEM project.&lt;/p&gt;
+&lt;p&gt;Thank you! That’s it for today. We are working on more use cases to operationalize our research shared through the OSSEM project.&lt;/p&gt;
 
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/OTRF/OSSEM-DM/blob/main/scripts/ossemDM_XPath_Queries.ps1&quot;&gt;PowerShell script to generate XML files with XPath queries based on OSSEM relationships mapped to ATT&amp;amp;CK and the creation of the file used with the new Azure Sentinel data connector&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;OSSEM Detection Modeling GitHub repository&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;OSSEM Detection Model - GitHub repository&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://ossemproject.com/intro.html&quot;&gt;OSSEM Project Website&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/OTRF/Azure-Sentinel2Go/tree/master/azure-sentinel/linkedtemplates/data-collection-rules/rules/ossem-attack&quot;&gt;Azure Sentinel To-Go - XML and JSON files&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/OTRF/Azure-Sentinel2Go&quot;&gt;Azure Sentinel To-Go - GitHub repository&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
 
       
@@ -492,7 +506,7 @@ $AllDataSources += $DataSource
       
 
       
-        <summary type="html">In this blogpost, we will introduce the OSSEM Detection Model project and show you how to use it to create Windows Event XPath queries. These XPath queries can then be used to improve your data collection strategy.</summary>
+        <summary type="html">In this blog post, we will introduce the OSSEM Detection Model project and show you how to use it to create Windows Event XPath queries. These XPath queries can then be used to improve your data collection strategy.</summary>
       
 
       
@@ -509,7 +523,7 @@ $AllDataSources += $DataSource
 
 &lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h1&gt;
 
-&lt;h3 id=&quot;python-libraries-installation&quot;&gt;Python Libraries Installation&lt;/h3&gt;
+&lt;h2 id=&quot;python-libraries-installation&quot;&gt;Python Libraries Installation&lt;/h2&gt;
 
 &lt;p&gt;In order to use the&lt;/p&gt;
 &lt;ul&gt;
@@ -523,19 +537,19 @@ $AllDataSources += $DataSource
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;jupyter-notebook-available&quot;&gt;Jupyter Notebook Available&lt;/h3&gt;
+&lt;h2 id=&quot;jupyter-notebook-available&quot;&gt;Jupyter Notebook Available&lt;/h2&gt;
 
-&lt;p&gt;All the python code used in this blogpost will be available through a notebook &lt;a href=&quot;https://github.com/OTRF/OSSEM/blob/master/docs/dd/security_telemetry_correlation/security_events_correlation.ipynb&quot;&gt;here&lt;/a&gt;, and you can use it as a reference to extend your analysis.&lt;/p&gt;
+&lt;p&gt;All the python code used in this blogpost will be available through a notebook &lt;a href=&quot;https://ossemproject.com/dd/notebooks/security_events_correlation.html&quot;&gt;here&lt;/a&gt;, and you can use it as a reference to extend your analysis.&lt;/p&gt;
 
-&lt;h1 id=&quot;introducing-ossem---data-dictionaries&quot;&gt;Introducing OSSEM - Data Dictionaries&lt;/h1&gt;
+&lt;h1 id=&quot;ossem---data-dictionaries&quot;&gt;OSSEM - Data Dictionaries&lt;/h1&gt;
 
-&lt;h3 id=&quot;what-is-ossem&quot;&gt;What is OSSEM?&lt;/h3&gt;
+&lt;h2 id=&quot;what-is-ossem&quot;&gt;What is OSSEM?&lt;/h2&gt;
 
-&lt;p&gt;Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data dictionary (DD)&lt;/code&gt; format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;common data model (CDM)&lt;/code&gt; that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. This relationships are stored under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;detection model (DM)&lt;/code&gt; section of the project.&lt;/p&gt;
+&lt;p&gt;OSSEM stands for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open Source Security Events Metadata&lt;/code&gt;, and it is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data dictionary (DD)&lt;/code&gt; format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;common data model (CDM)&lt;/code&gt; that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;detection model (DM)&lt;/code&gt; section of the project.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;assets/images/blog/ossem_correlating_events/2021-06-21_01_ossem_components.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;what-is-a-data-dictionary&quot;&gt;What is a Data Dictionary?&lt;/h3&gt;
+&lt;h2 id=&quot;what-is-a-data-dictionary&quot;&gt;What is a Data Dictionary?&lt;/h2&gt;
 
 &lt;p&gt;Data Dictionaries are structures that can help us to get a better understanding of the security context provided by security telemetry. Most of the metadata within a dictionary is obtained directly from telemtry providers documentation. In addition, the OSSEM project extends the content of data dictionaries with metadata such as the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;standard name&lt;/code&gt; for an event field, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;references&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tags&lt;/code&gt;. &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD&quot;&gt;OSSEM data dictionaries&lt;/a&gt; are stored in an easy to consume format such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yaml&lt;/code&gt;. Here is an example of a data dictionary for &lt;a href=&quot;https://github.com/OTRF/OSSEM-DD/blob/main/windows/sysmon/events/event-1.yml&quot;&gt;Sysmon event 1 (Process Creation)&lt;/a&gt;:&lt;/p&gt;
 
@@ -563,11 +577,11 @@ $AllDataSources += $DataSource
 &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Windows&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;why-do-we-need-data-dictionaries&quot;&gt;Why do we need Data Dictionaries?&lt;/h3&gt;
+&lt;h2 id=&quot;why-do-we-need-data-dictionaries&quot;&gt;Why do we need Data Dictionaries?&lt;/h2&gt;
 
 &lt;p&gt;A data dictionary is not just a collection of data provided by a security application. In fact, the main goal of documenting security telemetry is to understand the activity in our network environment that triggered the generation of data. In addition, we need to identify network concepts such as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;process&lt;/code&gt; that are represented and described by every data field.&lt;/p&gt;
 
-&lt;h3 id=&quot;why-do-we-need-standard-names&quot;&gt;Why do we need Standard Names?&lt;/h3&gt;
+&lt;h2 id=&quot;why-do-we-need-standard-names&quot;&gt;Why do we need Standard Names?&lt;/h2&gt;
 
 &lt;p&gt;One of the most helpful features provided by OSSEM data dictionaries is the standardization of data fields names. This can help us to correlate telemetry not only among data schemas provided by a specific security application, but also among data schemas from different telemetry providers such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security Auditing&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sysmon&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OSQuery&lt;/code&gt;.&lt;/p&gt;
 
@@ -575,7 +589,7 @@ $AllDataSources += $DataSource
 
 &lt;p&gt;One of the benefits of documenting and standardizing security telemetry is that we can correlate it based on data fields such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ProcessGuid&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LogonId&lt;/code&gt;. The correlation process might be easier when working with security telemetry provided by a single provider. On the other hand, working with data from different telemetry providers might be more difficult because of the different name syntax used by each provider. Indeed, for this type of use cases is where the standardization feature of OSSEM data dictionaries becomes more relevant.&lt;/p&gt;
 
-&lt;h3 id=&quot;microsoft-security-auditing-telemetry-correlation&quot;&gt;Microsoft Security Auditing Telemetry Correlation&lt;/h3&gt;
+&lt;h2 id=&quot;microsoft-security-auditing-telemetry-correlation&quot;&gt;Microsoft Security Auditing Telemetry Correlation&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;a) Collecting data dictionaries content&lt;/strong&gt;&lt;/p&gt;
 
@@ -652,7 +666,7 @@ $AllDataSources += $DataSource
 
 &lt;p&gt;As you can see in the image above, the link between secuity events 4624 and 4688 can be defined through the standard data field &lt;strong&gt;user_logon_id&lt;/strong&gt; (represented by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TargetLogonId&lt;/code&gt; in 4624 and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SubjectLogonId&lt;/code&gt; in 4688) and not &lt;strong&gt;target_user_logon_id&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;what-are-the-next-steps-regarding-data-dictionaries&quot;&gt;What Are The Next Steps Regarding Data Dictionaries?&lt;/h2&gt;
+&lt;h1 id=&quot;what-are-the-next-steps-regarding-data-dictionaries&quot;&gt;What Are The Next Steps Regarding Data Dictionaries?&lt;/h1&gt;
 
 &lt;p&gt;When we started the standardazitaion process for OSSEM - Data Dictioanries, we considered every security event having a unique standard structure. However, while performing research activities at &lt;a href=&quot;https://blog.openthreatresearch.com/&quot;&gt;Open Threat Research (OTR)&lt;/a&gt;, we realized that, in some cases, the standard structure of some events may change based on the values of some data fields.&lt;/p&gt;
 

@@ -181,7 +181,7 @@ into the {body} of the default.hbs template -->
 
 <h1 id="pre-requisites">Pre-requisites</h1>
 
-<h3 id="python-libraries-installation">Python Libraries Installation</h3>
+<h2 id="python-libraries-installation">Python Libraries Installation</h2>
 
 <p>In order to use the</p>
 <ul>
@@ -195,19 +195,19 @@ into the {body} of the default.hbs template -->
   </li>
 </ul>
 
-<h3 id="jupyter-notebook-available">Jupyter Notebook Available</h3>
+<h2 id="jupyter-notebook-available">Jupyter Notebook Available</h2>
 
-<p>All the python code used in this blogpost will be available through a notebook <a href="https://github.com/OTRF/OSSEM/blob/master/docs/dd/security_telemetry_correlation/security_events_correlation.ipynb">here</a>, and you can use it as a reference to extend your analysis.</p>
+<p>All the python code used in this blogpost will be available through a notebook <a href="https://ossemproject.com/dd/notebooks/security_events_correlation.html">here</a>, and you can use it as a reference to extend your analysis.</p>
 
-<h1 id="introducing-ossem---data-dictionaries">Introducing OSSEM - Data Dictionaries</h1>
+<h1 id="ossem---data-dictionaries">OSSEM - Data Dictionaries</h1>
 
-<h3 id="what-is-ossem">What is OSSEM?</h3>
+<h2 id="what-is-ossem">What is OSSEM?</h2>
 
-<p>Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a <code class="language-plaintext highlighter-rouge">data dictionary (DD)</code> format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a <code class="language-plaintext highlighter-rouge">common data model (CDM)</code> that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. This relationships are stored under the <code class="language-plaintext highlighter-rouge">detection model (DM)</code> section of the project.</p>
+<p>OSSEM stands for <code class="language-plaintext highlighter-rouge">Open Source Security Events Metadata</code>, and it is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems. Security events are documented in a <code class="language-plaintext highlighter-rouge">data dictionary (DD)</code> format, and they can be used as a reference while mapping data sources to data analytics used to validate the detection of adversarial techniques. In addition, the project provides a <code class="language-plaintext highlighter-rouge">common data model (CDM)</code> that can be used for data engineers during data normalization procedures to allow security analysts to query and analyze data across diverse data sources. Finally, the project also provides documentation about the structure and relationships identified in specific data sources to facilitate the development of data analytics and adversary behavior representation from a data perspective. These relationships are stored under the <code class="language-plaintext highlighter-rouge">detection model (DM)</code> section of the project.</p>
 
 <p><img src="assets/images/blog/ossem_correlating_events/2021-06-21_01_ossem_components.png" alt="" /></p>
 
-<h3 id="what-is-a-data-dictionary">What is a Data Dictionary?</h3>
+<h2 id="what-is-a-data-dictionary">What is a Data Dictionary?</h2>
 
 <p>Data Dictionaries are structures that can help us to get a better understanding of the security context provided by security telemetry. Most of the metadata within a dictionary is obtained directly from telemtry providers documentation. In addition, the OSSEM project extends the content of data dictionaries with metadata such as the <code class="language-plaintext highlighter-rouge">standard name</code> for an event field, <code class="language-plaintext highlighter-rouge">references</code> and <code class="language-plaintext highlighter-rouge">tags</code>. <a href="https://github.com/OTRF/OSSEM-DD">OSSEM data dictionaries</a> are stored in an easy to consume format such as <code class="language-plaintext highlighter-rouge">yaml</code>. Here is an example of a data dictionary for <a href="https://github.com/OTRF/OSSEM-DD/blob/main/windows/sysmon/events/event-1.yml">Sysmon event 1 (Process Creation)</a>:</p>
 
@@ -235,11 +235,11 @@ into the {body} of the default.hbs template -->
 <span class="pi">-</span> <span class="s">Windows</span>
 </code></pre></div></div>
 
-<h3 id="why-do-we-need-data-dictionaries">Why do we need Data Dictionaries?</h3>
+<h2 id="why-do-we-need-data-dictionaries">Why do we need Data Dictionaries?</h2>
 
 <p>A data dictionary is not just a collection of data provided by a security application. In fact, the main goal of documenting security telemetry is to understand the activity in our network environment that triggered the generation of data. In addition, we need to identify network concepts such as a <code class="language-plaintext highlighter-rouge">user</code> or <code class="language-plaintext highlighter-rouge">process</code> that are represented and described by every data field.</p>
 
-<h3 id="why-do-we-need-standard-names">Why do we need Standard Names?</h3>
+<h2 id="why-do-we-need-standard-names">Why do we need Standard Names?</h2>
 
 <p>One of the most helpful features provided by OSSEM data dictionaries is the standardization of data fields names. This can help us to correlate telemetry not only among data schemas provided by a specific security application, but also among data schemas from different telemetry providers such as <code class="language-plaintext highlighter-rouge">Security Auditing</code>, <code class="language-plaintext highlighter-rouge">Sysmon</code>, and <code class="language-plaintext highlighter-rouge">OSQuery</code>.</p>
 
@@ -247,7 +247,7 @@ into the {body} of the default.hbs template -->
 
 <p>One of the benefits of documenting and standardizing security telemetry is that we can correlate it based on data fields such as <code class="language-plaintext highlighter-rouge">ProcessGuid</code> and <code class="language-plaintext highlighter-rouge">LogonId</code>. The correlation process might be easier when working with security telemetry provided by a single provider. On the other hand, working with data from different telemetry providers might be more difficult because of the different name syntax used by each provider. Indeed, for this type of use cases is where the standardization feature of OSSEM data dictionaries becomes more relevant.</p>
 
-<h3 id="microsoft-security-auditing-telemetry-correlation">Microsoft Security Auditing Telemetry Correlation</h3>
+<h2 id="microsoft-security-auditing-telemetry-correlation">Microsoft Security Auditing Telemetry Correlation</h2>
 
 <p><strong>a) Collecting data dictionaries content</strong></p>
 
@@ -324,7 +324,7 @@ into the {body} of the default.hbs template -->
 
 <p>As you can see in the image above, the link between secuity events 4624 and 4688 can be defined through the standard data field <strong>user_logon_id</strong> (represented by <code class="language-plaintext highlighter-rouge">TargetLogonId</code> in 4624 and <code class="language-plaintext highlighter-rouge">SubjectLogonId</code> in 4688) and not <strong>target_user_logon_id</strong>.</p>
 
-<h2 id="what-are-the-next-steps-regarding-data-dictionaries">What Are The Next Steps Regarding Data Dictionaries?</h2>
+<h1 id="what-are-the-next-steps-regarding-data-dictionaries">What Are The Next Steps Regarding Data Dictionaries?</h1>
 
 <p>When we started the standardazitaion process for OSSEM - Data Dictioanries, we considered every security event having a unique standard structure. However, while performing research activities at <a href="https://blog.openthreatresearch.com/">Open Threat Research (OTR)</a>, we realized that, in some cases, the standard structure of some events may change based on the values of some data fields.</p>
 
