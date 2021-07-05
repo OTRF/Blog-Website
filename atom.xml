@@ -264,6 +264,21 @@
     
       
       <item>
+        <title>Installing Visual Studio Code - Mac</title>
+        
+          <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.57.1) &lt;em&gt;(VSCode)&lt;/em&gt; on a Mac computer using &lt;a href=&quot;https://brave.com/&quot;&gt;Brave&lt;/a&gt; browser.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Thu, 03 Dec 2020 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/installing_vscode_mac</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/installing_vscode_mac</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Installing Python Interpreter - Windows</title>
         
           <description>&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.&lt;/p&gt;

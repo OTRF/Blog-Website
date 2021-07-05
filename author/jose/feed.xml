@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/jose/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-06-24T23:15:00-04:00</updated>
+  <updated>2021-07-05T00:26:38-04:00</updated>
   <id>https://blog.openthreatresearch.com/author/jose/feed.xml</id>
 
   
@@ -1620,6 +1620,123 @@ jsonFilePath
     </entry>
   
     <entry>
+      <title type="html">Installing Visual Studio Code - Mac</title>
+      <link href="https://blog.openthreatresearch.com/installing_vscode_mac" rel="alternate" type="text/html" title="Installing Visual Studio Code - Mac" />
+      <published>2020-12-03T07:00:00-05:00</published>
+      <updated>2020-12-03T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/installing_vscode_mac</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_mac">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.57.1) &lt;em&gt;(VSCode)&lt;/em&gt; on a Mac computer using &lt;a href=&quot;https://brave.com/&quot;&gt;Brave&lt;/a&gt; browser.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-visual-studio-code&quot;&gt;Installing Visual Studio Code&lt;/h2&gt;
+&lt;h3 id=&quot;1-downloading-vscode-executable&quot;&gt;1) Downloading VSCode Executable&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt; website.&lt;/li&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download Mac Universal&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_01_download_vscode_mac.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_02_saving_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-running-vscode-application&quot;&gt;2) Running VSCode Application&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;After the file is downloaded, at the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bottom left&lt;/code&gt; of the browser window, open the options and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; to extract the application and open a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finder&lt;/code&gt; windows.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_03_open_vscode_application.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_04_open_vscode_finder_window.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Right click&lt;/code&gt; on the Visual Studio Code application, and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_05_open_vscode.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You might get the following message, click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_06_open_warning.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-visual-studio-code&quot;&gt;3) Visual Studio Code!!&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We are now ready to start working with &lt;strong&gt;VSCode&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_07_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt; menu.&lt;/li&gt;
+  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Preferences&lt;/code&gt;  and then select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Color Theme&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_08_vscode_color_theme.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select, for example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Light (Visual Studio)&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_09_vscode_color_theme_options.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is how it looks like.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_10_vscode_color_theme_light_vscode.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;4-moving-visual-studio-code-to-applications-folder&quot;&gt;4) Moving Visual Studio Code to Applications Folder&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go back to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finder&lt;/code&gt; window from section 2, and move the Visual Studio Code application to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;applications&lt;/code&gt; folder.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_11_vscode_applications_folder.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Do not forget to remove the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zip file&lt;/code&gt; we downloaded at the beginning of this post.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_12_vscode_zip_trash.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://code.visualstudio.com/&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="vscode" />
+      
+
+      
+        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.57.1) (VSCode) on a Mac computer using Brave browser.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
       <title type="html">Installing Python Interpreter - Windows</title>
       <link href="https://blog.openthreatresearch.com/installing_python_interpreter" rel="alternate" type="text/html" title="Installing Python Interpreter - Windows" />
       <published>2020-12-03T07:00:00-05:00</published>
@@ -1717,82 +1834,6 @@ jsonFilePath
 
       
         <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python (3.9.2) interpreter on a Windows computer using Firefox as web browser.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Installing Python Extension for Visual Studio Code - Windows</title>
-      <link href="https://blog.openthreatresearch.com/installing_python_extension_vscode" rel="alternate" type="text/html" title="Installing Python Extension for Visual Studio Code - Windows" />
-      <published>2020-12-03T07:00:00-05:00</published>
-      <updated>2020-12-03T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/installing_python_extension_vscode</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_python_extension_vscode">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-python-extension-for-vscode&quot;&gt;Installing Python Extension for VSCode&lt;/h2&gt;
-&lt;h3 id=&quot;1-searching-for-python-extension&quot;&gt;1) Searching for Python extension&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Open VSCode application.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_vscode_window.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Extensions&lt;/code&gt; from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;View&lt;/code&gt; menu, .&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_view_extensions.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt; and select the one provided by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Microsoft&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_python_extension.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-installing-python-extension&quot;&gt;2) Installing Python extension&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt; and wait ofr the installation to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_wait_installation.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The Python extension for VSCode was successfully installed.&lt;/li&gt;
-  &lt;li&gt;This extension has a dependency with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension, also provided by Microsoft.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_python_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Because of this dependency, the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Jupyter&lt;/code&gt; extension was also installed with the Python extension.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_Jupyter_extension_installed.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Jose Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="python" />
-      
-        <category term="vscode" />
-      
-
-      
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install the Python extension for Visual Studio Code (VSCode) on a Windows computer using Firefox as web browser.</summary>
       
 
       
