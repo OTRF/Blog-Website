@@ -4,8 +4,8 @@ current: post
 cover:  assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png
 navigation: True
 title: 'CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox'
-date: 2022-01-11 12:00:00
-tags: [Log4Shell,VirtualBox]
+date: 2022-01-10 12:00:00
+tags: [Log4Shell, VirtualBox]
 class: post-template
 subclass: 'post'
 author: jose
@@ -37,11 +37,11 @@ In this blog post, we will share the steps that you can follow to create an virt
 
 ## Attacker Virtual Machine
 
-- Go to *Machine > New* and create a new virtual machine. We are naming it **attacker** and using type **Linux** and version **Ubuntu (64-bi)**.
+- Go to *Machine > New* and create a new virtual machine. We are naming it **attacker** and using type **Linux** and version **Ubuntu (64-bit)**.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker.png)
 
-- Select the preferred amount of memory (RAM). We will use 4096 MB.
+- Select the preferred amount of memory (RAM). We will use **4096 MB**.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_ram.png)
 
@@ -65,7 +65,7 @@ In this blog post, we will share the steps that you can follow to create an virt
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_start_vm.png)
 
-- Select *Install Ubuntu* and continue the installation process using default options.
+- Select **Install Ubuntu** and continue the installation process using default options.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_ubuntu.png)
 
@@ -103,11 +103,11 @@ In this blog post, we will share the steps that you can follow to create an virt
     - Devices > Drag and Drop > Bidirectional
     - Devices > Insert Guest Additions CD Image
 
-- When installing the *Guest Additions CD Image**, you might get the following error: **This system is currently not set up to build kernel modules**
+- When installing the Guest Additions CD Image, you might get the following error: **This system is currently not set up to build kernel modules**
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_error_guest_additions.png)
 
-- Press **enter**, open a **terminal** window, and run the following command and start the installation process again.
+- Press **enter**, open a **terminal** window, and run the following commands:
 
 ```
 sudo apt update
@@ -116,13 +116,15 @@ sudo apt install build-essential
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_build.png)
 
+-  Now, you can start the installation process again.
+
 ## Tomcat Virtual Machine
 
-- Go to *Machine > New* and create a new virtual machine. We are naming it **tomcat** and using type **Linux** and version **Ubuntu (64-bi)**.
+- Go to *Machine > New* and create a new virtual machine. We are naming it **tomcat** and using type **Linux** and version **Ubuntu (64-bit)**.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat.png)
 
-- Select the preferred amount of memory (RAM). We will use 2048 MB.
+- Select the preferred amount of memory (RAM). We will use **2048 MB**.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_ram.png)
 
@@ -162,7 +164,7 @@ sudo apt install build-essential
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_wait_installation.png)
 
-- When the installation is complete, using the space bar select **Reboot Now**.
+- When the installation is complete, using the tab key select **Reboot Now** and press enter.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_restart_now.png)
 
@@ -170,7 +172,7 @@ sudo apt install build-essential
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_press_enter.png)
 
-- Press **enter**, type the user **Tomcat** and press enter, finally type the **password** and press enter.
+- Press **enter**, type the user **tomcat** and press enter, finally type the **password** and press enter.
 
 ![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_login.png)
 
