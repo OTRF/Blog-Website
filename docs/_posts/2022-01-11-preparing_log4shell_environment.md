@@ -1,7 +1,7 @@
 ---
 layout: post
 current: post
-cover:  assets/images/blog/log4shell_environment/
+cover:  assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png
 navigation: True
 title: 'CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox'
 date: 2022-01-11 12:00:00
@@ -59,7 +59,7 @@ In this blog post, we will share the steps that you can follow to create an virt
 
 - Go to the **Network** tab and attach the **Log4Shell** network adapter you created before. Click on **OK**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_network_adapter.png)
 
 - Select the attacker virtual machine and go to *Machine > Start*. This will start the Ubuntu virtual machine.
 
@@ -120,72 +120,74 @@ sudo apt install build-essential
 
 - Go to *Machine > New* and create a new virtual machine. We are naming it **tomcat** and using type **Linux** and version **Ubuntu (64-bi)**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat.png)
 
-- Select the preferred amount of memory (RAM). We will use 4096 MB.
+- Select the preferred amount of memory (RAM). We will use 2048 MB.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_ram.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_ram.png)
 
 - Create a virtual hard disk using default options.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_virtual_hard_disk.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_virtual_hard_disk.png)
 
-- Select the attacker virtual machine and go to *Machine > Settings*. Go to the **Storage** tab and select the **Choose a Disk File**.
+- Select the Tomcat virtual machine and go to *Machine > Settings*. Go to the **Storage** tab and select the **Choose a Disk File**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_add_iso.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_add_iso.png)
 
-- Choose the ISO file for Ubuntu Desktop you downloaded before.
+- Choose the ISO file for Ubuntu Server you downloaded before.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_choose_iso.png)
 
 - Go to the **Network** tab and attach the **Log4Shell** network adapter you created before. Click on **OK**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_network_adapter.png)
 
 - Select the attacker virtual machine and go to *Machine > Start*. This will start the Ubuntu virtual machine.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_start_vm.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_start_vm.png)
 
-- Select *Install Ubuntu* and continue the installation process using default options.
+- Press **enter** and continue the installation process using default options.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_ubuntu.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_install_ubuntu.png)
 
-- Use **attacker** as name, computer's name, and username. Also, you should choose and confirm your password.
+- Use **tomcat** as name, server's name, and username. Also, you should choose and confirm your password.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_user_password.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_user_password.png)
+
+- Using the **space bar**, select the **Install OpenSSH server** option.
+
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_openssh.png)
 
 - Wait for the installation process to complete.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_wait_installation.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_wait_installation.png)
 
-- When the installation is complete, click on **Restart Now**.
+- When the installation is complete, using the space bar select **Reboot Now**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_restart_now.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_restart_now.png)
 
 - Press **ENTER**.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_press_enter.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_press_enter.png)
 
-- Click on the user **attacker**.
+- Press **enter**, type the user **Tomcat** and press enter, finally type the **password** and press enter.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_select_user.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_login.png)
 
-- Insert the user's **password**.
+- Awesome!! You have created the Tomcat's virtual machine.
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_insert_password.png)
+![](assets/images/blog/log4shell_environment/create_ubuntu_tomcat_vm_ready.png)
 
-- Awesome!! You have created the attacker's virtual machine.
+## Attacker and Victim's Virtual Machines READY!!
 
-![](assets/images/blog/log4shell_environment/create_ubuntu_attacker_vm_ready.png)
+We now have our two virtual machines within the same network (192.168.50.0/24) and with the following features:
 
+- Attacker's virtual machine:
+    - Ubuntu 20.04.3 LTS (Release 20.04)
+    - IP Address: 192.168.50.4
 
+- Victim's virtual machine (Tomcat):
+    - Ubuntu 20.04.3 LTS (Release 20.04)
+    - IP Address: 192.168.50.5
 
-
-
-
-# References
-* [PowerShell script to generate XML files with XPath queries based on OSSEM relationships mapped to ATT&CK and the creation of the file used with the new Azure Sentinel data connector](https://github.com/OTRF/OSSEM-DM/blob/main/scripts/ossemDM_XPath_Queries.ps1)
-* [OSSEM Detection Model - GitHub repository](https://github.com/OTRF/OSSEM-DD)
-* [OSSEM Project Website](https://ossemproject.com/intro.html)
-* [Azure Sentinel To-Go - XML and JSON files](https://github.com/OTRF/Azure-Sentinel2Go/tree/master/azure-sentinel/linkedtemplates/data-collection-rules/rules/ossem-attack)
-* [Azure Sentinel To-Go - GitHub repository](https://github.com/OTRF/Azure-Sentinel2Go)
+![](assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png)
