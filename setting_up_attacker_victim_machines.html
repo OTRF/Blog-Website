@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Document Settings -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Base Meta -->
+    <!-- dynamically fixing the title for tag/author pages -->
+
+
+
+    <title>CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles'n'Scripts -->
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.edited.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/syntax.css" />
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+
+    <!--[if IE]>
+        <style>
+            p, ol, ul{
+                width: 100%;
+            }
+            blockquote{
+                width: 100%;
+            }
+        </style>
+    <![endif]-->
+    
+    <!-- This tag outputs SEO meta+structured data and other important settings -->
+    <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
+    <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+     <!--title below is coming from _includes/dynamic_title-->
+    <meta property="og:site_name" content="Open Threat Research Blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
+    <meta property="og:description" content="In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png" />
+    <meta property="article:publisher" content="https://www.facebook.com/" />
+    <meta property="article:author" content="https://www.facebook.com/" />
+    <meta property="article:published_time" content="2022-01-11T07:00:00-05:00" />
+    <meta property="article:modified_time" content="2022-01-11T07:00:00-05:00" />
+    <meta property="article:tag" content="Log4jshell" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
+    <meta name="twitter:description" content="In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto" />
+    <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Open Threat Research Blog" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Log4jshell" />
+    <meta name="twitter:site" content="@OTR_Community" />
+    <meta name="twitter:creator" content="@OTR_Community" />
+    <meta property="og:image:width" content="1400" />
+    <meta property="og:image:height" content="933" />
+
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Website",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Open Threat Research Blog",
+        "logo": "https://blog.openthreatresearch.com/false"
+    },
+    "url": "https://blog.openthreatresearch.com/setting_up_attacker_victim_machines",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png",
+        "width": 2000,
+        "height": 666
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.openthreatresearch.com/setting_up_attacker_victim_machines"
+    },
+    "description": "In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto"
+}
+    </script>
+
+    <!-- <script type="text/javascript" src="https://demo.ghost.io/public/ghost-sdk.min.js?v=724281a32e"></script>
+    <script type="text/javascript">
+    ghost.init({
+    	clientId: "ghost-frontend",
+    	clientSecret: "f84a07a72b17"
+    });
+    </script> -->
+
+    <meta name="generator" content="Jekyll 3.6.2" />
+    <link rel="alternate" type="application/rss+xml" title="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" href="/feed.xml" />
+
+
+</head>
+<body class="post-template">
+
+    <div class="site-wrapper">
+        <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
+        <!-- default -->
+
+<!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template -->
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+        
+            
+                <a class="site-nav-logo" href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a>
+            
+        
+        
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="/">Home</a></li>
+    <li class="nav-about" role="menuitem"><a href="/about/">About</a></li>
+    <li class="nav-getting-started" role="menuitem"><a href="/tag/getting-started/">Getting Started</a></li>
+    <!--<li class="nav-try-ghost" role="menuitem"><a href="https://ghost.org">Try Ghost</a></li>-->
+</ul>
+
+        
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+            
+            
+                <a class="social-link social-link-tw" href="https://twitter.com/OTR_Community" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            
+        </div>
+        
+            <a class="subscribe-button" href="#subscribe">Subscribe</a>
+        
+    </div>
+</nav>
+
+    </div>
+</header>
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
+
+        <article class="post-full  tag-log4jshell tag-virtualbox post ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="11 January 2022">11 January 2022</time>
+                    
+                        <span class="date-divider">/</span>
+                        
+                            
+                               <a href='/tag/log4jshell/'>LOG4JSHELL</a>,
+                            
+                        
+                            
+                               <a href='/tag/virtualbox/'>VIRTUALBOX</a>
+                            
+                        
+                    
+                </section>
+                <h1 class="post-full-title">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</h1>
+            </header>
+
+            
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png)">
+            </figure>
+            
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown">
+                    <p>In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits <strong><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a></strong>. We will follow the steps provided within the <a href="https://github.com/Cyb3rWard0g/log4jshell-lab">log4jshell-lab</a> GitHub repository by <a href="https://twitter.com/Cyb3rWard0g">Roberto Rodriguez</a></p>
+
+<h1 id="pre-requisites">Pre-Requisites</h1>
+
+<p>For the purpose of this blog, we will use three virtual machines: Ubuntu Server (Tomcat) and Ubuntu Desktop (Attacker and Remote-SSH). If you need to create these virtual machines using VirtualBox, you can follow the steps from these previous blog posts:</p>
+
+<ul>
+  <li>
+    <p><a href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</a></p>
+  </li>
+  <li>
+    <p><a href="https://blog.openthreatresearch.com/virtualbox_ubuntu_server">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</a></p>
+  </li>
+</ul>
+
+<h1 id="setting-up-the-attacker-virtual-machine">Setting Up the Attacker Virtual Machine</h1>
+
+<h2 id="installing-required-commands">Installing Required Commands</h2>
+
+<p>Open the <strong>terminal</strong> application and run the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/attacker_apt_update.png" alt="" /></p>
+
+<p>Let’s install the <strong>git</strong> and <strong>curl</strong> commands by running the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install git curl -y
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/attacker_install_git_curl.png" alt="" /></p>
+
+<h2 id="cloning-the-log4jshell-lab-github-repository">Cloning the log4jshell-lab GitHub Repository</h2>
+
+<p>Without changing your current directory, use the <strong>su</strong> command to use the <em>root</em> user. Then, use the <strong>git</strong> command to clone the GitHub repository:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/attacker_cloning_github_repo.png" alt="" /></p>
+
+<h2 id="installing-docker">Installing Docker</h2>
+
+<p>Use the <strong>wget</strong> command to download the bash shell script. Then, convert the Install-Docker.sh file into an executble by using the <strong>chmod</strong> command.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/attacker_install_docker_executable.png" alt="" /></p>
+
+<p>Finally, execute the <strong>Install-Docker.sh</strong> file by running the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./Install-Docker.sh
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/attacker_run_install_docker.png" alt="" /></p>
+
+<h1 id="setting-up-the-victim-tomcat-virtual-machine">Setting Up the Victim (Tomcat) Virtual Machine</h1>
+
+<h2 id="interacting-with-ubuntu-server-remotely-using-ssh-connection">Interacting with Ubuntu Server Remotely using SSH Connection</h2>
+
+<p>If you followed the steps from the blog posts shared in the pre-requisites section, you should have installed the <strong>OpenSSH server</strong> when creating your Ubuntu server virtual machine. Therefore, we should be able to access our server using a <strong>SecureShell (SSH)</strong> connection.</p>
+
+<p>First, let’s check the status of the SSH service and get the IP address of our server by running the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service ssh status
+
+ip a
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_status.png" alt="" /></p>
+
+<p>Let’s start an Ubuntu desktop virtual machine within the same network (192.168.50.0/24) and open the <strong>terminal</strong> application.</p>
+
+<p>Using the user (<strong>tomcat</strong>), IP address (<strong>192.168.50.5</strong>), and password for our ubuntu server, stablish a SSH connection by running the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh tomcat@192.168.50.5
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_connection.png" alt="" /></p>
+
+<h2 id="setting-up-tomcat-server">Setting Up Tomcat Server</h2>
+
+<p>Let’s switch our current user to the <strong>root</strong> user by using the <strong>su</strong> command.</p>
+
+<p>Also, we will use the <strong>git</strong> command to clone the <strong>log4jshell</strong> GitHub repository.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_cloning_repo_log4jshell.png" alt="" /></p>
+
+<p>Using the <strong>cd</strong> command, change your current directory to <em>log4jshell-lab/victim/tomcat</em>.</p>
+
+<p>Using the <strong>chmod</strong> command, make the <em>Install-Tomcat.sh</em> bash file an executable file.</p>
+
+<p>Using the <strong>sh</strong> command, execute the <em>Install-Tomcat.sh</em> bash file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd log4jshell-lab/victim/tomcat
+
+chmod +x Install-Tomcat.sh
+
+sh Install-Tomcat.sh
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_installing_tomcat.png" alt="" /></p>
+
+<p>Let’s check if the Tomcat service is running properly by running the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service tomcat status
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_checking_tomcat_service.png" alt="" /></p>
+
+<p>To go back to the terminal shell press <strong>CTRL + C</strong>.</p>
+
+<h2 id="installing-docker-1">Installing Docker</h2>
+
+<p>We will use a Docker image to compile our vulnerable applications, so let’s install Docker using a bash script from the <strong><a href="https://github.com/OTRF/Blacksmith">Blacksmith</a></strong> OTR project.</p>
+
+<p>Using the <strong>cd</strong> command, change your current directory to <em>home/tomcat</em>.</p>
+
+<p>Using the <strong>wget</strong> command, import the <em>Install-Docker.sh</em> bash script.</p>
+
+<p>Using the <strong>chmod</strong> command, make the <em>Install-Docker.sh</em> bash file an executable file.</p>
+
+<p>Using the <strong>./</strong> command, execute the <em>Install-Docker.sh</em> bash file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /home/tomcat/
+
+wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+
+./Install-Docker.sh
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_install_docker_executable.png" alt="" /></p>
+
+<h2 id="compiling-vulnerable-java-applications">Compiling Vulnerable Java Applications</h2>
+
+<p>We need to add vulnerable applications to our Tomcat server. The <strong><a href="https://github.com/Cyb3rWard0g/log4jshell-lab">log4jshell-lab</a></strong> project comes with a few vulnerable Java applications that use different versions of the <strong>Log4j</strong> library (<a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.14.0">2.14.0</a>, <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.15.0">2.15.0</a>, and <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.16.0">2.16.0</a>).</p>
+
+<p>We need to compile our applications and create .war files to host the vulnerable aplications in our Tomcat server under <strong>/opt/tomcat/webapps</strong>.</p>
+
+<p>The bash script Compile-Apps.sh compiles applications and copies <strong>.war</strong> files to <strong>/opt/tomcat/webapps</strong>.</p>
+
+<p>Using the <strong>cd</strong> command, change your current directory to <em>log4jshell-lab/victim/vuln-apps/</em>.</p>
+
+<p>Using the <strong>chmod</strong> command, make the <em>Compile-Apps.sh</em> bash file an executable file.</p>
+
+<p>Using the <strong>sh</strong> command, execute the <em>Compile-Apps.sh</em> bash file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd log4jshell-lab/victim/vuln-apps/
+
+chmod +x Compile-Apps.sh
+
+sh Compile-Apps.sh
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_compiling_vuln_apps.png" alt="" /></p>
+
+<p>Finally, we need to <strong>stop</strong> and <strong>restart</strong> the Tomcat service by using the following commands:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service tomcat stop
+
+service tomcat start
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_restarting_tomcat_server.png" alt="" /></p>
+
+<h2 id="accessing-vulnerable-java-applications">Accessing Vulnerable Java Applications</h2>
+
+<p>We need to validate that the vulnerable Java applications that we have installed are working and can be accessed. According to the GitHub repository, there are two ways to access the applications: through a <strong>web browser</strong> and by using an <strong>API-GET request</strong>.</p>
+
+<h3 id="a-web-browser-mode">a) Web Browser Mode</h3>
+
+<p>If your Tomcat server has a graphical user interface (GUI), you can open your preferred web browser and browse to:</p>
+
+<ul>
+  <li>log4j version 2.14.0: <strong>127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/</strong></li>
+  <li>log4j version 2.15.0: <strong>127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/</strong></li>
+  <li>log4j version 2.16.0: <strong>127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/</strong></li>
+</ul>
+
+<p>If you can only access your Tomcat server by using a terminal application, you can <strong>SSH tunnel</strong> your access to your vulnerable applications with a different computer.</p>
+
+<p>Let’s use the same Ubuntu desktop virtual machine that we used to set up the vulnerable applications and run the following commands through the <strong>terminal</strong> application:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh -L 8080:127.0.0.1:8080 tomcat@192.168.50.5
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel.png" alt="" /></p>
+
+<p>We can now open our preferred browser and browse to any of the previous links such as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel_browser.png" alt="" /></p>
+
+<h3 id="b-api-mode">b) API Mode</h3>
+
+<p>Another way to access the vulnerable Java applications through their API.</p>
+
+<p>First, using the user (<strong>tomcat</strong>), IP address (<strong>192.168.50.5</strong>), and password for our ubuntu server, stablish a SSH connection by running the following commands in the <strong>terminal</strong> application:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh tomcat@192.168.50.5
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_api.png" alt="" /></p>
+
+<p>We can now use the <strong>curl</strong> command to perform a <strong>GET</strong> request using the API for each application:</p>
+
+<ul>
+  <li>log4j version 2.14.0: <strong>curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api</strong></li>
+  <li>log4j version 2.15.0: <strong>curl -X GET 127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/api</strong></li>
+  <li>log4j version 2.16.0: <strong>curl -X GET 127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/api</strong></li>
+</ul>
+
+<p>Using the SSH connection we established previously, run one of the curl comands such as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_curl_api.png" alt="" /></p>
+
+<h2 id="installing-sysmon-for-linux">Installing Sysmon for Linux</h2>
+
+<p>If you want to generate some endpoint data that you can analyze late when simulating attacks, we can use some resources (bash script and xml config file) from the <strong><a href="https://github.com/OTRF/Blacksmith">Blacksmith</a></strong> OTR project. We will use the same <strong>SSH</strong> connection we established in the previous section.</p>
+
+<p>Using the <strong>wget</strong> command, download the <em>Install-Sysmon-For-Linux.sh</em> bash script.</p>
+
+<p>Using the <strong>chmod</strong> command, make the <em>Install-Sysmon-For-Linux.sh</em> bash file an executable file.</p>
+
+<p>Using the <strong>sh</strong> command, execute the <em>Install-Sysmon-For-Linux.sh</em> bash file. Note that we are adding the <strong>config</strong> parameter with the url that points to the <strong>xml config</strong> file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Sysmon-For-Linux.sh
+
+chmod +x Install-Sysmon-For-Linux.sh
+
+sh Install-Sysmon-For-Linux.sh --config https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/configs/sysmon/linux/sysmon.xml
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_installing_sysmon.png" alt="" /></p>
+
+<p>We can validate the generation of Sysmon events by using the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -f /var/log/syslog
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4shell_attacker_victim_machine/victim_sysmon_log_example.png" alt="" /></p>
+
+                </div>
+            </section>
+
+            <!-- Email subscribe form at the bottom of the page -->
+            
+                <section class="subscribe-form">
+                    <h3 class="subscribe-form-title">Subscribe to Open Threat Research Blog</h3>
+                    <p>Get the latest posts delivered right to your inbox</p>
+                    <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+                </section>
+            
+
+            <footer class="post-full-footer">
+                <!-- Everything inside the #author tags pulls data from the author -->
+                <!-- #author-->
+                
+                    
+                
+                    
+                        <section class="author-card">
+                            
+                                <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="jose" />
+                            
+                            <section class="author-card-content">
+                                <h4 class="author-card-name"><a href="/author/jose">Jose Rodriguez</a></h4>
+                                
+                                    <p>Security Researcher</p>
+                                
+                            </section>
+                        </section>
+                        <div class="post-full-footer-right">
+                            <a class="author-card-button" href="/author/jose">Read More</a>
+                        </div>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <!-- /author  -->
+            </footer>
+
+            <!-- If you use Disqus comments, just uncomment this block.
+            The only thing you need to change is "test-apkdzgmqhj" - which
+            should be replaced with your own Disqus site-id. -->
+            
+
+        </article>
+
+    </div>
+</main>
+
+<!-- Links to Previous/Next posts -->
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+            
+                
+                
+                
+                
+            
+
+            <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+
+            <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/virtualbox_ubuntu_server">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/virtualbox_ubuntu_desktop_server/tomcat_ubuntu_machine.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/virtualbox_ubuntu_server">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Virtualbox</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Ubuntu</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="Jose Rodriguez" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/jose/">Jose Rodriguez</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
+            
+
+        </div>
+    </div>
+</aside>
+
+<!-- Floating header which appears on-scroll, included from includes/floating-header.hbs -->
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="https://blog.openthreatresearch.com/">
+            
+                <img src="/assets/images/favicon.png" alt="Open Threat Research Blog icon" />
+            
+            <span>Open Threat Research Blog</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">&mdash;</span>
+    <div class="floating-header-title">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=CVE-2021-44228+Log4jShell%3A+Setting+Up+Virtual+Machines+for+the+Attacker+and+Victim&amp;url=setting_up_attacker_victim_machines"
+            onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=setting_up_attacker_victim_machines"
+            onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
+
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+<!-- /post -->
+
+<!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs -->
+
+
+        <!-- Previous/next page links - displayed on every page -->
+        
+
+        <!-- The footer at the very bottom of the screen -->
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="https://blog.openthreatresearch.com/">Open Threat Research Blog</a> &copy; 2022</section>
+                <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> &
+                    <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> using
+                    <a href="https://github.com/jekyller/jasper2" target="_blank" rel="noopener">Jasper2</a></section>
+                <nav class="site-footer-nav">
+                    <a href="/">Latest Posts</a>
+                    
+                    <a href="https://twitter.com/OTR_Community" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- The big email subscribe modal content -->
+    
+        <div id="subscribe" class="subscribe-overlay">
+            <a class="subscribe-overlay-close" href="#"></a>
+            <div class="subscribe-overlay-content">
+                
+                <h1 class="subscribe-overlay-title">Subscribe to Open Threat Research Blog</h1>
+                <p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
+                <form method="post" action="/subscribe/" class="">
+    <input class="confirm" type="hidden" name="confirm"  /><input class="location" type="hidden" name="location"  /><input class="referrer" type="hidden" name="referrer"  />
+
+    <div class="form-group">
+        <input class="subscribe-email" type="email" name="email"  placeholder="youremail@example.com" />
+    </div>
+    <button class="" type="submit" disabled><span>Subscribe</span></button>
+    <script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+</form>
+
+            </div>
+        </div>
+    
+
+    <!-- highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.10.0/components/prism-abap.min.js"></script>
+    <script>$(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });</script>
+
+    <!-- jQuery + Fitvids, which makes all video embeds responsive -->
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://demo.ghost.io/assets/js/jquery.fitvids.js?v=724281a32e"></script>
+
+
+    <!-- Paginator increased to "infinit" in _config.yml -->
+    <!-- if paginator.posts  -->
+    <!-- <script>
+        var maxPages = parseInt('');
+    </script>
+    <script src="/assets/js/infinitescroll.js"></script> -->
+    <!-- /endif -->
+
+    
+
+
+    <!-- Add Google Analytics  -->
+    <!-- Google Analytics Tracking code -->
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+
+ </script>
+
+
+    <!-- The #block helper will pull in data from the #contentFor other template files. In this case, there's some JavaScript which we only want to use in post.hbs, but it needs to be included down here, after jQuery has already loaded. -->
+    
+        <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+    
+
+    <!-- Ghost outputs important scripts and data with this tag - it should always be the very last thing before the closing body tag -->
+    <!-- ghost_foot -->
+
+</body>
+</html>

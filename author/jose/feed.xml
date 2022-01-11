@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/author/jose/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2022-01-11T00:39:39-05:00</updated>
+  <updated>2022-01-11T18:08:31-05:00</updated>
   <id>https://blog.openthreatresearch.com/author/jose/feed.xml</id>
 
   
@@ -40,276 +40,271 @@
 
   
     <entry>
-      <title type="html">CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</title>
-      <link href="https://blog.openthreatresearch.com/preparing_log4shell_environment" rel="alternate" type="text/html" title="CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox" />
-      <published>2022-01-10T07:00:00-05:00</published>
-      <updated>2022-01-10T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/preparing_log4shell_environment</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/preparing_log4shell_environment">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+      <title type="html">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
+      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
+      <published>2022-01-11T07:00:00-05:00</published>
+      <updated>2022-01-11T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+&lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
 
-&lt;h2 id=&quot;ubuntu-20043-lts---desktop-attacker&quot;&gt;Ubuntu 20.04.3 LTS - Desktop (Attacker)&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/desktop&quot;&gt;https://ubuntu.com/download/desktop&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/download_iso_ubuntu_desktop.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;ubuntu-20043-lts---server-tomcat&quot;&gt;Ubuntu 20.04.3 LTS - Server (Tomcat)&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/server&quot;&gt;https://ubuntu.com/download/server&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download Ubuntu Server 20.04.3 LTS&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/download_iso_ubuntu_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;creating-virtual-environment---virtualbox&quot;&gt;Creating Virtual Environment - VirtualBox&lt;/h1&gt;
-
-&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;attacker-virtual-machine&quot;&gt;Attacker Virtual Machine&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;attacker&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;4096 MB&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Create a virtual hard disk using default options.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Choose the ISO file for Ubuntu Desktop you downloaded before.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;strong&gt;Install Ubuntu&lt;/strong&gt; and continue the installation process using default options.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Use &lt;strong&gt;attacker&lt;/strong&gt; as name, computer’s name, and username. Also, you should choose and confirm your password.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;When the installation is complete, click on &lt;strong&gt;Restart Now&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on the user &lt;strong&gt;attacker&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_select_user.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Insert the user’s &lt;strong&gt;password&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_insert_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Awesome!! You have created the attacker’s virtual machine.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;For the purpose of this blog, we will use three virtual machines: Ubuntu Server (Tomcat) and Ubuntu Desktop (Attacker and Remote-SSH). If you need to create these virtual machines using VirtualBox, you can follow the steps from these previous blog posts:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;You can add the following features to your new virtual machine:&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;Devices &amp;gt; Shared Clipboard &amp;gt; Bidirectional&lt;/li&gt;
-      &lt;li&gt;Devices &amp;gt; Drag and Drop &amp;gt; Bidirectional&lt;/li&gt;
-      &lt;li&gt;Devices &amp;gt; Insert Guest Additions CD Image&lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop&quot;&gt;VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;When installing the Guest Additions CD Image, you might get the following error: &lt;strong&gt;This system is currently not set up to build kernel modules&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_server&quot;&gt;VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_error_guest_additions.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;setting-up-the-attacker-virtual-machine&quot;&gt;Setting Up the Attacker Virtual Machine&lt;/h1&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, open a &lt;strong&gt;terminal&lt;/strong&gt; window, and run the following commands:&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;installing-required-commands&quot;&gt;Installing Required Commands&lt;/h2&gt;
+
+&lt;p&gt;Open the &lt;strong&gt;terminal&lt;/strong&gt; application and run the following command:&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
-sudo apt install build-essential
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_build.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_apt_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s install the &lt;strong&gt;git&lt;/strong&gt; and &lt;strong&gt;curl&lt;/strong&gt; commands by running the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install git curl -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_install_git_curl.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cloning-the-log4jshell-lab-github-repository&quot;&gt;Cloning the log4jshell-lab GitHub Repository&lt;/h2&gt;
+
+&lt;p&gt;Without changing your current directory, use the &lt;strong&gt;su&lt;/strong&gt; command to use the &lt;em&gt;root&lt;/em&gt; user. Then, use the &lt;strong&gt;git&lt;/strong&gt; command to clone the GitHub repository:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_cloning_github_repo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-docker&quot;&gt;Installing Docker&lt;/h2&gt;
+
+&lt;p&gt;Use the &lt;strong&gt;wget&lt;/strong&gt; command to download the bash shell script. Then, convert the Install-Docker.sh file into an executble by using the &lt;strong&gt;chmod&lt;/strong&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_install_docker_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, execute the &lt;strong&gt;Install-Docker.sh&lt;/strong&gt; file by running the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_run_install_docker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;setting-up-the-victim-tomcat-virtual-machine&quot;&gt;Setting Up the Victim (Tomcat) Virtual Machine&lt;/h1&gt;
+
+&lt;h2 id=&quot;interacting-with-ubuntu-server-remotely-using-ssh-connection&quot;&gt;Interacting with Ubuntu Server Remotely using SSH Connection&lt;/h2&gt;
+
+&lt;p&gt;If you followed the steps from the blog posts shared in the pre-requisites section, you should have installed the &lt;strong&gt;OpenSSH server&lt;/strong&gt; when creating your Ubuntu server virtual machine. Therefore, we should be able to access our server using a &lt;strong&gt;SecureShell (SSH)&lt;/strong&gt; connection.&lt;/p&gt;
+
+&lt;p&gt;First, let’s check the status of the SSH service and get the IP address of our server by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service ssh status
+
+ip a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_status.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s start an Ubuntu desktop virtual machine within the same network (192.168.50.0/24) and open the &lt;strong&gt;terminal&lt;/strong&gt; application.&lt;/p&gt;
+
+&lt;p&gt;Using the user (&lt;strong&gt;tomcat&lt;/strong&gt;), IP address (&lt;strong&gt;192.168.50.5&lt;/strong&gt;), and password for our ubuntu server, stablish a SSH connection by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_connection.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-tomcat-server&quot;&gt;Setting Up Tomcat Server&lt;/h2&gt;
+
+&lt;p&gt;Let’s switch our current user to the &lt;strong&gt;root&lt;/strong&gt; user by using the &lt;strong&gt;su&lt;/strong&gt; command.&lt;/p&gt;
+
+&lt;p&gt;Also, we will use the &lt;strong&gt;git&lt;/strong&gt; command to clone the &lt;strong&gt;log4jshell&lt;/strong&gt; GitHub repository.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_cloning_repo_log4jshell.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;log4jshell-lab/victim/tomcat&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Tomcat.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Install-Tomcat.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd log4jshell-lab/victim/tomcat
+
+chmod +x Install-Tomcat.sh
+
+sh Install-Tomcat.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_installing_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s check if the Tomcat service is running properly by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service tomcat status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_checking_tomcat_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To go back to the terminal shell press &lt;strong&gt;CTRL + C&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-docker-1&quot;&gt;Installing Docker&lt;/h2&gt;
+
+&lt;p&gt;We will use a Docker image to compile our vulnerable applications, so let’s install Docker using a bash script from the &lt;strong&gt;&lt;a href=&quot;https://github.com/OTRF/Blacksmith&quot;&gt;Blacksmith&lt;/a&gt;&lt;/strong&gt; OTR project.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;home/tomcat&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;wget&lt;/strong&gt; command, import the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash script.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;./&lt;/strong&gt; command, execute the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /home/tomcat/
+
+wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+
+./Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_install_docker_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;compiling-vulnerable-java-applications&quot;&gt;Compiling Vulnerable Java Applications&lt;/h2&gt;
+
+&lt;p&gt;We need to add vulnerable applications to our Tomcat server. The &lt;strong&gt;&lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt;&lt;/strong&gt; project comes with a few vulnerable Java applications that use different versions of the &lt;strong&gt;Log4j&lt;/strong&gt; library (&lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.14.0&quot;&gt;2.14.0&lt;/a&gt;, &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.15.0&quot;&gt;2.15.0&lt;/a&gt;, and &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.16.0&quot;&gt;2.16.0&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;We need to compile our applications and create .war files to host the vulnerable aplications in our Tomcat server under &lt;strong&gt;/opt/tomcat/webapps&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;The bash script Compile-Apps.sh compiles applications and copies &lt;strong&gt;.war&lt;/strong&gt; files to &lt;strong&gt;/opt/tomcat/webapps&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;log4jshell-lab/victim/vuln-apps/&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Compile-Apps.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Compile-Apps.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd log4jshell-lab/victim/vuln-apps/
+
+chmod +x Compile-Apps.sh
+
+sh Compile-Apps.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_compiling_vuln_apps.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, we need to &lt;strong&gt;stop&lt;/strong&gt; and &lt;strong&gt;restart&lt;/strong&gt; the Tomcat service by using the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service tomcat stop
+
+service tomcat start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_restarting_tomcat_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;accessing-vulnerable-java-applications&quot;&gt;Accessing Vulnerable Java Applications&lt;/h2&gt;
+
+&lt;p&gt;We need to validate that the vulnerable Java applications that we have installed are working and can be accessed. According to the GitHub repository, there are two ways to access the applications: through a &lt;strong&gt;web browser&lt;/strong&gt; and by using an &lt;strong&gt;API-GET request&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;a-web-browser-mode&quot;&gt;a) Web Browser Mode&lt;/h3&gt;
+
+&lt;p&gt;If your Tomcat server has a graphical user interface (GUI), you can open your preferred web browser and browse to:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Now, you can start the installation process again.&lt;/li&gt;
+  &lt;li&gt;log4j version 2.14.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.15.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.16.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;tomcat-virtual-machine&quot;&gt;Tomcat Virtual Machine&lt;/h2&gt;
+&lt;p&gt;If you can only access your Tomcat server by using a terminal application, you can &lt;strong&gt;SSH tunnel&lt;/strong&gt; your access to your vulnerable applications with a different computer.&lt;/p&gt;
+
+&lt;p&gt;Let’s use the same Ubuntu desktop virtual machine that we used to set up the vulnerable applications and run the following commands through the &lt;strong&gt;terminal&lt;/strong&gt; application:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh -L 8080:127.0.0.1:8080 tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can now open our preferred browser and browse to any of the previous links such as:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel_browser.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;b-api-mode&quot;&gt;b) API Mode&lt;/h3&gt;
+
+&lt;p&gt;Another way to access the vulnerable Java applications through their API.&lt;/p&gt;
+
+&lt;p&gt;First, using the user (&lt;strong&gt;tomcat&lt;/strong&gt;), IP address (&lt;strong&gt;192.168.50.5&lt;/strong&gt;), and password for our ubuntu server, stablish a SSH connection by running the following commands in the &lt;strong&gt;terminal&lt;/strong&gt; application:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_api.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can now use the &lt;strong&gt;curl&lt;/strong&gt; command to perform a &lt;strong&gt;GET&lt;/strong&gt; request using the API for each application:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;tomcat&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;log4j version 2.14.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.15.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.16.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Using the SSH connection we established previously, run one of the curl comands such as:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;2048 MB&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_curl_api.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Create a virtual hard disk using default options.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h2 id=&quot;installing-sysmon-for-linux&quot;&gt;Installing Sysmon for Linux&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;If you want to generate some endpoint data that you can analyze late when simulating attacks, we can use some resources (bash script and xml config file) from the &lt;strong&gt;&lt;a href=&quot;https://github.com/OTRF/Blacksmith&quot;&gt;Blacksmith&lt;/a&gt;&lt;/strong&gt; OTR project. We will use the same &lt;strong&gt;SSH&lt;/strong&gt; connection we established in the previous section.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Select the Tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;Using the &lt;strong&gt;wget&lt;/strong&gt; command, download the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash script.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Choose the ISO file for Ubuntu Server you downloaded before.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash file. Note that we are adding the &lt;strong&gt;config&lt;/strong&gt; parameter with the url that points to the &lt;strong&gt;xml config&lt;/strong&gt; file.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Sysmon-For-Linux.sh
 
-&lt;ul&gt;
-  &lt;li&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+chmod +x Install-Sysmon-For-Linux.sh
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+sh Install-Sysmon-For-Linux.sh --config https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/configs/sysmon/linux/sysmon.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_installing_sysmon.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;We can validate the generation of Sysmon events by using the following command:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt; and continue the installation process using default options.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tail -f /var/log/syslog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Use &lt;strong&gt;tomcat&lt;/strong&gt; as name, server’s name, and username. Also, you should choose and confirm your password.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Using the &lt;strong&gt;space bar&lt;/strong&gt;, select the &lt;strong&gt;Install OpenSSH server&lt;/strong&gt; option.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_openssh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;When the installation is complete, using the tab key select &lt;strong&gt;Reboot Now&lt;/strong&gt; and press enter.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, type the user &lt;strong&gt;tomcat&lt;/strong&gt; and press enter, finally type the &lt;strong&gt;password&lt;/strong&gt; and press enter.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Awesome!! You have created the Tomcat’s virtual machine.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;attacker-and-victims-virtual-machines-ready&quot;&gt;Attacker and Victim’s Virtual Machines READY!!&lt;/h2&gt;
-
-&lt;p&gt;We now have our two virtual machines within the same network (192.168.50.0/24) and with the following features:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Attacker’s virtual machine:
-    &lt;ul&gt;
-      &lt;li&gt;Ubuntu 20.04.3 LTS (Release 20.04)&lt;/li&gt;
-      &lt;li&gt;IP Address: 192.168.50.4&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Victim’s virtual machine (Tomcat):
-    &lt;ul&gt;
-      &lt;li&gt;Ubuntu 20.04.3 LTS (Release 20.04)&lt;/li&gt;
-      &lt;li&gt;IP Address: 192.168.50.5&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_sysmon_log_example.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
 
       
       
@@ -326,13 +321,312 @@ sudo apt install build-essential
       
 
       
-        <category term="Log4Shell" />
+        <category term="Log4jShell" />
       
         <category term="VirtualBox" />
       
 
       
-        <summary type="html">In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228.</summary>
+        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</title>
+      <link href="https://blog.openthreatresearch.com/virtualbox_ubuntu_server" rel="alternate" type="text/html" title="VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine" />
+      <published>2022-01-10T08:00:00-05:00</published>
+      <updated>2022-01-10T08:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/virtualbox_ubuntu_server</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/virtualbox_ubuntu_server">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Server virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;tomcat&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
+
+&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---server-tomcat&quot;&gt;Ubuntu 20.04.3 LTS - Server (Tomcat)&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/server&quot;&gt;https://ubuntu.com/download/server&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download Ubuntu Server 20.04.3 LTS&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-virtual-machine---virtualbox&quot;&gt;Creating Virtual Machine - VirtualBox&lt;/h1&gt;
+
+&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ubuntu-server-virtual-machine&quot;&gt;Ubuntu Server Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;tomcat&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;2048 MB&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a virtual hard disk using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the ISO file for Ubuntu Server you downloaded before.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt; and continue the installation process using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Use &lt;strong&gt;tomcat&lt;/strong&gt; as the name, server’s name, and username. Also, you should choose and confirm your password.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;space bar&lt;/strong&gt;, select the &lt;strong&gt;Install OpenSSH server&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_openssh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wait for the installation process to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the installation is complete, using the tab key select &lt;strong&gt;Reboot Now&lt;/strong&gt; and press enter.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, type the user &lt;strong&gt;tomcat&lt;/strong&gt; and press enter, finally type the &lt;strong&gt;password&lt;/strong&gt; and press enter.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Awesome!! You have created the tomcat’s virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;need-to-access-your-server-remotely&quot;&gt;Need to Access your Server Remotely?&lt;/h2&gt;
+
+&lt;p&gt;Since we installed the &lt;strong&gt;OpenSSH server&lt;/strong&gt; when creating our virtual machine, we should be able to access our server using a &lt;strong&gt;SecureShell (SSH)&lt;/strong&gt; connection. First, let’s check the status of the SSH service and get the IP address of our server by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service ssh status
+
+ip a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_status.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We just validated that the SSH service is active or running and our server is listenning on &lt;strong&gt;port 22&lt;/strong&gt;. Also, the IP address of our server is &lt;strong&gt;192.168.50.5&lt;/strong&gt; .&lt;/p&gt;
+
+&lt;p&gt;Let’s stablish a SSH remote connection from an Ubuntu Desktop virtual machine that is part of the same network (If you need to create an Ubuntu Desktop virtual machine, you can follow the steps from a previous blog &lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop&quot;&gt;here&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;In your Ubuntu Desktop machine, open the &lt;strong&gt;terminal&lt;/strong&gt; application and run the following commands (user, IP address, and Password of your server will be required):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_connection.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should be able to interact with your server from the remote computer through a SSH connection.&lt;/p&gt;
+
+&lt;h2 id=&quot;running-out-of-hard-disk-space&quot;&gt;Running Out of Hard Disk Space?&lt;/h2&gt;
+
+&lt;p&gt;First, &lt;strong&gt;power off&lt;/strong&gt; your virtual machine. Then go to &lt;em&gt;File &amp;gt; Virtual Media Manager&lt;/em&gt; and select the &lt;strong&gt;Hard disks&lt;/strong&gt; tab within the &lt;strong&gt;Properties&lt;/strong&gt; section. Look for and select the Ubuntu Server’s virtual hard disk.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_media_manager.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Update the &lt;strong&gt;size&lt;/strong&gt; of the virtual hard doisk based on your requirements. Click on &lt;strong&gt;Apply&lt;/strong&gt; and then click on &lt;strong&gt;Close&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_media_manager_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now start your virtual machine again.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="VirtualBox" />
+      
+        <category term="Ubuntu" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to create an Ubuntu Server virtual machine in VirtualBox (Version 6.1.30). We are using the name tomcat for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name Log4Shell, but you can use your preferred name.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</title>
+      <link href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" rel="alternate" type="text/html" title="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
+      <published>2022-01-10T07:00:00-05:00</published>
+      <updated>2022-01-10T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;attacker&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
+
+&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---desktop-attacker&quot;&gt;Ubuntu 20.04.3 LTS - Desktop (Attacker)&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/desktop&quot;&gt;https://ubuntu.com/download/desktop&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_desktop.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-virtual-machine---virtualbox&quot;&gt;Creating Virtual Machine - VirtualBox&lt;/h1&gt;
+
+&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ubuntu-desktop-virtual-machine&quot;&gt;Ubuntu Desktop Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;attacker&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;4096 MB&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a virtual hard disk using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the ISO file for Ubuntu Desktop you downloaded before.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select &lt;strong&gt;Install Ubuntu&lt;/strong&gt; and continue the installation process using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Use &lt;strong&gt;attacker&lt;/strong&gt; as the name, computer’s name, and username. Also, you should choose and confirm your password.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wait for the installation process to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the installation is complete, click on &lt;strong&gt;Restart Now&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click on the user &lt;strong&gt;attacker&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_select_user.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Insert the user’s &lt;strong&gt;password&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_insert_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Awesome!! You have created the attacker’s virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If necessary, you can add the following features to your new virtual machine:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Devices &amp;gt; Shared Clipboard &amp;gt; Bidirectional
+- Devices &amp;gt; Drag and Drop &amp;gt; Bidirectional
+- Devices &amp;gt; Insert Guest Additions CD Image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;problems-when-installing-the-guest-additions-cd-image&quot;&gt;Problems when Installing the Guest Additions CD Image?&lt;/h2&gt;
+
+&lt;p&gt;You might get the following error: &lt;strong&gt;This system is currently not set up to build kernel modules&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_error_guest_additions.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, open a &lt;strong&gt;terminal&lt;/strong&gt; window, and run the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+sudo apt install build-essential
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_build.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, you can start the installation process again.&lt;/p&gt;
+
+&lt;h2 id=&quot;running-out-of-hard-disk-space&quot;&gt;Running Out of Hard Disk Space?&lt;/h2&gt;
+
+&lt;p&gt;First, &lt;strong&gt;power off&lt;/strong&gt; your virtual machine. Then go to &lt;em&gt;File &amp;gt; Virtual Media Manager&lt;/em&gt; and select the &lt;strong&gt;Hard disks&lt;/strong&gt; tab within the &lt;strong&gt;Properties&lt;/strong&gt; section. Look for and select the Ubuntu Desktop’s virtual hard disk.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Update the &lt;strong&gt;size&lt;/strong&gt; of the virtual hard doisk based on your requirements. Click on &lt;strong&gt;Apply&lt;/strong&gt; and then click on &lt;strong&gt;Close&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now start your virtual machine again.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="VirtualBox" />
+      
+        <category term="Ubuntu" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name Log4Shell, but you can use your preferred name.</summary>
       
 
       
@@ -1780,256 +2074,6 @@ jsonFilePath
 
       
         <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install a Python library using pip through either the Terminal or a Jupyter Notebook in Visual Studio Code (VSCode) on a Windows computer.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Installing Visual Studio Code - Windows</title>
-      <link href="https://blog.openthreatresearch.com/installing_vscode_windows" rel="alternate" type="text/html" title="Installing Visual Studio Code - Windows" />
-      <published>2020-12-03T07:00:00-05:00</published>
-      <updated>2020-12-03T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/installing_vscode_windows</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_windows">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) &lt;em&gt;(VSCode)&lt;/em&gt; on a Windows computer using Firefox as web browser.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-visual-studio-code&quot;&gt;Installing Visual Studio Code&lt;/h2&gt;
-&lt;h3 id=&quot;1-downloading-vscode-executable&quot;&gt;1) Downloading VSCode Executable&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download for Windows&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_01_download_vscode_windows.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save File&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_02_saving_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-running-vscode-executable&quot;&gt;2) Running VSCode Executable&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;In your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Downloads&lt;/code&gt; directory, right click on the VSCode executable and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_03_open_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-completing-the-vscode-setup&quot;&gt;3) Completing the VSCode Setup&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accept&lt;/code&gt; the agreetment.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_04_agreetment.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Destination&lt;/code&gt; folder and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_05_destination_location.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Start Menu&lt;/code&gt; folder and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_06_start_menu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Additional Tasks&lt;/code&gt; as desired and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Next&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_07_additional_tasks.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_08_install.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_09_wait_installation_process.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Check the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Launch Visual Studio Code&lt;/code&gt; box and click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Finish&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_10_finish.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-visual-studio-code&quot;&gt;4) Visual Studio Code!!&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;We are now ready to start working with &lt;strong&gt;VSCode&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_11_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;File&lt;/code&gt; menu.&lt;/li&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Preferences&lt;/code&gt;  and then select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Color Theme&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_12_vscode_color_theme.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select, for example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Light (Visual Studio)&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_13_vscode_color_theme_options.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;This is how it looks like.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/2020-12-01_14_vscode_color_theme_light_vscode.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://code.visualstudio.com/&lt;/li&gt;
-&lt;/ul&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Jose Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="vscode" />
-      
-
-      
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.54.3) (VSCode) on a Windows computer using Firefox as web browser.</summary>
-      
-
-      
-      
-    </entry>
-  
-    <entry>
-      <title type="html">Installing Visual Studio Code - Mac</title>
-      <link href="https://blog.openthreatresearch.com/installing_vscode_mac" rel="alternate" type="text/html" title="Installing Visual Studio Code - Mac" />
-      <published>2020-12-03T07:00:00-05:00</published>
-      <updated>2020-12-03T07:00:00-05:00</updated>
-      <id>https://blog.openthreatresearch.com/installing_vscode_mac</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/installing_vscode_mac">&lt;p&gt;In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.57.1) &lt;em&gt;(VSCode)&lt;/em&gt; on a Mac computer using &lt;a href=&quot;https://brave.com/&quot;&gt;Brave&lt;/a&gt; browser.&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-visual-studio-code&quot;&gt;Installing Visual Studio Code&lt;/h2&gt;
-&lt;h3 id=&quot;1-downloading-vscode-executable&quot;&gt;1) Downloading VSCode Executable&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Go to &lt;a href=&quot;https://code.visualstudio.com/&quot;&gt;Visual Studio Code&lt;/a&gt; website.&lt;/li&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Download Mac Universal&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_01_download_vscode_mac.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Save&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_02_saving_vscode_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2-running-vscode-application&quot;&gt;2) Running VSCode Application&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;After the file is downloaded, at the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bottom left&lt;/code&gt; of the browser window, open the options and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Open&lt;/code&gt; to extract the application and open a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finder&lt;/code&gt; windows.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_03_open_vscode_application.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_04_open_vscode_finder_window.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Right click&lt;/code&gt; on the Visual Studio Code application, and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_05_open_vscode.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;You might get the following message, click on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_06_open_warning.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3-visual-studio-code&quot;&gt;3) Visual Studio Code!!&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;We are now ready to start working with &lt;strong&gt;VSCode&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_07_vscode_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;If you want to change the color theme of the VSCode application, go to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code&lt;/code&gt; menu.&lt;/li&gt;
-  &lt;li&gt;Select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Preferences&lt;/code&gt;  and then select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Color Theme&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_08_vscode_color_theme.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select, for example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Light (Visual Studio)&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_09_vscode_color_theme_options.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;This is how it looks like.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_10_vscode_color_theme_light_vscode.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;4-moving-visual-studio-code-to-applications-folder&quot;&gt;4) Moving Visual Studio Code to Applications Folder&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Go back to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;finder&lt;/code&gt; window from section 2, and move the Visual Studio Code application to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;applications&lt;/code&gt; folder.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_11_vscode_applications_folder.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Do not forget to remove the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;zip file&lt;/code&gt; we downloaded at the beginning of this post.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;assets/images/blog/installing_vscode_mac/2020-12-03_12_vscode_zip_trash.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References:&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;https://code.visualstudio.com/&lt;/li&gt;
-&lt;/ul&gt;</content>
-
-      
-      
-      
-      
-      
-
-      <author>
-          <name>Jose Rodriguez</name>
-        
-        
-      </author>
-
-      
-
-      
-        <category term="vscode" />
-      
-
-      
-        <summary type="html">In this quick blogpost, I will share the steps that you can follow in order to install Visual Studio Code (1.57.1) (VSCode) on a Mac computer using Brave browser.</summary>
       
 
       

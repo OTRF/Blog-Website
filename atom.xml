@@ -8,16 +8,46 @@
     
       
       <item>
-        <title>CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</title>
+        <title>CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
         
-          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 11 Jan 2022 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</title>
+        
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Server virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;tomcat&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 10 Jan 2022 08:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/virtualbox_ubuntu_server</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/virtualbox_ubuntu_server</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</title>
+        
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;attacker&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
 
 </description>
         
         <pubDate>Mon, 10 Jan 2022 07:00:00 -0500</pubDate>
         <link>
-        https://blog.openthreatresearch.com/preparing_log4shell_environment</link>
-        <guid isPermaLink="true">https://blog.openthreatresearch.com/preparing_log4shell_environment</guid>
+        https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop</guid>
       </item>
       
     

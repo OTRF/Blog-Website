@@ -11,7 +11,7 @@
 
 
 
-    <title>CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</title>
+    <title>VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
     <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://blog.openthreatresearch.com/preparing_log4shell_environment" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox" />
-    <meta property="og:description" content="In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. Downloading ISO Files Ubuntu 20.04.3 LTS - Desktop (Attacker) Go to https://ubuntu.com/download/desktop and download the ISO file" />
-    <meta property="og:url" content="https://blog.openthreatresearch.com/preparing_log4shell_environment" />
-    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png" />
+    <meta property="og:title" content="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
+    <meta property="og:description" content="In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the" />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
     <meta property="article:published_time" content="2022-01-10T07:00:00-05:00" />
     <meta property="article:modified_time" content="2022-01-10T07:00:00-05:00" />
-    <meta property="article:tag" content="Log4shell" />
+    <meta property="article:tag" content="Virtualbox" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox" />
-    <meta name="twitter:description" content="In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. Downloading ISO Files Ubuntu 20.04.3 LTS - Desktop (Attacker) Go to https://ubuntu.com/download/desktop and download the ISO file" />
+    <meta name="twitter:title" content="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
+    <meta name="twitter:description" content="In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the" />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
-    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Open Threat Research Blog" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Log4shell" />
+    <meta name="twitter:data2" content="Virtualbox" />
     <meta name="twitter:site" content="@OTR_Community" />
     <meta name="twitter:creator" content="@OTR_Community" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Open Threat Research Blog",
         "logo": "https://blog.openthreatresearch.com/false"
     },
-    "url": "https://blog.openthreatresearch.com/preparing_log4shell_environment",
+    "url": "https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop",
     "image": {
         "@type": "ImageObject",
-        "url": "https://blog.openthreatresearch.com/assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.openthreatresearch.com/preparing_log4shell_environment"
+        "@id": "https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop"
     },
-    "description": "In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. Downloading ISO Files Ubuntu 20.04.3 LTS - Desktop (Attacker) Go to https://ubuntu.com/download/desktop and download the ISO file"
+    "description": "In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" href="/feed.xml" />
 
 
 </head>
@@ -153,7 +153,7 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-log4shell tag-virtualbox post ">
+        <article class="post-full  tag-virtualbox tag-ubuntu post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
@@ -162,290 +162,139 @@ into the {body} of the default.hbs template -->
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/log4shell/'>LOG4SHELL</a>,
+                               <a href='/tag/virtualbox/'>VIRTUALBOX</a>,
                             
                         
                             
-                               <a href='/tag/virtualbox/'>VIRTUALBOX</a>
+                               <a href='/tag/ubuntu/'>UBUNTU</a>
                             
                         
                     
                 </section>
-                <h1 class="post-full-title">CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</h1>
+                <h1 class="post-full-title">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</h1>
             </header>
 
             
-            <figure class="post-full-image" style="background-image: url(/assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png)">
             </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits <strong><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a></strong>.</p>
+                    <p>In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name <strong>attacker</strong> for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name <strong>Log4Shell</strong>, but you can use your preferred name.</p>
 
 <h1 id="downloading-iso-files">Downloading ISO Files</h1>
 
 <h2 id="ubuntu-20043-lts---desktop-attacker">Ubuntu 20.04.3 LTS - Desktop (Attacker)</h2>
 
-<ul>
-  <li>Go to <a href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a> and download the ISO file by clicking in <strong>Download</strong>.</li>
-</ul>
+<p>Go to <a href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a> and download the ISO file by clicking in <strong>Download</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/download_iso_ubuntu_desktop.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_desktop.png" alt="" /></p>
 
-<h2 id="ubuntu-20043-lts---server-tomcat">Ubuntu 20.04.3 LTS - Server (Tomcat)</h2>
-
-<ul>
-  <li>Go to <a href="https://ubuntu.com/download/server">https://ubuntu.com/download/server</a> and download the ISO file by clicking in <strong>Download Ubuntu Server 20.04.3 LTS</strong>.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/download_iso_ubuntu_server.png" alt="" /></p>
-
-<h1 id="creating-virtual-environment---virtualbox">Creating Virtual Environment - VirtualBox</h1>
+<h1 id="creating-virtual-machine---virtualbox">Creating Virtual Machine - VirtualBox</h1>
 
 <h2 id="nat-network-address-translation-network">NAT (Network Address Translation) Network</h2>
 
-<ul>
-  <li>Go to <em>File &gt; Preferences &gt; Network</em> and create a NAT network adapter. We are naming it <strong>Log4Shell</strong> and using a CIDR <strong>192.168.50.0/24</strong>. Do not forget to check the <strong>Supports DHCP</strong> option.</li>
-</ul>
+<p>Go to <em>File &gt; Preferences &gt; Network</em> and create a NAT network adapter. We are naming it <strong>Log4Shell</strong> and using a CIDR <strong>192.168.50.0/24</strong>. Do not forget to check the <strong>Supports DHCP</strong> option.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/virtualbox_nat_network.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png" alt="" /></p>
 
-<h2 id="attacker-virtual-machine">Attacker Virtual Machine</h2>
+<h2 id="ubuntu-desktop-virtual-machine">Ubuntu Desktop Virtual Machine</h2>
 
-<ul>
-  <li>Go to <em>Machine &gt; New</em> and create a new virtual machine. We are naming it <strong>attacker</strong> and using type <strong>Linux</strong> and version <strong>Ubuntu (64-bit)</strong>.</li>
-</ul>
+<p>Go to <em>Machine &gt; New</em> and create a new virtual machine. We are naming it <strong>attacker</strong> and using type <strong>Linux</strong> and version <strong>Ubuntu (64-bit)</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker.png" alt="" /></p>
 
-<ul>
-  <li>Select the preferred amount of memory (RAM). We will use <strong>4096 MB</strong>.</li>
-</ul>
+<p>Select the preferred amount of memory (RAM). We will use <strong>4096 MB</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_ram.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_ram.png" alt="" /></p>
 
-<ul>
-  <li>Create a virtual hard disk using default options.</li>
-</ul>
+<p>Create a virtual hard disk using default options.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_virtual_hard_disk.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_hard_disk.png" alt="" /></p>
 
-<ul>
-  <li>Select the attacker virtual machine and go to <em>Machine &gt; Settings</em>. Go to the <strong>Storage</strong> tab and select the <strong>Choose a Disk File</strong>.</li>
-</ul>
+<p>Select the attacker virtual machine and go to <em>Machine &gt; Settings</em>. Go to the <strong>Storage</strong> tab and select the <strong>Choose a Disk File</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_add_iso.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_add_iso.png" alt="" /></p>
 
-<ul>
-  <li>Choose the ISO file for Ubuntu Desktop you downloaded before.</li>
-</ul>
+<p>Choose the ISO file for Ubuntu Desktop you downloaded before.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_choose_iso.png" alt="" /></p>
 
-<ul>
-  <li>Go to the <strong>Network</strong> tab and attach the <strong>Log4Shell</strong> network adapter you created before. Click on <strong>OK</strong>.</li>
-</ul>
+<p>Go to the <strong>Network</strong> tab and attach the <strong>Log4Shell</strong> network adapter you created before. Click on <strong>OK</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_network_adapter.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_network_adapter.png" alt="" /></p>
 
-<ul>
-  <li>Select the attacker virtual machine and go to <em>Machine &gt; Start</em>. This will start the Ubuntu virtual machine.</li>
-</ul>
+<p>Select the attacker virtual machine and go to <em>Machine &gt; Start</em>. This will start the Ubuntu virtual machine.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_start_vm.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_start_vm.png" alt="" /></p>
 
-<ul>
-  <li>Select <strong>Install Ubuntu</strong> and continue the installation process using default options.</li>
-</ul>
+<p>Select <strong>Install Ubuntu</strong> and continue the installation process using default options.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_ubuntu.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_ubuntu.png" alt="" /></p>
 
-<ul>
-  <li>Use <strong>attacker</strong> as name, computer’s name, and username. Also, you should choose and confirm your password.</li>
-</ul>
+<p>Use <strong>attacker</strong> as the name, computer’s name, and username. Also, you should choose and confirm your password.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_user_password.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_user_password.png" alt="" /></p>
 
-<ul>
-  <li>Wait for the installation process to complete.</li>
-</ul>
+<p>Wait for the installation process to complete.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_wait_installation.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_wait_installation.png" alt="" /></p>
 
-<ul>
-  <li>When the installation is complete, click on <strong>Restart Now</strong>.</li>
-</ul>
+<p>When the installation is complete, click on <strong>Restart Now</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_restart_now.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_restart_now.png" alt="" /></p>
 
-<ul>
-  <li>Press <strong>ENTER</strong>.</li>
-</ul>
+<p>Press <strong>ENTER</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_press_enter.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_press_enter.png" alt="" /></p>
 
-<ul>
-  <li>Click on the user <strong>attacker</strong>.</li>
-</ul>
+<p>Click on the user <strong>attacker</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_select_user.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_select_user.png" alt="" /></p>
 
-<ul>
-  <li>Insert the user’s <strong>password</strong>.</li>
-</ul>
+<p>Insert the user’s <strong>password</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_insert_password.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_insert_password.png" alt="" /></p>
 
-<ul>
-  <li>Awesome!! You have created the attacker’s virtual machine.</li>
-</ul>
+<p>Awesome!! You have created the attacker’s virtual machine.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_vm_ready.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_vm_ready.png" alt="" /></p>
 
-<ul>
-  <li>
-    <p>You can add the following features to your new virtual machine:</p>
+<p>If necessary, you can add the following features to your new virtual machine:</p>
 
-    <ul>
-      <li>Devices &gt; Shared Clipboard &gt; Bidirectional</li>
-      <li>Devices &gt; Drag and Drop &gt; Bidirectional</li>
-      <li>Devices &gt; Insert Guest Additions CD Image</li>
-    </ul>
-  </li>
-  <li>
-    <p>When installing the Guest Additions CD Image, you might get the following error: <strong>This system is currently not set up to build kernel modules</strong></p>
-  </li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Devices &gt; Shared Clipboard &gt; Bidirectional
+- Devices &gt; Drag and Drop &gt; Bidirectional
+- Devices &gt; Insert Guest Additions CD Image
+</code></pre></div></div>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_error_guest_additions.png" alt="" /></p>
+<h2 id="problems-when-installing-the-guest-additions-cd-image">Problems when Installing the Guest Additions CD Image?</h2>
 
-<ul>
-  <li>Press <strong>enter</strong>, open a <strong>terminal</strong> window, and run the following commands:</li>
-</ul>
+<p>You might get the following error: <strong>This system is currently not set up to build kernel modules</strong></p>
+
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_error_guest_additions.png" alt="" /></p>
+
+<p>Press <strong>enter</strong>, open a <strong>terminal</strong> window, and run the following commands:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
 sudo apt install build-essential
 </code></pre></div></div>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_build.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_build.png" alt="" /></p>
 
-<ul>
-  <li>Now, you can start the installation process again.</li>
-</ul>
+<p>Now, you can start the installation process again.</p>
 
-<h2 id="tomcat-virtual-machine">Tomcat Virtual Machine</h2>
+<h2 id="running-out-of-hard-disk-space">Running Out of Hard Disk Space?</h2>
 
-<ul>
-  <li>Go to <em>Machine &gt; New</em> and create a new virtual machine. We are naming it <strong>tomcat</strong> and using type <strong>Linux</strong> and version <strong>Ubuntu (64-bit)</strong>.</li>
-</ul>
+<p>First, <strong>power off</strong> your virtual machine. Then go to <em>File &gt; Virtual Media Manager</em> and select the <strong>Hard disks</strong> tab within the <strong>Properties</strong> section. Look for and select the Ubuntu Desktop’s virtual hard disk.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager.png" alt="" /></p>
 
-<ul>
-  <li>Select the preferred amount of memory (RAM). We will use <strong>2048 MB</strong>.</li>
-</ul>
+<p>Update the <strong>size</strong> of the virtual hard doisk based on your requirements. Click on <strong>Apply</strong> and then click on <strong>Close</strong>.</p>
 
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_ram.png" alt="" /></p>
+<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager_update.png" alt="" /></p>
 
-<ul>
-  <li>Create a virtual hard disk using default options.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_virtual_hard_disk.png" alt="" /></p>
-
-<ul>
-  <li>Select the Tomcat virtual machine and go to <em>Machine &gt; Settings</em>. Go to the <strong>Storage</strong> tab and select the <strong>Choose a Disk File</strong>.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_add_iso.png" alt="" /></p>
-
-<ul>
-  <li>Choose the ISO file for Ubuntu Server you downloaded before.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_choose_iso.png" alt="" /></p>
-
-<ul>
-  <li>Go to the <strong>Network</strong> tab and attach the <strong>Log4Shell</strong> network adapter you created before. Click on <strong>OK</strong>.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_network_adapter.png" alt="" /></p>
-
-<ul>
-  <li>Select the attacker virtual machine and go to <em>Machine &gt; Start</em>. This will start the Ubuntu virtual machine.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_start_vm.png" alt="" /></p>
-
-<ul>
-  <li>Press <strong>enter</strong> and continue the installation process using default options.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_install_ubuntu.png" alt="" /></p>
-
-<ul>
-  <li>Use <strong>tomcat</strong> as name, server’s name, and username. Also, you should choose and confirm your password.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_user_password.png" alt="" /></p>
-
-<ul>
-  <li>Using the <strong>space bar</strong>, select the <strong>Install OpenSSH server</strong> option.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_openssh.png" alt="" /></p>
-
-<ul>
-  <li>Wait for the installation process to complete.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_wait_installation.png" alt="" /></p>
-
-<ul>
-  <li>When the installation is complete, using the tab key select <strong>Reboot Now</strong> and press enter.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_restart_now.png" alt="" /></p>
-
-<ul>
-  <li>Press <strong>ENTER</strong>.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_press_enter.png" alt="" /></p>
-
-<ul>
-  <li>Press <strong>enter</strong>, type the user <strong>tomcat</strong> and press enter, finally type the <strong>password</strong> and press enter.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_login.png" alt="" /></p>
-
-<ul>
-  <li>Awesome!! You have created the Tomcat’s virtual machine.</li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/create_ubuntu_tomcat_vm_ready.png" alt="" /></p>
-
-<h2 id="attacker-and-victims-virtual-machines-ready">Attacker and Victim’s Virtual Machines READY!!</h2>
-
-<p>We now have our two virtual machines within the same network (192.168.50.0/24) and with the following features:</p>
-
-<ul>
-  <li>Attacker’s virtual machine:
-    <ul>
-      <li>Ubuntu 20.04.3 LTS (Release 20.04)</li>
-      <li>IP Address: 192.168.50.4</li>
-    </ul>
-  </li>
-  <li>Victim’s virtual machine (Tomcat):
-    <ul>
-      <li>Ubuntu 20.04.3 LTS (Release 20.04)</li>
-      <li>IP Address: 192.168.50.5</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png" alt="" /></p>
+<p>You can now start your virtual machine again.</p>
 
                 </div>
             </section>
@@ -519,9 +368,167 @@ sudo apt install build-essential
                 
                 
                 
+                    <article class="read-next-card"
+                        
+                            
+                                style="background-image: url(url(/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png)"
+                        
+                    >
+                        <header class="read-next-card-header">
+                            <small class="read-next-card-header-sitetitle">&mdash; Open Threat Research Blog &mdash;</small>
+                            
+                                <h3 class="read-next-card-header-title"><a href="/tag/virtualbox/">Virtualbox</a></h3>
+                            
+                        </header>
+                        <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
+</div>
+                        <div class="read-next-card-content">
+                            <ul>
+                                
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/setting_up_attacker_victim_machines">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                        
+                                        
+                                            <li><a href="/virtualbox_ubuntu_server">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</a></li>
+                                        
+                                    
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                            </ul>
+                        </div>
+                        <footer class="read-next-card-footer">
+                            <a href="/tag/virtualbox/">
+                                
+                                    See all 2 posts  →
+                                
+                            </a>
+                        </footer>
+                    </article>
+                
             
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
+            
+                
+
+    <article class="post-card post-template">
+        
+            <a class="post-card-image-link" href="/virtualbox_ubuntu_server">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/virtualbox_ubuntu_desktop_server/tomcat_ubuntu_machine.png)"></div>
+            </a>
+        
+        <div class="post-card-content">
+            <a class="post-card-content-link" href="/virtualbox_ubuntu_server">
+                <header class="post-card-header">
+                    
+                        
+                            
+                               <span class="post-card-tags">Virtualbox</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Ubuntu</span>
+                            
+                        
+                    
+
+                    <h2 class="post-card-title">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</h2>
+                </header>
+                <section class="post-card-excerpt">
+                    
+                        <p></p>
+                    
+                </section>
+            </a>
+            <footer class="post-card-meta">
+                
+                    
+                
+                    
+                        
+                        <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="Jose Rodriguez" />
+                        
+                        <span class="post-card-author">
+                            <a href="/author/jose/">Jose Rodriguez</a>
+                        </span>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                <span class="reading-time">
+                    
+                    
+                      1 min read
+                    
+                </span>
+            </footer>
+        </div>
+    </article>
+
             
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
@@ -599,18 +606,18 @@ sudo apt install build-essential
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</div>
+    <div class="floating-header-title">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=CVE-2021-44228+Log4Shell%3A+Preparing+a+Virtual+Environment+using+VirtualBox&amp;url=preparing_log4shell_environment"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=VirtualBox%3A+Creating+an+Ubuntu+Desktop+20.04.3+LTS+Virtual+Machine&amp;url=virtualbox_ubuntu_desktop"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=preparing_log4shell_environment"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=virtualbox_ubuntu_desktop"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 

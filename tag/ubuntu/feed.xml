@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/ubuntu/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2022-01-11T18:08:31-05:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/ubuntu/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</title>
+      <link href="https://blog.openthreatresearch.com/virtualbox_ubuntu_server" rel="alternate" type="text/html" title="VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine" />
+      <published>2022-01-10T08:00:00-05:00</published>
+      <updated>2022-01-10T08:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/virtualbox_ubuntu_server</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/virtualbox_ubuntu_server">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Server virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;tomcat&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
+
+&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---server-tomcat&quot;&gt;Ubuntu 20.04.3 LTS - Server (Tomcat)&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/server&quot;&gt;https://ubuntu.com/download/server&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download Ubuntu Server 20.04.3 LTS&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-virtual-machine---virtualbox&quot;&gt;Creating Virtual Machine - VirtualBox&lt;/h1&gt;
+
+&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ubuntu-server-virtual-machine&quot;&gt;Ubuntu Server Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;tomcat&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;2048 MB&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a virtual hard disk using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the ISO file for Ubuntu Server you downloaded before.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt; and continue the installation process using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Use &lt;strong&gt;tomcat&lt;/strong&gt; as the name, server’s name, and username. Also, you should choose and confirm your password.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;space bar&lt;/strong&gt;, select the &lt;strong&gt;Install OpenSSH server&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_openssh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wait for the installation process to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the installation is complete, using the tab key select &lt;strong&gt;Reboot Now&lt;/strong&gt; and press enter.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, type the user &lt;strong&gt;tomcat&lt;/strong&gt; and press enter, finally type the &lt;strong&gt;password&lt;/strong&gt; and press enter.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Awesome!! You have created the tomcat’s virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;need-to-access-your-server-remotely&quot;&gt;Need to Access your Server Remotely?&lt;/h2&gt;
+
+&lt;p&gt;Since we installed the &lt;strong&gt;OpenSSH server&lt;/strong&gt; when creating our virtual machine, we should be able to access our server using a &lt;strong&gt;SecureShell (SSH)&lt;/strong&gt; connection. First, let’s check the status of the SSH service and get the IP address of our server by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service ssh status
+
+ip a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_status.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We just validated that the SSH service is active or running and our server is listenning on &lt;strong&gt;port 22&lt;/strong&gt;. Also, the IP address of our server is &lt;strong&gt;192.168.50.5&lt;/strong&gt; .&lt;/p&gt;
+
+&lt;p&gt;Let’s stablish a SSH remote connection from an Ubuntu Desktop virtual machine that is part of the same network (If you need to create an Ubuntu Desktop virtual machine, you can follow the steps from a previous blog &lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop&quot;&gt;here&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;In your Ubuntu Desktop machine, open the &lt;strong&gt;terminal&lt;/strong&gt; application and run the following commands (user, IP address, and Password of your server will be required):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_connection.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should be able to interact with your server from the remote computer through a SSH connection.&lt;/p&gt;
+
+&lt;h2 id=&quot;running-out-of-hard-disk-space&quot;&gt;Running Out of Hard Disk Space?&lt;/h2&gt;
+
+&lt;p&gt;First, &lt;strong&gt;power off&lt;/strong&gt; your virtual machine. Then go to &lt;em&gt;File &amp;gt; Virtual Media Manager&lt;/em&gt; and select the &lt;strong&gt;Hard disks&lt;/strong&gt; tab within the &lt;strong&gt;Properties&lt;/strong&gt; section. Look for and select the Ubuntu Server’s virtual hard disk.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_media_manager.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Update the &lt;strong&gt;size&lt;/strong&gt; of the virtual hard doisk based on your requirements. Click on &lt;strong&gt;Apply&lt;/strong&gt; and then click on &lt;strong&gt;Close&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_virtual_media_manager_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now start your virtual machine again.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="VirtualBox" />
+      
+        <category term="Ubuntu" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to create an Ubuntu Server virtual machine in VirtualBox (Version 6.1.30). We are using the name tomcat for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name Log4Shell, but you can use your preferred name.</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</title>
+      <link href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" rel="alternate" type="text/html" title="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
+      <published>2022-01-10T07:00:00-05:00</published>
+      <updated>2022-01-10T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name &lt;strong&gt;attacker&lt;/strong&gt; for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name &lt;strong&gt;Log4Shell&lt;/strong&gt;, but you can use your preferred name.&lt;/p&gt;
+
+&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---desktop-attacker&quot;&gt;Ubuntu 20.04.3 LTS - Desktop (Attacker)&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/desktop&quot;&gt;https://ubuntu.com/download/desktop&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_desktop.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-virtual-machine---virtualbox&quot;&gt;Creating Virtual Machine - VirtualBox&lt;/h1&gt;
+
+&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ubuntu-desktop-virtual-machine&quot;&gt;Ubuntu Desktop Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;attacker&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;4096 MB&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Create a virtual hard disk using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Choose the ISO file for Ubuntu Desktop you downloaded before.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select &lt;strong&gt;Install Ubuntu&lt;/strong&gt; and continue the installation process using default options.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Use &lt;strong&gt;attacker&lt;/strong&gt; as the name, computer’s name, and username. Also, you should choose and confirm your password.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Wait for the installation process to complete.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the installation is complete, click on &lt;strong&gt;Restart Now&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Click on the user &lt;strong&gt;attacker&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_select_user.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Insert the user’s &lt;strong&gt;password&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_insert_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Awesome!! You have created the attacker’s virtual machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If necessary, you can add the following features to your new virtual machine:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- Devices &amp;gt; Shared Clipboard &amp;gt; Bidirectional
+- Devices &amp;gt; Drag and Drop &amp;gt; Bidirectional
+- Devices &amp;gt; Insert Guest Additions CD Image
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;problems-when-installing-the-guest-additions-cd-image&quot;&gt;Problems when Installing the Guest Additions CD Image?&lt;/h2&gt;
+
+&lt;p&gt;You might get the following error: &lt;strong&gt;This system is currently not set up to build kernel modules&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_error_guest_additions.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, open a &lt;strong&gt;terminal&lt;/strong&gt; window, and run the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+sudo apt install build-essential
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_build.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, you can start the installation process again.&lt;/p&gt;
+
+&lt;h2 id=&quot;running-out-of-hard-disk-space&quot;&gt;Running Out of Hard Disk Space?&lt;/h2&gt;
+
+&lt;p&gt;First, &lt;strong&gt;power off&lt;/strong&gt; your virtual machine. Then go to &lt;em&gt;File &amp;gt; Virtual Media Manager&lt;/em&gt; and select the &lt;strong&gt;Hard disks&lt;/strong&gt; tab within the &lt;strong&gt;Properties&lt;/strong&gt; section. Look for and select the Ubuntu Desktop’s virtual hard disk.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Update the &lt;strong&gt;size&lt;/strong&gt; of the virtual hard doisk based on your requirements. Click on &lt;strong&gt;Apply&lt;/strong&gt; and then click on &lt;strong&gt;Close&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now start your virtual machine again.&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="VirtualBox" />
+      
+        <category term="Ubuntu" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name Log4Shell, but you can use your preferred name.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

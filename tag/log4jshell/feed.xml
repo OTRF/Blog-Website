@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/log4jshell/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2022-01-11T18:08:31-05:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/log4jshell/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
+      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
+      <published>2022-01-11T07:00:00-05:00</published>
+      <updated>2022-01-11T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
+
+&lt;p&gt;For the purpose of this blog, we will use three virtual machines: Ubuntu Server (Tomcat) and Ubuntu Desktop (Attacker and Remote-SSH). If you need to create these virtual machines using VirtualBox, you can follow the steps from these previous blog posts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop&quot;&gt;VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_server&quot;&gt;VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;setting-up-the-attacker-virtual-machine&quot;&gt;Setting Up the Attacker Virtual Machine&lt;/h1&gt;
+
+&lt;h2 id=&quot;installing-required-commands&quot;&gt;Installing Required Commands&lt;/h2&gt;
+
+&lt;p&gt;Open the &lt;strong&gt;terminal&lt;/strong&gt; application and run the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_apt_update.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s install the &lt;strong&gt;git&lt;/strong&gt; and &lt;strong&gt;curl&lt;/strong&gt; commands by running the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt install git curl -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_install_git_curl.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cloning-the-log4jshell-lab-github-repository&quot;&gt;Cloning the log4jshell-lab GitHub Repository&lt;/h2&gt;
+
+&lt;p&gt;Without changing your current directory, use the &lt;strong&gt;su&lt;/strong&gt; command to use the &lt;em&gt;root&lt;/em&gt; user. Then, use the &lt;strong&gt;git&lt;/strong&gt; command to clone the GitHub repository:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_cloning_github_repo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-docker&quot;&gt;Installing Docker&lt;/h2&gt;
+
+&lt;p&gt;Use the &lt;strong&gt;wget&lt;/strong&gt; command to download the bash shell script. Then, convert the Install-Docker.sh file into an executble by using the &lt;strong&gt;chmod&lt;/strong&gt; command.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_install_docker_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, execute the &lt;strong&gt;Install-Docker.sh&lt;/strong&gt; file by running the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/attacker_run_install_docker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;setting-up-the-victim-tomcat-virtual-machine&quot;&gt;Setting Up the Victim (Tomcat) Virtual Machine&lt;/h1&gt;
+
+&lt;h2 id=&quot;interacting-with-ubuntu-server-remotely-using-ssh-connection&quot;&gt;Interacting with Ubuntu Server Remotely using SSH Connection&lt;/h2&gt;
+
+&lt;p&gt;If you followed the steps from the blog posts shared in the pre-requisites section, you should have installed the &lt;strong&gt;OpenSSH server&lt;/strong&gt; when creating your Ubuntu server virtual machine. Therefore, we should be able to access our server using a &lt;strong&gt;SecureShell (SSH)&lt;/strong&gt; connection.&lt;/p&gt;
+
+&lt;p&gt;First, let’s check the status of the SSH service and get the IP address of our server by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service ssh status
+
+ip a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_tomcat_ssh_status.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s start an Ubuntu desktop virtual machine within the same network (192.168.50.0/24) and open the &lt;strong&gt;terminal&lt;/strong&gt; application.&lt;/p&gt;
+
+&lt;p&gt;Using the user (&lt;strong&gt;tomcat&lt;/strong&gt;), IP address (&lt;strong&gt;192.168.50.5&lt;/strong&gt;), and password for our ubuntu server, stablish a SSH connection by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_connection.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-tomcat-server&quot;&gt;Setting Up Tomcat Server&lt;/h2&gt;
+
+&lt;p&gt;Let’s switch our current user to the &lt;strong&gt;root&lt;/strong&gt; user by using the &lt;strong&gt;su&lt;/strong&gt; command.&lt;/p&gt;
+
+&lt;p&gt;Also, we will use the &lt;strong&gt;git&lt;/strong&gt; command to clone the &lt;strong&gt;log4jshell&lt;/strong&gt; GitHub repository.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+git clone https://github.com/Cyb3rWard0g/log4jshell-lab
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_cloning_repo_log4jshell.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;log4jshell-lab/victim/tomcat&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Tomcat.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Install-Tomcat.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd log4jshell-lab/victim/tomcat
+
+chmod +x Install-Tomcat.sh
+
+sh Install-Tomcat.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_installing_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s check if the Tomcat service is running properly by running the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service tomcat status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_checking_tomcat_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To go back to the terminal shell press &lt;strong&gt;CTRL + C&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-docker-1&quot;&gt;Installing Docker&lt;/h2&gt;
+
+&lt;p&gt;We will use a Docker image to compile our vulnerable applications, so let’s install Docker using a bash script from the &lt;strong&gt;&lt;a href=&quot;https://github.com/OTRF/Blacksmith&quot;&gt;Blacksmith&lt;/a&gt;&lt;/strong&gt; OTR project.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;home/tomcat&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;wget&lt;/strong&gt; command, import the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash script.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;./&lt;/strong&gt; command, execute the &lt;em&gt;Install-Docker.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /home/tomcat/
+
+wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Docker.sh
+
+chmod +x Install-Docker.sh
+
+./Install-Docker.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_install_docker_executable.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;compiling-vulnerable-java-applications&quot;&gt;Compiling Vulnerable Java Applications&lt;/h2&gt;
+
+&lt;p&gt;We need to add vulnerable applications to our Tomcat server. The &lt;strong&gt;&lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt;&lt;/strong&gt; project comes with a few vulnerable Java applications that use different versions of the &lt;strong&gt;Log4j&lt;/strong&gt; library (&lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.14.0&quot;&gt;2.14.0&lt;/a&gt;, &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.15.0&quot;&gt;2.15.0&lt;/a&gt;, and &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim/vuln-apps/2.16.0&quot;&gt;2.16.0&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;We need to compile our applications and create .war files to host the vulnerable aplications in our Tomcat server under &lt;strong&gt;/opt/tomcat/webapps&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;The bash script Compile-Apps.sh compiles applications and copies &lt;strong&gt;.war&lt;/strong&gt; files to &lt;strong&gt;/opt/tomcat/webapps&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;log4jshell-lab/victim/vuln-apps/&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Compile-Apps.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Compile-Apps.sh&lt;/em&gt; bash file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd log4jshell-lab/victim/vuln-apps/
+
+chmod +x Compile-Apps.sh
+
+sh Compile-Apps.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_compiling_vuln_apps.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, we need to &lt;strong&gt;stop&lt;/strong&gt; and &lt;strong&gt;restart&lt;/strong&gt; the Tomcat service by using the following commands:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service tomcat stop
+
+service tomcat start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_restarting_tomcat_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;accessing-vulnerable-java-applications&quot;&gt;Accessing Vulnerable Java Applications&lt;/h2&gt;
+
+&lt;p&gt;We need to validate that the vulnerable Java applications that we have installed are working and can be accessed. According to the GitHub repository, there are two ways to access the applications: through a &lt;strong&gt;web browser&lt;/strong&gt; and by using an &lt;strong&gt;API-GET request&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;a-web-browser-mode&quot;&gt;a) Web Browser Mode&lt;/h3&gt;
+
+&lt;p&gt;If your Tomcat server has a graphical user interface (GUI), you can open your preferred web browser and browse to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;log4j version 2.14.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.15.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.16.0: &lt;strong&gt;127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you can only access your Tomcat server by using a terminal application, you can &lt;strong&gt;SSH tunnel&lt;/strong&gt; your access to your vulnerable applications with a different computer.&lt;/p&gt;
+
+&lt;p&gt;Let’s use the same Ubuntu desktop virtual machine that we used to set up the vulnerable applications and run the following commands through the &lt;strong&gt;terminal&lt;/strong&gt; application:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh -L 8080:127.0.0.1:8080 tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can now open our preferred browser and browse to any of the previous links such as:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_tunnel_browser.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;b-api-mode&quot;&gt;b) API Mode&lt;/h3&gt;
+
+&lt;p&gt;Another way to access the vulnerable Java applications through their API.&lt;/p&gt;
+
+&lt;p&gt;First, using the user (&lt;strong&gt;tomcat&lt;/strong&gt;), IP address (&lt;strong&gt;192.168.50.5&lt;/strong&gt;), and password for our ubuntu server, stablish a SSH connection by running the following commands in the &lt;strong&gt;terminal&lt;/strong&gt; application:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh tomcat@192.168.50.5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_api.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can now use the &lt;strong&gt;curl&lt;/strong&gt; command to perform a &lt;strong&gt;GET&lt;/strong&gt; request using the API for each application:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;log4j version 2.14.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.15.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.15.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;log4j version 2.16.0: &lt;strong&gt;curl -X GET 127.0.0.1:8080/Log4j-2.16.0-SNAPSHOT/api&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Using the SSH connection we established previously, run one of the curl comands such as:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -X GET 127.0.0.1:8080/Log4j-2.14.0-SNAPSHOT/api
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_ssh_curl_api.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-sysmon-for-linux&quot;&gt;Installing Sysmon for Linux&lt;/h2&gt;
+
+&lt;p&gt;If you want to generate some endpoint data that you can analyze late when simulating attacks, we can use some resources (bash script and xml config file) from the &lt;strong&gt;&lt;a href=&quot;https://github.com/OTRF/Blacksmith&quot;&gt;Blacksmith&lt;/a&gt;&lt;/strong&gt; OTR project. We will use the same &lt;strong&gt;SSH&lt;/strong&gt; connection we established in the previous section.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;wget&lt;/strong&gt; command, download the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash script.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;chmod&lt;/strong&gt; command, make the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash file an executable file.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;sh&lt;/strong&gt; command, execute the &lt;em&gt;Install-Sysmon-For-Linux.sh&lt;/em&gt; bash file. Note that we are adding the &lt;strong&gt;config&lt;/strong&gt; parameter with the url that points to the &lt;strong&gt;xml config&lt;/strong&gt; file.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wget https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/bash/Install-Sysmon-For-Linux.sh
+
+chmod +x Install-Sysmon-For-Linux.sh
+
+sh Install-Sysmon-For-Linux.sh --config https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/configs/sysmon/linux/sysmon.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_installing_sysmon.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can validate the generation of Sysmon events by using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tail -f /var/log/syslog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_attacker_victim_machine/victim_sysmon_log_example.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Log4jShell" />
+      
+        <category term="VirtualBox" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>
