@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/rpc/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-07-05T00:26:38-04:00</updated>
+  <updated>2022-01-11T00:39:39-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/rpc/feed.xml</id>
 
   
@@ -143,12 +143,12 @@ $wc.DownloadFile($url, $FilePath)
 if (!(Test-Path $FilePath)) { Write-Error &quot;Welp!&quot; }
 
 # Install Windows Debuggers - Silently
-Start-Process &quot;C:\ProgramData\winsdksetup.exe&quot; -Wait -ArgumentList '/features OptionId.WindowsDesktopDebuggers /ceip off /q'
+Start-Process &quot;C:\ProgramData\winsdksetup.exe&quot; -Wait -ArgumentList &apos;/features OptionId.WindowsDesktopDebuggers /ceip off /q&apos;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We can now run the following command to set the DbgHelp DLL path via the NtObjectManager module:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt; Set-GlobalSymbolResolver -DbgHelpPath 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\dbghelp.dll' 
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt; Set-GlobalSymbolResolver -DbgHelpPath &apos;C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\dbghelp.dll&apos; 
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;start-and-create-services-via-rpc-model&quot;&gt;Start and Create Services via RPC Model&lt;/h2&gt;
@@ -166,8 +166,8 @@ The image below is a simple representation of some of the remote procedure calls
 
 &lt;p&gt;First, we need to find and parse the SCM RPC server in order to create a RPC client from it. As mentioned earlier in this post, the SCM RPC server interface UUID is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;367abb81-9844-35f1-ad32-98f038001003&lt;/code&gt;. Therefore, we can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Get-RpcServer&lt;/code&gt; command to find the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.dll or .exe&lt;/code&gt; that hosts the SCM RPC server code. As you can see, we are looking for objects with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InterfaceId&lt;/code&gt; that matches our RPC server interface UUID.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$lookRPC = Get-ChildItem C:\Windows\System32\* -Include '*.dll','*.exe' | Get-RpcServer
-$scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003'}
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$lookRPC = Get-ChildItem C:\Windows\System32\* -Include &apos;*.dll&apos;,&apos;*.exe&apos; | Get-RpcServer
+$scmServer = $lookRPC | Where-Object {$_.InterfaceId -eq &apos;367abb81-9844-35f1-ad32-98f038001003&apos;}
 $scmServer | fl
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -175,7 +175,7 @@ $scmServer | fl
 
 &lt;p&gt;The commands above take about 2-3 minutes. Since you already know that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Windows\System32\services.exe&lt;/code&gt; contains the SCM RPC server code, you can simply run this command to expedite the process:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmServer = Get-RpcServer C:\Windows\System32\services.exe | Where-Object { $_.InterfaceId -eq '367abb81-9844-35f1-ad32-98f038001003' }
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$scmServer = Get-RpcServer C:\Windows\System32\services.exe | Where-Object { $_.InterfaceId -eq &apos;367abb81-9844-35f1-ad32-98f038001003&apos; }
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&quot;create-rpc-client&quot;&gt;Create RPC Client&lt;/h2&gt;
@@ -297,10 +297,10 @@ The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RCreateSe
 &lt;p&gt;We can run the following to create the service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SCM Handle&lt;/code&gt; we obtained initially with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenSCManagerW&lt;/code&gt; call. When we later start the&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; service, it will execute &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; and list the files and folders in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\&lt;/code&gt; drive to then push the results to a file located at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\programdata\WardogLog.txt&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;# Set the binarypath with arguments
-$BinaryPathName = '%COMSPEC% /C dir C:\ &amp;gt; C:\programdata\WardogLog.txt'
+$BinaryPathName = &apos;%COMSPEC% /C dir C:\ &amp;gt; C:\programdata\WardogLog.txt&apos;
 
 # Create service remotely
-$Result2 = $scmClient.RCreateServiceW($scmHandle,'Wardog','Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::All,[NtApiDotNet.Win32.ServiceType]::Win32OwnProcess,[NtApiDotNet.Win32.ServiceStartType]::Demand,[NtApiDotNet.Win32.ServiceErrorControl]::Normal,$BinaryPathName, $null, $null, $null, 0, 'LocalSystem',$null,0)
+$Result2 = $scmClient.RCreateServiceW($scmHandle,&apos;Wardog&apos;,&apos;Wardog&apos;,[NtApiDotNet.Win32.ServiceAccessRights]::All,[NtApiDotNet.Win32.ServiceType]::Win32OwnProcess,[NtApiDotNet.Win32.ServiceStartType]::Demand,[NtApiDotNet.Win32.ServiceErrorControl]::Normal,$BinaryPathName, $null, $null, $null, 0, &apos;LocalSystem&apos;,$null,0)
 
 # Results
 $Result2
@@ -369,7 +369,7 @@ The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ROpenServ
 
 &lt;p&gt;We can run the following to get a handle to the service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint with access rights &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SERVICE_START (0x0010)&lt;/code&gt;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result3 = $scmClient.ROpenServiceW($scmHandle,'Wardog',[NtApiDotNet.Win32.ServiceAccessRights]::Start)
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;$Result3 = $scmClient.ROpenServiceW($scmHandle,&apos;Wardog&apos;,[NtApiDotNet.Win32.ServiceAccessRights]::Start)
 $Result3
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -393,7 +393,7 @@ The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RStartSer
 &lt;p&gt;We can first check if the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.
 It should not exist since we have not started the service yet.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt' 
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type &apos;\\WORKSTATION6\c$\ProgramData\WardogLog.txt&apos; 
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We can run the following to start service &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wardog&lt;/code&gt; on the remote endpoint:&lt;/p&gt;
@@ -421,7 +421,7 @@ else{
 However, the file gets created since the service actually starts, but it just does not stay up.
 We can check again if the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\ProgramData\WardogLog.txt&lt;/code&gt; exists on workstation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;WORKSTATION6&lt;/code&gt;.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type '\\WORKSTATION6\c$\ProgramData\WardogLog.txt'
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;type &apos;\\WORKSTATION6\c$\ProgramData\WardogLog.txt&apos;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;As you can see, the service started, executed the command line and created the file.&lt;/p&gt;

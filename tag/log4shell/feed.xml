@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" >
+  <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
+  <link href="https://blog.openthreatresearch.com/tag/log4shell/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
+  <updated>2022-01-11T00:39:39-05:00</updated>
+  <id>https://blog.openthreatresearch.com/tag/log4shell/feed.xml</id>
+
+  
+  
+  
+
+  
+    <title type="html">Open Threat Research Blog | </title>
+  
+
+  
+    <subtitle>Sharing and collaborating to empower the Infosec community!</subtitle>
+  
+
+  
+
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+
+  
+    <entry>
+      <title type="html">CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</title>
+      <link href="https://blog.openthreatresearch.com/preparing_log4shell_environment" rel="alternate" type="text/html" title="CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox" />
+      <published>2022-01-10T07:00:00-05:00</published>
+      <updated>2022-01-10T07:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/preparing_log4shell_environment</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/preparing_log4shell_environment">&lt;p&gt;In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;downloading-iso-files&quot;&gt;Downloading ISO Files&lt;/h1&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---desktop-attacker&quot;&gt;Ubuntu 20.04.3 LTS - Desktop (Attacker)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/desktop&quot;&gt;https://ubuntu.com/download/desktop&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/download_iso_ubuntu_desktop.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ubuntu-20043-lts---server-tomcat&quot;&gt;Ubuntu 20.04.3 LTS - Server (Tomcat)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;a href=&quot;https://ubuntu.com/download/server&quot;&gt;https://ubuntu.com/download/server&lt;/a&gt; and download the ISO file by clicking in &lt;strong&gt;Download Ubuntu Server 20.04.3 LTS&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/download_iso_ubuntu_server.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;creating-virtual-environment---virtualbox&quot;&gt;Creating Virtual Environment - VirtualBox&lt;/h1&gt;
+
+&lt;h2 id=&quot;nat-network-address-translation-network&quot;&gt;NAT (Network Address Translation) Network&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;em&gt;File &amp;gt; Preferences &amp;gt; Network&lt;/em&gt; and create a NAT network adapter. We are naming it &lt;strong&gt;Log4Shell&lt;/strong&gt; and using a CIDR &lt;strong&gt;192.168.50.0/24&lt;/strong&gt;. Do not forget to check the &lt;strong&gt;Supports DHCP&lt;/strong&gt; option.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/virtualbox_nat_network.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;attacker-virtual-machine&quot;&gt;Attacker Virtual Machine&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;attacker&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;4096 MB&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create a virtual hard disk using default options.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Choose the ISO file for Ubuntu Desktop you downloaded before.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select &lt;strong&gt;Install Ubuntu&lt;/strong&gt; and continue the installation process using default options.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use &lt;strong&gt;attacker&lt;/strong&gt; as name, computer’s name, and username. Also, you should choose and confirm your password.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When the installation is complete, click on &lt;strong&gt;Restart Now&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Click on the user &lt;strong&gt;attacker&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_select_user.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Insert the user’s &lt;strong&gt;password&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_insert_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Awesome!! You have created the attacker’s virtual machine.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can add the following features to your new virtual machine:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;Devices &amp;gt; Shared Clipboard &amp;gt; Bidirectional&lt;/li&gt;
+      &lt;li&gt;Devices &amp;gt; Drag and Drop &amp;gt; Bidirectional&lt;/li&gt;
+      &lt;li&gt;Devices &amp;gt; Insert Guest Additions CD Image&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When installing the Guest Additions CD Image, you might get the following error: &lt;strong&gt;This system is currently not set up to build kernel modules&lt;/strong&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_error_guest_additions.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, open a &lt;strong&gt;terminal&lt;/strong&gt; window, and run the following commands:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt update
+sudo apt install build-essential
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_attacker_install_build.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Now, you can start the installation process again.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;tomcat-virtual-machine&quot;&gt;Tomcat Virtual Machine&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to &lt;em&gt;Machine &amp;gt; New&lt;/em&gt; and create a new virtual machine. We are naming it &lt;strong&gt;tomcat&lt;/strong&gt; and using type &lt;strong&gt;Linux&lt;/strong&gt; and version &lt;strong&gt;Ubuntu (64-bit)&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the preferred amount of memory (RAM). We will use &lt;strong&gt;2048 MB&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_ram.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create a virtual hard disk using default options.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_virtual_hard_disk.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the Tomcat virtual machine and go to &lt;em&gt;Machine &amp;gt; Settings&lt;/em&gt;. Go to the &lt;strong&gt;Storage&lt;/strong&gt; tab and select the &lt;strong&gt;Choose a Disk File&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_add_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Choose the ISO file for Ubuntu Server you downloaded before.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_choose_iso.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Go to the &lt;strong&gt;Network&lt;/strong&gt; tab and attach the &lt;strong&gt;Log4Shell&lt;/strong&gt; network adapter you created before. Click on &lt;strong&gt;OK&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_network_adapter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Select the attacker virtual machine and go to &lt;em&gt;Machine &amp;gt; Start&lt;/em&gt;. This will start the Ubuntu virtual machine.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_start_vm.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt; and continue the installation process using default options.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_install_ubuntu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Use &lt;strong&gt;tomcat&lt;/strong&gt; as name, server’s name, and username. Also, you should choose and confirm your password.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_user_password.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Using the &lt;strong&gt;space bar&lt;/strong&gt;, select the &lt;strong&gt;Install OpenSSH server&lt;/strong&gt; option.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_openssh.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Wait for the installation process to complete.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_wait_installation.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;When the installation is complete, using the tab key select &lt;strong&gt;Reboot Now&lt;/strong&gt; and press enter.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_restart_now.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Press &lt;strong&gt;ENTER&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_press_enter.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Press &lt;strong&gt;enter&lt;/strong&gt;, type the user &lt;strong&gt;tomcat&lt;/strong&gt; and press enter, finally type the &lt;strong&gt;password&lt;/strong&gt; and press enter.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_login.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Awesome!! You have created the Tomcat’s virtual machine.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/create_ubuntu_tomcat_vm_ready.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;attacker-and-victims-virtual-machines-ready&quot;&gt;Attacker and Victim’s Virtual Machines READY!!&lt;/h2&gt;
+
+&lt;p&gt;We now have our two virtual machines within the same network (192.168.50.0/24) and with the following features:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Attacker’s virtual machine:
+    &lt;ul&gt;
+      &lt;li&gt;Ubuntu 20.04.3 LTS (Release 20.04)&lt;/li&gt;
+      &lt;li&gt;IP Address: 192.168.50.4&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Victim’s virtual machine (Tomcat):
+    &lt;ul&gt;
+      &lt;li&gt;Ubuntu 20.04.3 LTS (Release 20.04)&lt;/li&gt;
+      &lt;li&gt;IP Address: 192.168.50.5&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4shell_environment/attacker_tomcat_virtual_machines.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Log4Shell" />
+      
+        <category term="VirtualBox" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228.</summary>
+      
+
+      
+      
+    </entry>
+  
+</feed>

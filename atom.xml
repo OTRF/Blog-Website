@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>CVE-2021-44228 Log4Shell: Preparing a Virtual Environment using VirtualBox</title>
+        
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to create an virtual environment in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 10 Jan 2022 07:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/preparing_log4shell_environment</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/preparing_log4shell_environment</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>OSSEM Detection Model: Leveraging Data Relationships to Generate Windows Event XPath Queries</title>
         
           <description>&lt;p&gt;In this blog post, we will introduce the &lt;a href=&quot;https://github.com/OTRF/OSSEM-DM&quot;&gt;OSSEM Detection Model&lt;/a&gt; project and show you how to use it to create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Windows Event XPath queries&lt;/code&gt;. These XPath queries can then be used to improve your data collection strategy.&lt;/p&gt;

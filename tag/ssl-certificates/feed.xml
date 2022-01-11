@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/ssl-certificates/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-07-05T00:26:38-04:00</updated>
+  <updated>2022-01-11T00:39:39-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/ssl-certificates/feed.xml</id>
 
   
@@ -117,7 +117,7 @@
   &lt;li&gt;Import the following module directly from GitHub&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1')
+&lt;pre&gt;&lt;code class=&quot;language-PowerShell&quot;&gt;IEX (New-Object Net.WebClient).DownloadString(&apos;https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/misc/Get-CertSigningReq.ps1&apos;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;Create .CSR File&lt;/strong&gt;&lt;/p&gt;

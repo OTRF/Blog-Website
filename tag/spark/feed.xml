@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/spark/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2021-07-05T00:26:38-04:00</updated>
+  <updated>2022-01-11T00:39:39-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/spark/feed.xml</id>
 
   
@@ -128,7 +128,7 @@ import requests
 from io import BytesIO
 from zipfile import ZipFile
 # Downloading and Extracting Json File
-url = 'https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip'
+url = &apos;https://raw.githubusercontent.com/OTRF/mordor/master/datasets/small/windows/persistence/host/proxylogon_ssrf_rce_poc.zip&apos;
 zipFileRequest = requests.get(url)
 zipFile = ZipFile(BytesIO(zipFileRequest.content))
 jsonFilePath = zipFile.extract(zipFile.namelist()[0])
@@ -156,7 +156,7 @@ type(df)
   &lt;li&gt;In order to create a temporary view of a Spark dataframe , we use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;creteOrReplaceTempView&lt;/code&gt; method.&lt;/li&gt;
   &lt;li&gt;We can use this temporary view of a Spark dataframe as a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SQL&lt;/code&gt; table and define SQL-like queries to analyze our data.&lt;/li&gt;
   &lt;li&gt;We will use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;df&lt;/code&gt; Spark dataframe defined in the previous section. The name that we are using for our temporary view is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt;.
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView('mordorTable')
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df.createOrReplaceTempView(&apos;mordorTable&apos;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -169,12 +169,12 @@ type(df)
   &lt;li&gt;Using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mordorTable&lt;/code&gt; as a reference, we will execute the following code to summarize security event logs provided by the dataset.&lt;/li&gt;
   &lt;li&gt;We are performing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stack counting&lt;/code&gt; operation on the data, and we are grouping the result by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Hostname&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Channel&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EventID&lt;/code&gt;.
     &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;df = spark.sql(
-'''
+&apos;&apos;&apos;
 SELECT Hostname,Channel,EventID, Count(*) as count
 FROM mordorTable
 GROUP BY Hostname,Channel,EventID
 ORDER BY count DESC
-'''
+&apos;&apos;&apos;
 )
 df.show(truncate=False)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
