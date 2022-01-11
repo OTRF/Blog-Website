@@ -4,7 +4,7 @@ current: post
 cover:  assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png
 navigation: True
 title: 'CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim'
-date: 2022-01-11 00:00:00
+date: 2022-01-11 12:00:00
 tags: [Log4jShell, VirtualBox]
 class: post-template
 subclass: 'post'
