@@ -104,6 +104,9 @@ Unifi:
 ossem:
   name: OSSEM
   description: The Open Source Security Events Metadata (OSSEM) is a community-led project that focuses primarily on the documentation and standardization of security event logs from diverse data sources and operating systems.
-Log4Shell:
+Log4jShell:
   name: Log4Shell
   description: Log4j is an open-source java-based logging library used by several applications and maintained as an Apache Logging Services Project.
+Ubuntu:
+  name: Ubuntu
+  description: Ubuntu is a complete Linux operating system, freely available with both community and professional support.
