@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/virtualbox/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2022-01-11T18:08:31-05:00</updated>
+  <updated>2022-01-12T01:20:57-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/virtualbox/feed.xml</id>
 
   
@@ -40,12 +40,12 @@
 
   
     <entry>
-      <title type="html">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
-      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
-      <published>2022-01-11T07:00:00-05:00</published>
-      <updated>2022-01-11T07:00:00-05:00</updated>
+      <title type="html">CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim</title>
+      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim" />
+      <published>2022-01-11T06:00:00-05:00</published>
+      <updated>2022-01-11T06:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt; to exploit &lt;strong&gt;Log4j&lt;/strong&gt; vulnerabilities. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
 
@@ -327,7 +327,7 @@ sh Install-Sysmon-For-Linux.sh --config https://raw.githubusercontent.com/OTRF/B
       
 
       
-        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
+        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
       
 
       

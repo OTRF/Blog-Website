@@ -8,13 +8,28 @@
     
       
       <item>
-        <title>CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
+        <title>CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI</title>
         
-          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to simulate the use of &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt; to exploit &lt;strong&gt;Log4j&lt;/strong&gt; vulnerabilities using &lt;strong&gt;Rogue JNDI&lt;/strong&gt; (Malicious LDAP Server). We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
 
 </description>
         
-        <pubDate>Tue, 11 Jan 2022 07:00:00 -0500</pubDate>
+        <pubDate>Tue, 11 Jan 2022 20:00:00 -0500</pubDate>
+        <link>
+        https://blog.openthreatresearch.com/simulating_cve_2021_44228</link>
+        <guid isPermaLink="true">https://blog.openthreatresearch.com/simulating_cve_2021_44228</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim</title>
+        
+          <description>&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt; to exploit &lt;strong&gt;Log4j&lt;/strong&gt; vulnerabilities. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Tue, 11 Jan 2022 06:00:00 -0500</pubDate>
         <link>
         https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</link>
         <guid isPermaLink="true">https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</guid>

