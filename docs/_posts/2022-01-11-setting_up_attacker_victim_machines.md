@@ -3,15 +3,15 @@ layout: post
 current: post
 cover:  assets/images/blog/log4shell_attacker_victim_machine/attacker_tomcat_virtual_machines.png
 navigation: True
-title: 'CVE-2021-44228 Log4jShell: Setting Up Virtual Machines for the Attacker and Victim'
-date: 2022-01-11 12:00:00
+title: 'CVE-2021-44228: Setting Up Virtual Machines for the Attacker and Victim'
+date: 2022-01-11 11:00:00
 tags: [Log4jShell, VirtualBox]
 class: post-template
 subclass: 'post'
 author: jose
 ---
 
-In this blog post, we will share the steps that you can follow to set up the attacker and victim's virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate an attack that exploits **[CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)**. We will follow the steps provided within the [log4jshell-lab](https://github.com/Cyb3rWard0g/log4jshell-lab) GitHub repository by [Roberto Rodriguez](https://twitter.com/Cyb3rWard0g)
+In this blog post, we will share the steps that you can follow to set up the attacker and victim's virtual machines in VirtualBox (Version 6.1.30) that you can use to simulate the use of **[CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228)** to exploit **Log4j** vulnerabilities. We will follow the steps provided within the [log4jshell-lab](https://github.com/Cyb3rWard0g/log4jshell-lab) GitHub repository by [Roberto Rodriguez](https://twitter.com/Cyb3rWard0g)
 
 # Pre-Requisites
 
