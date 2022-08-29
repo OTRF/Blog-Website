@@ -14,4 +14,4 @@ Open Threat Research (OTR) is a community movement that brings together passiona
 
 If you would like to join us in this journey and share some blog posts through this platform, let us know!
 
-**Discord Server Invite:** [https://bit.ly/OTRDiscord](https://bit.ly/OTRDiscord)
+**Discord Server Invite:** https://discord.gg/AxnWauZxXN
